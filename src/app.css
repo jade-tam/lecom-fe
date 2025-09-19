@@ -1,2 +1,38 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "lecom";
+  default: true;
+  prefersdark: true;
+  color-scheme: "dark";
+  --color-base-100: #4d663c;
+  --color-base-200: #35452a;
+  --color-base-300: #243321;
+  --color-base-content: #f7e7b5;
+  --color-primary: #d05c2a;
+  --color-primary-content: #fffaf3;
+  --color-secondary: #f6b93c;
+  --color-secondary-content: #fff2e9;
+  --color-accent: #6fba3c;
+  --color-accent-content: oklch(40% 0.101 131.063);
+  --color-neutral: #3a2418;
+  --color-neutral-content: #f9eeda;
+  --color-info: #66AEE6;
+  --color-info-content: oklch(29% 0.066 243.157);
+  --color-success: #6fba3c;
+  --color-success-content: oklch(27% 0.072 132.109);
+  --color-warning: #f6b93c;
+  --color-warning-content: oklch(41% 0.112 45.904);
+  --color-error: oklch(70% 0.191 22.216);
+  --color-error-content: oklch(25% 0.092 26.042);
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.25rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 2px;
+  --depth: 1;
+  --noise: 0;
+}
