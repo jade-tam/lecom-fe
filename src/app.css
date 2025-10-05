@@ -1,13 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 @plugin "daisyui";
-
 @plugin "daisyui/theme" {
 	name: 'lecomlight';
 	default: true;
 	prefersdark: false;
 	color-scheme: 'light';
-	--color-base-100: oklch(100% 0 0);
+	--color-base-100: #ffffff;
 	--color-base-200: #f8f3ed;
 	--color-base-300: #e0d7ce;
 	--color-base-content: #2b2b2c;
@@ -35,4 +35,23 @@
 	--border: 2px;
 	--depth: 1;
 	--noise: 0;
+}
+
+@theme {
+	--font-sans:
+		'Nunito', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+		'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer base {
+	body {
+		@apply bg-base-200 min-h-screen;
+	}
+}
+
+@layer utilities {
+	.border {
+		border-width: var(--border);
+		border-color: var(--color-base-300);
+	}
 }
