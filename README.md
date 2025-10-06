@@ -8,6 +8,7 @@
 - Daisy UI 5: <https://daisyui.com/>
 - Icons - Iconify for Tailwind CSS 4: <https://iconify.design/docs/usage/css/tailwind/tailwind4/>
   - Icon pack: Font Awesome Solid <https://icon-sets.iconify.design/fa7-solid>
+- Form handling: <https://superforms.rocks/get-started>
 
 ## Recommended `lib/components` Structure
 
