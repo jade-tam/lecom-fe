@@ -1,78 +1,117 @@
 <script lang="ts">
-	import { registerSchema } from '$lib/schemas/registerSchema.js';
-	import { superForm } from 'sveltekit-superforms';
+	import FormInput from '$lib/components/ui/FormInput.svelte';
+	import { registerSchema, type RegisterSchema } from '$lib/schemas/registerSchema.js';
+	import showToast, { type ToastData } from '$lib/utils/showToast.js';
+	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 
 	const { data } = $props();
-	const { form, errors, message, enhance, submitting, delayed } = superForm(data.form, {
+	const { form, errors, message, enhance, submitting, delayed } = superForm<
+		RegisterSchema,
+		ToastData
+	>(data.form, {
 		validators: zod4Client(registerSchema)
+	});
+
+	$effect(() => {
+		if ($message) {
+			showToast($message);
+		}
 	});
 </script>
 
 <main class="w-screen bg-base-200">
-	<div class="mx-auto flex min-h-screen max-w-md items-center p-2">
+	<div class="mx-auto flex min-h-screen max-w-4xl items-center p-2">
 		<!-- HERE IS THE FORM -->
-		<form method="POST" class="h-fit w-full rounded-box bg-base-100 p-4 md:p-8" use:enhance>
-			<h1 class="mb-4 font-serif text-3xl">Your Journey Begin Here</h1>
-			<h1 class="mb-6 text-right font-serif text-xl">Let's make an account.</h1>
-			<fieldset class="fieldset">
-				<legend class="fieldset-legend">Email</legend>
-				<label class="input w-full">
-					<span class="icon-[fa7-solid--envelope] text-secondary"></span>
-					<input
+		<form method="POST" class="h-fit w-full rounded-box border bg-base-100 p-4 md:p-8" use:enhance>
+			<p class="text-header1 mb-2">Your Journey Begin Here</p>
+			<h1 class="text-header2 mb-8 text-right font-bold">Let's create a new account.</h1>
+
+			<div class="flex max-md:flex-col">
+				<!-- LEFT -->
+				<div class="flex-1">
+					<h2 class="">Personal Information</h2>
+
+					<FormInput
+						name="fullname"
+						label="Fullname"
+						placeholder="Enter your full name..."
 						type="text"
-						name="email"
-						bind:value={$form.email}
-						placeholder="Type in your niche email..."
+						{form}
+						{errors}
 					/>
-				</label>
-				{#if $errors.email}<p class="label text-error">{$errors.email}</p>{/if}
-			</fieldset>
 
-			<fieldset class="fieldset">
-				<legend class="fieldset-legend">Password</legend>
-				<label class="input w-full">
-					<span class="icon-[fa7-solid--star-of-life] text-secondary"></span>
-					<input
-						type="password"
-						name="password"
-						bind:value={$form.password}
-						placeholder="Your super secret password..."
+					<FormInput
+						name="dateOfBirth"
+						label="Date Of Birth"
+						placeholder="Enter your date of birth..."
+						type="date"
+						{form}
+						{errors}
 					/>
-				</label>
-				{#if $errors.password}<p class="label text-error">{$errors.password}</p>{/if}
-			</fieldset>
 
-			<fieldset class="fieldset">
-				<legend class="fieldset-legend">Confirm Password</legend>
-				<label class="input w-full">
-					<span class="icon-[fa7-solid--star-of-life] text-secondary"></span>
-					<input
-						type="confirmPassword"
-						name="confirmPassword"
-						bind:value={$form.confirmPassword}
-						placeholder="Your super secret password... again"
+					<FormInput
+						name="phoneNumber"
+						label="Phone Number"
+						placeholder="Enter your phone number..."
+						type="tel"
+						{form}
+						{errors}
 					/>
-				</label>
-				{#if $errors.confirmPassword}<p class="label text-error">{$errors.confirmPassword}</p>{/if}
-			</fieldset>
 
-			{#if $message}
-				<div
-					role="alert"
-					class="mt-6 alert"
-					class:alert-error={$message?.type === 'error'}
-					class:alert-success={$message?.type === 'success'}
-				>
-					{#if $message?.type === 'success'}
-						<span class="text-2xl icon-[pixelarticons--mail-arrow-right]"></span>
-					{/if}
-					{#if $message?.type === 'error'}
-						<span class="text-2xl icon-[pixelarticons--alert]"></span>
-					{/if}
-					<span>{$message.text}</span>
+					<FormInput
+						name="address"
+						label="Address"
+						placeholder="Enter your address..."
+						type="text"
+						{form}
+						{errors}
+					/>
 				</div>
-			{/if}
+
+				<div class="divider divider-horizontal max-md:divider-vertical"></div>
+
+				<!-- RIGHT -->
+				<div class="flex-1">
+					<h2 class="">Login Details</h2>
+
+					<FormInput
+						name="username"
+						label="Username"
+						placeholder="Enter your username..."
+						type="text"
+						{form}
+						{errors}
+					/>
+
+					<FormInput
+						name="email"
+						label="Email"
+						placeholder="Enter your email..."
+						type="text"
+						{form}
+						{errors}
+					/>
+
+					<FormInput
+						name="password"
+						label="Password"
+						placeholder="Your super secret password..."
+						type="password"
+						{form}
+						{errors}
+					/>
+
+					<FormInput
+						name="confirmPassword"
+						label="Confirm Password"
+						placeholder="Your super secret password... again"
+						type="password"
+						{form}
+						{errors}
+					/>
+				</div>
+			</div>
 
 			<button class="btn mt-10 w-full btn-primary" disabled={$submitting}
 				>Register new account
@@ -82,7 +121,7 @@
 			</button>
 
 			<a class="btn mt-6 w-full btn-ghost btn-sm" href="/auth/login"
-				>Already have an account? Log in now.</a
+				>Already have an account? <strong>Log in now</strong>.</a
 			>
 		</form>
 	</div>

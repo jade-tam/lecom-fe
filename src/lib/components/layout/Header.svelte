@@ -1,9 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import type { UserProfile } from '$lib/types/UserProfile';
 
-	import { onMount } from 'svelte';
+	import { getContext, onMount } from 'svelte';
+	import UserAvatar from '../ui/UserAvatar.svelte';
 
 	let searchInput: HTMLInputElement | null = null;
+	const getUserProfile = getContext<() => UserProfile | null>('userProfile');
+	let userProfile = $derived(getUserProfile());
 
 	onMount(() => {
 		const handleShortcut = (e: KeyboardEvent) => {
@@ -55,8 +59,34 @@
 		<kbd class="kbd kbd-sm">K</kbd>
 	</label>
 
-	<div class="flex gap-2 pl-8">
-		<a href="/auth/login" class="btn btn-primary">Login</a>
-		<a href="/auth/register" class="btn btn-secondary">Register</a>
+	<div class="flex items-center gap-2 pl-8">
+		{#if userProfile}
+			<button class="btn btn-square btn-ghost" aria-label="Notification">
+				<span class="icon-[fa7-solid--bell]"></span>
+			</button>
+			<a href="/cart" class="btn btn-square btn-ghost" aria-label="Cart">
+				<span class="icon-[fa7-solid--shopping-cart]"></span>
+			</a>
+			<div class="dropdown dropdown-end">
+				<div tabindex="0" role="button" class="btn m-1 btn-square btn-link">
+					<UserAvatar
+						avatar_url={userProfile.imageUrl}
+						letter={userProfile.userName.charAt(0).toUpperCase()}
+					/>
+				</div>
+				<ul
+					tabindex="0"
+					class="dropdown-content menu z-1 w-52 rounded-field bg-base-100 p-2 shadow-sm"
+				>
+					<li><a class="rounded-field">Profile</a></li>
+					<li><a class="rounded-field">Preferences</a></li>
+					<li><a class="rounded-field">Help & Feedback</a></li>
+					<li><a href="/auth/logout" class="rounded-field text-error">Logout</a></li>
+				</ul>
+			</div>
+		{:else}
+			<a href="/auth/login" class="btn btn-primary">Login</a>
+			<a href="/auth/register" class="btn btn-secondary">Register</a>
+		{/if}
 	</div>
 </header>

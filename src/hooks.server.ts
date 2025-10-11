@@ -1,5 +1,7 @@
-import type { Handle } from '@sveltejs/kit';
+import { redirect, type Handle } from '@sveltejs/kit';
 import { paraglideMiddleware } from '$lib/paraglide/server';
+import { sequence } from '@sveltejs/kit/hooks';
+import { parseJwt } from '$lib/utils/others';
 
 const handleParaglide: Handle = ({ event, resolve }) =>
 	paraglideMiddleware(event.request, ({ request, locale }) => {
@@ -10,4 +12,24 @@ const handleParaglide: Handle = ({ event, resolve }) =>
 		});
 	});
 
-export const handle: Handle = handleParaglide;
+const handleToken: Handle = async ({ event, resolve }) => {
+	const token = event.cookies.get('token');
+
+	if (token) {
+		event.locals.user = parseJwt(token);
+	}
+
+	return resolve(event);
+};
+
+const handleAuthGuard: Handle = async ({ event, resolve }) => {
+	const routeId = event.route.id ?? '';
+
+	// if (!routeId.endsWith('/logout') && event.locals.user && routeId.startsWith('/(auth)')) {
+	// 	redirect(303, '/learn');
+	// }
+
+	return resolve(event);
+};
+
+export const handle: Handle = sequence(handleParaglide, handleToken, handleAuthGuard);

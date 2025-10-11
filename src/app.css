@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 @plugin "@iconify/tailwind4";
@@ -42,11 +42,22 @@
 	--font-sans:
 		'Nunito', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
 		'Segoe UI Symbol', 'Noto Color Emoji';
+	--font-serif: 'Crimson Pro', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
 }
 
 @layer base {
 	body {
-		@apply bg-base-200 min-h-screen;
+		@apply min-h-screen bg-base-200;
+	}
+
+	h1,
+	.text-header1 {
+		@apply font-serif text-[3.24rem] font-medium max-md:text-[2rem];
+	}
+
+	h2,
+	.text-header2 {
+		@apply font-serif text-[1.62rem] font-medium max-md:text-[1.4rem];
 	}
 }
 

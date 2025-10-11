@@ -10,6 +10,29 @@
   - Icon pack: Font Awesome Solid <https://icon-sets.iconify.design/fa7-solid>
 - Form handling: <https://superforms.rocks/get-started>
 
+## 🧩 Running the Project
+
+### 1. Install dependencies
+
+```bash
+pnpm install
+```
+
+### 2. Start the development server
+
+```bash
+pnpm dev
+```
+
+## ⚠️ Before Committing Code
+
+Please make sure your code is formatted and linted before committing:
+
+```bash
+pnpm format
+pnpm lint
+```
+
 ## Recommended `lib/components` Structure
 
 ```plaintext
@@ -47,47 +70,3 @@ src/lib/components/layout/
 ├── Header.svelte
 ├── Footer.svelte
 └── Sidebar.svelte
-```
-
-### 3. `form/` (Form Components)
-
-- Custom form components and validation logic.
-- Keeps form-related code organized and consistent.
-
-**Example:**
-
-```plaintext
-src/lib/components/form/
-├── TextInput.svelte
-├── Select.svelte
-└── FormWrapper.svelte
-```
-
-### 4. `features/` (Feature-Specific Components)
-
-- Components that are specific to a particular feature or module of your app.
-- Useful for organizing components by feature rather than type.
-
-**Example:**
-
-```plaintext
-src/lib/components/features/
-├── dashboard/
-│   ├── DashboardStats.svelte
-│   └── UserList.svelte
-└── profile/
-    ├── ProfileCard.svelte
-    └── EditProfileForm.svelte
-```
-
-### 5. `modal/` (Modal Components)
-
-- Centralized modal components for consistency in modal handling.
-
-**Example:**
-
-```plaintext
-src/lib/components/modal/
-├── ModalWrapper.svelte
-└── ConfirmDialog.svelte
-```

@@ -1,0 +1,28 @@
+import type { Cookies } from '@sveltejs/kit';
+
+export function parseJwt(token: string) {
+	try {
+		return JSON.parse(atob(token.split('.')[1]));
+	} catch {
+		return null;
+	}
+}
+
+export function storeTokens(cookies: Cookies, token: string, refreshToken: string) {
+	// Store tokens securely
+	cookies.set('token', token, {
+		path: '/',
+		httpOnly: true,
+		secure: true,
+		sameSite: 'lax',
+		maxAge: 60 * 60 * 24 * 7 // 7 days
+	});
+
+	cookies.set('refreshToken', refreshToken, {
+		path: '/',
+		httpOnly: true,
+		secure: true,
+		sameSite: 'lax',
+		maxAge: 60 * 60 * 24 * 30 // 30 days
+	});
+}
