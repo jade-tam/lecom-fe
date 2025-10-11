@@ -70,3 +70,4 @@ src/lib/components/layout/
 ├── Header.svelte
 ├── Footer.svelte
 └── Sidebar.svelte
+```
