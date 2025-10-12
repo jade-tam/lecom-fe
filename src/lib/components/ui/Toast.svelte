@@ -19,12 +19,12 @@
 	{:else if type === 'success'}<span class="icon-[fa7-solid--check-circle] text-2xl"></span>
 	{:else if type === 'warning'}<span class="icon-[fa7-solid--warning] text-2xl"></span>
 	{:else if type === 'error'}<span class="icon-[fa7-solid--xmark-circle] text-2xl"></span>{/if}
-	<div>
+	<div class=" items-center">
 		{#if title}
-			<p class="font-medium">{title}</p>
+			<p class="font-medium mb-1">{title}</p>
 		{/if}
 		{#if description}
-			<p class="mt-1 text-sm">{description}</p>
+			<p class="text-sm">{description}</p>
 		{/if}
 	</div>
 </div>

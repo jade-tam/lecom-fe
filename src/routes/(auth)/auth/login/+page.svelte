@@ -21,7 +21,7 @@
 
 	$effect(() => {
 		if ($message) {
-			showToast({ ...$message, title: 'Logged In' });
+			showToast($message);
 		}
 	});
 </script>

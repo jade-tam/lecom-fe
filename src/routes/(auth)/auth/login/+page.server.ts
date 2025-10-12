@@ -34,7 +34,7 @@ export const actions: Actions = {
 
 		const responseToastData: ToastData = {
 			type: responseData.isSuccess ? 'success' : 'error',
-			title: responseData.isSuccess ? 'Success' : 'Error',
+			title: responseData.isSuccess ? 'Logged In' : null,
 			description: responseData.isSuccess
 				? responseData.result.message
 				: responseData.errorMessages.join('. ')

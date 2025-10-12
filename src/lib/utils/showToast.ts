@@ -5,7 +5,7 @@ type ToastType = 'default' | 'info' | 'success' | 'warning' | 'error';
 
 export type ToastData = {
 	type?: ToastType;
-	title?: string;
+	title?: string | null;
 	description?: string;
 };
 
