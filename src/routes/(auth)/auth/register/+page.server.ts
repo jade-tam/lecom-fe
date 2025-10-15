@@ -15,10 +15,13 @@ export const actions: Actions = {
 	default: async ({ request, fetch }) => {
 		const form = await superValidate(request, zod4(registerSchema));
 
+		console.log(form);
+
 		if (!form.valid) {
 			return fail(400, { form });
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const { confirmPassword, ...formData } = {
 			...form.data,
 			dateOfBirth: new Date(form.data.dateOfBirth).toISOString()
