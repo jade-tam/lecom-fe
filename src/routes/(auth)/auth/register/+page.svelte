@@ -2,7 +2,7 @@
 	import FormInput from '$lib/components/ui/FormInput.svelte';
 	import { registerSchema, type RegisterSchema } from '$lib/schemas/registerSchema.js';
 	import showToast, { type ToastData } from '$lib/utils/showToast.js';
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 
 	const { data } = $props();
@@ -37,7 +37,7 @@
 						label="Fullname"
 						placeholder="Enter your full name..."
 						type="text"
-						{form}
+						superForm={form}
 						{errors}
 					/>
 
@@ -46,7 +46,7 @@
 						label="Date Of Birth"
 						placeholder="Enter your date of birth..."
 						type="date"
-						{form}
+						superForm={form}
 						{errors}
 					/>
 
@@ -55,7 +55,7 @@
 						label="Phone Number"
 						placeholder="Enter your phone number..."
 						type="tel"
-						{form}
+						superForm={form}
 						{errors}
 					/>
 
@@ -64,7 +64,7 @@
 						label="Address"
 						placeholder="Enter your address..."
 						type="text"
-						{form}
+						superForm={form}
 						{errors}
 					/>
 				</div>
@@ -80,7 +80,7 @@
 						label="Username"
 						placeholder="Enter your username..."
 						type="text"
-						{form}
+						superForm={form}
 						{errors}
 					/>
 
@@ -89,7 +89,7 @@
 						label="Email"
 						placeholder="Enter your email..."
 						type="text"
-						{form}
+						superForm={form}
 						{errors}
 					/>
 
@@ -98,7 +98,7 @@
 						label="Password"
 						placeholder="Your super secret password..."
 						type="password"
-						{form}
+						superForm={form}
 						{errors}
 					/>
 
@@ -107,14 +107,14 @@
 						label="Confirm Password"
 						placeholder="Your super secret password... again"
 						type="password"
-						{form}
+						superForm={form}
 						{errors}
 					/>
 				</div>
 			</div>
 
-			<button class="btn mt-10 w-full btn-primary" disabled={$submitting}
-				>Register new account
+			<button class="btn mt-10 w-full btn-primary" disabled={$submitting}>
+				Register new account
 				{#if $delayed}
 					<span class="loading loading-md loading-dots"></span>
 				{/if}

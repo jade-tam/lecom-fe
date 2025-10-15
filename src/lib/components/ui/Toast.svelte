@@ -3,13 +3,14 @@
 
 	const { type = 'default', title, description }: ToastData = $props();
 
-	const alertClass = {
-		default: 'alert alert-default',
-		info: 'alert alert-info',
-		success: 'alert alert-success',
-		warning: 'alert alert-warning',
-		error: 'alert alert-error'
-	}[type] ?? 'alert alert-default';
+	const alertClass =
+		{
+			default: 'alert alert-default',
+			info: 'alert alert-info',
+			success: 'alert alert-success',
+			warning: 'alert alert-warning',
+			error: 'alert alert-error'
+		}[type] ?? 'alert alert-default';
 </script>
 
 <div role="alert" class="{alertClass} min-w-xs border">
@@ -21,7 +22,7 @@
 	{:else if type === 'error'}<span class="icon-[fa7-solid--xmark-circle] text-2xl"></span>{/if}
 	<div class=" items-center">
 		{#if title}
-			<p class="font-medium mb-1">{title}</p>
+			<p class="mb-1 font-medium">{title}</p>
 		{/if}
 		{#if description}
 			<p class="text-sm">{description}</p>

@@ -1,35 +1,40 @@
 <script lang="ts">
-	import type { HTMLInputTypeAttribute } from 'svelte/elements';
+	import type { HTMLInputAttributes } from 'svelte/elements';
 	import type { SuperFormData, SuperFormErrors } from 'sveltekit-superforms/client';
+	import ToolTip from './ToolTip.svelte';
 
 	let {
-		name,
 		label,
-		type = 'text',
 		icon = '',
-		placeholder = '',
-		form,
-		errors
-	} = $props<{
-		name: string;
+		help = '',
+		superForm,
+		errors,
+		name,
+		hidden = false,
+		...restInputAttr
+	}: HTMLInputAttributes & {
 		label: string;
-		type?: HTMLInputTypeAttribute;
 		icon?: string;
-		placeholder?: string;
-		form: SuperFormData<any>;
-		errors: SuperFormErrors<any>;
-	}>();
-
-	$inspect($errors);
+		help?: string;
+		name: string;
+		hidden?: boolean;
+		superForm: SuperFormData<any>;
+		errors: SuperFormErrors<Record<string, string>>;
+	} = $props();
 </script>
 
-<fieldset class="fieldset">
-	<legend class="fieldset-legend">{label}</legend>
+<fieldset class="fieldset" class:hidden>
+	<legend class="fieldset-legend"
+		>{label}
+		{#if help}
+			<ToolTip tip={help} />
+		{/if}
+	</legend>
 	<label class="input w-full">
 		{#if icon}
-			<span class={`icon-[${icon}] text-secondary`}></span>
+			<span class={`${icon} text-secondary`}></span>
 		{/if}
-		<input {type} {name} bind:value={$form[name]} {placeholder} />
+		<input {name} bind:value={$superForm[name]} {...restInputAttr} />
 	</label>
 	{#if $errors[name]}
 		{#each $errors[name] as error}
