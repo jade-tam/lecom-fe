@@ -25,9 +25,9 @@ const handleToken: Handle = async ({ event, resolve }) => {
 const handleAuthGuard: Handle = async ({ event, resolve }) => {
 	const routeId = event.route.id ?? '';
 
-	// if (!routeId.endsWith('/logout') && event.locals.user && routeId.startsWith('/(auth)')) {
-	// 	redirect(303, '/learn');
-	// }
+	if (routeId.startsWith('/(admin)') && !event.locals.user) {
+		redirect(303, '/auth/login');
+	}
 
 	return resolve(event);
 };

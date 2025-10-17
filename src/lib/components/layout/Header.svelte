@@ -78,9 +78,9 @@
 					tabindex="0"
 					class="dropdown-content menu z-1 w-52 rounded-field bg-base-100 p-2 shadow-sm"
 				>
-					<li><a class="rounded-field">Profile</a></li>
-					<li><a class="rounded-field">Preferences</a></li>
-					<li><a class="rounded-field">Help & Feedback</a></li>
+					<li><a href="/profile" class="rounded-field">Profile</a></li>
+					<li><a href="/settings" class="rounded-field">Settings</a></li>
+					<li><a href="/help-and-feedback" class="rounded-field">Help & Feedback</a></li>
 					<li><a href="/auth/logout" class="rounded-field text-error">Logout</a></li>
 				</ul>
 			</div>

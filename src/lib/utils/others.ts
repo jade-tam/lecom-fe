@@ -26,3 +26,8 @@ export function storeTokens(cookies: Cookies, token: string, refreshToken: strin
 		maxAge: 60 * 60 * 24 * 30 // 30 days
 	});
 }
+
+export function clearTokens(cookies: Cookies) {
+	cookies.delete('token', { path: '/' }); // change "token" to your actual cookie name
+	cookies.delete('refreshToken', { path: '/' }); // change "token" to your actual cookie name
+}

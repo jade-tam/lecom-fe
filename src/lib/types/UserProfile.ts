@@ -3,7 +3,7 @@ export type UserProfile = {
 	dateOfBirth: Date;
 	fullName: string;
 	id: string;
-	imageUrl: string;
+	imageUrl: string | null;
 	phoneNumber: string;
 	userName: string;
 };
