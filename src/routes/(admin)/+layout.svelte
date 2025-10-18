@@ -14,7 +14,7 @@
 	<div class="drawer-content flex min-h-screen flex-col">
 		<!-- Page content here -->
 		<div class="flex items-center justify-between p-4">
-			<div class="flex items-center gap-4">
+			<div class="flex items-center gap-4 pl-4">
 				<label for="main-drawer" class="drawer-button btn btn-square btn-soft xl:hidden">
 					<span class="icon-[fa7-solid--bars-staggered] text-2xl"></span>
 				</label>
