@@ -11,8 +11,6 @@
 			href: '/' + segments.slice(0, i + 1).join('/')
 		}));
 
-		console.log(crumbs);
-
 		return crumbs;
 	});
 </script>
@@ -23,14 +21,23 @@
 			<li>
 				{#if i < breadcrumbs.length - 1}
 					<a href={crumb.href}>
-						{adminSidebarLayout.find((item) => item.href === crumb.href)?.iconClass}{crumb.title}
+						{#if adminSidebarLayout.find((item) => item.href === crumb.href)?.iconClass}
+							<span
+								class={adminSidebarLayout.find((item) => item.href === crumb.href)?.iconClass +
+									'text-base'}
+							></span>
+						{/if}
+
+						{crumb.title}
 					</a>
 				{:else}
-					<span class="font-bold hover:no-underline">
-						<span
-							class={adminSidebarLayout.find((item) => item.href === crumb.href)?.iconClass +
-								'text-base'}
-						></span>
+					<span class="pointer-events-none font-bold hover:no-underline!">
+						{#if adminSidebarLayout.find((item) => item.href === crumb.href)?.iconClass}
+							<span
+								class={adminSidebarLayout.find((item) => item.href === crumb.href)?.iconClass +
+									'text-base'}
+							></span>
+						{/if}
 						{crumb.title}
 					</span>
 				{/if}

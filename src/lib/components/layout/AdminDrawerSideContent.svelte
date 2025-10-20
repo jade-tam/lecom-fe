@@ -41,13 +41,13 @@
 				href="/profile"
 			>
 				<UserAvatar
-					avatar_url={user().imageUrl ?? null}
-					letter={user().userName[0].toUpperCase()}
+					avatar_url={user()?.imageUrl ?? null}
+					letter={user()?.userName[0].toUpperCase()}
 					sizeClass={'w-7 h-7'}
 				/>
 				<div class="min-w-0 text-left">
-					<p class="text-xs font-medium">{user().fullName}</p>
-					<p class="truncate text-[0.65rem] font-light">{user().userName}</p>
+					<p class="text-xs font-medium">{user()?.fullName}</p>
+					<p class="truncate text-[0.65rem] font-light">{user()?.userName}</p>
 				</div>
 			</a>
 		</div>
