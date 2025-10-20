@@ -2,7 +2,7 @@ import type { UserProfile } from '$lib/types/UserProfile';
 import { fetchAuthorizedApi } from '$lib/utils/externalApi';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async ({ cookies, depends }) => {
+export const load: LayoutServerLoad = async ({ cookies, depends, locals }) => {
 	// make the layout depend on auth state
 	depends('auth:session');
 
@@ -17,6 +17,7 @@ export const load: LayoutServerLoad = async ({ cookies, depends }) => {
 		// If request succeeded
 		if (responseBody.isSuccess) {
 			return {
+				userRole: locals.user?.role,
 				userProfile: responseBody.result,
 				isAuthenticated: true
 			};
@@ -24,6 +25,7 @@ export const load: LayoutServerLoad = async ({ cookies, depends }) => {
 
 		// If backend says unauthorized or some other error
 		return {
+			userRole: null,
 			userProfile: null,
 			isAuthenticated: false
 		};
@@ -32,6 +34,7 @@ export const load: LayoutServerLoad = async ({ cookies, depends }) => {
 
 		// When refresh token expired or fetch fails
 		return {
+			userRole: null,
 			userProfile: null,
 			isAuthenticated: false
 		};

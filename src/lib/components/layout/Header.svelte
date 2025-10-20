@@ -4,10 +4,14 @@
 
 	import { getContext, onMount } from 'svelte';
 	import UserAvatar from '../ui/UserAvatar.svelte';
+	import type { UserRole } from '$lib/types/User';
+	import { USER_PROFILE_CONTEXT, USER_ROLE_CONTEXT } from '$lib/consts/contexts';
 
 	let searchInput: HTMLInputElement | null = null;
-	const getUserProfile = getContext<() => UserProfile | null>('userProfile');
+	const getUserProfile = getContext<() => UserProfile | null>(USER_PROFILE_CONTEXT);
+	const getUserRole = getContext<() => UserRole | null>(USER_ROLE_CONTEXT);
 	let userProfile = $derived(getUserProfile());
+	let userRole = $derived(getUserRole());
 
 	onMount(() => {
 		const handleShortcut = (e: KeyboardEvent) => {
@@ -78,6 +82,12 @@
 					tabindex="0"
 					class="dropdown-content menu z-1 w-52 rounded-field bg-base-100 p-2 shadow-sm"
 				>
+					{#if userRole === 'Admin'}
+						<li><a href="/admin" class="rounded-field">Admin Dashboard</a></li>
+					{/if}
+					{#if userRole === 'Seller'}
+						<li><a href="/seller" class="rounded-field">Seller Dashboard</a></li>
+					{/if}
 					<li><a href="/profile" class="rounded-field">Profile</a></li>
 					<li><a href="/settings" class="rounded-field">Settings</a></li>
 					<li><a href="/help-and-feedback" class="rounded-field">Help & Feedback</a></li>
