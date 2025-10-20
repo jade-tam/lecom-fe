@@ -18,11 +18,14 @@ const handleToken: Handle = async ({ event, resolve }) => {
 
 	if (token) {
 		const payload: JwtPayload = parseJwt(token);
+
+		console.log(payload);
+
 		event.locals.user = {
 			id: payload.sub,
 			email: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
 			name: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
-			role: payload.aud
+			role: payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
 		};
 	}
 

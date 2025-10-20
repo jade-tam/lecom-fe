@@ -4,8 +4,8 @@ export type JwtPayload = {
 	sub: string;
 	'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress': string;
 	'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name': string;
-	'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': string;
+	'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': UserRole;
 	exp: number;
 	iss: string;
-	aud: UserRole;
+	aud: string;
 };
