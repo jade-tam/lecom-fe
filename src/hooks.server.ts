@@ -2,6 +2,7 @@ import { redirect, type Handle } from '@sveltejs/kit';
 import { paraglideMiddleware } from '$lib/paraglide/server';
 import { sequence } from '@sveltejs/kit/hooks';
 import { parseJwt } from '$lib/utils/others';
+import type { JwtPayload } from '$lib/types/JwtPayload';
 
 const handleParaglide: Handle = ({ event, resolve }) =>
 	paraglideMiddleware(event.request, ({ request, locale }) => {
@@ -16,7 +17,13 @@ const handleToken: Handle = async ({ event, resolve }) => {
 	const token = event.cookies.get('token');
 
 	if (token) {
-		event.locals.user = parseJwt(token);
+		const payload: JwtPayload = parseJwt(token);
+		event.locals.user = {
+			id: payload.sub,
+			email: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
+			name: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
+			role: payload.aud
+		};
 	}
 
 	return resolve(event);
@@ -24,9 +31,16 @@ const handleToken: Handle = async ({ event, resolve }) => {
 
 const handleAuthGuard: Handle = async ({ event, resolve }) => {
 	const routeId = event.route.id ?? '';
+	const user = event.locals.user;
 
-	if (routeId.startsWith('/(admin)') && !event.locals.user) {
-		redirect(303, '/auth/login');
+	if (routeId.startsWith('/(admin)')) {
+		if (!user) {
+			redirect(303, '/auth/login');
+		}
+
+		if (user.role !== 'Admin') {
+			throw redirect(303, '/unauthorized');
+		}
 	}
 
 	return resolve(event);

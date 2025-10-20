@@ -1,5 +1,5 @@
 import { PUBLIC_API_URL } from '$env/static/public';
-import type { ApiResponseBody } from '$lib/types/ResponseBody';
+import type { ApiResponseBody } from '$lib/types/ApiResponseBody';
 import type { Cookies } from '@sveltejs/kit';
 import { clearTokens, storeTokens } from './others';
 import type { ToastData } from './showToast';
