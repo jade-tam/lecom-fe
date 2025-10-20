@@ -16,11 +16,11 @@
 </script>
 
 <div class="flex h-screen w-84 flex-col border bg-base-200 p-4">
-	<button class="btn flex h-fit w-full flex-col justify-start btn-ghost">
+	<div class="flex h-fit w-full flex-col items-center justify-center">
 		<!-- <img class="size-6 md:size-7" src="/images/logo-transparent-512.png" alt="logo" /> -->
 		<p class="ml-2 font-serif text-5xl font-black">Lecom</p>
 		<p class="ml-2 text-lg font-black">Admin Dashboard</p>
-	</button>
+	</div>
 
 	<div class="mt-6 flex grow flex-col gap-2">
 		{#each adminSidebarLayout as item}
