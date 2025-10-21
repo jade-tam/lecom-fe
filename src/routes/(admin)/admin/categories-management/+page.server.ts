@@ -1,13 +1,14 @@
-import { PUBLIC_API_URL } from '$env/static/public';
+import { type Category } from '$lib/types/Category.js';
+import { fetchAuthorizedApi } from '$lib/utils/externalApi';
 
-export const load = async () => {
-	const res = await fetch(PUBLIC_API_URL + '/api/CourseCategory', {
-		method: 'GET'
-	});
-
-	const responseData = await res.json();
+export const load = async ({ cookies }) => {
+	const { responseBody } = await fetchAuthorizedApi<Category[]>(
+		cookies,
+		'/api/CourseCategory',
+		'GET'
+	);
 
 	return {
-		categories: responseData
+		categories: responseBody.result
 	};
 };

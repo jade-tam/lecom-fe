@@ -3,6 +3,9 @@ import type { ApiResponseBody } from '$lib/types/ApiResponseBody';
 import type { Cookies } from '@sveltejs/kit';
 import { clearTokens, storeTokens } from './others';
 import type { ToastData } from './showToast';
+import { createLogger } from '$lib/server/logger';
+
+const logger = createLogger('API');
 
 export async function fetchApi<T = Record<string, unknown>>(
 	path: string,
@@ -10,6 +13,9 @@ export async function fetchApi<T = Record<string, unknown>>(
 	body?: object,
 	token?: string
 ): Promise<{ response: Response; responseBody: ApiResponseBody<T> }> {
+	const apiPrefix = `${method} ${path}`;
+	logger.log(apiPrefix, 'Start fetching api...');
+
 	try {
 		const response = await fetch(PUBLIC_API_URL + path, {
 			method,
@@ -24,10 +30,14 @@ export async function fetchApi<T = Record<string, unknown>>(
 
 		// handle non-2xx before parsing JSON
 		if (!response.ok) {
+			const errorMessage = `HTTP ${response.status} ${response.statusText}`;
+
+			logger.error(apiPrefix, 'Request failed', errorMessage);
+
 			responseBody = {
 				statusCode: response.status,
 				isSuccess: false,
-				errorMessages: [`HTTP ${response.status} ${response.statusText}`],
+				errorMessages: [errorMessage],
 				result: { message: 'Request failed' } as T & { message: string }
 			};
 
@@ -45,24 +55,35 @@ export async function fetchApi<T = Record<string, unknown>>(
 				rawText = 'No response body';
 			}
 
+			const errorMessages = [
+				'Invalid JSON response from server.',
+				`Raw response: ${rawText.slice(0, 200)}`
+			];
+
+			logger.error(apiPrefix, ...errorMessages);
+
 			responseBody = {
 				statusCode: response.status,
 				isSuccess: false,
-				errorMessages: [
-					'Invalid JSON response from server.',
-					`Raw response: ${rawText.slice(0, 200)}`
-				],
+				errorMessages: errorMessages,
 				result: { message: 'Unexpected server error' } as T & { message: string }
 			};
 		}
 
+		logger.log(apiPrefix, 'Success');
+		logger.log(apiPrefix, 'DATA', responseBody);
+
 		return { response, responseBody };
 	} catch (error) {
 		// network / fetch failed
+		const errorMessage = (error as Error).message;
+
+		logger.error(apiPrefix, errorMessage);
+
 		const responseBody: ApiResponseBody<T> = {
 			statusCode: 500,
 			isSuccess: false,
-			errorMessages: [(error as Error).message],
+			errorMessages: [errorMessage],
 			result: { message: 'Network or server unreachable' } as T & { message: string }
 		};
 
@@ -76,12 +97,16 @@ export async function fetchAuthorizedApi<T>(
 	method: 'GET' | 'POST' | 'PUT' | 'DELETE',
 	body?: object
 ) {
+	const apiPrefix = `${method} ${path}`;
+
 	const token = cookies.get('token');
 	const refreshToken = cookies.get('refreshToken');
 
 	let { response, responseBody } = await fetchApi<T>(path, method, body, token);
 
 	if (response?.status === 401 && refreshToken) {
+		logger.warn(apiPrefix, 'Unauthorized, try to refresh token');
+
 		// Try refresh
 		const refreshRes = await fetch(`${PUBLIC_API_URL}/api/Auth/refresh-token`, {
 			method: 'POST',
@@ -94,6 +119,8 @@ export async function fetchAuthorizedApi<T>(
 
 			storeTokens(cookies, refreshedBody.result.token, refreshedBody.result.refreshToken);
 
+			logger.log(apiPrefix, 'Refresh token success, start fetching api again...');
+
 			// Retry the original request with new token
 			({ response, responseBody } = await fetchApi<T>(
 				path,
@@ -102,6 +129,8 @@ export async function fetchAuthorizedApi<T>(
 				refreshedBody.result.token
 			));
 		} else {
+			logger.warn(apiPrefix, "Can't refresh new token");
+
 			clearTokens(cookies);
 		}
 	}

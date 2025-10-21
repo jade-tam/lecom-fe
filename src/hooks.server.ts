@@ -19,8 +19,6 @@ const handleToken: Handle = async ({ event, resolve }) => {
 	if (token) {
 		const payload: JwtPayload = parseJwt(token);
 
-		console.log(payload);
-
 		event.locals.user = {
 			id: payload.sub,
 			email: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
