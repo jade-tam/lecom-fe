@@ -66,10 +66,10 @@
 	<div class="flex items-center gap-2 pl-8">
 		{#if userProfile}
 			<button class="btn btn-square btn-ghost" aria-label="Notification">
-				<span class="icon-[fa7-solid--bell]"></span>
+				<span class="icon-[fa7-solid--bell] text-xl"></span>
 			</button>
 			<a href="/cart" class="btn btn-square btn-ghost" aria-label="Cart">
-				<span class="icon-[fa7-solid--shopping-cart]"></span>
+				<span class="icon-[fa7-solid--shopping-cart] text-xl"></span>
 			</a>
 			<div class="dropdown dropdown-end">
 				<div tabindex="0" role="button" class="btn m-1 btn-square btn-link">
@@ -90,6 +90,9 @@
 					{/if}
 					<li><a href="/profile" class="rounded-field">Profile</a></li>
 					<li><a href="/settings" class="rounded-field">Settings</a></li>
+					{#if userRole === 'Customer'}
+						<li><a href="/seller-register" class="rounded-field">Register Shop</a></li>
+					{/if}
 					<li><a href="/help-and-feedback" class="rounded-field">Help & Feedback</a></li>
 					<li><a href="/auth/logout" class="rounded-field text-error">Logout</a></li>
 				</ul>

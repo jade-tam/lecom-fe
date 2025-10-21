@@ -1,10 +1,16 @@
 <script lang="ts">
-	import type { HTMLInputAttributes } from 'svelte/elements';
+	import type { HTMLSelectAttributes } from 'svelte/elements';
 	import type { SuperFormData, SuperFormErrors } from 'sveltekit-superforms/client';
 	import ToolTip from './ToolTip.svelte';
 
+	export type FormSelectOption = {
+		title: string;
+		value: string;
+	};
+
 	let {
 		label,
+		options = [],
 		icon = '',
 		help = '',
 		superForm,
@@ -12,9 +18,10 @@
 		name,
 		hidden = false,
 		class: className = '',
-		...restInputAttr
-	}: HTMLInputAttributes & {
+		...restSelectAttr
+	}: HTMLSelectAttributes & {
 		label: string;
+		options: FormSelectOption[];
 		icon?: string;
 		help?: string;
 		name: string;
@@ -32,12 +39,13 @@
 			<ToolTip tip={help} />
 		{/if}
 	</legend>
-	<label class="input w-full">
-		{#if icon}
-			<span class={`${icon} text-secondary`}></span>
-		{/if}
-		<input {name} bind:value={$superForm[name]} {...restInputAttr} />
-	</label>
+
+	<select class="select w-full" {name} bind:value={$superForm[name]} {...restSelectAttr}>
+		<option disabled selected value={''}>Select an option</option>
+		{#each options as option}
+			<option value={option.value}>{option.title}</option>
+		{/each}
+	</select>
 	{#if $errors[name]}
 		{#each $errors[name] as error}
 			<p class="text-error">{error}</p>

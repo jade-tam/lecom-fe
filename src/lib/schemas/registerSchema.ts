@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const vnPrefixes = [
+export const vnPrefixes = [
 	'032',
 	'033',
 	'034',

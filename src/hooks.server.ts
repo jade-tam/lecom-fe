@@ -44,6 +44,12 @@ const handleAuthGuard: Handle = async ({ event, resolve }) => {
 		}
 	}
 
+	if (routeId.startsWith('/(main)/seller-register')) {
+		if (!user) {
+			redirect(303, '/auth/login');
+		}
+	}
+
 	return resolve(event);
 };
 

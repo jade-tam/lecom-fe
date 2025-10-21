@@ -138,12 +138,12 @@ export async function fetchAuthorizedApi<T>(
 	return { response, responseBody };
 }
 
-export function getToastData(responseBody: ApiResponseBody<unknown>) {
+export function getToastData(responseBody: ApiResponseBody<unknown>, fallbackMessage?: string) {
 	const responseToastData: ToastData = {
 		type: responseBody.isSuccess ? 'success' : 'error',
-		title: responseBody.isSuccess ? 'Logged In' : null,
+		title: responseBody.isSuccess ? 'Success' : null,
 		description: responseBody.isSuccess
-			? responseBody.result.message
+			? (responseBody.result.message ?? fallbackMessage)
 			: responseBody.errorMessages.join('. ')
 	};
 

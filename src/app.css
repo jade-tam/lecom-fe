@@ -59,6 +59,11 @@
 	.text-header2 {
 		@apply font-serif text-[1.62rem] font-medium max-md:text-[1.4rem];
 	}
+
+	h3,
+	.text-header3 {
+		@apply font-serif text-[1.32rem] font-medium max-md:text-[1.2rem];
+	}
 }
 
 @layer utilities {
