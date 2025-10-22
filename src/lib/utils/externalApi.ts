@@ -3,7 +3,9 @@ import type { ApiResponseBody } from '$lib/types/ApiResponseBody';
 import type { Cookies } from '@sveltejs/kit';
 import { clearTokens, storeTokens } from './others';
 import type { ToastData } from './showToast';
-import { createLogger } from '$lib/server/logger';
+import { createLogger, sanitizeForLog } from '$lib/server/logger';
+import { goto } from '$app/navigation';
+import { resolve } from '$app/paths';
 
 const logger = createLogger('API');
 
@@ -71,7 +73,8 @@ export async function fetchApi<T = Record<string, unknown>>(
 		}
 
 		logger.log(apiPrefix, 'Success');
-		logger.log(apiPrefix, 'DATA', responseBody);
+		const cleanedLog = sanitizeForLog(responseBody);
+		logger.log(apiPrefix, 'DATA', cleanedLog);
 
 		return { response, responseBody };
 	} catch (error) {
@@ -132,6 +135,8 @@ export async function fetchAuthorizedApi<T>(
 			logger.warn(apiPrefix, "Can't refresh new token");
 
 			clearTokens(cookies);
+
+			goto(resolve('/auth/login'));
 		}
 	}
 

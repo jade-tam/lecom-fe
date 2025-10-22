@@ -10,7 +10,7 @@ export const shopStatusOptions = [
 		value: 'Pending'
 	},
 	{
-		title: 'Reject',
-		value: 'Reject'
+		title: 'Rejected',
+		value: 'Rejected'
 	}
 ] as const satisfies readonly FormSelectOption[];

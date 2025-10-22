@@ -4,6 +4,4 @@
 	const { data } = $props();
 </script>
 
-
-
 <ShopsTable shops={data.shops} />

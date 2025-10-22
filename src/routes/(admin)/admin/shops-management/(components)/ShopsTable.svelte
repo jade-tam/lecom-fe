@@ -30,6 +30,9 @@
 	<h2>Shops Management</h2>
 
 	<div class="flex gap-2">
+		<div class="flex items-center">
+			<span class="icon-[fa7-solid--filter] text-secondary"></span>
+		</div>
 		<form class="flex justify-end gap-1">
 			{#each shopStatusOptions as option}
 				<input
@@ -90,9 +93,7 @@
 						{#each table.columns as column (column.id)}
 							{#if column.id === 'status'}
 								<td
-									><div
-										class={`badge ${getStatusBadgeClass(row.status)}`}
-									>
+									><div class={`badge ${getStatusBadgeClass(row.status)}`}>
 										{row[column.key]}
 									</div></td
 								>
@@ -101,9 +102,9 @@
 							{/if}
 						{/each}
 						<td>
-							<button class="btn">
+							<a href={`/admin/shops-management/${row.id}`} class="btn">
 								<span class="icon-[fa7-solid--file-invoice]"></span>View Details
-							</button>
+							</a>
 						</td>
 					</tr>
 				{/each}
