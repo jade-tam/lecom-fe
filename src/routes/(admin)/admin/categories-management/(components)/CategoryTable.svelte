@@ -1,7 +1,7 @@
 <script lang="ts">
+	import TablePagination from '$lib/components/ui/TablePagination.svelte';
 	import type { Category } from '$lib/types/Category';
 	import { DataTable } from '@careswitch/svelte-data-table';
-	import Pagination from './Pagination.svelte';
 
 	const { categories }: { categories: Category[] } = $props();
 
@@ -62,7 +62,7 @@
 		</table>
 
 		<div class="flex justify-end">
-			<Pagination {table} {pageSize} />
+			<TablePagination {table} {pageSize} />
 		</div>
 	</div>
 </div>

@@ -21,7 +21,7 @@
 		...restSelectAttr
 	}: HTMLSelectAttributes & {
 		label: string;
-		options: FormSelectOption[];
+		options: Readonly<FormSelectOption[]>;
 		icon?: string;
 		help?: string;
 		name: string;

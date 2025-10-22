@@ -1,6 +1,6 @@
 import type { FormSelectOption } from '$lib/components/ui/FormSelect.svelte';
 
-export const shopBusinessOptions: FormSelectOption[] = [
+export const shopBusinessOptions = [
 	{
 		title: 'Personal',
 		value: 'personal'
@@ -9,4 +9,4 @@ export const shopBusinessOptions: FormSelectOption[] = [
 		title: 'Business',
 		value: 'business'
 	}
-];
+] as const satisfies readonly FormSelectOption[];
