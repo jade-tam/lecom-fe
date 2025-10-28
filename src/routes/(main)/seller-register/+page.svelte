@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import FormImageInput from '$lib/components/ui/FormImageInput.svelte';
 	import FormInput from '$lib/components/ui/FormInput.svelte';
 	import FormSelect from '$lib/components/ui/FormSelect.svelte';
 	import { shopBusinessOptions } from '$lib/consts/shopBusinessOptions.js';
@@ -73,23 +74,20 @@
 	/>
 
 	<div class="flex w-full gap-4">
-		<FormInput
-			class="flex-1"
+		<FormImageInput
+			class="aspect-video"
 			name="ownerPersonalIdFrontUrl"
 			label="Personal ID Front Image"
 			icon="icon-[fa7-solid--image]"
-			placeholder="Will be updated with image upload"
-			type="text"
 			superForm={form}
 			{errors}
 		/>
-		<FormInput
-			class="flex-1"
+
+		<FormImageInput
+			class="aspect-video"
 			name="ownerPersonalIdBackUrl"
 			icon="icon-[fa7-solid--image]"
 			label="Personal ID Back Image"
-			placeholder="Will be updated with image upload"
-			type="text"
 			superForm={form}
 			{errors}
 		/>
@@ -98,27 +96,50 @@
 	<div class="divider"></div>
 	<h3>Shop Information</h3>
 
-	<FormInput
-		name="shopName"
-		label="Shop Name"
-		icon="icon-[fa7-solid--shop]"
-		placeholder="Enter your shop name..."
-		class="max-w-[400px]"
-		type="text"
-		superForm={form}
-		{errors}
-	/>
+	<div class="grid grid-cols-12 gap-4">
+		<div class="col-span-4">
+			<FormInput
+				name="shopName"
+				label="Shop Name"
+				icon="icon-[fa7-solid--shop]"
+				placeholder="Enter your shop name..."
+				class="max-w-[400px]"
+				type="text"
+				superForm={form}
+				{errors}
+			/>
 
-	<FormInput
-		name="shopPhoneNumber"
-		label="Shop Phone Number"
-		class="max-w-[400px]"
-		icon="icon-[fa7-solid--phone-square]"
-		placeholder="This is your shop contact number..."
-		type="text"
-		superForm={form}
-		{errors}
-	/>
+			<FormInput
+				name="shopPhoneNumber"
+				label="Shop Phone Number"
+				class="max-w-[400px]"
+				icon="icon-[fa7-solid--phone-square]"
+				placeholder="This is your shop contact number..."
+				type="text"
+				superForm={form}
+				{errors}
+			/>
+		</div>
+		<div class="col-span-8 flex gap-4">
+			<FormImageInput
+				name="shopAvatar"
+				label="Shop Avatar"
+				class="h-39 w-38"
+				icon="icon-[fa7-solid--image]"
+				superForm={form}
+				{errors}
+			/>
+			<FormImageInput
+				name="shopBanner"
+				label="Shop Banner"
+				class="h-39 w-full"
+				icon="icon-[fa7-solid--image]"
+				superForm={form}
+				aspectRatio={16 / 9}
+				{errors}
+			/>
+		</div>
+	</div>
 
 	<FormInput
 		name="shopDescription"
@@ -160,6 +181,7 @@
 		class="max-w-[400px]"
 		label="Shop Category"
 		placeholder="Shop category"
+		help="Products and courses on your shop will focus on this category"
 		superForm={form}
 		{errors}
 	/>

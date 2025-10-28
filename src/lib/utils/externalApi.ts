@@ -1,31 +1,50 @@
 import { PUBLIC_API_URL } from '$env/static/public';
+import { createLogger, sanitizeForLog } from '$lib/server/logger';
 import type { ApiResponseBody } from '$lib/types/ApiResponseBody';
-import type { Cookies } from '@sveltejs/kit';
+import { redirect, type Cookies } from '@sveltejs/kit';
 import { clearTokens, storeTokens } from './others';
 import type { ToastData } from './showToast';
-import { createLogger, sanitizeForLog } from '$lib/server/logger';
-import { goto } from '$app/navigation';
-import { resolve } from '$app/paths';
 
 const logger = createLogger('API');
 
 export async function fetchApi<T = Record<string, unknown>>(
 	path: string,
 	method: 'GET' | 'POST' | 'PUT' | 'DELETE',
-	body?: object,
+	body?: unknown,
 	token?: string
 ): Promise<{ response: Response; responseBody: ApiResponseBody<T> }> {
 	const apiPrefix = `${method} ${path}`;
 	logger.log(apiPrefix, 'Start fetching api...');
 
+	const headers: Record<string, string> = {
+		Accept: 'application/json'
+	};
+	let fetchBody: BodyInit | null | undefined = undefined;
+
+	// Detect FormData (do NOT set Content-Type if sending FormData)
+	const isFormData = typeof FormData !== 'undefined' && body instanceof FormData;
+
+	if (isFormData) {
+		fetchBody = body; // pass through FormData untouched
+	} else if (body instanceof URLSearchParams) {
+		// urlencoded form
+		headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+		fetchBody = body.toString();
+	} else if (body && typeof body === 'object') {
+		// plain object -> JSON
+		headers['Content-Type'] = 'application/json';
+		fetchBody = JSON.stringify(body);
+	} else if (typeof body === 'string') {
+		fetchBody = body;
+	}
+
+	if (token) headers['Authorization'] = `Bearer ${token}`;
+
 	try {
 		const response = await fetch(PUBLIC_API_URL + path, {
 			method,
-			headers: {
-				'Content-Type': 'application/json',
-				...(token ? { Authorization: `Bearer ${token}` } : {})
-			},
-			body: method === 'GET' ? undefined : JSON.stringify(body)
+			headers,
+			body: fetchBody
 		});
 
 		let responseBody: ApiResponseBody<T>;
@@ -136,7 +155,7 @@ export async function fetchAuthorizedApi<T>(
 
 			clearTokens(cookies);
 
-			goto(resolve('/auth/login'));
+			redirect(303, '/auth/login');
 		}
 	}
 

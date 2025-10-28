@@ -1,3 +1,4 @@
+
 export function toPascalCase(segment: string) {
 	return segment
 		.split('-') // split by dash

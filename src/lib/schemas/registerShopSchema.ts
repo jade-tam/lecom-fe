@@ -39,6 +39,35 @@ export const registerShopSchema = z.object({
 
 	ownershipDocumentUrl: z.url('Ownership document must be a valid URL'),
 
+	shopAvatar: z.url('Please upload shop avatar'),
+
+	shopBanner: z.url('Please upload shop banner'),
+
+	// shopFacebook: z
+	// 	.url('Facebook link is not a valid URL')
+	// 	.refine(
+	// 		(value) =>
+	// 			value.startsWith('https://www.facebook.com/') || value.startsWith('https://facebook.com/'),
+	// 		'Facebook link must start with https://facebook.com/'
+	// 	),
+
+	// shopTiktok: z
+	// 	.url('TikTok link is not a valid URL')
+	// 	.refine(
+	// 		(value) =>
+	// 			value.startsWith('https://www.tiktok.com/@') || value.startsWith('https://tiktok.com/@'),
+	// 		'TikTok link must start with https://tiktok.com/@'
+	// 	),
+
+	// shopInstagram: z
+	// 	.url('Instagram link is not a valid URL')
+	// 	.refine(
+	// 		(value) =>
+	// 			value.startsWith('https://www.instagram.com/') ||
+	// 			value.startsWith('https://instagram.com/'),
+	// 		'Instagram link must start with https://instagram.com/'
+	// 	),
+
 	categoryId: z.uuid('Please select a category'),
 
 	acceptedTerms: z
