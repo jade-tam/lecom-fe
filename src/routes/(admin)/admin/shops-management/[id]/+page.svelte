@@ -1,7 +1,6 @@
 <script>
 	import { enhance } from '$app/forms';
-	import { invalidate, invalidateAll } from '$app/navigation';
-	import UserAvatar from '$lib/components/ui/UserAvatar.svelte';
+	import { invalidateAll } from '$app/navigation';
 	import { getStatusBadgeClass } from '$lib/utils/classComposer';
 	import { formatDate, getTimeSince } from '$lib/utils/converters.js';
 	import showToast from '$lib/utils/showToast.js';
@@ -22,7 +21,7 @@
 	});
 </script>
 
-<div class="my-2 flex justify-between">
+<div class="my-2 flex items-center justify-between">
 	<div class="flex gap-3">
 		<a href="/admin/shops-management/" aria-label="return to shop list" class="btn btn-square">
 			<span class="icon-[fa7-solid--arrow-left]"></span>
@@ -32,7 +31,7 @@
 
 	<div class="flex gap-2">
 		<div class="flex items-center">
-			{#if true}
+			{#if shop.status === 'Pending'}
 				<form method="POST" action="?/approve" use:enhance>
 					<input type="hidden" name="id" value={shop.id} />
 					<div class="dropdown dropdown-end">
@@ -77,38 +76,41 @@
 		</div>
 	</div>
 </div>
+<!-- ============================================================================================= -->
 
 <div class="overflow-auto rounded-box border bg-base-100 p-4">
 	<div class="flex gap-4">
-		<div class="avatar">
-			<div class="h-32 w-32 rounded-selector border">
-				<img src={shop.ownerPersonalIdBackUrl} alt={shop.name + ' shop'} />
-			</div>
+		<div class="aspect-square h-32 overflow-hidden rounded-field border">
+			<img src={shop.shopAvatar} alt={shop.name + ' shop'} class="h-full w-full object-cover" />
 		</div>
-		<div class="flex flex-col gap-1 overflow-hidden">
-			<h3 class="text-header2">{shop.name}</h3>
-			<p class="font-bold text-secondary italic">{shop.categoryName}</p>
-			<div class="mt-1 flex items-center gap-2">
-				<div class={`badge ${getStatusBadgeClass(shop.status)}`}>
-					{shop.status}
-				</div>
-				{#if shop.status === 'Approved'}
-					<p class="text-xs italic">Since {formatDate(shop.approvedAt)}</p>
-				{:else if shop.status === 'Rejected'}
-					<p class="text-xs italic">Reason: {shop.rejectedReason}</p>
-				{/if}
-			</div>
-			<p class="mt-2">{shop.description}</p>
+		<div class="aspect-video h-32 overflow-hidden rounded-field border">
+			<img src={shop.shopBanner} alt={shop.name + ' shop'} class="h-full w-full object-cover" />
 		</div>
 	</div>
 
-	<div class="stats mt-4 shadow">
+	<div class="mt-2 flex flex-col gap-1 overflow-hidden">
+		<h3 class="text-header2">{shop.name}</h3>
+		<p class="font-bold text-secondary italic">{shop.categoryName}</p>
+		<div class="mt-1 flex items-center gap-2">
+			<div class={`badge ${getStatusBadgeClass(shop.status)}`}>
+				{shop.status}
+			</div>
+			{#if shop.status === 'Approved'}
+				<p class="text-xs italic">Since {formatDate(shop.approvedAt)}</p>
+			{:else if shop.status === 'Rejected'}
+				<p class="text-xs italic">Reason: {shop.rejectedReason}</p>
+			{/if}
+		</div>
+		<p class="mt-2">{shop.description}</p>
+	</div>
+
+	<div class="stats mt-4 border">
 		<div class="stat">
 			<div class="stat-figure text-secondary">
 				<span class="icon-[fa7-solid--box-archive] text-2xl"></span>
 			</div>
 			<div class="stat-title">Total Products</div>
-			<div class="stat-value">127</div>
+			<div class="stat-value">4</div>
 			<div class="stat-desc">In {shop.categoryName}</div>
 		</div>
 
@@ -117,7 +119,7 @@
 				<span class="icon-[fa7-solid--money-bill-trend-up] text-2xl"> </span>
 			</div>
 			<div class="stat-title">Total sells</div>
-			<div class="stat-value">4,200</div>
+			<div class="stat-value">0</div>
 			<div class="stat-desc">489 last month ↗︎ 400 (22%)</div>
 		</div>
 
@@ -145,56 +147,108 @@
 		</div>
 	</div>
 
-	<div class="mt-4 flex gap-2">
-		<p>Shop Phone Number:</p>
-		<p class="font-bold">{shop.phoneNumber}</p>
-	</div>
-	<div class="flex gap-2">
-		<p>Address:</p>
-		<p class="font-bold">{shop.address}</p>
-	</div>
-	<div class="flex gap-2">
-		<p>Business Type:</p>
-		<p class="font-bold">{shop.businessType}</p>
-	</div>
+	<fieldset class="mt-2 fieldset">
+		<legend class="fieldset-legend">Shop Phone Number</legend>
+		<label class="input w-full">
+			<span class={`icon-[fa7-solid--phone-square] text-secondary`}></span>
+			<input value={shop.phoneNumber} readonly />
+		</label>
+	</fieldset>
 
-	<div class="divider my-2"></div>
+	<fieldset class="fieldset">
+		<legend class="fieldset-legend">Shop Address</legend>
+		<label class="input w-full">
+			<span class={`icon-[fa7-solid--location-dot] text-secondary`}></span>
+			<input value={shop.address} readonly />
+		</label>
+	</fieldset>
 
+	<div class="grid grid-cols-2 gap-4">
+		<fieldset class="fieldset">
+			<legend class="fieldset-legend">Business Type</legend>
+			<label class="input w-full">
+				<span class={`icon-[fa7-solid--briefcase] text-secondary`}></span>
+				<input value={shop.businessType} readonly />
+			</label>
+		</fieldset>
+
+		<fieldset class="fieldset">
+			<legend class="fieldset-legend">Main Category</legend>
+			<label class="input w-full">
+				<span class={`icon-[fa7-solid--swatchbook] text-secondary`}></span>
+				<input value={shop.categoryName} readonly />
+			</label>
+		</fieldset>
+	</div>
+</div>
+
+<!-- ============================================================================================= -->
+
+<div class="mt-2 overflow-auto rounded-box border bg-base-100 p-4">
 	<div class="flex flex-col gap-1">
-		<h3>Owner Details</h3>
+		<h3>Owner Information</h3>
 
-		<UserAvatar
-			avatar_url={shop.ownerPersonalIdBackUrl}
-			sizeClass="w-32 h-32 rounded-full"
-			letter={shop.ownerFullName.charAt(0)}
-		/>
+		<div class="grid grid-cols-2 gap-4">
+			<fieldset class="fieldset">
+				<legend class="fieldset-legend">Owner Full Name</legend>
+				<label class="input w-full">
+					<span class={`icon-[fa7-solid--circle-user] text-secondary`}></span>
+					<input value={shop.ownerFullName} readonly />
+				</label>
+			</fieldset>
 
-		<div class="mt-2 flex gap-2">
-			<p>Full Name:</p>
-			<p class="font-bold">{shop.ownerFullName}</p>
+			<fieldset class="fieldset">
+				<legend class="fieldset-legend">Owner Date Of Birth</legend>
+				<label class="input w-full">
+					<span class={`icon-[fa7-solid--calendar-alt] text-secondary`}></span>
+					<input value={formatDate(shop.ownerDateOfBirth)} readonly />
+				</label>
+			</fieldset>
 		</div>
-		<div class="flex gap-2">
-			<p>Date Of Birth:</p>
-			<p class="font-bold">{formatDate(shop.ownerDateOfBirth)}</p>
-		</div>
-		<div class="flex gap-2">
-			<p>Personal ID Number:</p>
-			<p class="font-bold">{shop.ownerPersonalIdNumber}</p>
-		</div>
-		<div class="flex gap-2">
-			<p>Personal ID Images:</p>
-		</div>
-		<div class="flex gap-2">
-			<div class="avatar">
-				<div class="h-32 w-64 rounded-selector border">
-					<img src={shop.ownerPersonalIdFrontUrl} alt={shop.name + ' shop'} />
+
+		<fieldset class="fieldset">
+			<legend class="fieldset-legend">Personal ID Number</legend>
+			<label class="input w-full">
+				<span class={`icon-[fa7-solid--id-card] text-secondary`}></span>
+				<input value={shop.ownerPersonalIdNumber} readonly />
+			</label>
+		</fieldset>
+
+		<div class="flex w-full gap-4">
+			<fieldset class="fieldset">
+				<legend class="fieldset-legend">ID Card Front Image</legend>
+				<div class="overflow-hidden rounded-field border">
+					<img
+						src={shop.ownerPersonalIdFrontUrl}
+						alt="ID Card Front"
+						class="h-full w-full object-cover"
+					/>
 				</div>
-			</div>
-			<div class="avatar">
-				<div class="h-32 w-64 rounded-selector border">
-					<img src={shop.ownerPersonalIdBackUrl} alt={shop.name + ' shop'} />
+			</fieldset>
+
+			<fieldset class="fieldset">
+				<legend class="fieldset-legend">ID Card Back Image</legend>
+				<div class="overflow-hidden rounded-field border">
+					<img
+						src={shop.ownerPersonalIdBackUrl}
+						alt="ID Card Front"
+						class="h-full w-full object-cover"
+					/>
 				</div>
-			</div>
+			</fieldset>
 		</div>
 	</div>
+</div>
+
+<!-- ============================================================================================= -->
+
+<div class="mt-2 overflow-auto rounded-box border bg-base-100 p-4">
+	<h3>Business Document</h3>
+
+	<fieldset class="fieldset">
+		<legend class="fieldset-legend">Document</legend>
+		<a class="link" href={shop.ownershipDocumentUrl}
+			>{shop.ownershipDocumentUrl.split('/').pop() ?? 'Document'}</a
+		>
+	</fieldset>
 </div>

@@ -8,6 +8,8 @@ export type BusinessType = (typeof shopBusinessOptions)[number]['value'];
 export type Shop = {
 	id: number;
 	name: string;
+	shopAvatar: string;
+	shopBanner: string;
 	description: string;
 	phoneNumber: string;
 	address: string;

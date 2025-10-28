@@ -102,8 +102,14 @@
 							{/if}
 						{/each}
 						<td>
-							<a href={`/admin/shops-management/${row.id}`} class="btn">
-								<span class="icon-[fa7-solid--file-invoice]"></span>View Details
+							<a
+								href={`/admin/shops-management/${row.id}`}
+								class="btn {row.status === 'Pending' ? 'btn-primary' : 'btn-secondary'}"
+								aria-label="view details"
+							>
+								<span class="icon-[fa7-solid--eye] text-xl"></span>{row.status === 'Pending'
+									? 'Pending Review'
+									: 'View Details'}
 							</a>
 						</td>
 					</tr>
