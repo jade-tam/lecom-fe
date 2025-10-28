@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import FormImageInput from '$lib/components/ui/FormImageInput.svelte';
 	import FormInput from '$lib/components/ui/FormInput.svelte';
+	import FormMediaInput from '$lib/components/ui/FormMediaInput.svelte';
 	import FormSelect from '$lib/components/ui/FormSelect.svelte';
 	import { shopBusinessOptions } from '$lib/consts/shopBusinessOptions.js';
 	import { registerShopSchema, type RegisterShopSchema } from '$lib/schemas/registerShopSchema.js';
 	import type { ToastData } from '$lib/utils/showToast.js';
 	import showToast from '$lib/utils/showToast.js';
-	import { superForm } from 'sveltekit-superforms';
+	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 
 	const { data } = $props();
@@ -33,6 +33,8 @@
 <div class="my-2 flex justify-center">
 	<h2>Register Shop Now</h2>
 </div>
+
+<SuperDebug data={form} />
 
 <!-- HERE IS THE FORM -->
 <form method="POST" class="h-fit w-full rounded-box border bg-base-100 p-4 pt-2" use:enhance>
@@ -74,8 +76,9 @@
 	/>
 
 	<div class="flex w-full gap-4">
-		<FormImageInput
+		<FormMediaInput
 			class="aspect-video"
+			aspectRatio={16 / 9}
 			name="ownerPersonalIdFrontUrl"
 			label="Personal ID Front Image"
 			icon="icon-[fa7-solid--image]"
@@ -83,8 +86,9 @@
 			{errors}
 		/>
 
-		<FormImageInput
+		<FormMediaInput
 			class="aspect-video"
+			aspectRatio={16 / 9}
 			name="ownerPersonalIdBackUrl"
 			icon="icon-[fa7-solid--image]"
 			label="Personal ID Back Image"
@@ -121,7 +125,7 @@
 			/>
 		</div>
 		<div class="col-span-8 flex gap-4">
-			<FormImageInput
+			<FormMediaInput
 				name="shopAvatar"
 				label="Shop Avatar"
 				class="h-39 w-38"
@@ -129,7 +133,7 @@
 				superForm={form}
 				{errors}
 			/>
-			<FormImageInput
+			<FormMediaInput
 				name="shopBanner"
 				label="Shop Banner"
 				class="h-39 w-full"
@@ -186,13 +190,13 @@
 		{errors}
 	/>
 
-	<FormInput
+	<FormMediaInput
+		mediaType="Document"
 		name="ownershipDocumentUrl"
 		label="Shop Ownership Document"
-		placeholder="Will be replaced by file upload"
-		icon="icon-[fa7-solid--file-alt]"
-		help="Upload an official document proving ownership of your business — for example, a business registration certificate or store lease agreement. Accepted formats: JPG, PNG, or PDF"
-		type="text"
+		placeholder="Upload document here"
+		icon="icon-[fa7-solid--file-text]"
+		help="Upload an official document proving ownership of your business — for example, a business registration certificate or store lease agreement. Accepted formats: DOC, DOCX, or PDF"
 		superForm={form}
 		{errors}
 	/>
