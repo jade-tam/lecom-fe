@@ -7,7 +7,7 @@
 	import { registerShopSchema, type RegisterShopSchema } from '$lib/schemas/registerShopSchema.js';
 	import type { ToastData } from '$lib/utils/showToast.js';
 	import showToast from '$lib/utils/showToast.js';
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 
 	const { data } = $props();
@@ -33,8 +33,6 @@
 <div class="my-2 flex justify-center">
 	<h2>Register Shop Now</h2>
 </div>
-
-<SuperDebug data={form} />
 
 <!-- HERE IS THE FORM -->
 <form method="POST" class="h-fit w-full rounded-box border bg-base-100 p-4 pt-2" use:enhance>
