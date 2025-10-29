@@ -24,7 +24,7 @@
 				<span class="icon-[fa7-solid--bell] text-2xl"></span>
 			</button>
 		</div>
-		<div class="h-full p-4 pt-0 max-w-7xl mx-auto w-full">
+		<div class="mx-auto h-full w-full max-w-7xl p-4 pt-0">
 			{@render children()}
 		</div>
 	</div>
