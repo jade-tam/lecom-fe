@@ -62,3 +62,14 @@ export function getTimeSince(dateInput: string | Date): string {
 	if (months > 0) parts.push(`${months} month${months > 1 ? 's' : ''}`);
 	return parts.join(' ');
 }
+
+export function formatVND(amount: number): string {
+	return amount
+		.toLocaleString('vi-VN', {
+			style: 'currency',
+			currency: 'VND',
+			minimumFractionDigits: 0,
+			maximumFractionDigits: 0
+		})
+		.replace('₫', 'đ'); // optional: lowercase for style consistency
+}

@@ -35,7 +35,7 @@
 		<p class="ml-2 text-lg font-black">{title}</p>
 	</div>
 
-	<div class="mt-6 flex grow flex-col gap-2">
+	<div class="mt-6 flex grow flex-col gap-1">
 		{#each sidebarLayoutItems as item (item.href)}
 			{#if item.subItems}
 				<div class="flex gap-4 px-4 py-2 text-sm font-semibold text-base-content/60">

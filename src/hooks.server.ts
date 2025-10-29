@@ -50,6 +50,12 @@ const handleAuthGuard: Handle = async ({ event, resolve }) => {
 		}
 	}
 
+	if (routeId.startsWith('/(seller)')) {
+		if (!user) {
+			redirect(303, '/auth/login');
+		}
+	}
+
 	return resolve(event);
 };
 

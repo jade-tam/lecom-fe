@@ -54,3 +54,36 @@ export const adminSidebarLayout: SidebarLayoutItem[] = [
 		iconClass: 'icon-[fa7-solid--file-waveform] text-xl'
 	}
 ];
+
+export const sellerSidebarLayout: SidebarLayoutItem[] = [
+	{
+		href: '/seller/dashboard',
+		title: 'Dashboard',
+		iconClass: 'icon-[fa7-solid--tachometer-alt] text-xl'
+	},
+	{
+		href: '/seller/my-shop',
+		title: 'View Shop',
+		iconClass: 'icon-[fa7-solid--store] text-xl'
+	},
+	{
+		href: '/seller/products',
+		title: 'Products',
+		iconClass: 'icon-[fa7-solid--box-open] text-xl'
+	},
+	{
+		href: '/seller/courses',
+		title: 'Courses',
+		iconClass: 'icon-[fa7-solid--book] text-xl'
+	},
+	{
+		href: '/seller/orders',
+		title: 'Orders',
+		iconClass: 'icon-[fa7-solid--money-check-alt] text-xl'
+	},
+	{
+		href: '/seller/analytics',
+		title: 'Analytics',
+		iconClass: 'icon-[fa7-solid--chart-column] text-xl'
+	}
+];

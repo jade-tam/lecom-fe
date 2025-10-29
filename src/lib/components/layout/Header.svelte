@@ -67,7 +67,7 @@
 					{#if userRole === 'Admin'}
 						<li><a href="/admin" class="rounded-field">Admin Dashboard</a></li>
 					{/if}
-					{#if userRole === 'Seller'}
+					{#if userRole === 'Seller' || true}
 						<li><a href="/seller" class="rounded-field">Seller Dashboard</a></li>
 					{/if}
 					<li><a href="/profile" class="rounded-field">Profile</a></li>
