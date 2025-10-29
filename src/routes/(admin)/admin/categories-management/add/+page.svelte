@@ -27,34 +27,45 @@
 	});
 </script>
 
-<div class="my-2 flex justify-between">
-	<h2>Add new category</h2>
+<div class="mx-auto max-w-xl">
+	<div class="my-2 flex justify-between">
+		<div class="flex gap-3">
+			<a
+				href="/admin/categories-management"
+				aria-label="return to category list"
+				class="btn btn-square"
+			>
+				<span class="icon-[fa7-solid--arrow-left]"></span>
+			</a>
+			<h2>Add new category</h2>
+		</div>
+	</div>
+
+	<!-- HERE IS THE FORM -->
+	<form method="POST" class="h-fit w-full rounded-box border bg-base-100 p-4 pt-2" use:enhance>
+		<FormInput
+			name="name"
+			label="Category Name"
+			placeholder="Enter name here..."
+			type="text"
+			superForm={form}
+			{errors}
+		/>
+
+		<FormInput
+			name="description"
+			label="Category Description"
+			placeholder="Enter description here..."
+			type="text"
+			superForm={form}
+			{errors}
+		/>
+
+		<button class="btn mt-2 w-full btn-primary" disabled={$submitting}>
+			Add
+			{#if $delayed}
+				<span class="loading loading-spinner"></span>
+			{/if}
+		</button>
+	</form>
 </div>
-
-<!-- HERE IS THE FORM -->
-<form method="POST" class="h-fit w-full rounded-box border bg-base-100 p-4 pt-2" use:enhance>
-	<FormInput
-		name="name"
-		label="Category Name"
-		placeholder="Enter name here..."
-		type="text"
-		superForm={form}
-		{errors}
-	/>
-
-	<FormInput
-		name="description"
-		label="Category Description"
-		placeholder="Enter description here..."
-		type="text"
-		superForm={form}
-		{errors}
-	/>
-
-	<button class="btn mt-2 w-full btn-primary" disabled={$submitting}>
-		Add
-		{#if $delayed}
-			<span class="loading loading-spinner"></span>
-		{/if}
-	</button>
-</form>

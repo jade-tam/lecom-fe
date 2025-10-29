@@ -78,14 +78,20 @@
 </div>
 <!-- ============================================================================================= -->
 
-<div class="overflow-auto rounded-box border bg-base-100 p-4">
+<div class="rounded-box border bg-base-100 p-4">
 	<div class="flex gap-4">
-		<div class="aspect-square h-32 overflow-hidden rounded-field border">
-			<img src={shop.shopAvatar} alt={shop.name + ' shop'} class="h-full w-full object-cover" />
-		</div>
-		<div class="aspect-video h-32 overflow-hidden rounded-field border">
-			<img src={shop.shopBanner} alt={shop.name + ' shop'} class="h-full w-full object-cover" />
-		</div>
+		<fieldset class="fieldset">
+			<legend class="fieldset-legend">Shop Avatar</legend>
+			<div class="aspect-square h-32 overflow-hidden rounded-field border">
+				<img src={shop.shopAvatar} alt={shop.name + ' shop'} class="h-full w-full object-cover" />
+			</div>
+		</fieldset>
+		<fieldset class="fieldset">
+			<legend class="fieldset-legend">Shop Banner</legend>
+			<div class="aspect-video h-32 overflow-hidden rounded-field border">
+				<img src={shop.shopBanner} alt={shop.name + ' shop'} class="h-full w-full object-cover" />
+			</div>
+		</fieldset>
 	</div>
 
 	<div class="mt-2 flex flex-col gap-1 overflow-hidden">
@@ -104,46 +110,48 @@
 		<p class="mt-2">{shop.description}</p>
 	</div>
 
-	<div class="stats mt-4 border">
-		<div class="stat">
-			<div class="stat-figure text-secondary">
-				<span class="icon-[fa7-solid--box-archive] text-2xl"></span>
+	<div class="overflow-auto">
+		<div class="stats mt-4 border">
+			<div class="stat">
+				<div class="stat-figure text-secondary">
+					<span class="icon-[fa7-solid--box-archive] text-2xl"></span>
+				</div>
+				<div class="stat-title">Total Products</div>
+				<div class="stat-value">4</div>
+				<div class="stat-desc">In {shop.categoryName}</div>
 			</div>
-			<div class="stat-title">Total Products</div>
-			<div class="stat-value">4</div>
-			<div class="stat-desc">In {shop.categoryName}</div>
-		</div>
 
-		<div class="stat">
-			<div class="stat-figure text-secondary">
-				<span class="icon-[fa7-solid--money-bill-trend-up] text-2xl"> </span>
+			<div class="stat">
+				<div class="stat-figure text-secondary">
+					<span class="icon-[fa7-solid--money-bill-trend-up] text-2xl"> </span>
+				</div>
+				<div class="stat-title">Total sells</div>
+				<div class="stat-value">0</div>
+				<div class="stat-desc">489 last month ↗︎ 400 (22%)</div>
 			</div>
-			<div class="stat-title">Total sells</div>
-			<div class="stat-value">0</div>
-			<div class="stat-desc">489 last month ↗︎ 400 (22%)</div>
-		</div>
 
-		<div class="stat">
-			<div class="stat-figure text-secondary">
-				<span class="icon-[fa7-solid--business-time] text-2xl"></span>
+			<div class="stat">
+				<div class="stat-figure text-secondary">
+					<span class="icon-[fa7-solid--business-time] text-2xl"></span>
+				</div>
+				<div class="stat-title">In Operation For</div>
+				{#if shop.status === 'Approved'}
+					<div class="stat-value">{getTimeSince(shop.approvedAt)}</div>
+					<div class="stat-desc">Since {formatDate(shop.approvedAt)}</div>
+				{:else}
+					<div class="stat-value">---</div>
+					<div class="stat-desc">Waiting for approve...</div>
+				{/if}
 			</div>
-			<div class="stat-title">In Operation For</div>
-			{#if shop.status === 'Approved'}
-				<div class="stat-value">{getTimeSince(shop.approvedAt)}</div>
-				<div class="stat-desc">Since {formatDate(shop.approvedAt)}</div>
-			{:else}
-				<div class="stat-value">---</div>
-				<div class="stat-desc">Waiting for approve...</div>
-			{/if}
-		</div>
 
-		<div class="stat">
-			<div class="stat-figure text-secondary">
-				<span class="icon-[fa7-solid--star] text-2xl"></span>
+			<div class="stat">
+				<div class="stat-figure text-secondary">
+					<span class="icon-[fa7-solid--star] text-2xl"></span>
+				</div>
+				<div class="stat-title">Shop Reviews</div>
+				<div class="stat-value">4,3</div>
+				<div class="stat-desc">145 reviews</div>
 			</div>
-			<div class="stat-title">Shop Reviews</div>
-			<div class="stat-value">4,3</div>
-			<div class="stat-desc">145 reviews</div>
 		</div>
 	</div>
 
@@ -184,7 +192,7 @@
 
 <!-- ============================================================================================= -->
 
-<div class="mt-2 overflow-auto rounded-box border bg-base-100 p-4">
+<div class="mt-2 rounded-box border bg-base-100 p-4">
 	<div class="flex flex-col gap-1">
 		<h3>Owner Information</h3>
 
@@ -217,7 +225,7 @@
 		<div class="flex w-full gap-4">
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend">ID Card Front Image</legend>
-				<div class="overflow-hidden rounded-field border">
+				<div class="max-h-48 overflow-hidden rounded-field border">
 					<img
 						src={shop.ownerPersonalIdFrontUrl}
 						alt="ID Card Front"
@@ -228,7 +236,7 @@
 
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend">ID Card Back Image</legend>
-				<div class="overflow-hidden rounded-field border">
+				<div class="max-h-48 overflow-hidden rounded-field border">
 					<img
 						src={shop.ownerPersonalIdBackUrl}
 						alt="ID Card Front"

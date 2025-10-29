@@ -16,7 +16,10 @@ export const load = async ({ cookies }) => {
 	const userProfile: UserProfile = responseBody.result;
 
 	const form = await superValidate(
-		{ ...userProfile, dateOfBirth: userProfile.dateOfBirth.split('T')[0] },
+		{
+			...userProfile,
+			dateOfBirth: userProfile.dateOfBirth?.split('T')[0]
+		},
 		zod4(updateUserProfileSchema)
 	);
 

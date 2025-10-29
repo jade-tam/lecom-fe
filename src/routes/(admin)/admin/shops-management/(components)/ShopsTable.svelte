@@ -16,7 +16,6 @@
 		columns: [
 			{ id: 'id', key: 'id', name: 'ID' },
 			{ id: 'name', key: 'name', name: 'Name' },
-			{ id: 'description', key: 'description', name: 'Description' },
 			{ id: 'ownerFullName', key: 'ownerFullName', name: 'Owner Full Name' },
 			{ id: 'phoneNumber', key: 'phoneNumber', name: 'Phone Number' },
 			{ id: 'businessType', key: 'businessType', name: 'Business Type' },
@@ -107,9 +106,11 @@
 								class="btn {row.status === 'Pending' ? 'btn-primary' : 'btn-secondary'}"
 								aria-label="view details"
 							>
-								<span class="icon-[fa7-solid--eye] text-xl"></span>{row.status === 'Pending'
-									? 'Pending Review'
-									: 'View Details'}
+								<span
+									class="{row.status === 'Pending'
+										? 'icon-[fa7-solid--vote-yea]'
+										: 'icon-[fa7-solid--eye]'} text-xl"
+								></span>{row.status === 'Pending' ? 'Review' : 'Details'}
 							</a>
 						</td>
 					</tr>
