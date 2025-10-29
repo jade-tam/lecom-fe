@@ -4,7 +4,7 @@
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
 	import { productStatusOptions, type Product } from '$lib/types/Products';
 	import { getProductStatusBadgeClass, getProductStatusBtnClass } from '$lib/utils/classComposer';
-	import { formatDate } from '$lib/utils/converters';
+	import { formatDate, formatVND } from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
 
 	const { products }: { products: Product[] } = $props();
@@ -55,6 +55,9 @@
 			/>
 		</form>
 		<SearchInput bind:value={table.globalFilter} />
+		<a href="./products/create" class="btn btn-primary">
+			<span class="mr-1 icon-[fa7-solid--add]"></span>Create Product
+		</a>
 	</div>
 </div>
 
@@ -99,6 +102,8 @@
 										{row.status}
 									</div></td
 								>
+							{:else if column.id === 'price'}
+								<td>{formatVND(row.price)}</td>
 							{:else if column.id === 'images'}
 								<td
 									><div>

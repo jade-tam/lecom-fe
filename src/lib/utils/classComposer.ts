@@ -21,6 +21,6 @@ export function getProductStatusBadgeClass(status: ProductStatus) {
 	return status === 'Publish'
 		? 'badge-success'
 		: status === 'Draft'
-			? 'badge-warning'
+			? 'badge-secondary'
 			: 'badge-error';
 }
