@@ -1,7 +1,7 @@
 import { PUBLIC_API_URL } from '$env/static/public';
 import { createLogger, sanitizeForLog } from '$lib/server/logger';
 import type { ApiResponseBody } from '$lib/types/ApiResponseBody';
-import { redirect, type Cookies } from '@sveltejs/kit';
+import { type Cookies } from '@sveltejs/kit';
 import { clearTokens, storeTokens } from './others';
 import type { ToastData } from './showToast';
 
@@ -154,8 +154,6 @@ export async function fetchAuthorizedApi<T>(
 			logger.warn(apiPrefix, "Can't refresh new token");
 
 			clearTokens(cookies);
-
-			redirect(303, '/auth/login');
 		}
 	}
 

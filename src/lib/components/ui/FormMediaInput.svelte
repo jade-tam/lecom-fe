@@ -13,10 +13,11 @@
 		name,
 		hidden = false,
 		class: className = '',
-		aspectRatio = 1,
+		buttonClass = '',
+		aspectRatio,
 		mediaType = 'Image' // "Image" | "Video" | "Document"
 	}: {
-		aspectRatio?: number;
+		aspectRatio: '1:1' | '16:9';
 		placeholder?: string;
 		label: string;
 		icon?: string;
@@ -24,6 +25,7 @@
 		name: string;
 		hidden?: boolean;
 		class?: string;
+		buttonClass?: string;
 		superForm: SuperFormData<any>;
 		errors: SuperFormErrors<Record<string, string>>;
 		mediaType?: 'Image' | 'Video' | 'Document';
@@ -46,6 +48,7 @@
 		{name}
 		{icon}
 		{mediaType}
+		{buttonClass}
 		maxSizeMB={mediaType === 'Video' ? 200 : undefined}
 	/>
 

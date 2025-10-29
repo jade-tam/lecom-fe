@@ -76,7 +76,7 @@
 	<div class="flex w-full gap-4">
 		<FormMediaInput
 			class="aspect-video"
-			aspectRatio={16 / 9}
+			aspectRatio="16:9"
 			name="ownerPersonalIdFrontUrl"
 			label="Personal ID Front Image"
 			icon="icon-[fa7-solid--image]"
@@ -86,7 +86,7 @@
 
 		<FormMediaInput
 			class="aspect-video"
-			aspectRatio={16 / 9}
+			aspectRatio="16:9"
 			name="ownerPersonalIdBackUrl"
 			icon="icon-[fa7-solid--image]"
 			label="Personal ID Back Image"
@@ -124,6 +124,7 @@
 		</div>
 		<div class="col-span-8 flex gap-4">
 			<FormMediaInput
+				aspectRatio="1:1"
 				name="shopAvatar"
 				label="Shop Avatar"
 				class="h-39 w-38"
@@ -137,7 +138,7 @@
 				class="h-39 w-full"
 				icon="icon-[fa7-solid--image]"
 				superForm={form}
-				aspectRatio={16 / 9}
+				aspectRatio="16:9"
 				{errors}
 			/>
 		</div>
@@ -189,6 +190,8 @@
 	/>
 
 	<FormMediaInput
+		aspectRatio="16:9"
+		buttonClass="max-h-32"
 		mediaType="Document"
 		name="ownershipDocumentUrl"
 		label="Shop Ownership Document"

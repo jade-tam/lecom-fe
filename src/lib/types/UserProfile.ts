@@ -1,9 +1,10 @@
 export type UserProfile = {
-	address: string;
-	dateOfBirth: Date;
-	fullName: string;
 	id: string;
+	address: string;
+	dateOfBirth: string;
+	fullName: string;
 	imageUrl: string | null;
 	phoneNumber: string;
 	userName: string;
+	email: string;
 };

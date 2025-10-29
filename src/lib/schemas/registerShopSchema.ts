@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { vnPrefixes } from './registerSchema';
 import { shopBusinessOptions } from '$lib/consts/shopBusinessOptions';
+import { vnPrefixes } from '$lib/consts/vnPhonePrefixes';
 
 // Enum for business type
 const BusinessTypeEnum = z.enum(
@@ -37,7 +37,7 @@ export const registerShopSchema = z.object({
 
 	businessType: BusinessTypeEnum,
 
-	ownershipDocumentUrl: z.url('Ownership document must be a valid URL'),
+	ownershipDocumentUrl: z.url('Ownership document must be included'),
 
 	shopAvatar: z.url('Please upload shop avatar'),
 
@@ -103,8 +103,8 @@ export const registerShopSchema = z.object({
 		.min(5, 'Personal ID number is required')
 		.max(20, 'Personal ID number must be at most 20 characters'),
 
-	ownerPersonalIdFrontUrl: z.url('Must be a valid URL for front of ID'),
-	ownerPersonalIdBackUrl: z.url('Must be a valid URL for back of ID')
+	ownerPersonalIdFrontUrl: z.url('Please upload your front ID image'),
+	ownerPersonalIdBackUrl: z.url('Please upload your back ID image')
 });
 
 export type RegisterShopSchema = z.infer<typeof registerShopSchema>;

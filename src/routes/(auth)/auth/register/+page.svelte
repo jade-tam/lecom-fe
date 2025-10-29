@@ -33,7 +33,7 @@
 					<h2 class="">Personal Information</h2>
 
 					<FormInput
-						name="fullname"
+						name="fullName"
 						label="Fullname"
 						placeholder="Enter your full name..."
 						type="text"
@@ -76,7 +76,7 @@
 					<h2 class="">Login Details</h2>
 
 					<FormInput
-						name="username"
+						name="userName"
 						label="Username"
 						placeholder="Enter your username..."
 						type="text"

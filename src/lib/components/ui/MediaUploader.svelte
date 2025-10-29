@@ -5,6 +5,7 @@
 
 	let {
 		name,
+		buttonClass,
 		value = $bindable(''),
 		aspectRatio,
 		maxSizeMB = 5,
@@ -12,10 +13,11 @@
 		placeholder,
 		mediaType = 'Image' // "Image" | "Video" | "Document"
 	}: {
+		buttonClass: string;
 		name: string;
 		value: string;
 		icon: string;
-		aspectRatio?: number;
+		aspectRatio: '1:1' | '16:9';
 		maxSizeMB?: number;
 		placeholder: string;
 		mediaType?: 'Image' | 'Video' | 'Document';
@@ -230,7 +232,13 @@
 <input type="text" class="hidden" bind:value {name} />
 
 <!-- Display / trigger -->
-<button type="button" class="btn relative flex-1 overflow-hidden p-0" onclick={openFilePicker}>
+<button
+	type="button"
+	class="btn relative aspect-square flex-1 overflow-hidden p-0 {buttonClass} {aspectRatio === '1:1'
+		? 'aspect-square'
+		: 'aspect-video'}"
+	onclick={openFilePicker}
+>
 	{#if value}
 		{#if mediaType === 'Image'}
 			<img src={value} alt={name} class="h-full w-full object-cover" />
@@ -276,7 +284,7 @@
 					image={imageSrc}
 					bind:crop
 					bind:zoom
-					aspect={aspectRatio}
+					aspect={aspectRatio === '1:1' ? 1 : 1.77}
 					oncropcomplete={handleCropComplete}
 				/>
 			</div>
