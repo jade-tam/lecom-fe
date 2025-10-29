@@ -23,7 +23,7 @@
 	</div>
 
 	<div class="mt-6 flex grow flex-col gap-2">
-		{#each adminSidebarLayout as item}
+		{#each adminSidebarLayout as item (item.href)}
 			<a
 				href={item.href}
 				class="btn justify-start gap-4 btn-ghost btn-primary"

@@ -60,7 +60,7 @@
 							class="dropdown-content flex w-96 flex-col gap-2 rounded-field border bg-base-100 p-4"
 						>
 							<p class="font-bold">Reject this shop?</p>
-							<fieldset class={`fieldset`}>
+							<fieldset class="fieldset">
 								<legend class="fieldset-legend">Reason</legend>
 								<label class="input w-full">
 									<input name="reason" placeholder="Enter reason here..." />

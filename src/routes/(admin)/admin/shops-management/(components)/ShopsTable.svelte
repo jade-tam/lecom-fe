@@ -34,7 +34,7 @@
 			<span class="icon-[fa7-solid--filter] text-secondary"></span>
 		</div>
 		<form class="flex justify-end gap-1">
-			{#each shopStatusOptions as option}
+			{#each shopStatusOptions as option (option.value)}
 				<input
 					class={`btn ${getStatusBtnClass(option.value)} not-checked:btn-soft`}
 					type="checkbox"
