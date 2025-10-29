@@ -1,12 +1,25 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { USER_PROFILE_CONTEXT } from '$lib/consts/contexts';
+	import { USER_PROFILE_CONTEXT, USER_ROLE_CONTEXT } from '$lib/consts/contexts';
 	import type { UserProfile } from '$lib/types/UserProfile';
 	import { getContext } from 'svelte';
 	import UserAvatar from '../ui/UserAvatar.svelte';
-	import { adminSidebarLayout } from '$lib/consts/sidebarLayout';
+	import type { SidebarLayoutItem } from '$lib/consts/sidebarLayout';
+	import type { UserRole } from '$lib/types/User';
 
-	const user = getContext<() => UserProfile>(USER_PROFILE_CONTEXT);
+	const {
+		sidebarLayoutItems,
+		title
+	}: {
+		sidebarLayoutItems: SidebarLayoutItem[];
+		title: string;
+	} = $props();
+
+	const getUser = getContext<() => UserProfile>(USER_PROFILE_CONTEXT);
+	const getRole = getContext<() => UserRole>(USER_ROLE_CONTEXT);
+
+	const userProfile = $derived(getUser());
+	const role = $derived(getRole());
 
 	let logoutModalRef: HTMLDialogElement;
 
@@ -19,11 +32,11 @@
 	<div class="flex h-fit w-full flex-col items-center justify-center">
 		<!-- <img class="size-6 md:size-7" src="/images/logo-transparent-512.png" alt="logo" /> -->
 		<p class="ml-2 font-serif text-5xl font-black">Lecom</p>
-		<p class="ml-2 text-lg font-black">Admin Dashboard</p>
+		<p class="ml-2 text-lg font-black">{title}</p>
 	</div>
 
 	<div class="mt-6 flex grow flex-col gap-2">
-		{#each adminSidebarLayout as item (item.href)}
+		{#each sidebarLayoutItems as item (item.href)}
 			{#if item.subItems}
 				<div class="flex gap-4 px-4 py-2 text-sm font-semibold text-base-content/60">
 					<span class={item.iconClass}></span><span>{item.title}</span>
@@ -62,13 +75,22 @@
 				href="/profile"
 			>
 				<UserAvatar
-					avatar_url={user()?.imageUrl ?? null}
-					letter={user()?.userName[0].toUpperCase()}
+					avatar_url={userProfile?.imageUrl ?? null}
+					letter={userProfile?.userName[0].toUpperCase()}
 					sizeClass={'w-7 h-7'}
 				/>
 				<div class="min-w-0 text-left">
-					<p class="text-xs font-medium">{user()?.fullName}</p>
-					<p class="truncate text-[0.65rem] font-light">{user()?.userName}</p>
+					<p class="text-xs font-medium">{userProfile?.fullName ?? '---'}</p>
+					<p class="truncate text-[0.65rem] font-light">{userProfile?.userName}</p>
+				</div>
+				<div
+					class="badge badge-xs ml-auto {role === 'Admin'
+						? 'badge-error'
+						: role === 'Seller'
+							? 'badge-info'
+							: ''}"
+				>
+					{role}
 				</div>
 			</a>
 		</div>

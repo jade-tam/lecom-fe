@@ -1,11 +1,11 @@
-export type AdminSidebarLayoutItem = {
+export type SidebarLayoutItem = {
 	href: string;
 	title: string;
 	iconClass: string;
-	subItems?: AdminSidebarLayoutItem[];
+	subItems?: SidebarLayoutItem[];
 };
 
-export const adminSidebarLayout: AdminSidebarLayoutItem[] = [
+export const adminSidebarLayout: SidebarLayoutItem[] = [
 	{
 		href: '/admin/dashboard',
 		title: 'Dashboard',

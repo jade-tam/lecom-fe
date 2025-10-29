@@ -1,6 +1,7 @@
 <script>
-	import AuthenticatedDrawerSideContent from '$lib/components/layout/AdminDrawerSideContent.svelte';
+	import DrawerSideContent from '$lib/components/layout/DrawerSideContent.svelte';
 	import Breadcrumb from '$lib/components/ui/Breadcrumb.svelte';
+	import { adminSidebarLayout } from '$lib/consts/sidebarLayout';
 
 	let { children } = $props();
 </script>
@@ -30,6 +31,6 @@
 	</div>
 	<div class="drawer-side">
 		<label for="main-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-		<AuthenticatedDrawerSideContent />
+		<DrawerSideContent sidebarLayoutItems={adminSidebarLayout} title="Admin Dashboard" />
 	</div>
 </div>

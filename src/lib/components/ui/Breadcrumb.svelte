@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { adminSidebarLayout, type AdminSidebarLayoutItem } from '$lib/consts/sidebarLayout';
+	import { adminSidebarLayout, type SidebarLayoutItem } from '$lib/consts/sidebarLayout';
 	import { toPascalCase } from '$lib/utils/converters';
 
 	// helper: flatten main + subItems into a single list for easier lookup
-	function flattenSidebar(items: AdminSidebarLayoutItem[]): AdminSidebarLayoutItem[] {
+	function flattenSidebar(items: SidebarLayoutItem[]): SidebarLayoutItem[] {
 		return items.flatMap((item) => [item, ...(item.subItems ? flattenSidebar(item.subItems) : [])]);
 	}
 
@@ -22,7 +22,7 @@
 	});
 
 	function findSidebarItem(href: string) {
-		return allSidebarItems.find((item: AdminSidebarLayoutItem) => item.href === href);
+		return allSidebarItems.find((item: SidebarLayoutItem) => item.href === href);
 	}
 </script>
 
