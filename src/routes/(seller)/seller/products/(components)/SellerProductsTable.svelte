@@ -39,7 +39,7 @@
 			</div>
 			{#each productStatusOptions as option (option.value)}
 				<input
-					class={`btn ${getProductStatusBtnClass(option.value)} not-checked:btn-soft`}
+					class={`btn ${getProductStatusBtnClass(option.value)} not-checked:btn-outline`}
 					type="checkbox"
 					name="status"
 					aria-label={option.title}
@@ -48,7 +48,7 @@
 				/>
 			{/each}
 			<input
-				class="btn btn-square btn-soft btn-error"
+				class="btn btn-square btn-outline btn-error"
 				type="reset"
 				value="×"
 				onclick={() => table.clearFilter('status')}
