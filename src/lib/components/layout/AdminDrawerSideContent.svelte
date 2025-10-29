@@ -25,7 +25,7 @@
 	<div class="mt-6 flex grow flex-col gap-2">
 		{#each adminSidebarLayout as item (item.href)}
 			{#if item.subItems}
-				<div class="flex gap-4 px-4 py-2 text-sm font-semibold">
+				<div class="flex gap-4 px-4 py-2 text-sm font-semibold text-base-content/60">
 					<span class={item.iconClass}></span><span>{item.title}</span>
 				</div>
 			{:else}
