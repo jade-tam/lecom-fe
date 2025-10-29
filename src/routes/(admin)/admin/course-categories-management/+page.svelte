@@ -5,10 +5,10 @@
 </script>
 
 <div class="my-2 flex justify-between">
-	<h2>Categories Management</h2>
+	<h2>Course Categories Management</h2>
 
 	<div>
-		<a href="./categories-management/add" class="btn btn-primary">
+		<a href="./course-categories-management/add" class="btn btn-primary">
 			<span class="mr-2 icon-[fa7-solid--add]"></span>Add new category
 		</a>
 	</div>

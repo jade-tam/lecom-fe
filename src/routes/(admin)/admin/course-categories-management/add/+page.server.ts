@@ -28,7 +28,7 @@ export const actions: Actions = {
 			formData
 		);
 
-		const toastData: ToastData = getToastData(responseBody);
+		const toastData: ToastData = getToastData(responseBody, 'Category has been added');
 
 		if (response.ok) {
 			return message(form, toastData);

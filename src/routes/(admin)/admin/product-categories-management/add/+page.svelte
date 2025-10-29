@@ -15,7 +15,7 @@
 		validators: zod4Client(addCategorySchema),
 		onUpdated: ({ form }) => {
 			if (form.message?.type === 'success') {
-				goto('/admin/categories-management');
+				goto('/admin/product-categories-management');
 			}
 		}
 	});
@@ -31,7 +31,7 @@
 	<div class="my-2 flex justify-between">
 		<div class="flex gap-3">
 			<a
-				href="/admin/categories-management"
+				href="/admin/course-categories-management"
 				aria-label="return to category list"
 				class="btn btn-square"
 			>

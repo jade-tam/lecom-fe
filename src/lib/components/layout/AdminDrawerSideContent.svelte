@@ -24,12 +24,33 @@
 
 	<div class="mt-6 flex grow flex-col gap-2">
 		{#each adminSidebarLayout as item (item.href)}
-			<a
-				href={item.href}
-				class="btn justify-start gap-4 btn-ghost btn-primary"
-				class:btn-active={page.url.pathname.startsWith(item.href)}
-				><span class={item.iconClass}></span><span>{item.title}</span></a
-			>
+			{#if item.subItems}
+				<div class="flex gap-4 px-4 py-2 text-sm font-semibold">
+					<span class={item.iconClass}></span><span>{item.title}</span>
+				</div>
+			{:else}
+				<a
+					href={item.href}
+					class="btn justify-start gap-4 btn-ghost btn-primary"
+					class:btn-active={page.url.pathname.startsWith(item.href)}
+					><span class={item.iconClass}></span><span>{item.title}</span></a
+				>
+			{/if}
+			<div class="flex">
+				<div class="divider divider-horizontal"></div>
+				<div class="flex grow flex-col gap-2">
+					{#if item.subItems}
+						{#each item.subItems as subItem (subItem.href)}
+							<a
+								href={subItem.href}
+								class="btn justify-start gap-4 btn-ghost btn-primary"
+								class:btn-active={page.url.pathname.startsWith(subItem.href)}
+								><span class={subItem.iconClass}></span><span>{subItem.title}</span></a
+							>
+						{/each}
+					{/if}
+				</div>
+			</div>
 		{/each}
 	</div>
 

@@ -1,7 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { adminSidebarLayout } from '$lib/consts/sidebarLayout';
+	import { adminSidebarLayout, type AdminSidebarLayoutItem } from '$lib/consts/sidebarLayout';
 	import { toPascalCase } from '$lib/utils/converters';
+
+	// helper: flatten main + subItems into a single list for easier lookup
+	function flattenSidebar(items: AdminSidebarLayoutItem[]): AdminSidebarLayoutItem[] {
+		return items.flatMap((item) => [item, ...(item.subItems ? flattenSidebar(item.subItems) : [])]);
+	}
+
+	const allSidebarItems = flattenSidebar(adminSidebarLayout);
 
 	const breadcrumbs = $derived.by(() => {
 		const segments = page.url.pathname.split('/').filter(Boolean);
@@ -13,6 +20,10 @@
 
 		return crumbs;
 	});
+
+	function findSidebarItem(href: string) {
+		return allSidebarItems.find((item: AdminSidebarLayoutItem) => item.href === href);
+	}
 </script>
 
 <div class="breadcrumbs text-sm">
@@ -21,24 +32,17 @@
 			<li>
 				{#if i < breadcrumbs.length - 1}
 					<a href={crumb.href}>
-						{#if adminSidebarLayout.find((item) => item.href === crumb.href)?.iconClass}
-							<span
-								class={adminSidebarLayout.find((item) => item.href === crumb.href)?.iconClass +
-									'text-base'}
-							></span>
+						{#if findSidebarItem(crumb.href)?.iconClass}
+							<span class={findSidebarItem(crumb.href)?.iconClass + ' text-base'}></span>
 						{/if}
-
-						{crumb.title}
+						{findSidebarItem(crumb.href)?.title ?? crumb.title}
 					</a>
 				{:else}
 					<span class="pointer-events-none font-bold hover:no-underline!">
-						{#if adminSidebarLayout.find((item) => item.href === crumb.href)?.iconClass}
-							<span
-								class={adminSidebarLayout.find((item) => item.href === crumb.href)?.iconClass +
-									'text-base'}
-							></span>
+						{#if findSidebarItem(crumb.href)?.iconClass}
+							<span class={findSidebarItem(crumb.href)?.iconClass + ' text-base'}></span>
 						{/if}
-						{crumb.title}
+						{findSidebarItem(crumb.href)?.title ?? crumb.title}
 					</span>
 				{/if}
 			</li>

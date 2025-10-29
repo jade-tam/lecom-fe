@@ -1,7 +1,8 @@
-type AdminSidebarLayoutItem = {
+export type AdminSidebarLayoutItem = {
 	href: string;
 	title: string;
 	iconClass: string;
+	subItems?: AdminSidebarLayoutItem[];
 };
 
 export const adminSidebarLayout: AdminSidebarLayoutItem[] = [
@@ -33,7 +34,19 @@ export const adminSidebarLayout: AdminSidebarLayoutItem[] = [
 	{
 		href: '/admin/categories-management',
 		title: 'Categories Management',
-		iconClass: 'icon-[fa7-solid--swatchbook] text-xl'
+		iconClass: 'icon-[fa7-solid--swatchbook] text-xl',
+		subItems: [
+			{
+				href: '/admin/course-categories-management',
+				title: 'Course Categories',
+				iconClass: 'icon-[fa7-solid--book] text-xl'
+			},
+			{
+				href: '/admin/product-categories-management',
+				title: 'Product Categories',
+				iconClass: 'icon-[fa7-solid--box-open] text-xl'
+			}
+		]
 	},
 	{
 		href: '/admin/reports-and-feedbacks',
