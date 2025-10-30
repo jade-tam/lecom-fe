@@ -1,5 +1,24 @@
+import type { FormSelectOption } from '$lib/components/ui/FormSelect.svelte';
 import type { shopBusinessOptions } from '$lib/consts/shopBusinessOptions';
-import type { shopStatusOptions } from '$lib/consts/shopStatusOptions';
+
+export const shopStatusOptions = [
+	{
+		title: 'Approved',
+		value: 'Approved'
+	},
+	{
+		title: 'Pending',
+		value: 'Pending'
+	},
+	{
+		title: 'Rejected',
+		value: 'Rejected'
+	},
+	{
+		title: 'Inactive',
+		value: 'Inactive'
+	}
+] as const satisfies readonly FormSelectOption[];
 
 export type ShopStatus = (typeof shopStatusOptions)[number]['value'];
 

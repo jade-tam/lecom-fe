@@ -1,10 +1,11 @@
 <script lang="ts">
-	import type { Shop } from '$lib/types/Shop';
+	import { shopStatusOptions, type Shop } from '$lib/types/Shop';
 	import { DataTable } from '@careswitch/svelte-data-table';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
-	import { shopStatusOptions } from '$lib/consts/shopStatusOptions';
 	import { getStatusBadgeClass, getStatusBtnClass } from '$lib/utils/classComposer';
+	import Image from '$lib/components/ui/Image.svelte';
+	import TableFilter from '$lib/components/ui/TableFilter.svelte';
 
 	const { shops }: { shops: Shop[] } = $props();
 
@@ -15,6 +16,7 @@
 		data: shops,
 		columns: [
 			{ id: 'id', key: 'id', name: 'ID' },
+			{ id: 'shopAvatar', key: 'shopAvatar', name: 'Avatar' },
 			{ id: 'name', key: 'name', name: 'Name' },
 			{ id: 'ownerFullName', key: 'ownerFullName', name: 'Owner Full Name' },
 			{ id: 'phoneNumber', key: 'phoneNumber', name: 'Phone Number' },
@@ -29,27 +31,12 @@
 	<h2>Shops Management</h2>
 
 	<div class="flex gap-2">
-		<div class="flex items-center">
-			<span class="icon-[fa7-solid--filter] text-secondary"></span>
-		</div>
-		<form class="flex justify-end gap-1">
-			{#each shopStatusOptions as option (option.value)}
-				<input
-					class={`btn ${getStatusBtnClass(option.value)} not-checked:btn-soft`}
-					type="checkbox"
-					name="status"
-					aria-label={option.title}
-					checked={table.isFilterActive('status', option.value)}
-					onchange={() => table.toggleFilter('status', option.value)}
-				/>
-			{/each}
-			<input
-				class="btn btn-square btn-soft btn-error"
-				type="reset"
-				value="×"
-				onclick={() => table.clearFilter('status')}
-			/>
-		</form>
+		<TableFilter
+			name="status"
+			options={shopStatusOptions}
+			{table}
+			getFilterBtnClass={getStatusBtnClass}
+		/>
 		<SearchInput bind:value={table.globalFilter} />
 	</div>
 </div>
@@ -96,6 +83,10 @@
 										{row[column.key]}
 									</div></td
 								>
+							{:else if column.id === 'shopAvatar'}
+								<td>
+									<Image src={row.shopAvatar} alt="avatar" />
+								</td>
 							{:else}
 								<td>{row[column.key]}</td>
 							{/if}

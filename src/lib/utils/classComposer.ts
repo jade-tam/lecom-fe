@@ -2,7 +2,13 @@ import type { ProductStatus } from '$lib/types/Product';
 import type { ShopStatus } from '$lib/types/Shop';
 
 export function getStatusBtnClass(status: ShopStatus) {
-	return status === 'Approved' ? 'btn-success' : status === 'Pending' ? 'btn-warning' : 'btn-error';
+	return status === 'Approved'
+		? 'btn-success'
+		: status === 'Pending'
+			? 'btn-warning'
+			: status === 'Inactive'
+				? 'btn-error'
+				: 'btn-error';
 }
 
 export function getStatusBadgeClass(status: ShopStatus) {
@@ -10,7 +16,9 @@ export function getStatusBadgeClass(status: ShopStatus) {
 		? 'badge-success'
 		: status === 'Pending'
 			? 'badge-warning'
-			: 'badge-error';
+			: status === 'Inactive'
+				? 'badge-error'
+				: 'badge-error';
 }
 
 export function getProductStatusBtnClass(status: ProductStatus) {

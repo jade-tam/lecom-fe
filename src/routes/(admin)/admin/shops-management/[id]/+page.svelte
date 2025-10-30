@@ -1,6 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
+	import Image from '$lib/components/ui/Image.svelte';
 	import { getStatusBadgeClass } from '$lib/utils/classComposer';
 	import { formatDate, getTimeSince } from '$lib/utils/converters.js';
 	import showToast from '$lib/utils/showToast.js';
@@ -82,15 +83,11 @@
 	<div class="flex gap-4">
 		<fieldset class="fieldset">
 			<legend class="fieldset-legend">Shop Avatar</legend>
-			<div class="aspect-square h-32 overflow-hidden rounded-field border">
-				<img src={shop.shopAvatar} alt={shop.name + ' shop'} class="h-full w-full object-cover" />
-			</div>
+			<Image src={shop.shopAvatar} class="h-32 w-32" alt={shop.name + ' shop'} />
 		</fieldset>
-		<fieldset class="fieldset">
+		<fieldset class="fieldset w-full">
 			<legend class="fieldset-legend">Shop Banner</legend>
-			<div class="aspect-video h-32 overflow-hidden rounded-field border">
-				<img src={shop.shopBanner} alt={shop.name + ' shop'} class="h-full w-full object-cover" />
-			</div>
+			<Image src={shop.shopBanner} alt={shop.name + ' shop'} class="h-32 w-full" />
 		</fieldset>
 	</div>
 
@@ -225,24 +222,12 @@
 		<div class="flex w-full gap-4">
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend">ID Card Front Image</legend>
-				<div class="max-h-48 overflow-hidden rounded-field border">
-					<img
-						src={shop.ownerPersonalIdFrontUrl}
-						alt="ID Card Front"
-						class="h-full w-full object-cover"
-					/>
-				</div>
+				<Image src={shop.ownerPersonalIdFrontUrl} alt="ID Card Front" class="h-32 w-64" />
 			</fieldset>
 
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend">ID Card Back Image</legend>
-				<div class="max-h-48 overflow-hidden rounded-field border">
-					<img
-						src={shop.ownerPersonalIdBackUrl}
-						alt="ID Card Front"
-						class="h-full w-full object-cover"
-					/>
-				</div>
+				<Image src={shop.ownerPersonalIdBackUrl} alt="ID Card Front" class="h-32 w-64" />
 			</fieldset>
 		</div>
 	</div>

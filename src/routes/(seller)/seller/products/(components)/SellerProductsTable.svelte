@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Image from '$lib/components/ui/Image.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
+	import TableFilter from '$lib/components/ui/TableFilter.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
 	import FormConfirmDropdownAction from '$lib/components/wrapper/FormConfirmDropdownAction.svelte';
 	import { productStatusOptions, type Product } from '$lib/types/Product';
@@ -34,27 +35,12 @@
 	</div>
 
 	<div class="flex gap-2">
-		<form class="flex justify-end gap-1">
-			<div class="mr-2 flex items-center">
-				<span class="icon-[fa7-solid--filter] text-secondary"></span>
-			</div>
-			{#each productStatusOptions as option (option.value)}
-				<input
-					class={`btn ${getProductStatusBtnClass(option.value)} not-checked:btn-outline`}
-					type="checkbox"
-					name="status"
-					aria-label={option.title}
-					checked={table.isFilterActive('status', option.value)}
-					onchange={() => table.toggleFilter('status', option.value)}
-				/>
-			{/each}
-			<input
-				class="btn btn-square btn-outline btn-error"
-				type="reset"
-				value="×"
-				onclick={() => table.clearFilter('status')}
-			/>
-		</form>
+		<TableFilter
+			name="status"
+			{table}
+			options={productStatusOptions}
+			getFilterBtnClass={getProductStatusBtnClass}
+		/>
 		<SearchInput bind:value={table.globalFilter} />
 		<a href="./products/create" class="btn btn-primary">
 			<span class="mr-1 icon-[fa7-solid--add]"></span>Create Product
