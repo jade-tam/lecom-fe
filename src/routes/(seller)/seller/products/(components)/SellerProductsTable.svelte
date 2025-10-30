@@ -2,6 +2,7 @@
 	import Image from '$lib/components/ui/Image.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
+	import ToolTip from '$lib/components/ui/ToolTip.svelte';
 	import { productStatusOptions, type Product } from '$lib/types/Products';
 	import { getProductStatusBadgeClass, getProductStatusBtnClass } from '$lib/utils/classComposer';
 	import { formatDate, formatVND } from '$lib/utils/converters';
@@ -117,27 +118,35 @@
 							{/if}
 						{/each}
 						<td>
-							<a
-								href={`/shop/product/${row['slug']}`}
-								class="btn btn-square btn-secondary"
-								aria-label="view details"
-							>
-								<span class="icon-[fa7-solid--eye] text-xl"></span>
-							</a>
-							<a
-								href={`/seller/products/${row['slug']}`}
-								class="btn btn-square btn-primary"
-								aria-label="edit"
-							>
-								<span class="icon-[fa7-solid--edit] text-xl"></span>
-							</a>
-							<a
-								href={`/seller/products/${row['slug']}`}
-								class="btn btn-square btn-error"
-								aria-label="delete"
-							>
-								<span class="icon-[fa7-solid--trash-alt] text-xl"></span>
-							</a>
+							<div class="flex gap-1">
+								<div class="tooltip" data-tip="View product">
+									<a
+										href={`/shop/product/${row['slug']}`}
+										class="btn btn-square btn-secondary"
+										aria-label="view details"
+									>
+										<span class="icon-[fa7-solid--eye] text-xl"></span>
+									</a>
+								</div>
+								<div class="tooltip" data-tip="Update">
+									<a
+										href={`/seller/products/update/${row.id}`}
+										class="btn btn-square btn-primary"
+										aria-label="edit"
+									>
+										<span class="icon-[fa7-solid--edit] text-xl"></span>
+									</a>
+								</div>
+								<div class="tooltip" data-tip="Delete">
+									<a
+										href={`/seller/products/${row.id}`}
+										class="btn btn-square btn-error"
+										aria-label="delete"
+									>
+										<span class="icon-[fa7-solid--trash-alt] text-xl"></span>
+									</a>
+								</div>
+							</div>
 						</td>
 					</tr>
 				{/each}

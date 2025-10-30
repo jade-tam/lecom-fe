@@ -1,10 +1,8 @@
 <script lang="ts">
 	import type { ProductImageData } from '$lib/types/Products';
 	import { uploadSingleImage } from '$lib/utils/imageUploader';
-	import { overrideItemIdKeyNameBeforeInitialisingDndZones, dndzone } from 'svelte-dnd-action';
+	import { dragHandle, dragHandleZone } from 'svelte-dnd-action';
 	import { fade } from 'svelte/transition';
-
-	overrideItemIdKeyNameBeforeInitialisingDndZones('url');
 
 	export type MultiImageUploaderProps = {
 		name: string;
@@ -31,6 +29,26 @@
 	let fileInput: HTMLInputElement | null = $state(null);
 	let uploading = $state(false);
 
+	// Local working copy for DnD + uploads
+	let localImages: (ProductImageData & { id: string })[] = $state([]);
+
+	$effect(() => {
+		// Only initialize once or when value changes length (like on form reset)
+		if (value?.length && localImages.length === 0) {
+			localImages = value.map((img) => ({
+				...img,
+				id: crypto.randomUUID() // ensure unique key for each item
+			}));
+		}
+	});
+
+	$effect(() => console.log('Synced form value:', value));
+
+	// Sync helper to push local changes back into the form's bound value
+	function syncToForm() {
+		value = localImages.map(({ id, ...img }) => img);
+	}
+
 	// =============================================================================
 	function openFilePicker() {
 		if (uploading) return;
@@ -48,12 +66,15 @@
 			const url = await uploadSingleImage(file, { maxSizeMB: maxFileSize });
 
 			if (url) {
-				const newItem = {
-					url,
-					orderIndex: value.length,
-					isPrimary: value.length === 0
-				};
-				value = [...value, newItem];
+				localImages = [
+					...localImages,
+					{
+						id: crypto.randomUUID(),
+						url,
+						orderIndex: localImages.length,
+						isPrimary: localImages.length === 0
+					}
+				];
 			}
 		}
 
@@ -61,23 +82,27 @@
 
 		// clear file input so selecting same file again works
 		if (fileInput) fileInput.value = '';
+
+		syncToForm();
 	}
 
 	// =============================================================================
 	function removeImage(index: number) {
-		value = value.filter((_, i) => i !== index).map((img, i) => ({ ...img, orderIndex: i }));
+		localImages = localImages
+			.filter((_, i) => i !== index)
+			.map((img, i) => ({ ...img, orderIndex: i }));
+		syncToForm();
 	}
 
 	// =============================================================================
-	function handleDndTrigger({ detail }: CustomEvent) {
-		const { items } = detail;
-
-		// items is an array of our ImageItem reordered
-		value = items.map((item: ProductImageData, i: number) => ({
+	function handleDndTrigger(e: CustomEvent) {
+		const { items } = e.detail;
+		localImages = items.map((item: ProductImageData & { id: string }, i) => ({
 			...item,
 			orderIndex: i,
 			isPrimary: i === 0
 		}));
+		syncToForm();
 	}
 </script>
 
@@ -91,24 +116,28 @@
 	multiple
 />
 
-<!-- Hidden input, store values used for form data -->
-<input type="hidden" {name} value={JSON.stringify(value)} />
-
 <!-- Image grid -->
 <div
 	class="flex flex-wrap gap-2"
-	use:dndzone={{
-		items: value,
+	use:dragHandleZone={{
+		items: localImages,
 		flipDurationMs: 200,
 		dropTargetClasses: ['outline-secondary', 'outline-2', 'rounded-field'],
-		dropTargetStyle: {}
+		dropTargetStyle: {},
+		dragDisabled: uploading
 	}}
 	onconsider={handleDndTrigger}
 	onfinalize={handleDndTrigger}
 >
-	{#each value as item, i (item.url)}
+	{#each localImages as item, i (item.id)}
 		<div class="group relative h-32 w-32 overflow-hidden rounded-lg border outline-primary">
-			<img src={item.url} alt="product" class="h-full w-full object-cover" draggable="false" />
+			<img
+				use:dragHandle
+				src={item.url}
+				alt="product"
+				class="h-full w-full object-cover"
+				draggable="false"
+			/>
 
 			<!-- Top-right remove button -->
 			<button

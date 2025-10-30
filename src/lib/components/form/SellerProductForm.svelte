@@ -9,7 +9,7 @@
 	import { getProductStatusBadgeClass } from '$lib/utils/classComposer';
 	import type { ToastData } from '$lib/utils/showToast';
 	import showToast from '$lib/utils/showToast';
-	import { superForm } from 'sveltekit-superforms';
+	import SuperDebug, { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 
 	const {
@@ -78,6 +78,8 @@
 	<h1 class="text-header3 mt-8 font-bold">Product Media</h1>
 
 	<FormMultiImageInput name="images" label="Product Images" superForm={form} {errors} />
+
+	<SuperDebug data={$form} />
 
 	<h1 class="text-header3 mt-8 font-bold">Stock & Pricing</h1>
 

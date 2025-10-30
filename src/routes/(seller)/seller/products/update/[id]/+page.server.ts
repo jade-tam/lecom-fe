@@ -1,21 +1,31 @@
 import { createProductSchema } from '$lib/schemas/createProductSchema';
 import type { Category } from '$lib/types/Category';
+import type { Product } from '$lib/types/Products.js';
 import { fetchApi, fetchAuthorizedApi, getToastData } from '$lib/utils/externalApi';
 import type { ToastData } from '$lib/utils/showToast';
 import { fail, type Actions } from '@sveltejs/kit';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 
-export const load = async () => {
-	const { responseBody } = await fetchApi<Category[]>('/api/productcategory', 'GET');
-	const categories: Category[] = responseBody.result;
-	const form = await superValidate(zod4(createProductSchema));
+export const load = async ({ params, cookies }) => {
+	const { id } = params;
+
+	const product: Product = (
+		await fetchAuthorizedApi<Product>(cookies, `/api/seller/products/${id}`, 'GET')
+	).responseBody.result;
+
+	const categories: Category[] = (await fetchApi<Category[]>('/api/productcategory', 'GET'))
+		.responseBody.result;
+
+	const form = await superValidate(product, zod4(createProductSchema));
 
 	return { form, categories };
 };
 
 export const actions: Actions = {
-	default: async ({ request, cookies }) => {
+	default: async ({ request, cookies, params }) => {
+		const { id } = params;
+
 		const form = await superValidate(request, zod4(createProductSchema));
 
 		if (!form.valid) {
@@ -26,12 +36,12 @@ export const actions: Actions = {
 
 		const { response, responseBody } = await fetchAuthorizedApi(
 			cookies,
-			'/api/seller/products',
-			'POST',
+			`/api/seller/products/${id}`,
+			'PUT',
 			formData
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Product has been created');
+		const toastData: ToastData = getToastData(responseBody, 'Product has been updated');
 
 		if (response.ok) {
 			return message(form, toastData);
