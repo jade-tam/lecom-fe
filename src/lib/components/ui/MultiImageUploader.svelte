@@ -96,7 +96,7 @@
 
 	// =============================================================================
 	function handleDndTrigger(e: CustomEvent) {
-		const { items } = e.detail;
+		const { items }: { items: (ProductImageData & { id: string })[] } = e.detail;
 		localImages = items.map((item: ProductImageData & { id: string }, i) => ({
 			...item,
 			orderIndex: i,
