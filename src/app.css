@@ -73,3 +73,15 @@
 		border-color: var(--color-base-300);
 	}
 }
+
+html {
+	font-size: 16px; /* default desktop size */
+}
+
+/* Reduce base font size on smaller screens */
+@media (max-width: 786px) {
+	/* Tailwind’s sm breakpoint */
+	html {
+		font-size: 12px;
+	}
+}

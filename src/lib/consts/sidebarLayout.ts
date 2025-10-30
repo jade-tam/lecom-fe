@@ -63,7 +63,7 @@ export const sellerSidebarLayout: SidebarLayoutItem[] = [
 	},
 	{
 		href: '/seller/my-shop',
-		title: 'View Shop',
+		title: 'My Shop',
 		iconClass: 'icon-[fa7-solid--store] text-xl'
 	},
 	{

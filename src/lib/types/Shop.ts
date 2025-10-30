@@ -27,4 +27,7 @@ export type Shop = {
 	sellerId: string;
 	createdAt: Date;
 	approvedAt: Date;
+	shopFacebook: string;
+	shopInstagram: string;
+	shopTiktok: string;
 };
