@@ -256,7 +256,7 @@
 	<fieldset class="fieldset">
 		<legend class="fieldset-legend">Document</legend>
 		<a class="link" href={shop.ownershipDocumentUrl} target="_blank"
-			>{shop.ownershipDocumentUrl.split('/').pop() ?? 'Document'}</a
+			>{shop.ownershipDocumentUrl?.split('/').pop() ?? 'Document'}</a
 		>
 	</fieldset>
 </div>

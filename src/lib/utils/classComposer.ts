@@ -14,13 +14,21 @@ export function getStatusBadgeClass(status: ShopStatus) {
 }
 
 export function getProductStatusBtnClass(status: ProductStatus) {
-	return status === 'Publish' ? 'btn-success' : status === 'Draft' ? 'btn-secondary' : 'btn-error';
+	return status === 'Published'
+		? 'btn-success'
+		: status === 'Draft'
+			? 'btn-secondary'
+			: status === 'Archived'
+				? 'btn-info'
+				: 'btn-error';
 }
 
 export function getProductStatusBadgeClass(status: ProductStatus) {
-	return status === 'Publish'
+	return status === 'Published'
 		? 'badge-success'
 		: status === 'Draft'
 			? 'badge-secondary'
-			: 'badge-error';
+			: status === 'Archived'
+				? 'btn-info'
+				: 'badge-error';
 }

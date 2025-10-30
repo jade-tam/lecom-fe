@@ -6,12 +6,16 @@ export const productStatusOptions = [
 		value: 'Draft'
 	},
 	{
-		title: 'Publish',
-		value: 'Publish'
+		title: 'Published',
+		value: 'Published'
 	},
 	{
 		title: 'Out Of Stock',
-		value: 'Out Of Stock'
+		value: 'OutOfStock'
+	},
+	{
+		title: 'Archived',
+		value: 'Archived'
 	}
 ] as const satisfies readonly FormSelectOption[];
 

@@ -40,7 +40,7 @@ const handleAuthGuard: Handle = async ({ event, resolve }) => {
 		}
 
 		if (user.role !== 'Admin') {
-			throw redirect(303, '/unauthorized');
+			redirect(303, '/unauthorized');
 		}
 	}
 
