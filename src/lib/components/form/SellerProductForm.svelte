@@ -118,7 +118,7 @@
 			class="btn btn-primary"
 			type="submit"
 			name="status"
-			value="Publish"
+			value="Published"
 			disabled={$submitting}
 		>
 			Publish Product
