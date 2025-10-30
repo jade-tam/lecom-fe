@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import FormInput from '$lib/components/ui/FormInput.svelte';
 	import FormMediaInput from '$lib/components/ui/FormMediaInput.svelte';
@@ -17,13 +17,18 @@
 		UpdateUserProfileSchema,
 		ToastData
 	>(data.form, {
-		validators: zod4Client(updateUserProfileSchema)
+		validators: zod4Client(updateUserProfileSchema),
+		resetForm: false
 	});
 	let formTaintedModal: HTMLDialogElement;
 
 	$effect(() => {
 		if ($message) {
 			showToast($message);
+
+			if ($message.type === 'success') {
+				invalidateAll();
+			}
 		}
 	});
 

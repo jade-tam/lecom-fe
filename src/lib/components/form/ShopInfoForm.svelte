@@ -23,11 +23,7 @@
 		superForm<UpdateShopSchema, ToastData>(dataForm, {
 			dataType: 'json',
 			validators: zod4Client(updateShopSchema),
-			onUpdated: ({ form }) => {
-				if (form.message?.type === 'success') {
-					goto('/seller/my-shop');
-				}
-			}
+			resetForm: false
 		});
 
 	$inspect($form);

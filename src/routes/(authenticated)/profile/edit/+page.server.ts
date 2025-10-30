@@ -65,7 +65,7 @@ export const actions: Actions = {
 
 		const formData = form.data;
 
-		const { response, responseBody } = await fetchAuthorizedApi(
+		const { response, responseBody } = await fetchAuthorizedApi<UserProfile>(
 			cookies,
 			'/api/user/change-password',
 			'POST',
@@ -75,7 +75,7 @@ export const actions: Actions = {
 		const toastData: ToastData = getToastData(responseBody, 'Your password has been updated');
 
 		if (response.ok) {
-			return message(form, toastData);
+			return message({ ...form, data: responseBody.result }, toastData);
 		} else {
 			return message(form, toastData, { status: 400 });
 		}
