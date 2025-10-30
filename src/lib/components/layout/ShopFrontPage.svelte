@@ -13,7 +13,7 @@
 		haveSellerAction?: boolean;
 	} = $props();
 
-	$inspect(shop)
+	$inspect(shop);
 
 	let currentTab: 'Products' | 'Courses' = $state('Products');
 </script>

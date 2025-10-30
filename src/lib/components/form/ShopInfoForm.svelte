@@ -177,7 +177,7 @@
 
 		<!-- ============================================================== -->
 
-		<div class="rounded-box border bg-base-100 p-4 h-fit">
+		<div class="h-fit rounded-box border bg-base-100 p-4">
 			<div class="flex items-center justify-between">
 				<h1 class="text-header3 font-bold">Live Preview</h1>
 			</div>
