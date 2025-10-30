@@ -84,7 +84,7 @@
 					<p class="truncate text-[0.65rem] font-light">{userProfile?.userName}</p>
 				</div>
 				<div
-					class="badge badge-xs ml-auto {role === 'Admin'
+					class="ml-auto badge badge-xs {role === 'Admin'
 						? 'badge-error'
 						: role === 'Seller'
 							? 'badge-info'

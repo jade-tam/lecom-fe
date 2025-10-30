@@ -5,40 +5,39 @@
 @plugin "daisyui";
 
 @plugin "daisyui/theme" {
-  name: "lecomlight";
-  default: true;
-  prefersdark: false;
-  color-scheme: "light";
-  --color-base-100: #ffffff;
-  --color-base-200: #f8f3ed;
-  --color-base-300: #e0d7ce;
-  --color-base-content: oklch(0.325 0.002 286.3);
-  --color-primary: #ffcb66;
-  --color-primary-content: oklch(0.470 0.096 68.0);
-  --color-secondary: #ccb6dc;
-  --color-secondary-content: oklch(0.416 0.058 311.0);
-  --color-accent: #add6b8;
-  --color-accent-content: oklch(0.449 0.060 153.2);
-  --color-neutral: #2b2b2c;
-  --color-neutral-content: #f8f3ed;
-  --color-info: #a5c4fb;
-  --color-info-content: oklch(0.433 0.085 261.7);
-  --color-success: #add6b8;
-  --color-success-content: oklch(0.449 0.060 153.2);
-  --color-warning: #ffcb66;
-  --color-warning-content: oklch(0.470 0.096 68.0);
-  --color-error: #f2a297;
-  --color-error-content: oklch(0.404 0.097 28.1);
-  --radius-selector: 0.25rem;
-  --radius-field: 0.5rem;
-  --radius-box: 1rem;
-  --size-selector: 0.25rem;
-  --size-field: 0.25rem;
-  --border: 2px;
-  --depth: 1;
-  --noise: 1;
+	name: 'lecomlight';
+	default: true;
+	prefersdark: false;
+	color-scheme: 'light';
+	--color-base-100: #ffffff;
+	--color-base-200: #f8f3ed;
+	--color-base-300: #e0d7ce;
+	--color-base-content: oklch(0.325 0.002 286.3);
+	--color-primary: #ffcb66;
+	--color-primary-content: oklch(0.47 0.096 68);
+	--color-secondary: #ccb6dc;
+	--color-secondary-content: oklch(0.416 0.058 311);
+	--color-accent: #add6b8;
+	--color-accent-content: oklch(0.449 0.06 153.2);
+	--color-neutral: #2b2b2c;
+	--color-neutral-content: #f8f3ed;
+	--color-info: #a5c4fb;
+	--color-info-content: oklch(0.433 0.085 261.7);
+	--color-success: #add6b8;
+	--color-success-content: oklch(0.449 0.06 153.2);
+	--color-warning: #ffcb66;
+	--color-warning-content: oklch(0.47 0.096 68);
+	--color-error: #f2a297;
+	--color-error-content: oklch(0.404 0.097 28.1);
+	--radius-selector: 0.25rem;
+	--radius-field: 0.5rem;
+	--radius-box: 1rem;
+	--size-selector: 0.25rem;
+	--size-field: 0.25rem;
+	--border: 2px;
+	--depth: 1;
+	--noise: 1;
 }
-
 
 @theme {
 	--font-sans:

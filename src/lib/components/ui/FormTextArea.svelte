@@ -32,12 +32,7 @@
 			<ToolTip tip={help} />
 		{/if}
 	</legend>
-	<textarea
-		class="textarea w-full"
-		{name}
-		bind:value={$superForm[name]}
-		{...restAttr}
-	></textarea>
+	<textarea class="textarea w-full" {name} bind:value={$superForm[name]} {...restAttr}></textarea>
 	{#if $errors[name]}
 		{#each $errors[name] as error}
 			<p class="text-error">{error}</p>

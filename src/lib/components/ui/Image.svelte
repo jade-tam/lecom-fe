@@ -37,7 +37,7 @@
 			onerror={handleError}
 		/>
 	{:else}
-		<div class="flex flex-col h-full items-center justify-center">
+		<div class="flex h-full flex-col items-center justify-center">
 			<span class="icon-[fa7-solid--file-circle-xmark] text-2xl text-base-content/60"></span>
 		</div>
 	{/if}
