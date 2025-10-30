@@ -1,4 +1,4 @@
-import type { ProductStatus } from '$lib/types/Products';
+import type { ProductStatus } from '$lib/types/Product';
 import type { ShopStatus } from '$lib/types/Shop';
 
 export function getStatusBtnClass(status: ShopStatus) {

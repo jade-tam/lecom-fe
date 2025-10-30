@@ -1,4 +1,4 @@
-import { productStatusOptions } from '$lib/types/Products';
+import { productStatusOptions } from '$lib/types/Product';
 import { z } from 'zod';
 
 export const productStatusEnum = z.enum(productStatusOptions.map((option) => option.value));

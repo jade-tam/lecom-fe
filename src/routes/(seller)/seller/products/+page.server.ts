@@ -1,4 +1,4 @@
-import type { Product } from '$lib/types/Products.js';
+import type { Product } from '$lib/types/Product.js';
 import { fetchAuthorizedApi, getToastData } from '$lib/utils/externalApi';
 import { fail } from '@sveltejs/kit';
 

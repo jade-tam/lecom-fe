@@ -16,7 +16,7 @@
 		pageSize: pageSize,
 		data: products,
 		columns: [
-			{ id: 'images', key: 'images', name: 'Image' },
+			{ id: 'courseThumbnail', key: 'courseThumbnail', name: 'Course Thumbnail' },
 			{ id: 'name', key: 'name', name: 'Name' },
 			{ id: 'categoryName', key: 'categoryName', name: 'Category' },
 			{ id: 'price', key: 'price', name: 'Price' },

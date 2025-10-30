@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ProductImageData } from '$lib/types/Products';
+	import type { ProductImageData } from '$lib/types/Product';
 	import { uploadSingleImage } from '$lib/utils/imageUploader';
 	import { dragHandle, dragHandleZone } from 'svelte-dnd-action';
 	import { fade } from 'svelte/transition';
