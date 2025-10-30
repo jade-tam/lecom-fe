@@ -2,7 +2,7 @@
 	import Image from '$lib/components/ui/Image.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
-	import ToolTip from '$lib/components/ui/ToolTip.svelte';
+	import FormConfirmDropdownAction from '$lib/components/wrapper/FormConfirmDropdownAction.svelte';
 	import { productStatusOptions, type Product } from '$lib/types/Products';
 	import { getProductStatusBadgeClass, getProductStatusBtnClass } from '$lib/utils/classComposer';
 	import { formatDate, formatVND } from '$lib/utils/converters';
@@ -137,15 +137,18 @@
 										<span class="icon-[fa7-solid--edit] text-xl"></span>
 									</a>
 								</div>
-								<div class="tooltip" data-tip="Delete">
-									<a
-										href={`/seller/products/${row.id}`}
-										class="btn btn-square btn-error"
-										aria-label="delete"
-									>
-										<span class="icon-[fa7-solid--trash-alt] text-xl"></span>
-									</a>
-								</div>
+								<FormConfirmDropdownAction
+									label="Delete this product?"
+									description="Your product will be deleted forever"
+									action="?/delete"
+									formData={{ id: row.id }}
+								>
+									<div class="tooltip" data-tip="Delete">
+										<button class="btn btn-square btn-error" type="button" aria-label="delete">
+											<span class="icon-[fa7-solid--trash-alt] text-xl"></span>
+										</button>
+									</div>
+								</FormConfirmDropdownAction>
 							</div>
 						</td>
 					</tr>
