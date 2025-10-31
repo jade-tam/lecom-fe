@@ -39,4 +39,7 @@ export type Product = {
 	status: ProductStatus;
 	lastUpdatedAt: string;
 	images: ProductImageData[];
+	thumbnailUrl: string;
+	shopName: string;
+	shopAvatar: string;
 };

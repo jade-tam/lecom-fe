@@ -2,8 +2,6 @@
 	const {
 		src,
 		alt = '',
-		w = 'w-16',
-		h = 'h-16',
 		rounded = 'rounded-field',
 		border = 'border',
 		objectFit = 'object-cover',
@@ -26,7 +24,7 @@
 	}
 </script>
 
-<div class={`overflow-hidden bg-secondary ${w} ${h} ${rounded} ${border} ${customClass}`}>
+<div class={`overflow-hidden bg-secondary ${rounded} ${border} ${customClass}`}>
 	{#if src && !isImageError}
 		<img
 			{src}
