@@ -83,7 +83,7 @@
 			<div class="mt-2 flex flex-wrap gap-2">
 				{#each data.productCategories?.slice(0, 4) as category, i (category.id)}
 					<div class={`badge badge-lg ${badgeColors[i % badgeColors.length]}`}>
-						<span class="icon-[fa7-solid--bookmark]"></span>
+						<span class="icon-[fa7-solid--box-open]"></span>
 						{category.name}
 					</div>
 				{/each}
