@@ -70,7 +70,7 @@
 						</th>
 					{/each}
 
-					<th> </th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -85,7 +85,7 @@
 								>
 							{:else if column.id === 'shopAvatar'}
 								<td>
-									<Image src={row.shopAvatar} alt="avatar" />
+									<Image src={row.shopAvatar} class="w-12 h-12" alt="avatar" />
 								</td>
 							{:else}
 								<td>{row[column.key]}</td>

@@ -94,7 +94,7 @@
 							{:else if column.id === 'images'}
 								<td
 									><div>
-										<Image alt="product" src={row['images'].find((img) => img.isPrimary)?.url} />
+										<Image alt="product" class="w-16 h-16" src={row['images'].find((img) => img.isPrimary)?.url} />
 									</div>
 								</td>
 							{:else if column.id === 'lastUpdatedAt'}
