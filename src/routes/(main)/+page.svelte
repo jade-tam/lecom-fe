@@ -45,21 +45,37 @@
 
 			<h3 class="mt-8">Top Learning Categories</h3>
 			<div class="mt-2 flex flex-wrap gap-2">
-				{#each data.courseCategories?.slice(0, 4) as category, i (category.id)}
-					<div class={`badge badge-lg ${badgeColors[i % badgeColors.length]}`}>
-						<span class="icon-[fa7-solid--bookmark]"></span>
-						{category.name}
-					</div>
-				{/each}
+				{#await data.courseCategories}
+					{#each Array(4) as skeleton}
+						<div class="h-4 w-16 skeleton"></div>
+					{/each}
+				{:then courseCategories}
+					{#each courseCategories?.slice(0, 4) as category, i (category.id)}
+						<div class={`badge badge-lg ${badgeColors[i % badgeColors.length]}`}>
+							<span class="icon-[fa7-solid--bookmark]"></span>
+							{category.name}
+						</div>
+					{/each}
+				{:catch err}
+					<p class="text-error">Error loading top categories</p>
+				{/await}
 			</div>
 		</div>
 	</div>
 
 	<h3 class="self-start">Popular Courses</h3>
 	<div class="grid w-full grid-cols-4 items-stretch gap-4 py-2 max-md:grid-cols-2">
-		{#each data.popularCourses?.slice(0, 4) as course (course.id)}
-			<CourseCard {course} />
-		{/each}
+		{#await data.popularCourses}
+			{#each Array(4) as skeleton}
+				<div class="h-64 w-full skeleton"></div>
+			{/each}
+		{:then popularCourses}
+			{#each popularCourses?.slice(0, 4) as course (course.id)}
+				<CourseCard {course} />
+			{/each}
+		{:catch err}
+			<p class="text-error">Error loading popular courses</p>
+		{/await}
 	</div>
 
 	<a href="/learn" class="btn mt-8 btn-primary">
@@ -81,12 +97,20 @@
 
 			<h3 class="mt-8">Top Product Categories</h3>
 			<div class="mt-2 flex flex-wrap gap-2">
-				{#each data.productCategories?.slice(0, 4) as category, i (category.id)}
-					<div class={`badge badge-lg ${badgeColors[i % badgeColors.length]}`}>
-						<span class="icon-[fa7-solid--box-open]"></span>
-						{category.name}
-					</div>
-				{/each}
+				{#await data.productCategories}
+					{#each Array(4) as skeleton}
+						<div class="h-4 w-16 skeleton"></div>
+					{/each}
+				{:then productCategories}
+					{#each productCategories?.slice(0, 4) as category, i (category.id)}
+						<div class={`badge badge-lg ${badgeColors[i % badgeColors.length]}`}>
+							<span class="icon-[fa7-solid--box-open]"></span>
+							{category.name}
+						</div>
+					{/each}
+				{:catch err}
+					<p class="text-error">Error loading product categories</p>
+				{/await}
 			</div>
 		</div>
 		<div class="flex justify-center max-md:justify-center">
@@ -98,9 +122,17 @@
 
 	<h3 class="self-start">Best Seller Products</h3>
 	<div class="grid w-full grid-cols-4 items-stretch gap-4 py-2 max-md:grid-cols-2">
-		{#each data.bestSellerProducts?.slice(0, 4) as product (product.id)}
-			<ProductCard {product} />
-		{/each}
+		{#await data.bestSellerProducts}
+			{#each Array(4) as skeleton}
+				<div class="h-64 w-full skeleton"></div>
+			{/each}
+		{:then bestSellerProducts}
+			{#each bestSellerProducts?.slice(0, 4) as product (product.id)}
+				<ProductCard {product} />
+			{/each}
+		{:catch err}
+			<p class="text-error">Error loading best seller products</p>
+		{/await}
 	</div>
 
 	<a href="/shop" class="btn mt-8 btn-primary">

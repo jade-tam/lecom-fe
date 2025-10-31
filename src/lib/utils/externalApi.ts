@@ -171,3 +171,12 @@ export function getToastData(responseBody: ApiResponseBody<unknown>, fallbackMes
 
 	return responseToastData;
 }
+
+export function getSafeResult<T>(p: Promise<{ responseBody: { result: T } }>, fallback: T) {
+	return p
+		.then((r) => r.responseBody.result)
+		.catch((err) => {
+			logger.error('getSafeResult', err);
+			return fallback;
+		});
+}
