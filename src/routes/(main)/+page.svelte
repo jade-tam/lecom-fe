@@ -45,12 +45,12 @@
 
 			<h3 class="mt-8">Top Learning Categories</h3>
 			<div class="mt-2 flex flex-wrap gap-2">
-				{#await data.courseCategories}
+				{#await data.landingPageData}
 					{#each Array(4) as skeleton}
 						<div class="h-4 w-16 skeleton"></div>
 					{/each}
-				{:then courseCategories}
-					{#each courseCategories?.slice(0, 4) as category, i (category.id)}
+				{:then lpData}
+					{#each lpData.topCourseCategories?.slice(0, 4) as category, i (category.id)}
 						<div class={`badge badge-lg ${badgeColors[i % badgeColors.length]}`}>
 							<span class="icon-[fa7-solid--bookmark]"></span>
 							{category.name}
@@ -65,12 +65,12 @@
 
 	<h3 class="self-start">Popular Courses</h3>
 	<div class="grid w-full grid-cols-4 items-stretch gap-4 py-2 max-md:grid-cols-2">
-		{#await data.popularCourses}
+		{#await data.landingPageData}
 			{#each Array(4) as skeleton}
 				<div class="h-64 w-full skeleton"></div>
 			{/each}
-		{:then popularCourses}
-			{#each popularCourses?.slice(0, 4) as course (course.id)}
+		{:then lpData}
+			{#each lpData.popularCourses?.slice(0, 4) as course (course.id)}
 				<CourseCard {course} />
 			{/each}
 		{:catch err}
@@ -97,12 +97,12 @@
 
 			<h3 class="mt-8">Top Product Categories</h3>
 			<div class="mt-2 flex flex-wrap gap-2">
-				{#await data.productCategories}
+				{#await data.landingPageData}
 					{#each Array(4) as skeleton}
 						<div class="h-4 w-16 skeleton"></div>
 					{/each}
-				{:then productCategories}
-					{#each productCategories?.slice(0, 4) as category, i (category.id)}
+				{:then lpData}
+					{#each lpData.topProductCategories?.slice(0, 4) as category, i (category.id)}
 						<div class={`badge badge-lg ${badgeColors[i % badgeColors.length]}`}>
 							<span class="icon-[fa7-solid--box-open]"></span>
 							{category.name}
@@ -122,12 +122,12 @@
 
 	<h3 class="self-start">Best Seller Products</h3>
 	<div class="grid w-full grid-cols-4 items-stretch gap-4 py-2 max-md:grid-cols-2">
-		{#await data.bestSellerProducts}
+		{#await data.landingPageData}
 			{#each Array(4) as skeleton}
 				<div class="h-64 w-full skeleton"></div>
 			{/each}
-		{:then bestSellerProducts}
-			{#each bestSellerProducts?.slice(0, 4) as product (product.id)}
+		{:then lpData}
+			{#each lpData.bestSellerProducts?.slice(0, 4) as product (product.id)}
 				<ProductCard {product} />
 			{/each}
 		{:catch err}

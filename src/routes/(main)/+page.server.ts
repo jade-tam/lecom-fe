@@ -3,31 +3,25 @@ import type { Course } from '$lib/types/Course';
 import type { Product } from '$lib/types/Product';
 import { fetchApi, getSafeResult } from '$lib/utils/externalApi';
 
+type LandingPageData = {
+	topCourseCategories: Category[];
+	topProductCategories: Category[];
+	popularCourses: Course[];
+	bestSellerProducts: Product[];
+};
+
 export async function load() {
-	const courseCategories = getSafeResult(
-		fetchApi<Category[]>('/api/CourseCategory', 'GET'),
-		[] as Category[]
-	);
-
-	const productCategories = getSafeResult(
-		fetchApi<Category[]>('/api/productcategory', 'GET'),
-		[] as Category[]
-	);
-
-	const popularCourses = getSafeResult(
-		fetchApi<Course[]>('/api/home/courses', 'GET'),
-		[] as Course[]
-	);
-
-	const bestSellerProducts = getSafeResult(
-		fetchApi<Product[]>('/api/home/products', 'GET'),
-		[] as Product[]
+	const landingPageData = getSafeResult<LandingPageData>(
+		fetchApi<LandingPageData>('/api/landing-page', 'GET'),
+		{
+			topCourseCategories: [],
+			topProductCategories: [],
+			popularCourses: [],
+			bestSellerProducts: []
+		}
 	);
 
 	return {
-		courseCategories,
-		productCategories,
-		popularCourses,
-		bestSellerProducts
+		landingPageData
 	};
 }
