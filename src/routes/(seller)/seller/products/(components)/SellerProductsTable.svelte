@@ -110,6 +110,7 @@
 										href={`/shop/product/${row['slug']}`}
 										class="btn btn-square btn-secondary"
 										aria-label="view details"
+										target="_blank"
 									>
 										<span class="icon-[fa7-solid--eye] text-xl"></span>
 									</a>

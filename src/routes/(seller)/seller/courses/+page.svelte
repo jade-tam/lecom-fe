@@ -1,5 +1,5 @@
 <script>
-	import { invalidateAll } from '$app/navigation';
+	import { invalidate, invalidateAll } from '$app/navigation';
 	import showToast from '$lib/utils/showToast';
 	import SellerCoursesTable from './(components)/SellerCoursesTable.svelte';
 
@@ -12,7 +12,7 @@
 			showToast(form.toastData);
 
 			if (form.toastData.type === 'success') {
-				invalidateAll();
+				invalidate('seller:courses');
 			}
 		}
 	});

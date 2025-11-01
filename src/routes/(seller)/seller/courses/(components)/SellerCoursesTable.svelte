@@ -106,15 +106,16 @@
 										href={`/shop/product/${row['slug']}`}
 										class="btn btn-square btn-secondary"
 										aria-label="view course"
+										target="_blank"
 									>
 										<span class="icon-[fa7-solid--eye] text-xl"></span>
 									</a>
 								</div>
 								<div class="tooltip" data-tip="Update">
 									<a
-										href={`/seller/products/update/${row.id}`}
+										href={`/seller/courses/update/${row.id}`}
 										class="btn btn-square btn-primary"
-										aria-label="edit"
+										aria-label="update"
 									>
 										<span class="icon-[fa7-solid--edit] text-xl"></span>
 									</a>

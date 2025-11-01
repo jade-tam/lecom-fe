@@ -16,6 +16,7 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import FormMediaInput from '../ui/FormMediaInput.svelte';
+	import { courseActiveStatusOptions } from '$lib/types/Course';
 
 	const {
 		dataForm,
@@ -49,7 +50,9 @@
 	<div class="flex items-center justify-between">
 		<h1 class="text-header3 font-bold">Basic Information</h1>
 		{#if $form.active}
-			<div class="badge {getCourseActiveStatusBadgeClass($form.active)}">{$form.active}</div>
+			<div class="badge {getCourseActiveStatusBadgeClass($form.active)}">
+				{courseActiveStatusOptions.find((option) => option.value === $form.active)?.title}
+			</div>
 		{/if}
 	</div>
 

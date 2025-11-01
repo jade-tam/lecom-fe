@@ -2,7 +2,9 @@ import type { Course } from '$lib/types/Course.js';
 import { fetchAuthorizedApi, getToastData } from '$lib/utils/externalApi';
 import { fail } from '@sveltejs/kit';
 
-export const load = async ({ cookies }) => {
+export const load = async ({ cookies, depends }) => {
+	depends('seller:courses');
+
 	const { responseBody } = await fetchAuthorizedApi<Course[]>(
 		cookies,
 		'/api/seller/courses/my',
