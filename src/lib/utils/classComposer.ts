@@ -1,3 +1,4 @@
+import type { CourseActiveStatus } from '$lib/types/Course';
 import type { ProductStatus } from '$lib/types/Product';
 import type { ShopStatus } from '$lib/types/Shop';
 
@@ -39,4 +40,12 @@ export function getProductStatusBadgeClass(status: ProductStatus) {
 			: status === 'Archived'
 				? 'btn-info'
 				: 'badge-error';
+}
+
+export function getCourseActiveStatusBtnClass(active: CourseActiveStatus) {
+	return active === 1 ? 'btn-success' : 'btn-error';
+}
+
+export function getCourseActiveStatusBadgeClass(active: CourseActiveStatus) {
+	return active === 1 ? 'badge-success' : 'badge-error';
 }

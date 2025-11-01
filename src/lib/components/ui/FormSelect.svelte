@@ -5,7 +5,7 @@
 
 	export type FormSelectOption = {
 		title: string;
-		value: string;
+		value: number | string;
 	};
 
 	let {

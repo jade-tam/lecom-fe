@@ -1,63 +1,49 @@
 <script lang="ts">
 	import Image from '$lib/components/ui/Image.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
+	import TableFilter from '$lib/components/ui/TableFilter.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
 	import FormConfirmDropdownAction from '$lib/components/wrapper/FormConfirmDropdownAction.svelte';
-	import { productStatusOptions, type Product } from '$lib/types/Product';
-	import { getProductStatusBadgeClass, getProductStatusBtnClass } from '$lib/utils/classComposer';
-	import { formatDate, formatVND } from '$lib/utils/converters';
+	import { courseActiveStatusOptions, type Course } from '$lib/types/Course';
+	import {
+		getCourseActiveStatusBadgeClass,
+		getCourseActiveStatusBtnClass
+	} from '$lib/utils/classComposer';
 	import { DataTable } from '@careswitch/svelte-data-table';
 
-	const { products }: { products: Product[] } = $props();
+	const { courses }: { courses: Course[] } = $props();
 
 	const pageSize = 12;
 
 	const table = new DataTable({
 		pageSize: pageSize,
-		data: products,
+		data: courses,
 		columns: [
 			{ id: 'courseThumbnail', key: 'courseThumbnail', name: 'Course Thumbnail' },
-			{ id: 'name', key: 'name', name: 'Name' },
+			{ id: 'title', key: 'title', name: 'Title' },
 			{ id: 'categoryName', key: 'categoryName', name: 'Category' },
-			{ id: 'price', key: 'price', name: 'Price' },
-			{ id: 'stock', key: 'stock', name: 'Stock' },
-			{ id: 'status', key: 'status', name: 'Status' },
-			{ id: 'lastUpdatedAt', key: 'lastUpdatedAt', name: 'Last Updated' }
+			{ id: 'shopName', key: 'shopName', name: 'Shop' },
+			{ id: 'activeStatus', key: 'active', name: 'Active status' }
 		]
 	});
 </script>
 
 <div class="my-2 flex items-end justify-between">
 	<div class="flex flex-col">
-		<h1 class="text-header3 font-bold">Products</h1>
-		<p class="text-base-content/60">View, edit, and manage your products.</p>
+		<h1 class="text-header3 font-bold">Courses</h1>
+		<p class="text-base-content/60">View, edit, and manage your courses.</p>
 	</div>
 
 	<div class="flex gap-2">
-		<form class="flex justify-end gap-1">
-			<div class="mr-2 flex items-center">
-				<span class="icon-[fa7-solid--filter] text-secondary"></span>
-			</div>
-			{#each productStatusOptions as option (option.value)}
-				<input
-					class={`btn ${getProductStatusBtnClass(option.value)} not-checked:btn-outline`}
-					type="checkbox"
-					name="status"
-					aria-label={option.title}
-					checked={table.isFilterActive('status', option.value)}
-					onchange={() => table.toggleFilter('status', option.value)}
-				/>
-			{/each}
-			<input
-				class="btn btn-square btn-outline btn-error"
-				type="reset"
-				value="×"
-				onclick={() => table.clearFilter('status')}
-			/>
-		</form>
+		<TableFilter
+			name="activeStatus"
+			{table}
+			options={courseActiveStatusOptions}
+			getFilterBtnClass={getCourseActiveStatusBtnClass}
+		/>
 		<SearchInput bind:value={table.globalFilter} />
-		<a href="./products/create" class="btn btn-primary">
-			<span class="mr-1 icon-[fa7-solid--add]"></span>Create Product
+		<a href="./courses/create" class="btn btn-primary">
+			<span class="mr-1 icon-[fa7-solid--add]"></span>Create Course
 		</a>
 	</div>
 </div>
@@ -97,33 +83,29 @@
 				{#each table.rows as row (row.id)}
 					<tr>
 						{#each table.columns as column (column.id)}
-							{#if column.id === 'status'}
+							{#if column.id === 'activeStatus'}
 								<td
-									><div class={`badge ${getProductStatusBadgeClass(row.status)}`}>
-										{row.status}
+									><div class={`badge ${getCourseActiveStatusBadgeClass(row.active)}`}>
+										{courseActiveStatusOptions.find((option) => option.value === row.active)?.title}
 									</div></td
 								>
-							{:else if column.id === 'price'}
-								<td>{formatVND(row.price)}</td>
-							{:else if column.id === 'images'}
+							{:else if column.id === 'courseThumbnail'}
 								<td
 									><div>
-										<Image alt="product" src={row['images'].find((img) => img.isPrimary)?.url} />
+										<Image alt="product" src={row.courseThumbnail} class="h-20 w-32" />
 									</div>
 								</td>
-							{:else if column.id === 'lastUpdatedAt'}
-								<td>{formatDate(row['lastUpdatedAt'])}</td>
 							{:else}
 								<td>{row[column.key]}</td>
 							{/if}
 						{/each}
 						<td>
 							<div class="flex gap-1">
-								<div class="tooltip" data-tip="View product">
+								<div class="tooltip" data-tip="View course">
 									<a
 										href={`/shop/product/${row['slug']}`}
 										class="btn btn-square btn-secondary"
-										aria-label="view details"
+										aria-label="view course"
 									>
 										<span class="icon-[fa7-solid--eye] text-xl"></span>
 									</a>
@@ -138,8 +120,8 @@
 									</a>
 								</div>
 								<FormConfirmDropdownAction
-									label="Delete this product?"
-									description="Your product will be deleted forever"
+									label="Delete this course?"
+									description="Your course will be deleted forever"
 									action="?/delete"
 									formData={{ id: row.id }}
 								>
