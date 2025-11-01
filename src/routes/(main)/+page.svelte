@@ -78,7 +78,7 @@
 		{/await}
 	</div>
 
-	<a href="/learn" class="btn mt-8 btn-primary">
+	<a href="/learning" class="btn mt-8 btn-primary">
 		Explore all courses <span class="icon-[fa7-solid--arrow-right]"></span>
 	</a>
 </section>
@@ -135,7 +135,7 @@
 		{/await}
 	</div>
 
-	<a href="/shop" class="btn mt-8 btn-primary">
+	<a href="/shopping" class="btn mt-8 btn-primary">
 		Start Shopping Now <span class="icon-[fa7-solid--arrow-right]"></span>
 	</a>
 </section>

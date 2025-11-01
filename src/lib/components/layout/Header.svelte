@@ -22,20 +22,31 @@
 	<div>
 		<ul class="flex h-full items-center px-6">
 			<li>
-				<a href="/learn" class="p-6" class:font-black={page.url.pathname.startsWith('/learn')}>
-					Learn
+				<a
+					href="/learning"
+					class="p-6 {page.url.pathname.startsWith('/learning')
+						? 'font-black text-primary-content'
+						: ''}"
+				>
+					Learning
 				</a>
 			</li>
 			<li>
-				<a href="/shop" class="p-6" class:font-black={page.url.pathname.startsWith('/shop')}>
-					Shop
+				<a
+					href="/shopping"
+					class="p-6 {page.url.pathname.startsWith('/shopping')
+						? 'font-black text-primary-content'
+						: ''}"
+				>
+					Shopping
 				</a>
 			</li>
 			<li>
 				<a
 					href="/community"
-					class="p-6"
-					class:font-black={page.url.pathname.startsWith('/community')}
+					class="p-6 {page.url.pathname.startsWith('/community')
+						? 'font-black text-primary-content'
+						: ''}"
 				>
 					Community
 				</a>

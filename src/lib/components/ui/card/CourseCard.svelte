@@ -5,7 +5,7 @@
 	const { course }: { course: Course } = $props();
 </script>
 
-<a href="/learn/course/{course.slug}" class="group">
+<a href="/learning/course/{course.slug}" class="group">
 	<div
 		class="flex h-full flex-col gap-3 rounded-box border bg-base-100 p-3 shadow duration-200 group-hover:-translate-y-2 group-hover:shadow-lg"
 	>
