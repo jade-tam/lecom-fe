@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { adminSidebarLayout, type SidebarLayoutItem } from '$lib/consts/sidebarLayout';
+	import {
+		adminSidebarLayout,
+		sellerSidebarLayout,
+		type SidebarLayoutItem
+	} from '$lib/consts/sidebarLayout';
 	import { toPascalCase } from '$lib/utils/converters';
 
 	// helper: flatten main + subItems into a single list for easier lookup
@@ -8,7 +12,7 @@
 		return items.flatMap((item) => [item, ...(item.subItems ? flattenSidebar(item.subItems) : [])]);
 	}
 
-	const allSidebarItems = flattenSidebar(adminSidebarLayout);
+	const allSidebarItems = flattenSidebar([...adminSidebarLayout, ...sellerSidebarLayout]);
 
 	const breadcrumbs = $derived.by(() => {
 		const segments = page.url.pathname.split('/').filter(Boolean);

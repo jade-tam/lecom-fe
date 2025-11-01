@@ -6,6 +6,7 @@
 	import FormTextArea from '$lib/components/ui/FormTextArea.svelte';
 	import { createProductSchema, type CreateProductSchema } from '$lib/schemas/createProductSchema';
 	import type { Category } from '$lib/types/Category';
+	import type { ProductStatus } from '$lib/types/Product';
 	import { getProductStatusBadgeClass } from '$lib/utils/classComposer';
 	import type { ToastData } from '$lib/utils/showToast';
 	import showToast from '$lib/utils/showToast';
@@ -20,24 +21,29 @@
 		categories: Category[];
 	} = $props();
 
-	const { form, errors, message, enhance, submitting, delayed, tainted, isTainted } = superForm<
-		CreateProductSchema,
-		ToastData
-	>(dataForm, {
-		dataType: 'json',
-		validators: zod4Client(createProductSchema),
-		onUpdated: ({ form }) => {
-			if (form.message?.type === 'success') {
-				goto('/seller/products');
+	const { form, errors, message, enhance, submitting, delayed, tainted, isTainted, submit } =
+		superForm<CreateProductSchema, ToastData>(dataForm, {
+			dataType: 'json',
+			validators: zod4Client(createProductSchema),
+			onUpdated: ({ form }) => {
+				if (form.message?.type === 'success') {
+					goto('/seller/products');
+				}
 			}
-		}
-	});
+		});
 
 	$effect(() => {
 		if ($message) {
 			showToast($message);
 		}
 	});
+
+	async function handleSubmit(status: ProductStatus) {
+		// set status before submit
+		$form.status = status;
+
+		submit();
+	}
 </script>
 
 <form method="POST" class="mt-2 h-fit w-full rounded-box border bg-base-100 p-4" use:enhance>
@@ -104,9 +110,8 @@
 	<div class="mt-4 flex justify-end gap-2">
 		<button
 			class="btn btn-secondary"
-			type="submit"
-			name="status"
-			value="Draft"
+			type="button"
+			onclick={() => handleSubmit('Draft')}
 			disabled={$submitting}
 		>
 			Save as Draft
@@ -116,9 +121,8 @@
 		</button>
 		<button
 			class="btn btn-primary"
-			type="submit"
-			name="status"
-			value="Published"
+			type="button"
+			onclick={() => handleSubmit('Published')}
 			disabled={$submitting}
 		>
 			Publish Product
