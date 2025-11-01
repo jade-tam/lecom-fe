@@ -1,5 +1,5 @@
-import { PUBLIC_API_URL } from '$env/static/public';
 import { loginSchema } from '$lib/schemas/loginSchema';
+import { fetchApi, getToastData } from '$lib/utils/externalApi';
 import { storeTokens } from '$lib/utils/others';
 import type { ToastData } from '$lib/utils/showToast';
 import { fail, type Actions } from '@sveltejs/kit';
@@ -22,26 +22,16 @@ export const actions: Actions = {
 
 		const formData = form.data;
 
-		const res = await fetch(PUBLIC_API_URL + '/api/Auth/login', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(formData)
-		});
+		const { response, responseBody } = await fetchApi('/api/Auth/login', 'POST', formData);
 
-		const responseData = await res.json();
+		const responseToastData: ToastData = getToastData(responseBody, 'Logged in');
 
-		const responseToastData: ToastData = {
-			type: responseData.isSuccess ? 'success' : 'error',
-			title: responseData.isSuccess ? 'Logged In' : null,
-			description: responseData.isSuccess
-				? responseData.result.message
-				: responseData.errorMessages.join('. ')
-		};
-
-		if (res.ok) {
-			storeTokens(cookies, responseData.result.token, responseData.result.refreshToken);
+		if (response.ok) {
+			storeTokens(
+				cookies,
+				responseBody.result.token as string,
+				responseBody.result.refreshToken as string
+			);
 
 			return message(form, responseToastData);
 		} else {
