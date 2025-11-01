@@ -51,18 +51,40 @@ export async function fetchApi<T = Record<string, unknown>>(
 
 		// handle non-2xx before parsing JSON
 		if (!response.ok) {
-			const errorMessage = `HTTP ${response.status} ${response.statusText}`;
+			let responseBody: ApiResponseBody<T> | null = null;
+			let backendText = '';
 
-			logger.error(apiPrefix, 'Request failed', errorMessage);
+			try {
+				// Try to parse backend JSON error
+				responseBody = (await response.json()) as ApiResponseBody<T>;
+			} catch {
+				// If not JSON, try to read as plain text for debugging
+				try {
+					backendText = await response.text();
+				} catch {
+					backendText = 'No response body';
+				}
+			}
 
-			responseBody = {
+			// If backend returned JSON-like body with message or errorMessages → keep it
+			if (responseBody && (responseBody.errorMessages?.length || responseBody.result)) {
+				logger.error(apiPrefix, 'Request failed with backend error', sanitizeForLog(responseBody));
+				return { response, responseBody };
+			}
+
+			// Otherwise, fall back to generic message
+			const fallbackResponse: ApiResponseBody<T> = {
 				statusCode: response.status,
 				isSuccess: false,
-				errorMessages: [errorMessage],
+				errorMessages: [
+					`HTTP ${response.status} ${response.statusText}`,
+					backendText ? `Raw response: ${backendText}` : 'No response text'
+				],
 				result: { message: 'Request failed' } as T & { message: string }
 			};
 
-			return { response, responseBody };
+			logger.error(apiPrefix, 'Request failed (no JSON)', sanitizeForLog(fallbackResponse));
+			return { response, responseBody: fallbackResponse };
 		}
 
 		try {
