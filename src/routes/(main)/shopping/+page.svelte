@@ -1,4 +1,23 @@
 <script>
+	import ProductCard from '$lib/components/ui/card/ProductCard.svelte';
+
+	const { data } = $props();
 </script>
 
-Shop page
+<section class="mt-8 flex min-h-screen flex-col items-center max-md:mt-32">
+	<h2 class="text-header1">Discover our shopping products</h2>
+
+	<div class="grid w-full grid-cols-4 items-stretch gap-4 py-2 max-md:grid-cols-2 mt-4">
+		{#await data.products}
+			{#each Array(16) as skeleton}
+				<div class="h-64 w-full skeleton"></div>
+			{/each}
+		{:then products}
+			{#each products as product (product.id)}
+				<ProductCard {product} />
+			{/each}
+		{:catch err}
+			<p class="text-error">Error loading products</p>
+		{/await}
+	</div>
+</section>
