@@ -7,6 +7,7 @@
 	import { getContext } from 'svelte';
 	import SearchInput from '../ui/SearchInput.svelte';
 	import UserAvatar from '../ui/UserAvatar.svelte';
+	import { goto } from '$app/navigation';
 
 	const getUserProfile = getContext<() => UserProfile | null>(USER_PROFILE_CONTEXT);
 	const getUserRole = getContext<() => UserRole | null>(USER_ROLE_CONTEXT);
@@ -20,13 +21,11 @@
 	</a>
 
 	<div>
-		<ul class="flex h-full items-center px-6">
+		<ul class="flex h-full items-center gap-2 px-6">
 			<li>
 				<a
 					href="/learning"
-					class="p-6 {page.url.pathname.startsWith('/learning')
-						? 'font-black text-primary-content'
-						: ''}"
+					class="btn btn-ghost {page.url.pathname.startsWith('/learning') ? 'font-black' : ''}"
 				>
 					Learning
 				</a>
@@ -34,9 +33,7 @@
 			<li>
 				<a
 					href="/shopping"
-					class="p-6 {page.url.pathname.startsWith('/shopping')
-						? 'font-black text-primary-content'
-						: ''}"
+					class="btn btn-ghost {page.url.pathname.startsWith('/shopping') ? 'font-black' : ''}"
 				>
 					Shopping
 				</a>
@@ -44,9 +41,7 @@
 			<li>
 				<a
 					href="/community"
-					class="p-6 {page.url.pathname.startsWith('/community')
-						? 'font-black text-primary-content'
-						: ''}"
+					class="btn btn-ghost {page.url.pathname.startsWith('/community') ? 'font-black' : ''}"
 				>
 					Community
 				</a>
@@ -54,7 +49,19 @@
 		</ul>
 	</div>
 
-	<SearchInput />
+	{#if page.url.pathname.startsWith('/learning')}
+		<SearchInput
+			placeholder="Search for courses..."
+			onEnter={(query) => goto(`/learning/courses?search=${query}`)}
+		/>
+	{:else if page.url.pathname.startsWith('/shopping')}
+		<SearchInput
+			placeholder="Search for products..."
+			onEnter={(query) => goto(`/shopping/products?search=${query}`)}
+		/>
+	{:else}
+		<div class="grow"></div>
+	{/if}
 
 	<div class="flex items-center gap-2 pl-8">
 		{#if userProfile}
@@ -72,7 +79,7 @@
 					/>
 				</div>
 				<ul
-					tabindex="0"
+					tabindex="-1"
 					class="dropdown-content menu z-1 w-52 rounded-field bg-base-100 p-2 shadow-sm"
 				>
 					{#if userRole === 'Admin'}

@@ -7,7 +7,7 @@
 <section class="mt-8 flex min-h-screen flex-col items-center max-md:mt-32">
 	<h2 class="text-header1">Discover our learning courses</h2>
 
-	<div class="grid w-full grid-cols-4 items-stretch gap-4 py-2 max-md:grid-cols-2 mt-4">
+	<div class="mt-4 grid w-full grid-cols-4 items-stretch gap-4 py-2 max-md:grid-cols-2">
 		{#await data.courses}
 			{#each Array(16) as skeleton}
 				<div class="h-64 w-full skeleton"></div>

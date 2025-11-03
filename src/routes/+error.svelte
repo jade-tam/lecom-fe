@@ -22,5 +22,5 @@
 		/>
 	</div>
 
-	<a href="/" class="btn btn-primary mt-12"> Go Home </a>
+	<a href="/" class="btn mt-12 btn-primary"> Go Home </a>
 </div>

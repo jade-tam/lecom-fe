@@ -1,6 +1,4 @@
-import {
-	updateCourseSchema
-} from '$lib/schemas/courseSchema';
+import { updateCourseSchema } from '$lib/schemas/courseSchema';
 import type { Category } from '$lib/types/Category';
 import type { Course } from '$lib/types/Course.js';
 import { fetchApi, fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi';

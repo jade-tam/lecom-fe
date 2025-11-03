@@ -1,9 +1,21 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import type { HTMLInputAttributes } from 'svelte/elements';
 
-	let { value = $bindable('') } = $props();
+	let {
+		value = $bindable(''),
+		onEnter,
+		...restAttributes
+	}: HTMLInputAttributes & { onEnter?: (value: string) => void } = $props();
 
 	let searchInput: HTMLInputElement | null = null;
+
+	function handleKeydown(event: KeyboardEvent) {
+		if (event.key === 'Enter' && value.trim()) {
+			event.preventDefault();
+			onEnter?.(value.trim());
+		}
+	}
 
 	onMount(() => {
 		const handleShortcut = (e: KeyboardEvent) => {
@@ -21,7 +33,15 @@
 
 <label class="input w-full">
 	<span class="icon-[fa7-solid--search]"></span>
-	<input bind:this={searchInput} bind:value type="search" class="grow" placeholder="Search..." />
+	<input
+		bind:this={searchInput}
+		bind:value
+		type="search"
+		class="grow"
+		placeholder="Search..."
+		onkeydown={handleKeydown}
+		{...restAttributes}
+	/>
 	<kbd class="kbd kbd-sm">Ctrl</kbd>
 	<kbd class="kbd kbd-sm">K</kbd>
 </label>
