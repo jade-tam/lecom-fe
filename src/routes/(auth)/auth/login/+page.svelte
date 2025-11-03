@@ -13,7 +13,7 @@
 			validators: zod4Client(loginSchema),
 			onUpdated: ({ form }) => {
 				if (form.message?.type === 'success') {
-					goto('/learn');
+					goto('/learning');
 				}
 			}
 		}
