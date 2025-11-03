@@ -79,7 +79,7 @@ html {
 }
 
 /* Reduce base font size on smaller screens */
-@media (max-width: 786px) {
+@media (max-width: 768px) {
 	/* Tailwind’s sm breakpoint */
 	html {
 		font-size: 12px;
