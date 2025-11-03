@@ -10,9 +10,21 @@
 <section class="mt-8 flex min-h-screen flex-col items-center max-md:mt-32">
 	<h2 class="text-header1">Discover our shopping products</h2>
 
-	<div
-		class="grid w-full grid-cols-4 items-stretch gap-4 max-lg:grid-cols-3 max-md:grid-cols-2"
-	>
+	<div class="mt-2 flex gap-2 self-start">
+		{#await data.categories}
+			<div class="btn w-32 skeleton rounded-field btn-sm"></div>
+			<div class="btn w-24 skeleton rounded-field btn-sm"></div>
+			<div class="btn w-28 skeleton rounded-field btn-sm"></div>
+		{:then categories}
+			{#each categories as cat (cat.id)}
+				<a class="btn btn-sm btn-secondary" href="/shopping/products?category={cat.id}">
+					{cat.name}
+				</a>
+			{/each}
+		{/await}
+	</div>
+
+	<div class="grid w-full grid-cols-4 items-stretch gap-4 max-lg:grid-cols-3 max-md:grid-cols-2">
 		{#await data.queryResult}
 			{#each Array(12) as skeleton}
 				<ProductCardSkeleton />
