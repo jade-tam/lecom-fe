@@ -18,7 +18,7 @@
 		validators: zod4Client(registerShopSchema),
 		onUpdated: ({ form }) => {
 			if (form.message?.type === 'success') {
-				goto('/shop');
+				goto('/shopping');
 			}
 		}
 	});
