@@ -11,7 +11,7 @@ export const load = async ({ params, cookies }) => {
 	const { id } = params;
 
 	const product: Product = (
-		await fetchAuthorizedApi<Product>(cookies, `/api/seller/products/${id}`, 'GET')
+		await fetchAuthorizedApi<Product>(cookies, `/api/seller/products/by-id/${id}`, 'GET')
 	).responseBody.result;
 
 	const categories: Category[] = (await fetchApi<Category[]>('/api/productcategory', 'GET'))
