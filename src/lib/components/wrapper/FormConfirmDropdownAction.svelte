@@ -36,7 +36,7 @@
 		>
 			<p class="font-bold">{label}</p>
 			<p class="text-xs text-base-content/60">{description}</p>
-			<button class="btn mt-1 {confirmButtonClass}">
+			<button class="btn mt-1 {confirmButtonClass}" type="submit">
 				<span class={confirmButtonIcon}></span>Confirm
 			</button>
 		</div>

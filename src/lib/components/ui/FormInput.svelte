@@ -25,14 +25,14 @@
 	} = $props();
 </script>
 
-<fieldset class={`fieldset ${className}`} class:hidden>
-	<legend class="fieldset-legend"
+<fieldset class={`fieldset ${className}`}>
+	<legend class="fieldset-legend" class:hidden
 		>{label}
 		{#if help}
 			<ToolTip tip={help} />
 		{/if}
 	</legend>
-	<label class="input w-full">
+	<label class="input w-full" class:hidden>
 		{#if icon}
 			<span class={`${icon} text-secondary`}></span>
 		{/if}

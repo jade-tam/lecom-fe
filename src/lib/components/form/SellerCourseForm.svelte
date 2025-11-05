@@ -46,7 +46,12 @@
 	});
 </script>
 
-<form method="POST" class="mt-2 h-fit w-full rounded-box border bg-base-100 p-4" use:enhance>
+<form
+	method="POST"
+	class="mt-2 h-fit w-full rounded-box border bg-base-100 p-4"
+	use:enhance
+	action={mode === 'update' ? '?/updateCourse' : ''}
+>
 	<div class="flex items-center justify-between">
 		<h1 class="text-header3 font-bold">Basic Information</h1>
 		{#if $form.active}
@@ -56,47 +61,51 @@
 		{/if}
 	</div>
 
-	<FormInput
-		name="title"
-		label="Course Title"
-		placeholder="Enter title here..."
-		type="text"
-		superForm={form}
-		{errors}
-	/>
-
-	{#await categories}
-		<fieldset class="fieldset">
-			<legend class="fieldset-legend">Course Category</legend>
-			<div class="h-10 w-90 skeleton rounded-field"></div>
-		</fieldset>
-	{:then categories}
-		<FormSelect
-			options={categories.map((cat) => ({
-				title: cat.name,
-				value: cat.id
-			}))}
-			class="max-w-[360px]"
-			name="categoryId"
-			label="Course Category"
-			superForm={form}
-			{errors}
-		/>
-	{/await}
+	<div class="flex gap-4">
+		<div>
+			<FormMediaInput
+				label="Course Thumbnail"
+				aspectRatio="16:9"
+				buttonClass="h-48"
+				name="courseThumbnail"
+				superForm={form}
+				{errors}
+			/>
+		</div>
+		<div class="flex grow flex-col">
+			<FormInput
+				name="title"
+				label="Course Title"
+				placeholder="Enter title here..."
+				type="text"
+				superForm={form}
+				{errors}
+			/>
+			{#await categories}
+				<fieldset class="fieldset">
+					<legend class="fieldset-legend">Course Category</legend>
+					<div class="h-10 w-90 skeleton rounded-field"></div>
+				</fieldset>
+			{:then categories}
+				<FormSelect
+					options={categories.map((cat) => ({
+						title: cat.name,
+						value: cat.id
+					}))}
+					class="max-w-[300px]"
+					name="categoryId"
+					label="Course Category"
+					superForm={form}
+					{errors}
+				/>
+			{/await}
+		</div>
+	</div>
 
 	<FormTextArea
 		name="summary"
 		label="Summary"
 		placeholder="Enter summary here..."
-		superForm={form}
-		{errors}
-	/>
-
-	<FormMediaInput
-		label="Course Thumbnail"
-		aspectRatio="16:9"
-		buttonClass="w-full max-h-48"
-		name="courseThumbnail"
 		superForm={form}
 		{errors}
 	/>

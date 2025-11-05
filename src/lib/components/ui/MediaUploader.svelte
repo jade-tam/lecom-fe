@@ -11,7 +11,8 @@
 		maxSizeMB = 5,
 		icon,
 		placeholder,
-		mediaType = 'Image' // "Image" | "Video" | "Document"
+		mediaType = 'Image', // "Image" | "Video" | "Document",
+		onUploadSuccess
 	}: {
 		buttonClass: string;
 		name: string;
@@ -21,6 +22,7 @@
 		maxSizeMB?: number;
 		placeholder: string;
 		mediaType?: 'Image' | 'Video' | 'Document';
+		onUploadSuccess?: (data: { url: string; file: File; duration?: number }) => void;
 	} = $props();
 
 	// elements & local state
@@ -97,37 +99,49 @@
 			form.append('file', file);
 
 			const resp = await fetch(uploadEndpoint, { method: 'POST', body: form });
-			if (!resp.ok) {
-				const text = await resp.text().catch(() => 'Upload failed');
-				throw new Error(text || `Upload failed with status ${resp.status}`);
-			}
+			if (!resp.ok) throw new Error(await resp.text());
 
 			const body = await resp.json().catch(() => null);
-			// your API previously returned responseBody.result.url
-			// be tolerant: try common shapes
-			const remoteUrl =
-				(body && body.result && body.result.url) ||
-				(body && body.url) ||
-				(body && body.data && body.data.url) ||
-				null;
+			const remoteUrl = body?.result?.url || body?.url || body?.data?.url || null;
 
-			// fallback: create local object URL if no remote URL returned
-			if (remoteUrl) {
-				value = remoteUrl;
-			} else {
-				// create object URL for immediate preview (not persisted)
-				value = URL.createObjectURL(file);
+			const finalUrl = remoteUrl ?? URL.createObjectURL(file);
+			value = finalUrl;
+
+			// ✅ if it's a video, get duration before clearing
+			let duration: number | undefined;
+			if (mediaType === 'Video') {
+				duration = await getVideoDuration(file);
 			}
 
-			// clear selection
+			// ✅ Trigger external callback
+			onUploadSuccess?.({ url: finalUrl, file, duration });
+
 			selectedFile = null;
 		} catch (err: any) {
 			console.error(err);
 			errorMessage = String(err?.message ?? err);
-			showToast({ type: 'error', description: 'Something wrong' });
+			showToast({ type: 'error', description: 'Something went wrong' });
 		} finally {
 			uploading = false;
 		}
+	}
+
+	async function getVideoDuration(file: File): Promise<number | undefined> {
+		return new Promise((resolve) => {
+			try {
+				const video = document.createElement('video');
+				video.preload = 'metadata';
+				video.onloadedmetadata = () => {
+					URL.revokeObjectURL(video.src);
+					const duration = Math.round(video.duration); // ✅ round to nearest second
+					resolve(isFinite(duration) ? duration : undefined);
+				};
+				video.onerror = () => resolve(undefined);
+				video.src = URL.createObjectURL(file);
+			} catch {
+				resolve(undefined);
+			}
+		});
 	}
 
 	// ============================================================================================
@@ -202,6 +216,12 @@
 
 			if (remoteUrl) value = remoteUrl;
 			else value = dataUrl; // fallback to local preview
+
+			// DO thing with success function
+			onUploadSuccess?.({
+				url: remoteUrl ?? dataUrl,
+				file: outFile
+			});
 
 			// cleanup
 			modal?.close();

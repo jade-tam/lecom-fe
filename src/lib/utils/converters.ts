@@ -73,3 +73,59 @@ export function formatVND(amount: number): string {
 		})
 		.replace('₫', 'đ'); // optional: lowercase for style consistency
 }
+
+export function toRomanNumeral(num: number): string {
+	if (num <= 0) return '';
+	const romanMap: [number, string][] = [
+		[1000, 'M'],
+		[900, 'CM'],
+		[500, 'D'],
+		[400, 'CD'],
+		[100, 'C'],
+		[90, 'XC'],
+		[50, 'L'],
+		[40, 'XL'],
+		[10, 'X'],
+		[9, 'IX'],
+		[5, 'V'],
+		[4, 'IV'],
+		[1, 'I']
+	];
+
+	let result = '';
+	for (const [value, symbol] of romanMap) {
+		while (num >= value) {
+			result += symbol;
+			num -= value;
+		}
+	}
+	return result;
+}
+
+export function toNumericString(num: number): string {
+	return String(num);
+}
+
+export function toOrdinalNumber(num: number): string {
+	const suffixes = ['th', 'st', 'nd', 'rd'];
+	const v = num % 100;
+	return num + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0]);
+}
+
+export function formatVideoDuration(totalSeconds: number | undefined | null): string {
+	if (!totalSeconds || totalSeconds < 0 || !isFinite(totalSeconds)) return '0:00';
+
+	const seconds = Math.floor(totalSeconds % 60);
+	const minutes = Math.floor((totalSeconds / 60) % 60);
+	const hours = Math.floor(totalSeconds / 3600);
+
+	const pad = (n: number) => n.toString().padStart(2, '0');
+
+	if (hours > 0) {
+		// ✅ Always show H:MM:SS
+		return `${hours}:${pad(minutes)}:${pad(seconds)}`;
+	}
+
+	// ✅ Always show M:SS (even for less than 1 minute)
+	return `${minutes}:${pad(seconds)}`;
+}

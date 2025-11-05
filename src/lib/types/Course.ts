@@ -26,3 +26,20 @@ export type Course = {
 	courseThumbnail: string;
 	active: CourseActiveStatus;
 };
+
+export type Section = {
+	id: string;
+	title: string;
+	orderIndex: number;
+	lessons: Lesson[];
+};
+
+export type Lesson = {
+	id: string;
+	courseSectionId: string;
+	title: string;
+	type: string;
+	durationSeconds: number;
+	contentUrl: string;
+	orderIndex: number;
+};

@@ -15,7 +15,8 @@
 		class: className = '',
 		buttonClass = '',
 		aspectRatio,
-		mediaType = 'Image' // "Image" | "Video" | "Document"
+		mediaType = 'Image', // "Image" | "Video" | "Document"
+		onUploadSuccess
 	}: {
 		aspectRatio: '1:1' | '16:9';
 		placeholder?: string;
@@ -29,6 +30,7 @@
 		superForm: SuperFormData<any>;
 		errors: SuperFormErrors<Record<string, string>>;
 		mediaType?: 'Image' | 'Video' | 'Document';
+		onUploadSuccess?: (data: { url: string; file: File; duration?: number }) => void;
 	} = $props();
 </script>
 
@@ -50,6 +52,7 @@
 		{mediaType}
 		{buttonClass}
 		maxSizeMB={mediaType === 'Video' ? 200 : undefined}
+		{onUploadSuccess}
 	/>
 
 	{#if $errors[name]}
