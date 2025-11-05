@@ -61,7 +61,6 @@
 		maxPrice = MAX_PRICE;
 
 		const searchParams = new URLSearchParams();
-		if (search) searchParams.set('search', search);
 		if (pageNumber) searchParams.set('page', String(pageNumber));
 
 		goto(`./products?${searchParams.toString()}`, {
@@ -70,9 +69,22 @@
 	}
 </script>
 
-<section class="flex min-h-screen flex-col items-center max-md:mt-32">
+<section class="flex min-h-screen flex-col items-center">
 	<div class="my-4 flex items-center justify-between self-start">
-		<p>Showing xxx results for <span class="font-bold">'{search}'</span></p>
+		{#await data.queryResult}
+			<div class="loading loading-infinity"></div>
+		{:then queryResult}
+			<p>
+				Showing <strong>{queryResult.items.length} results</strong>
+				{#if search}
+					for <span class="font-bold">
+						'{search}'
+					</span>
+				{/if}
+			</p>
+		{:catch err}
+			<p class="text-error">Error loading products</p>
+		{/await}
 	</div>
 
 	<div class="grid w-full grid-cols-12 gap-6 max-md:grid-cols-1">
@@ -130,10 +142,10 @@
 			</div>
 		</div>
 		<div
-			class="col-span-9 grid w-full grid-cols-4 items-stretch gap-4 max-lg:grid-cols-3 max-md:grid-cols-2"
+			class="col-span-9 grid h-fit w-full grid-cols-4 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2"
 		>
 			{#await data.queryResult}
-				{#each Array(12) as skeleton}
+				{#each Array(4) as skeleton}
 					<ProductCardSkeleton />
 				{/each}
 			{:then result}

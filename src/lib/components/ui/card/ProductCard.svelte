@@ -8,7 +8,7 @@
 
 <a href="/shopping/product/{product.slug}" class="group">
 	<div
-		class="flex h-full flex-col gap-3 rounded-box border bg-base-100 p-3 shadow duration-200 group-hover:-translate-y-2 group-hover:shadow-lg"
+		class="flex flex-col gap-3 h-full rounded-box border bg-base-100 p-3 shadow duration-200 group-hover:-translate-y-2 group-hover:shadow-lg"
 	>
 		<Image src={product.thumbnailUrl} class="h-38 w-full" border="" alt={product.name} />
 		<p class="font-medium">{product.name}</p>

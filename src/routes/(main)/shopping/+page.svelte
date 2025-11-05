@@ -7,7 +7,7 @@
 	const { data } = $props();
 </script>
 
-<section class="mt-8 flex min-h-screen flex-col items-center max-md:mt-32">
+<section class="mt-8 flex min-h-screen flex-col items-center">
 	<h2 class="text-header1">Discover our shopping products</h2>
 
 	<div class="mt-2 flex gap-2 self-start">
@@ -24,7 +24,7 @@
 		{/await}
 	</div>
 
-	<div class="grid w-full grid-cols-4 items-stretch gap-4 max-lg:grid-cols-3 max-md:grid-cols-2">
+	<div class="grid w-full grid-cols-4 items-stretch gap-4 max-lg:grid-cols-3 max-md:grid-cols-2 mt-4">
 		{#await data.queryResult}
 			{#each Array(12) as skeleton}
 				<ProductCardSkeleton />
