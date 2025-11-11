@@ -24,7 +24,9 @@
 		{/await}
 	</div>
 
-	<div class="grid w-full grid-cols-4 items-stretch gap-4 max-lg:grid-cols-3 max-md:grid-cols-2 mt-4">
+	<div
+		class="mt-4 grid w-full grid-cols-4 items-stretch gap-4 max-lg:grid-cols-3 max-md:grid-cols-2"
+	>
 		{#await data.queryResult}
 			{#each Array(12) as skeleton}
 				<ProductCardSkeleton />

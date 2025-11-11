@@ -1,1 +1,1 @@
-<div class="h-64 w-full skeleton border shadow"></div>
+<div class="h-84 w-full skeleton rounded-field border shadow"></div>

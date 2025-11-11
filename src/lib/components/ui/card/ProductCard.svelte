@@ -8,10 +8,16 @@
 
 <a href="/shopping/product/{product.slug}" class="group">
 	<div
-		class="flex flex-col gap-2 h-full rounded-field border bg-base-100 p-3 shadow duration-200 group-hover:-translate-y-2 group-hover:shadow-lg"
+		class="flex h-full flex-col gap-2 rounded-field border bg-base-100 p-3 shadow duration-200 group-hover:-translate-y-2 group-hover:shadow-lg"
 	>
-		<Image src={product.thumbnailUrl} class="h-38 w-full" rounded="rounded-selector" border="" alt={product.name} />
-		<p class="font-medium line-clamp-3">{product.name}</p>
+		<Image
+			src={product.thumbnailUrl}
+			class="h-38 w-full"
+			rounded="rounded-selector"
+			border=""
+			alt={product.name}
+		/>
+		<p class="line-clamp-2 font-medium">{product.name}</p>
 		<div class="badge badge-sm badge-secondary">{product.categoryName}</div>
 		<div class="flex items-center gap-2">
 			<Image class="h-8 w-8 rounded-full" src={product.shopAvatar} alt={product.shopName} />

@@ -40,6 +40,8 @@ export type Product = {
 	lastUpdatedAt: string;
 	images: ProductImageData[];
 	thumbnailUrl: string;
+	shopId: number;
 	shopName: string;
 	shopAvatar: string;
+	shopDescription: string;
 };

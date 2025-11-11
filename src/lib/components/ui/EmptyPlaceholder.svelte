@@ -1,5 +1,5 @@
 <script lang="ts">
-	const { icon = 'icon-[fa7-solid--ghost]', text = 'Empty' } = $props();
+	const { icon = 'icon-[fa7-solid--ghost]', text } = $props();
 </script>
 
 <div
