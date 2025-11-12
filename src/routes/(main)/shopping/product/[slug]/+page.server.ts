@@ -5,7 +5,7 @@ import type { ToastData } from '$lib/utils/showToast.js';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 
-export async function load({ params }) {
+export async function load({ params, cookies }) {
 	const { slug } = params;
 
 	const product: Product | null = await getSafeResult(
@@ -14,7 +14,7 @@ export async function load({ params }) {
 	);
 
 	const similarProductsPromise: Promise<Product[]> = getSafeResult(
-		fetchApi(`/api/recombee/similar/${product?.id}`, 'GET'),
+		fetchAuthorizedApi(cookies, `/api/recombee/similar/${product?.id}`, 'GET'),
 		[] as Product[]
 	);
 
