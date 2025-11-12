@@ -178,7 +178,7 @@
 				<h1 class="text-header3 font-bold">Live Preview</h1>
 			</div>
 
-			<ShopFrontPage shop={{ ...shop, ...$form }} />
+			<ShopFrontPage shop={{ ...shop, ...$form }} products={[]} courses={[]} />
 		</div>
 	</div>
 </form>

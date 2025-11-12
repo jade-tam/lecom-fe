@@ -9,11 +9,12 @@ import { zod4 } from 'sveltekit-superforms/adapters';
 export const load = async ({ cookies }) => {
 	const { responseBody } = await fetchAuthorizedApi<Shop>(cookies, '/api/Seller/my-shop', 'GET');
 	const shop = responseBody.result;
+
 	const form = await superValidate(shop, zod4(updateShopSchema));
 
 	return {
 		form,
-		shop: shop
+		shop
 	};
 };
 

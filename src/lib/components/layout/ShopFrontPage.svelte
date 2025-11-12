@@ -1,15 +1,24 @@
 <script lang="ts">
+	import type { Course } from '$lib/types/Course';
+	import type { Product } from '$lib/types/Product';
 	import type { Shop } from '$lib/types/Shop';
 	import IconFacebook from '../others/IconFacebook.svelte';
 	import IconInstagram from '../others/IconInstagram.svelte';
 	import IconTiktok from '../others/IconTiktok.svelte';
+	import CourseCard from '../ui/card/CourseCard.svelte';
+	import ProductCard from '../ui/card/ProductCard.svelte';
+	import EmptyPlaceholder from '../ui/EmptyPlaceholder.svelte';
 	import Image from '../ui/Image.svelte';
 
 	const {
 		shop,
+		products,
+		courses,
 		haveSellerAction = false
 	}: {
 		shop: Shop;
+		products: Product[];
+		courses: Course[];
 		haveSellerAction?: boolean;
 	} = $props();
 
@@ -52,6 +61,9 @@
 			<a class="btn btn-primary" href="/seller/products"
 				><span class="icon-[fa7-solid--box-open]"></span>Manage Products</a
 			>
+			<a class="btn btn-secondary" href="/seller/courses"
+				><span class="icon-[fa7-solid--book]"></span>Manage Courses</a
+			>
 		</div>
 	{/if}
 </div>
@@ -60,18 +72,42 @@
 	<label class="tab gap-2 text-primary-content hover:text-primary-content">
 		<input type="radio" name="my_tab" checked />
 		<span class="icon-[fa7-solid--box-open]"></span>
-		Products ({5})
+		Products ({products.length})
 	</label>
 
-	<div class="tab-content p-4">Products show here</div>
+	<div class="tab-content">
+		<div class="grid grid-cols-4 gap-4 pt-4 max-md:grid-cols-2">
+			{#if products}
+				{#each products as product (product.id)}
+					<ProductCard {product} />
+				{/each}
+			{:else}
+				<div class="col-span-4 max-md:col-span-2">
+					<EmptyPlaceholder text="No product found" />
+				</div>
+			{/if}
+		</div>
+	</div>
 
 	<label class="tab gap-2 text-secondary-content hover:text-secondary-content">
-		<input type="radio" name="my_tab" checked />
+		<input type="radio" name="my_tab" />
 		<span class="icon-[fa7-solid--book]"></span>
-		Courses ({9})
+		Courses ({courses.length})
 	</label>
 
-	<div class="tab-content p-4">Courses show here</div>
+	<div class="tab-content">
+		<div class="grid grid-cols-4 gap-4 pt-4">
+			{#if courses}
+				{#each courses as course (course.id)}
+					<CourseCard {course} />
+				{/each}
+			{:else}
+				<div class="col-span-4">
+					<EmptyPlaceholder text="No course found" />
+				</div>
+			{/if}
+		</div>
+	</div>
 </div>
 
 <div class="mt-4 flex flex-col items-center gap-4 rounded-box border bg-base-100 p-4">
@@ -80,30 +116,36 @@
 		><span class="icon-[fa7-solid--phone] shrink-0"></span>Call us now</a
 	>
 	<div class="flex gap-2">
-		<a
-			class="btn btn-square text-info-content btn-ghost btn-info"
-			href={shop.shopFacebook}
-			aria-label="facebook link"
-			target="_blank"
-		>
-			<IconFacebook />
-		</a>
-		<a
-			class="btn btn-square text-error-content btn-ghost btn-error"
-			href={shop.shopInstagram}
-			aria-label="instagram link"
-			target="_blank"
-		>
-			<IconInstagram />
-		</a>
-		<a
-			class="btn btn-square text-secondary-content btn-ghost btn-secondary"
-			href={shop.shopTiktok}
-			aria-label="tiktok link"
-			target="_blank"
-		>
-			<IconTiktok />
-		</a>
+		{#if shop.shopFacebook}
+			<a
+				class="btn btn-square text-info-content btn-ghost btn-info"
+				href={shop.shopFacebook}
+				aria-label="facebook link"
+				target="_blank"
+			>
+				<IconFacebook />
+			</a>
+		{/if}
+		{#if shop.shopInstagram}
+			<a
+				class="btn btn-square text-error-content btn-ghost btn-error"
+				href={shop.shopInstagram}
+				aria-label="instagram link"
+				target="_blank"
+			>
+				<IconInstagram />
+			</a>
+		{/if}
+		{#if shop.shopTiktok}
+			<a
+				class="btn btn-square text-secondary-content btn-ghost btn-secondary"
+				href={shop.shopTiktok}
+				aria-label="tiktok link"
+				target="_blank"
+			>
+				<IconTiktok />
+			</a>
+		{/if}
 	</div>
 	<p class="text-sm text-base-content/60">Follow to receive shop updates and exclusive offers.</p>
 </div>

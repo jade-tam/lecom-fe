@@ -6,12 +6,7 @@
 </script>
 
 {#if data.shop}
-	<ShopFrontPage
-		shop={data.shop}
-		products={data.products}
-		courses={data.courses}
-		haveSellerAction
-	/>
+	<ShopFrontPage shop={data.shop} products={data.products} courses={data.courses} />
 {:else}
-	<EmptyPlaceholder text="Something is wrong, we cannot found your shop" />
+	<EmptyPlaceholder text="Shop not found" />
 {/if}
