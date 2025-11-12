@@ -1,7 +1,7 @@
 import { redirect, type Handle } from '@sveltejs/kit';
 import { paraglideMiddleware } from '$lib/paraglide/server';
 import { sequence } from '@sveltejs/kit/hooks';
-import { parseJwt } from '$lib/utils/others';
+import { haveAuthorization, parseJwt } from '$lib/utils/others';
 import type { JwtPayload } from '$lib/types/JwtPayload';
 
 const handleParaglide: Handle = ({ event, resolve }) =>
@@ -18,6 +18,8 @@ const handleToken: Handle = async ({ event, resolve }) => {
 
 	if (token) {
 		const payload: JwtPayload = parseJwt(token);
+
+		console.log('[HandleToken Hook payload]: ', payload);
 
 		event.locals.user = {
 			id: payload.sub,
@@ -39,7 +41,7 @@ const handleAuthGuard: Handle = async ({ event, resolve }) => {
 			redirect(303, '/auth/login');
 		}
 
-		if (user.role !== 'Admin') {
+		if (!haveAuthorization(user.role, 'Admin')) {
 			redirect(303, '/unauthorized');
 		}
 	}
@@ -53,6 +55,10 @@ const handleAuthGuard: Handle = async ({ event, resolve }) => {
 	if (routeId.startsWith('/(seller)')) {
 		if (!user) {
 			redirect(303, '/auth/login');
+		}
+
+		if (!haveAuthorization(user.role, 'Seller')) {
+			redirect(303, '/unauthorized');
 		}
 	}
 

@@ -8,6 +8,7 @@
 	import SearchInput from '../ui/SearchInput.svelte';
 	import UserAvatar from '../ui/UserAvatar.svelte';
 	import { goto } from '$app/navigation';
+	import { haveAuthorization } from '$lib/utils/others';
 
 	const getUserProfile = getContext<() => UserProfile | null>(USER_PROFILE_CONTEXT);
 	const getUserRole = getContext<() => UserRole | null>(USER_ROLE_CONTEXT);
@@ -82,15 +83,15 @@
 					tabindex="-1"
 					class="dropdown-content menu z-1 w-52 rounded-field bg-base-100 p-2 shadow-sm"
 				>
-					{#if userRole === 'Admin'}
+					{#if userRole && haveAuthorization(userRole, 'Admin')}
 						<li><a href="/admin" class="rounded-field">Admin Dashboard</a></li>
 					{/if}
-					{#if userRole === 'Seller' || userRole === 'Admin'}
+					{#if userRole && haveAuthorization(userRole, 'Seller')}
 						<li><a href="/seller" class="rounded-field">Seller Dashboard</a></li>
 					{/if}
 					<li><a href="/profile" class="rounded-field">Profile</a></li>
 					<li><a href="/settings" class="rounded-field">Settings</a></li>
-					{#if userRole === 'Customer'}
+					{#if userRole && haveAuthorization(userRole, 'Customer')}
 						<li><a href="/seller-register" class="rounded-field">Register Shop</a></li>
 					{/if}
 					<li><a href="/help-and-feedback" class="rounded-field">Help & Feedback</a></li>
