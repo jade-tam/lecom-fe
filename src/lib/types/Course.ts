@@ -43,3 +43,20 @@ export type Lesson = {
 	contentUrl: string;
 	orderIndex: number;
 };
+
+// Another version of course data response from public api
+export type CourseWithDetail = {
+	id: string;
+	title: string;
+	slug: string;
+	summary: string;
+	categoryName: string;
+	courseThumbnail: string;
+	shop: {
+		id: number;
+		name: string;
+		avatar: string;
+		description: string;
+	};
+	sections: Section[];
+};
