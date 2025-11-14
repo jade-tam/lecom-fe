@@ -51,7 +51,7 @@
 		{icon}
 		{mediaType}
 		{buttonClass}
-		maxSizeMB={mediaType === 'Video' ? 200 : undefined}
+		maxSizeMB={mediaType === 'Video' ? 8 : undefined}
 		{onUploadSuccess}
 	/>
 

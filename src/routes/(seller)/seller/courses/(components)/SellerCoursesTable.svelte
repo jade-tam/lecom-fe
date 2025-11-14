@@ -13,19 +13,20 @@
 
 	const { courses }: { courses: Course[] } = $props();
 
-	const pageSize = 12;
+	const pageSize = 6;
 
-	const table = new DataTable({
-		pageSize: pageSize,
-		data: courses,
-		columns: [
-			{ id: 'courseThumbnail', key: 'courseThumbnail', name: 'Course Thumbnail' },
-			{ id: 'title', key: 'title', name: 'Title' },
-			{ id: 'categoryName', key: 'categoryName', name: 'Category' },
-			{ id: 'shopName', key: 'shopName', name: 'Shop' },
-			{ id: 'activeStatus', key: 'active', name: 'Active status' }
-		]
-	});
+	const table = $derived(
+		new DataTable({
+			pageSize: pageSize,
+			data: courses,
+			columns: [
+				{ id: 'courseThumbnail', key: 'courseThumbnail', name: 'Course Thumbnail' },
+				{ id: 'title', key: 'title', name: 'Title & Summary' },
+				{ id: 'categoryName', key: 'categoryName', name: 'Category' },
+				{ id: 'activeStatus', key: 'active', name: 'Active status' }
+			]
+		})
+	);
 </script>
 
 <div class="my-2 flex items-end justify-between">
@@ -68,9 +69,7 @@
 											<span class="icon-[fa7-solid--sort-asc]"></span>
 										{:else if table.getSortState(column.id) === 'desc'}
 											<span class="icon-[fa7-solid--sort-desc]"></span>
-										{:else}
-											<span class="icon-[fa7-solid--sort]"></span>
-										{/if}
+										{:else}{/if}
 									</span>
 								{/if}
 							</button>
@@ -95,43 +94,52 @@
 										<Image alt="product" src={row.courseThumbnail} class="h-20 w-32" />
 									</div>
 								</td>
+							{:else if column.id === 'title'}
+								<td
+									><div class="flex flex-col">
+										<p class="line-clamp-1">{row[column.key]}</p>
+										<p class="mt-1 line-clamp-2 text-xs text-base-content/60">{row.summary}</p>
+									</div>
+								</td>
 							{:else}
 								<td>{row[column.key]}</td>
 							{/if}
 						{/each}
 						<td>
-							<div class="flex gap-1">
-								<div class="tooltip" data-tip="View course">
-									<a
-										href={`/shopping/product/${row['slug']}`}
-										class="btn btn-square btn-secondary"
-										aria-label="view course"
-										target="_blank"
-									>
-										<span class="icon-[fa7-solid--eye] text-xl"></span>
-									</a>
-								</div>
-								<div class="tooltip" data-tip="Update">
-									<a
-										href={`/seller/courses/update/${row.id}`}
-										class="btn btn-square btn-primary"
-										aria-label="update"
-									>
-										<span class="icon-[fa7-solid--edit] text-xl"></span>
-									</a>
-								</div>
-								<FormConfirmDropdownAction
-									label="Delete this course?"
-									description="Your course will be deleted forever"
-									action="?/delete"
-									formData={{ id: row.id }}
-								>
-									<div class="tooltip" data-tip="Delete">
-										<button class="btn btn-square btn-error" type="button" aria-label="delete">
-											<span class="icon-[fa7-solid--trash-alt] text-xl"></span>
-										</button>
+							<div class="flex justify-end gap-1">
+								{#if row.active}
+									<div class="tooltip" data-tip="View course">
+										<a
+											href={`/learning/course/${row['slug']}`}
+											class="btn btn-square btn-secondary"
+											aria-label="view course"
+											target="_blank"
+										>
+											<span class="icon-[fa7-solid--eye] text-xl"></span>
+										</a>
 									</div>
-								</FormConfirmDropdownAction>
+									<div class="tooltip" data-tip="Update">
+										<a
+											href={`/seller/courses/update/${row.id}`}
+											class="btn btn-square btn-primary"
+											aria-label="update"
+										>
+											<span class="icon-[fa7-solid--edit] text-xl"></span>
+										</a>
+									</div>
+									<FormConfirmDropdownAction
+										label="Delete this course?"
+										description="Your course will be deleted forever"
+										action="?/delete"
+										formData={{ id: row.id }}
+									>
+										<div class="tooltip" data-tip="Delete">
+											<button class="btn btn-square btn-error" type="button" aria-label="delete">
+												<span class="icon-[fa7-solid--trash-alt] text-xl"></span>
+											</button>
+										</div>
+									</FormConfirmDropdownAction>
+								{/if}
 							</div>
 						</td>
 					</tr>

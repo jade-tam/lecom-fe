@@ -1,5 +1,6 @@
 <script>
-	import { invalidate, invalidateAll } from '$app/navigation';
+	import { invalidate } from '$app/navigation';
+	import { page } from '$app/state';
 	import showToast from '$lib/utils/showToast';
 	import SellerCoursesTable from './(components)/SellerCoursesTable.svelte';
 
@@ -12,7 +13,12 @@
 			showToast(form.toastData);
 
 			if (form.toastData.type === 'success') {
-				invalidate('seller:courses');
+				(async () => {
+					console.log('invalidating seller:courses...');
+					await invalidate('seller:courses');
+					// inspect current page store to see if data changed
+					console.log('page.data.courses after invalidate:', page.data.courses);
+				})();
 			}
 		}
 	});

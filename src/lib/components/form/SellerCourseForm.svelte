@@ -16,7 +16,7 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import FormMediaInput from '../ui/FormMediaInput.svelte';
-	import { courseActiveStatusOptions } from '$lib/types/Course';
+	import { courseActiveStatusOptions, type Course } from '$lib/types/Course';
 
 	const {
 		dataForm,
@@ -29,19 +29,25 @@
 	} = $props();
 
 	const { form, errors, message, enhance, submitting, delayed, tainted, isTainted, submit } =
-		superForm<CreateCourseSchema & UpdateCourseSchema, ToastData>(dataForm, {
+		superForm<
+			CreateCourseSchema & UpdateCourseSchema,
+			{
+				toastData: ToastData;
+				responseResult: Course;
+			}
+		>(dataForm, {
 			validators:
 				mode === 'create' ? zod4Client(createCourseSchema) : zod4Client(updateCourseSchema),
 			onUpdated: ({ form }) => {
-				if (form.message?.type === 'success') {
-					goto('/seller/courses');
+				if (form.message?.toastData.type === 'success') {
+					goto(`/seller/courses/update/${form.message?.responseResult?.id}`);
 				}
 			}
 		});
 
 	$effect(() => {
-		if ($message) {
-			showToast($message);
+		if ($message?.toastData) {
+			showToast($message.toastData);
 		}
 	});
 </script>

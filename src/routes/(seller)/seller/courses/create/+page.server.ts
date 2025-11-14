@@ -38,9 +38,19 @@ export const actions: Actions = {
 		const toastData: ToastData = getToastData(responseBody, 'Course has been created');
 
 		if (response.ok) {
-			return message(form, toastData);
+			return message(form, {
+				toastData: toastData,
+				responseResult: responseBody.result
+			});
 		} else {
-			return message(form, toastData, { status: 400 });
+			return message(
+				form,
+				{
+					toastData: toastData,
+					responseResult: responseBody.result
+				},
+				{ status: 400 }
+			);
 		}
 	}
 };
