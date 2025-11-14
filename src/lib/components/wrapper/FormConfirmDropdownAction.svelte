@@ -8,7 +8,7 @@
 		action,
 		formData,
 		confirmButtonClass = 'btn-error',
-		confirmButtonIcon = 'icon-[fa7-solid--circle-xmark]',
+		confirmButtonIcon = 'icon-[fa7-solid--check-circle]',
 		children
 	}: {
 		label: string;

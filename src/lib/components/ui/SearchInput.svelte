@@ -32,7 +32,7 @@
 </script>
 
 <label class="input w-full">
-	<span class="icon-[fa7-solid--search]"></span>
+	<span class="icon-[fa7-solid--search] shrink-0"></span>
 	<input
 		bind:this={searchInput}
 		bind:value

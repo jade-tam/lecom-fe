@@ -1,6 +1,7 @@
 import type { CourseActiveStatus } from '$lib/types/Course';
 import type { ProductStatus } from '$lib/types/Product';
 import type { ShopStatus } from '$lib/types/Shop';
+import type { UserActiveStatus, UserRole } from '$lib/types/User';
 
 export function getStatusBtnClass(status: ShopStatus) {
 	return status === 'Approved'
@@ -48,4 +49,20 @@ export function getCourseActiveStatusBtnClass(active: CourseActiveStatus) {
 
 export function getCourseActiveStatusBadgeClass(active: CourseActiveStatus) {
 	return active === 1 ? 'badge-success' : 'badge-error';
+}
+
+export function getUserActiveStatusBtnClass(active: UserActiveStatus) {
+	return active === true ? 'btn-success' : 'btn-error';
+}
+
+export function getUserActiveStatusBadgeClass(active: UserActiveStatus) {
+	return active === true ? 'badge-success' : 'badge-error';
+}
+
+export function getUserRoleBtnClass(role: UserRole | UserRole[]) {
+	return role === 'Admin' ? 'btn-error' : role === 'Seller' ? 'btn-info' : 'btn-secondary';
+}
+
+export function getUserRoleBadgeClass(role: UserRole | UserRole[]) {
+	return role === 'Admin' ? 'badge-error' : role === 'Seller' ? 'badge-info' : 'badge-secondary';
 }

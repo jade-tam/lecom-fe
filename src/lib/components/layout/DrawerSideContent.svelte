@@ -38,8 +38,8 @@
 	<div class="mt-6 flex grow flex-col gap-1">
 		{#each sidebarLayoutItems as item (item.href)}
 			{#if item.subItems}
-				<div class="flex gap-4 px-4 py-2 text-sm font-semibold text-base-content/60">
-					<span class={item.iconClass}></span><span>{item.title}</span>
+				<div class="flex gap-4 px-4 py-2 text-sm font-semibold">
+					<span>{item.title}</span>
 				</div>
 			{:else}
 				<a
@@ -51,12 +51,12 @@
 			{/if}
 			<div class="flex">
 				<div class="divider divider-horizontal"></div>
-				<div class="flex grow flex-col gap-2">
+				<div class="flex grow flex-col gap-1">
 					{#if item.subItems}
 						{#each item.subItems as subItem (subItem.href)}
 							<a
 								href={subItem.href}
-								class="btn justify-start gap-4 btn-ghost btn-primary"
+								class="btn mb-1 justify-start gap-4 btn-ghost btn-primary"
 								class:btn-active={page.url.pathname.startsWith(subItem.href)}
 								><span class={subItem.iconClass}></span><span>{subItem.title}</span></a
 							>
@@ -88,7 +88,7 @@
 						? 'badge-error'
 						: role === 'Seller'
 							? 'badge-info'
-							: ''}"
+							: 'badge-error'}"
 				>
 					{role}
 				</div>
