@@ -35,7 +35,7 @@
 
 <section class="mt-8 flex min-h-screen flex-col items-center">
 	{#if product}
-		<div class="grid grid-cols-2 gap-x-8 gap-y-2 w-full">
+		<div class="grid w-full grid-cols-2 gap-x-8 gap-y-2">
 			<div class="col-span-1 max-md:col-span-2">
 				<ImageViewer images={product.images.map((image) => image.url) ?? []} />
 			</div>

@@ -9,7 +9,7 @@
 	} = $props();
 </script>
 
-<div class="relative mt-4 overflow-hidden rounded-box border bg-base-100 h-full">
+<div class="relative mt-4 h-full overflow-hidden rounded-box border bg-base-100">
 	<div class="flex flex-wrap gap-4 p-4">
 		<div>
 			<Image src={shop.shopAvatar} alt={shop.name} class="h-16 w-16 rounded-full" />

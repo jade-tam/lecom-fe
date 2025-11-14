@@ -79,7 +79,9 @@
 				<span class="icon-[fa7-solid--shopping-cart] shrink-0 text-xl"></span>
 				{#await cartCountPromise then cartCount}
 					{#if cartCount}
-						<span class="absolute top-0 right-0.5 badge h-4 w-4 rounded-full badge-xs badge-secondary">
+						<span
+							class="absolute top-0 right-0.5 badge h-4 w-4 rounded-full badge-xs badge-secondary"
+						>
 							{cartCount}
 						</span>
 					{/if}
