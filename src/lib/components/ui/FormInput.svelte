@@ -34,7 +34,7 @@
 	</legend>
 	<label class="input w-full" class:hidden>
 		{#if icon}
-			<span class={`${icon} text-secondary`}></span>
+			<span class={`${icon} text-secondary-content`}></span>
 		{/if}
 		<input {name} bind:value={$superForm[name]} {...restInputAttr} />
 	</label>

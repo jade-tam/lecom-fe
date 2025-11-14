@@ -7,6 +7,7 @@
 		description,
 		action,
 		formData,
+		dropdownDirection = 'dropdown-left dropdown-center',
 		confirmButtonClass = 'btn-error',
 		confirmButtonIcon = 'icon-[fa7-solid--check-circle]',
 		children
@@ -15,6 +16,7 @@
 		description?: string;
 		action: string;
 		formData: Record<string, string>;
+		dropdownDirection?: string;
 		confirmButtonClass?: string;
 		confirmButtonIcon?: string;
 		children: Snippet;
@@ -27,7 +29,7 @@
 		<input type="hidden" name={key} {value} />
 	{/each}
 
-	<div class="dropdown dropdown-left dropdown-center">
+	<div class="dropdown {dropdownDirection}">
 		{@render children()}
 
 		<div

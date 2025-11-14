@@ -48,9 +48,17 @@ export const deleteCourseLessonSchema = z.object({
 	lessonId: z.string().min(1, 'Something wrong, missing current course lesson id')
 });
 
+export const linkProductSchema = z.object({
+	lessonTitle: z.string().min(1, 'Something wrong, missing lessonTitle'),
+	productName: z.string().min(1, 'You forgot to link the product'),
+	lessonId: z.string().min(1, 'Something wrong, missing current course lesson id'),
+	productId: z.string().min(1, 'Please select a product to link')
+});
+
 export type CreateCourseSchema = z.infer<typeof createCourseSchema>;
 export type UpdateCourseSchema = z.infer<typeof updateCourseSchema>;
 export type AddCourseSectionSchema = z.infer<typeof addCourseSectionSchema>;
 export type AddCourseLessonSchema = z.infer<typeof addCourseLessonSchema>;
 export type DeleteCourseSectionSchema = z.infer<typeof deleteCourseSectionSchema>;
 export type DeleteCourseLessonSchema = z.infer<typeof deleteCourseLessonSchema>;
+export type LinkProductSchema = z.infer<typeof linkProductSchema>;

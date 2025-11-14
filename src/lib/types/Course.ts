@@ -42,6 +42,15 @@ export type Lesson = {
 	durationSeconds: number;
 	contentUrl: string;
 	orderIndex: number;
+	linkedProducts: LinkedProduct[];
+};
+
+type LinkedProduct = {
+	id: string;
+	name: string;
+	price: number;
+	thumbnailUrl: string;
+	shopName: string;
 };
 
 // Another version of course data response from public api

@@ -1,7 +1,9 @@
 <script lang="ts">
 	import SellerCourseForm from '$lib/components/form/SellerCourseForm.svelte';
+	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import FormInput from '$lib/components/ui/FormInput.svelte';
 	import FormMediaInput from '$lib/components/ui/FormMediaInput.svelte';
+	import Image from '$lib/components/ui/Image.svelte';
 	import FormConfirmDropdownAction from '$lib/components/wrapper/FormConfirmDropdownAction.svelte';
 	import {
 		addCourseLessonSchema,
@@ -11,18 +13,20 @@
 		type AddCourseLessonSchema,
 		type AddCourseSectionSchema,
 		type DeleteCourseLessonSchema,
-		type DeleteCourseSectionSchema
+		type DeleteCourseSectionSchema,
+		type LinkProductSchema
 	} from '$lib/schemas/courseSchema';
 	import { formatVideoDuration, toNumericString, toRomanNumeral } from '$lib/utils/converters';
 	import type { ToastData } from '$lib/utils/showToast';
 	import showToast from '$lib/utils/showToast';
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 
 	const { data } = $props();
 
 	let addSectionModalRef: HTMLDialogElement | null = $state(null);
 	let addLessonModalRef: HTMLDialogElement | null = $state(null);
+	let linkProductModalRef: HTMLDialogElement | null = $state(null);
 
 	const {
 		form: sectionForm,
@@ -80,6 +84,21 @@
 		validators: zod4Client(deleteCourseLessonSchema)
 	});
 
+	const {
+		form: linkProductForm,
+		errors: linkProductErrors,
+		message: linkProductMessage,
+		enhance: linkProductEnhance,
+		submitting: linkProductSubmitting,
+		delayed: linkProductDelayed,
+		tainted: linkProductTainted,
+		isTainted: linkProductIsTainted,
+		submit: linkProductSubmit,
+		reset: linkProductReset
+	} = superForm<LinkProductSchema, ToastData>(data.linkProductForm, {
+		validators: zod4Client(deleteCourseLessonSchema)
+	});
+
 	$effect(() => {
 		if ($sectionMessage) {
 			showToast($sectionMessage);
@@ -105,7 +124,16 @@
 		}
 	});
 
-	$inspect($sectionErrors);
+	$effect(() => {
+		if ($linkProductMessage) {
+			showToast($linkProductMessage);
+
+			if ($linkProductMessage.type === 'success') {
+				linkProductReset();
+				linkProductModalRef?.close();
+			}
+		}
+	});
 </script>
 
 <!-- ===================================================================================== -->
@@ -204,6 +232,116 @@
 </dialog>
 
 <!-- ===================================================================================== -->
+
+<dialog bind:this={linkProductModalRef} class="modal">
+	<div class="modal-box">
+		<form action="?/linkProduct" method="POST" use:linkProductEnhance>
+			<h3 class="text-lg font-bold">Link a product</h3>
+			<p class="mb-2 text-xs text-base-content/60">
+				Feature a product related to this lesson to help learner learning faster.
+			</p>
+
+			<FormInput
+				name="lessonTitle"
+				label="Selected Lesson"
+				placeholder="This shouldn't be empty"
+				superForm={linkProductForm}
+				errors={linkProductErrors}
+				icon="icon-[fa7-solid--book]"
+				readonly
+			/>
+
+			<FormInput
+				name="productName"
+				label="Selected Product"
+				placeholder="Select a product to link"
+				superForm={linkProductForm}
+				errors={linkProductErrors}
+				icon="icon-[fa7-solid--box-open]"
+				help="Select one product from the list below"
+				readonly
+			/>
+
+			{#await data.products}
+				<div class="flex gap-2">
+					<div class="loading loading-infinity"></div>
+					<p class="text-sm">Loading products</p>
+				</div>
+			{:then products}
+				{#if products.length}
+					<div class="mt-1 flex max-h-64 flex-col gap-1 overflow-auto rounded-field border p-1">
+						{#each products as product (product.id)}
+							<div class="flex gap-1">
+								<button
+									type="button"
+									class="btn grow items-center justify-start btn-sm {$linkProductForm.productId ===
+									product.id
+										? 'btn-primary'
+										: ''}"
+									onclick={() => {
+										$linkProductForm.productId = product.id;
+										$linkProductForm.productName = product.name;
+									}}
+								>
+									<Image
+										src={product.images.find((img) => img.isPrimary)?.url}
+										alt={product.name}
+										class="h-6 w-6"
+									/>
+									<p>{product.name}</p>
+									{#if $linkProductForm.productId === product.id}
+										<span class="icon-[fa7-solid--check-square]"></span>
+									{/if}
+								</button>
+								<a
+									href="/shopping/product/{product.slug}"
+									class="btn btn-square btn-sm btn-secondary"
+									target="_blank"
+									aria-label="View product"
+								>
+									<span class="icon-[fa7-solid--eye]"></span>
+								</a>
+							</div>
+						{/each}
+					</div>
+				{:else}
+					<EmptyPlaceholder text="Your shop don't have any products" />
+				{/if}
+			{/await}
+
+			<FormInput
+				hidden
+				name="lessonId"
+				label="lessonId"
+				superForm={linkProductForm}
+				errors={linkProductErrors}
+			/>
+
+			<FormInput
+				hidden
+				name="productId"
+				label="productId"
+				superForm={linkProductForm}
+				errors={linkProductErrors}
+			/>
+
+			<div class="modal-action">
+				<!-- if there is a button in form, it will close the modal -->
+				<button
+					class="btn"
+					type="button"
+					onclick={() => {
+						linkProductModalRef?.close();
+						linkProductReset();
+					}}>Cancel</button
+				>
+				<button class="btn btn-primary" type="submit">Confirm</button>
+			</div>
+		</form>
+	</div>
+</dialog>
+
+<!-- ===================================================================================== -->
 <div class="my-2 flex flex-col justify-between overflow-x-auto">
 	<div class="flex items-center gap-4">
 		<a href="/seller/courses" aria-label="return to category list" class="btn btn-square">
@@ -252,37 +390,84 @@
 							{#if section.lessons.length}
 								{#each section.lessons as lesson, ii (lesson.id)}
 									<div
-										class="flex items-center gap-2 p-2 {ii !== section.lessons.length - 1
+										class="flex flex-col gap-2 p-2 {ii !== section.lessons.length - 1
 											? 'border-b border-secondary'
 											: ''}"
 									>
-										<button class="btn btn-square btn-ghost btn-primary" aria-label="play">
-											<span class="icon-[fa7-solid--circle-play]"></span>
-										</button>
-										<p>{toNumericString(ii + 1)}. {lesson.title}</p>
-										<p class="mr-4 ml-auto flex items-center gap-2 text-xs text-secondary-content">
-											{formatVideoDuration(lesson.durationSeconds)}<span
-												class="icon-[fa7-solid--clock]"
-											></span>
-										</p>
-										<button class="btn btn-xs btn-info" aria-label="delete">
-											<span class="icon-[fa7-solid--box-open]"></span>Link product
-										</button>
-										<FormConfirmDropdownAction
-											formData={{ lessonId: lesson.id }}
-											label="Confirm delete this lesson?"
-											action="?/deleteLesson"
-											description="It's content will be deleted forever"
-											confirmButtonClass="btn-error"
-										>
-											<button
-												class="btn btn-square btn-xs btn-error"
-												type="button"
-												aria-label="delete"
-											>
-												<span class="icon-[fa7-solid--trash-alt]"></span>
+										<div class="flex items-center gap-2">
+											<button class="btn btn-square btn-ghost btn-primary" aria-label="play">
+												<span class="icon-[fa7-solid--circle-play]"></span>
 											</button>
-										</FormConfirmDropdownAction>
+											<p class="line-clamp-2">{toNumericString(ii + 1)}. {lesson.title}</p>
+											<p
+												class="mr-4 ml-auto flex items-center gap-2 text-xs text-secondary-content"
+											>
+												{formatVideoDuration(lesson.durationSeconds)}<span
+													class="icon-[fa7-solid--clock]"
+												></span>
+											</p>
+											<button
+												class="btn btn-xs btn-info"
+												aria-label="delete"
+												onclick={() => {
+													$linkProductForm.lessonTitle = lesson.title;
+													$linkProductForm.lessonId = lesson.id;
+													linkProductModalRef?.showModal();
+												}}
+											>
+												<span class="icon-[fa7-solid--box-open]"></span>Link product
+											</button>
+											<FormConfirmDropdownAction
+												formData={{ lessonId: lesson.id }}
+												label="Confirm delete this lesson?"
+												action="?/deleteLesson"
+												description="It's content will be deleted forever"
+												confirmButtonClass="btn-error"
+											>
+												<button
+													class="btn btn-square btn-xs btn-error"
+													type="button"
+													aria-label="delete"
+												>
+													<span class="icon-[fa7-solid--trash-alt]"></span>
+												</button>
+											</FormConfirmDropdownAction>
+										</div>
+
+										<div class="flex flex-wrap items-start gap-3 px-2">
+											<p class="text-xs font-bold">Linked Products:</p>
+											{#each lesson.linkedProducts as product (product.id)}
+												<FormConfirmDropdownAction
+													label="Unlink this product?"
+													description="{product.name} will be unlink with {lesson.title}."
+													action="?/unlinkProduct"
+													confirmButtonIcon="icon-[fa7-solid--unlink]"
+													dropdownDirection="dropdown-top"
+													formData={{
+														productId: product.id,
+														lessonId: lesson.id
+													}}
+												>
+													<div class="tooltip tooltip-error" data-tip="Unlink this product">
+														<button
+															class="group btn btn-sm btn-info hover:btn-error"
+															type="button"
+															aria-label="delete"
+														>
+															<Image
+																src={product.thumbnailUrl}
+																alt={product.name}
+																class="h-6 w-6"
+															/>
+															<p>{product.name}</p>
+															<span
+																class="icon-[fa7-solid--link] group-hover:icon-[fa7-solid--unlink]"
+															></span>
+														</button>
+													</div>
+												</FormConfirmDropdownAction>
+											{/each}
+										</div>
 									</div>
 								{/each}
 							{:else}

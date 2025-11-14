@@ -3,10 +3,12 @@ import {
 	addCourseSectionSchema,
 	deleteCourseLessonSchema,
 	deleteCourseSectionSchema,
+	linkProductSchema,
 	updateCourseSchema
 } from '$lib/schemas/courseSchema';
 import type { Category } from '$lib/types/Category';
 import type { Course, Section } from '$lib/types/Course.js';
+import type { Product } from '$lib/types/Product.js';
 import { fetchApi, fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi';
 import type { ToastData } from '$lib/utils/showToast';
 import { fail, type Actions } from '@sveltejs/kit';
@@ -18,6 +20,10 @@ export const load = async ({ cookies, params }) => {
 	const categories = getSafeResult(
 		fetchApi<Category[]>('/api/CourseCategory', 'GET'),
 		[] as Category[]
+	);
+	const products = getSafeResult(
+		fetchAuthorizedApi<Product[]>(cookies, '/api/seller/products', 'GET'),
+		[] as Product[]
 	);
 
 	const { responseBody: courseResponseBody } = await fetchAuthorizedApi<Course>(
@@ -37,15 +43,20 @@ export const load = async ({ cookies, params }) => {
 	const addLessonForm = await superValidate(zod4(addCourseLessonSchema));
 	const deleteSectionForm = await superValidate(zod4(deleteCourseSectionSchema));
 	const deleteLessonForm = await superValidate(zod4(deleteCourseLessonSchema));
+	const linkProductForm = await superValidate(zod4(linkProductSchema));
+	const unlinkProductForm = await superValidate(zod4(linkProductSchema));
 
 	return {
 		form,
 		categories,
+		products,
 		sections,
 		addSectionForm,
 		addLessonForm,
 		deleteSectionForm,
-		deleteLessonForm
+		deleteLessonForm,
+		linkProductForm,
+		unlinkProductForm
 	};
 };
 
@@ -53,8 +64,6 @@ export const actions: Actions = {
 	updateCourse: async ({ request, cookies, params }) => {
 		const { id } = params;
 		const form = await superValidate(request, zod4(updateCourseSchema));
-
-		console.log(form);
 
 		if (!form.valid) {
 			return fail(400, { form });
@@ -81,8 +90,6 @@ export const actions: Actions = {
 	addSection: async ({ request, cookies, params }) => {
 		const { id } = params;
 		const form = await superValidate(request, zod4(addCourseSectionSchema));
-
-		console.log(form);
 
 		if (!form.valid) {
 			return fail(400, { form });
@@ -112,8 +119,6 @@ export const actions: Actions = {
 
 	addLesson: async ({ request, cookies }) => {
 		const form = await superValidate(request, zod4(addCourseLessonSchema));
-
-		console.log(form);
 
 		if (!form.valid) {
 			return fail(400, { form });
@@ -171,8 +176,6 @@ export const actions: Actions = {
 	deleteLesson: async ({ request, cookies }) => {
 		const form = await superValidate(request, zod4(deleteCourseLessonSchema));
 
-		console.log(form);
-
 		if (!form.valid) {
 			return fail(400, { form });
 		}
@@ -192,5 +195,51 @@ export const actions: Actions = {
 		} else {
 			return message(form, toastData, { status: 400 });
 		}
+	},
+
+	linkProduct: async ({ request, cookies }) => {
+		const form = await superValidate(request, zod4(linkProductSchema));
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		const formData = form.data;
+
+		const { response, responseBody } = await fetchAuthorizedApi(
+			cookies,
+			`/api/seller/courses/lessons/products`,
+			'POST',
+			{
+				lessonId: formData.lessonId,
+				productId: formData.productId
+			}
+		);
+
+		const toastData: ToastData = getToastData(responseBody, 'Product has been linked');
+
+		if (response.ok) {
+			return message(form, toastData);
+		} else {
+			return message(form, toastData, { status: 400 });
+		}
+	},
+
+	unlinkProduct: async ({ request, cookies }) => {
+		const data = await request.formData();
+		const productId = data.get('productId');
+		const lessonId = data.get('lessonId');
+
+		if (!productId || !lessonId) return fail(400, { message: 'Missing required data' });
+
+		const { responseBody } = await fetchAuthorizedApi(
+			cookies,
+			`/api/seller/courses/lessons/${lessonId}/products/${productId}`,
+			'DELETE'
+		);
+
+		const toastData = getToastData(responseBody, 'Course linked products has been updated');
+
+		return { toastData };
 	}
 };
