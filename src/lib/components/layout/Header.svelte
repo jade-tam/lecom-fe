@@ -10,6 +10,12 @@
 	import { goto } from '$app/navigation';
 	import { haveAuthorization } from '$lib/utils/others';
 
+	const {
+		cartCountPromise
+	}: {
+		cartCountPromise: Promise<number>;
+	} = $props();
+
 	const getUserProfile = getContext<() => UserProfile | null>(USER_PROFILE_CONTEXT);
 	const getUserRole = getContext<() => UserRole | null>(USER_ROLE_CONTEXT);
 	let userProfile = $derived(getUserProfile());
@@ -69,8 +75,15 @@
 			<button class="btn btn-square btn-ghost" aria-label="Notification">
 				<span class="icon-[fa7-solid--bell] text-xl"></span>
 			</button>
-			<a href="/cart" class="btn btn-square btn-ghost" aria-label="Cart">
-				<span class="icon-[fa7-solid--shopping-cart] text-xl"></span>
+			<a href="/cart" class="btn relative btn-square btn-ghost btn-secondary" aria-label="Cart">
+				<span class="icon-[fa7-solid--shopping-cart] shrink-0 text-xl"></span>
+				{#await cartCountPromise then cartCount}
+					{#if cartCount}
+						<span class="absolute top-0 right-0.5 badge h-4 w-4 rounded-full badge-xs badge-secondary">
+							{cartCount}
+						</span>
+					{/if}
+				{/await}
 			</a>
 			<div class="dropdown dropdown-end">
 				<div tabindex="0" role="button" class="btn m-1 btn-square btn-link">

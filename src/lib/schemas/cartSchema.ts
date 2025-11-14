@@ -11,3 +11,21 @@ export const addToCartSchema = z.object({
 });
 
 export type AddToCartSchema = z.infer<typeof addToCartSchema>;
+
+export const updateCartItemCountSchema = z.object({
+	productId: z.string().min(1, 'Something wrong, no product id'),
+	quantity: z
+		.number({
+			error: 'Quantity is required'
+		})
+		.int('Quantity must be an integer')
+		.min(1, 'Quantity must be at least 1')
+});
+
+export type UpdateCartItemCountSchema = z.infer<typeof updateCartItemCountSchema>;
+
+export const deleteCartItemSchema = z.object({
+	productId: z.string().min(1, 'Something wrong, no product id')
+});
+
+export type DeleteCartItemSchema = z.infer<typeof deleteCartItemSchema>;
