@@ -103,7 +103,7 @@
 							<div class="flex gap-1">
 								<div class="tooltip" data-tip="View course">
 									<a
-										href={`/shop/product/${row['slug']}`}
+										href={`/shopping/product/${row['slug']}`}
 										class="btn btn-square btn-secondary"
 										aria-label="view course"
 										target="_blank"
