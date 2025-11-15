@@ -17,14 +17,18 @@ export const actions = {
 	updateItemCount: async ({ request, cookies }) => {
 		const data = await request.formData();
 		const productId = data.get('productId');
-		const quantity = data.get('quantity');
+		const quantityChange = data.get('quantityChange');
 
-		if (!productId || !quantity) return fail(400, { message: 'Missing required data' });
+		if (!productId || !quantityChange) return fail(400, { message: 'Missing required data' });
 
-		const { responseBody } = await fetchAuthorizedApi(cookies, '/api/cart/items', 'POST', {
-			productId: productId,
-			quantity: Number(quantity)
-		});
+		const { responseBody } = await fetchAuthorizedApi(
+			cookies,
+			`/api/cart/items/${productId}`,
+			'PATCH',
+			{
+				quantityChange: Number(quantityChange)
+			}
+		);
 
 		const toastData = getToastData(responseBody, 'Item count updated');
 

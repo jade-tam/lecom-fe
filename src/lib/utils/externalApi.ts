@@ -1,7 +1,8 @@
+import { resolve } from '$app/paths';
 import { PUBLIC_API_URL } from '$env/static/public';
 import { createLogger, sanitizeForLog } from '$lib/server/logger';
 import type { ApiResponseBody } from '$lib/types/ApiResponseBody';
-import { type Cookies } from '@sveltejs/kit';
+import { redirect, type Cookies } from '@sveltejs/kit';
 import { clearTokens, storeTokens } from './others';
 import type { ToastData } from './showToast';
 
@@ -9,7 +10,7 @@ const logger = createLogger('API');
 
 export async function fetchApi<T = Record<string, unknown>>(
 	path: string,
-	method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+	method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
 	body?: unknown,
 	token?: string
 ): Promise<{ response: Response; responseBody: ApiResponseBody<T> }> {
@@ -138,7 +139,7 @@ export async function fetchApi<T = Record<string, unknown>>(
 export async function fetchAuthorizedApi<T>(
 	cookies: Cookies,
 	path: string,
-	method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+	method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
 	body?: object
 ) {
 	const apiPrefix = `${method} ${path}`;
@@ -176,6 +177,8 @@ export async function fetchAuthorizedApi<T>(
 			logger.warn(apiPrefix, "Can't refresh new token");
 
 			clearTokens(cookies);
+
+			throw redirect(303, resolve('/auth/login'));
 		}
 	}
 

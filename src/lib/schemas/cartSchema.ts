@@ -14,12 +14,11 @@ export type AddToCartSchema = z.infer<typeof addToCartSchema>;
 
 export const updateCartItemCountSchema = z.object({
 	productId: z.string().min(1, 'Something wrong, no product id'),
-	quantity: z
+	quantityChange: z
 		.number({
-			error: 'Quantity is required'
+			error: 'quantityChange is required'
 		})
-		.int('Quantity must be an integer')
-		.min(1, 'Quantity must be at least 1')
+		.int('quantityChange must be an integer')
 });
 
 export type UpdateCartItemCountSchema = z.infer<typeof updateCartItemCountSchema>;
