@@ -187,27 +187,35 @@
 		<div class="col-span-4 rounded-box border bg-base-100 p-4 max-md:col-span-1">
 			<h2 class="text-header3">Order Summary</h2>
 			<div class="mt-2 flex flex-col gap-2">
-				{#each selectedCart.items as shopItemGroup (shopItemGroup.shopId)}
-					<div class="flex flex-col gap-1" transition:slide>
-						<p class="font-serif font-bold">{shopItemGroup.shopName}</p>
-						{#each shopItemGroup.items as item (item.productId)}
-							<div class="flex gap-2">
-								<Image class="h-12 w-12 shrink-0" src={item.productImage} alt={item.productName} />
-								<div class="flex w-full flex-col">
-									<p class="line-clamp-1 text-sm">{item.productName}</p>
-									<div class="flex justify-between">
-										<p class="text-xs font-light text-base-content/70">
-											<NumberFlow value={item.quantity} /> × {formatVND(item.unitPrice)}
-										</p>
-										<p class="mt-1 font-serif font-bold">
-											<NumberFlow value={item.lineTotal} format={formatVND} />
-										</p>
+				{#if selectedCart.items.length}
+					{#each selectedCart.items as shopItemGroup (shopItemGroup.shopId)}
+						<div class="flex flex-col gap-1" transition:slide>
+							<p class="font-serif font-bold">{shopItemGroup.shopName}</p>
+							{#each shopItemGroup.items as item (item.productId)}
+								<div class="flex gap-2">
+									<Image
+										class="h-12 w-12 shrink-0"
+										src={item.productImage}
+										alt={item.productName}
+									/>
+									<div class="flex w-full flex-col">
+										<p class="line-clamp-1 text-sm">{item.productName}</p>
+										<div class="flex justify-between">
+											<p class="text-xs font-light text-base-content/70">
+												<NumberFlow value={item.quantity} /> × {formatVND(item.unitPrice)}
+											</p>
+											<p class="mt-1 font-serif font-bold">
+												<NumberFlow value={item.lineTotal} format={formatVND} />
+											</p>
+										</div>
 									</div>
 								</div>
-							</div>
-						{/each}
-					</div>
-				{/each}
+							{/each}
+						</div>
+					{/each}
+				{:else}
+				<EmptyPlaceholder class="h-24" text="Select item to checkout" />
+				{/if}
 				<div class="divider my-0"></div>
 				<div class="flex items-end justify-between">
 					<p class="font-bold">Total:</p>
@@ -218,7 +226,7 @@
 				<button
 					onclick={() => goto(resolve('/cart/checkout'))}
 					class="btn btn-primary"
-					disabled={!cart.items.length}>Proceed to checkout</button
+					disabled={!selectedCart.items.length}>Proceed to checkout</button
 				>
 			</div>
 		</div>
