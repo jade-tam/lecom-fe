@@ -1,0 +1,57 @@
+import { checkoutSchema } from '$lib/schemas/checkoutSchema';
+import { fetchAuthorizedApi, getToastData } from '$lib/utils/externalApi.js';
+import type { ToastData } from '$lib/utils/showToast.js';
+import { message, superValidate } from 'sveltekit-superforms';
+import { zod4 } from 'sveltekit-superforms/adapters';
+
+export async function load() {
+	const checkoutForm = await superValidate(zod4(checkoutSchema));
+
+	return {
+		checkoutForm
+	};
+}
+
+export const actions = {
+	checkout: async ({ request, cookies }) => {
+		const form = await superValidate(request, zod4(checkoutSchema));
+
+		console.log('CHECK OUT WITH THIS FORM', form);
+
+		if (!form.valid) {
+			return { form };
+		}
+
+		const formData = form.data;
+
+		console.log('CHECK OUT WITH THIS FORM DATA', formData);
+
+		const { response, responseBody } = await fetchAuthorizedApi(
+			cookies,
+			'/api/orders/checkout',
+			'POST',
+			formData
+		);
+
+		const toastData: ToastData = getToastData(
+			responseBody,
+			'Order has been created, proceed to payment.'
+		);
+
+		if (response.ok) {
+			return message(form, {
+				toastData: toastData,
+				responseResult: responseBody.result
+			});
+		} else {
+			return message(
+				form,
+				{
+					toastData: toastData,
+					responseResult: responseBody.result
+				},
+				{ status: 400 }
+			);
+		}
+	}
+};
