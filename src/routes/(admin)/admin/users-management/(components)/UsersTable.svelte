@@ -9,6 +9,7 @@
 		getUserRoleBadgeClass,
 		getUserRoleBtnClass
 	} from '$lib/utils/classComposer';
+	import { formatDate } from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
 
 	const { users }: { users: User[] } = $props();
@@ -86,6 +87,8 @@
 										{userActiveStatusOptions.find((option) => option.value === row.isActive)?.title}
 									</div></td
 								>
+							{:else if column.id === 'dateOfBirth'}
+								<td>{formatDate(row.dateOfBirth)}</td>
 							{:else if column.id === 'role'}
 								<td
 									><div class={`badge ${getUserRoleBadgeClass(row.role)}`}>
