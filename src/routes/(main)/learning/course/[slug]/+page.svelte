@@ -2,12 +2,20 @@
 	import ShopCard from '$lib/components/ui/card/ShopCard.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
+	import FormAction from '$lib/components/wrapper/FormAction.svelte';
 	import { formatVideoDuration, toNumericString, toRomanNumeral } from '$lib/utils/converters.js';
+	import showToast from '$lib/utils/showToast.js';
 
-	const { data } = $props();
+	const { data, form } = $props();
 	const course = $derived(data.course);
 
 	let isWishlist = $state(false);
+
+	$effect(() => {
+		if (form?.toastData) {
+			showToast(form.toastData);
+		}
+	});
 </script>
 
 <section class="flex min-h-screen flex-col gap-4">
@@ -38,9 +46,23 @@
 				</p>
 				<p class="line-clamp-5">{course.summary}</p>
 				<div class="mt-2 flex gap-2">
-					<button class="btn grow btn-primary"
-						><span class="icon-[fa7-solid--book-open]"></span>Enroll this course</button
-					>
+					{#if course.isEnrolled}
+						<button class="btn grow btn-primary">
+							<span class="icon-[fa7-solid--book-open]"></span>Start learning
+						</button>
+					{:else}
+						<FormAction
+							action="?/enroll"
+							formData={{
+								courseId: course.id
+							}}
+							class="grow"
+						>
+							<button type="submit" class="btn w-full btn-primary"
+								><span class="icon-[fa7-solid--book-open]"></span>Enroll this course</button
+							>
+						</FormAction>
+					{/if}
 				</div>
 			</div>
 			<div class="flex flex-col gap-2">

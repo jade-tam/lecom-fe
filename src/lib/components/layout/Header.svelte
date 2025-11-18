@@ -27,14 +27,14 @@
 		<h1 class="text-3xl font-black uppercase">Lecom</h1>
 	</a>
 
-	<div>
+	<div class="shrink-0">
 		<ul class="flex h-full items-center gap-2 px-6">
 			<li>
 				<a
 					href="/learning"
 					class="btn btn-ghost {page.url.pathname.startsWith('/learning') ? 'font-black' : ''}"
 				>
-					Learning
+					Học tập
 				</a>
 			</li>
 			<li>
@@ -42,7 +42,7 @@
 					href="/shopping"
 					class="btn btn-ghost {page.url.pathname.startsWith('/shopping') ? 'font-black' : ''}"
 				>
-					Shopping
+					Mua sắm
 				</a>
 			</li>
 			<li>
@@ -50,7 +50,7 @@
 					href="/community"
 					class="btn btn-ghost {page.url.pathname.startsWith('/community') ? 'font-black' : ''}"
 				>
-					Community
+					Cộng đồng
 				</a>
 			</li>
 		</ul>
@@ -58,12 +58,12 @@
 
 	{#if page.url.pathname.startsWith('/learning')}
 		<SearchInput
-			placeholder="Search for courses..."
+			placeholder="Tìm kiếm khóa học..."
 			onEnter={(query) => goto(`/learning/courses?search=${query}`)}
 		/>
 	{:else if page.url.pathname.startsWith('/shopping')}
 		<SearchInput
-			placeholder="Search for products..."
+			placeholder="Tìm kiếm sản phẩm..."
 			onEnter={(query) => goto(`/shopping/products?search=${query}`)}
 		/>
 	{:else}
@@ -72,12 +72,12 @@
 
 	<div class="flex items-center gap-2 pl-8">
 		{#if userProfile}
-			<div class="tooltip tooltip-bottom" data-tip="Notifications">
+			<div class="tooltip tooltip-bottom" data-tip="Thông báo">
 				<button class="btn btn-square btn-ghost" aria-label="Notification">
 					<span class="icon-[fa7-solid--bell] text-xl"></span>
 				</button>
 			</div>
-			<div class="tooltip tooltip-bottom" data-tip="Cart">
+			<div class="tooltip tooltip-bottom" data-tip="Giỏ hàng">
 				<a href="/cart" class="btn relative btn-square btn-ghost btn-secondary" aria-label="Cart">
 					<span class="icon-[fa7-solid--shopping-cart] shrink-0 text-xl"></span>
 					{#await cartCountPromise then cartCount}
@@ -91,7 +91,7 @@
 					{/await}
 				</a>
 			</div>
-			<div class="tooltip tooltip-bottom" data-tip="Chat & Messages">
+			<div class="tooltip tooltip-bottom" data-tip="Trò chuyện & Tin nhắn">
 				<a class="btn btn-square btn-ghost" aria-label="Chat" href="/chat">
 					<span class="icon-[fa7-solid--message] text-xl"></span>
 				</a>
@@ -108,25 +108,25 @@
 					class="dropdown-content menu z-1 w-52 rounded-field bg-base-100 p-2 shadow-sm"
 				>
 					{#if userRole && haveAuthorization(userRole, 'Admin')}
-						<li><a href="/admin" class="rounded-field">Admin Dashboard</a></li>
+						<li><a href="/admin" class="rounded-field">Quản lý Admin</a></li>
 					{/if}
 					{#if userRole && haveAuthorization(userRole, 'Seller')}
-						<li><a href="/seller" class="rounded-field">Seller Dashboard</a></li>
+						<li><a href="/seller" class="rounded-field">Quản lý cửa hàng</a></li>
 					{/if}
-					<li><a href="/profile" class="rounded-field">Profile</a></li>
-					<li><a href="/orders" class="rounded-field">My Orders</a></li>
-					<li><a href="/course-enrollments" class="rounded-field">My Enrollments</a></li>
-					<li><a href="/settings" class="rounded-field">Settings</a></li>
+					<li><a href="/profile" class="rounded-field">Trang cá nhân</a></li>
+					<li><a href="/orders" class="rounded-field">Lịch sử đơn hàng</a></li>
+					<li><a href="/course-enrollments" class="rounded-field">Khóa học của tôi</a></li>
+					<li><a href="/settings" class="rounded-field">Cài đặt</a></li>
 					{#if userRole && haveAuthorization(userRole, 'Customer')}
-						<li><a href="/seller-register" class="rounded-field">Register Shop</a></li>
+						<li><a href="/seller-register" class="rounded-field">Đăng ký bán hàng</a></li>
 					{/if}
-					<li><a href="/help-and-feedback" class="rounded-field">Help & Feedback</a></li>
-					<li><a href="/auth/logout" class="rounded-field text-error">Logout</a></li>
+					<li><a href="/help-and-feedback" class="rounded-field">Trợ giúp & Phản hồi</a></li>
+					<li><a href="/auth/logout" class="rounded-field text-error">Đăng xuất</a></li>
 				</ul>
 			</div>
 		{:else}
-			<a href="/auth/login" class="btn btn-primary">Login</a>
-			<a href="/auth/register" class="btn btn-secondary">Register</a>
+			<a href="/auth/login" class="btn btn-primary">Đăng nhập</a>
+			<a href="/auth/register" class="btn btn-secondary">Đăng ký</a>
 		{/if}
 	</div>
 </header>

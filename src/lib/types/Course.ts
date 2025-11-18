@@ -61,6 +61,7 @@ export type CourseWithDetail = {
 	summary: string;
 	categoryName: string;
 	courseThumbnail: string;
+	isEnrolled: boolean;
 	shop: {
 		id: number;
 		name: string;
