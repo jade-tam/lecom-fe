@@ -9,7 +9,7 @@
 	const { selectedCart }: { selectedCart: Cart } = $props();
 </script>
 
-<h2 class="text-header3">Order Summary</h2>
+<h2 class="text-header3">Tổng quan đơn hàng</h2>
 <div class="mt-2 flex flex-col gap-2">
 	{#if selectedCart.items.length}
 		{#each selectedCart.items as shopItemGroup (shopItemGroup.shopId)}
@@ -34,13 +34,13 @@
 			</div>
 		{/each}
 	{:else}
-		<EmptyPlaceholder class="h-24" text="Select item to checkout" />
+		<EmptyPlaceholder class="h-24" text="Chọn sản phẩm để thanh toán" />
 	{/if}
 	<div class="divider my-0"></div>
 	<div class="flex items-end justify-between">
-		<p class="font-bold">Total:</p>
+		<p class="font-bold">Tổng tạm tính:</p>
 		<p class="font-serif text-2xl font-bold text-primary-content">
-			<NumberFlow value={selectedCart.subtotal} format={formatVND} />
+			<NumberFlow value={selectedCart.subtotal} format={formatVND} /> đ
 		</p>
 	</div>
 </div>

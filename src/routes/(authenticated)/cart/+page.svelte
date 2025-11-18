@@ -69,7 +69,7 @@
 	}
 </script>
 
-<h1 class="my-2 text-center">Your Shopping Cart</h1>
+<h1 class="my-2 text-center">Giỏ hàng của bạn</h1>
 {#if cart}
 	<div class="grid grid-cols-12 gap-4 max-md:grid-cols-1">
 		<div
@@ -83,7 +83,7 @@
 			<button
 				onclick={() => handleProceedToCheckout()}
 				class="btn mt-2 btn-block btn-primary"
-				disabled={!selectedCart.items.length}>Proceed to checkout</button
+				disabled={!selectedCart.items.length}>Tiến hành thanh toán</button
 			>
 		</div>
 	</div>

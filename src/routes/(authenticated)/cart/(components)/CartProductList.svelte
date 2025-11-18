@@ -13,8 +13,8 @@
 </script>
 
 <div class="flex justify-between rounded-field bg-secondary px-3 py-2">
-	<p class="text-sm font-bold">Product</p>
-	<p class="text-sm font-bold">Subtotal</p>
+	<p class="text-sm font-bold">Sản phẩm</p>
+	<p class="text-sm font-bold">Tạm tính</p>
 </div>
 {#if cart.items.length}
 	{#each cart?.items as shopItemGroup (shopItemGroup.shopId)}
@@ -35,7 +35,7 @@
 				{#each shopItemGroup.items as item (item.productId)}
 					<div
 						class="flex gap-2 rounded-field duration-200 {checked[item.productId]
-							? 'bg-primary/50'
+							? 'bg-primary'
 							: ''} p-2"
 					>
 						<input
@@ -52,7 +52,7 @@
 								>{item.productName}</a
 							>
 							<div class="flex items-baseline gap-2">
-								<p class="text-sm font-light text-base-content/70">Price:</p>
+								<p class="text-sm font-light text-base-content/70">Giá:</p>
 								<p class="font-serif font-bold text-base-content">
 									{formatVND(item.unitPrice)}
 								</p>
@@ -67,7 +67,7 @@
 								>
 									<button
 										type="submit"
-										class="btn btn-sm btn-secondary"
+										class="btn btn-sm btn-square btn-secondary"
 										onclick={() => null}
 										disabled={item.quantity <= 1}>-</button
 									>
@@ -82,21 +82,21 @@
 										quantityChange: String(1)
 									}}
 								>
-									<button type="submit" class="btn btn-sm btn-secondary" onclick={() => null}
+									<button type="submit" class="btn btn-sm btn-square btn-secondary" onclick={() => null}
 										>+</button
 									>
 								</FormAction>
 							</div>
 						</div>
 						<div class="flex flex-col items-end">
-							<p class="text-sm font-light text-base-content/70">Total:</p>
+							<p class="text-sm font-light text-base-content/70">Thành tiền:</p>
 							<p class="font-serif text-xl font-bold">
 								<NumberFlow value={item.lineTotal} format={formatVND} />
 							</p>
 
 							<FormConfirmDropdownAction
-								label="Remove this item?"
-								description="This item will be removed from your cart"
+								label="Xóa sản phẩm này?"
+								description="Sản phẩm này sẽ bị xóa khỏi giỏ hàng của bạn"
 								action="?/deleteItem"
 								confirmButtonIcon="icon-[fa7-solid--check-circle]"
 								formData={{ productId: item.productId }}
@@ -104,7 +104,7 @@
 								<button
 									type="button"
 									class="btn mt-2 btn-square btn-sm btn-error"
-									aria-label="remove item"><span class="icon-[fa7-solid--trash-alt]"></span></button
+									aria-label="xóa sản phẩm"><span class="icon-[fa7-solid--trash-alt]"></span></button
 								>
 							</FormConfirmDropdownAction>
 						</div>
@@ -114,5 +114,5 @@
 		</div>
 	{/each}
 {:else}
-	<EmptyPlaceholder text="Your cart is empty" />
+	<EmptyPlaceholder text="Giỏ hàng của bạn đang trống" />
 {/if}

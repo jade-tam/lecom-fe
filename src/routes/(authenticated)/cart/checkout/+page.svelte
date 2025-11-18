@@ -8,13 +8,14 @@
 	import { SELECTED_CART_SESSION } from '$lib/consts/contexts';
 	import { checkoutSchema, type CheckoutSchema } from '$lib/schemas/checkoutSchema';
 	import type { Cart } from '$lib/types/Cart.js';
-	import { paymentMethodOptions, type OrderCheckout } from '$lib/types/OrderCheckout';
+	import { paymentMethodOptions, type OrderPaymentGroup } from '$lib/types/OrderPaymentGroup';
 	import type { ToastData } from '$lib/utils/showToast';
 	import showToast from '$lib/utils/showToast';
 	import { onMount } from 'svelte';
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import OrderSummary from '../(components)/OrderSummary.svelte';
+	import { formatVND } from '$lib/utils/converters';
 
 	const { data } = $props();
 
@@ -25,14 +26,14 @@
 			CheckoutSchema,
 			{
 				toastData: ToastData;
-				responseResult: OrderCheckout;
+				responseResult: OrderPaymentGroup;
 			}
 		>(data.checkoutForm, {
 			validators: zod4Client(checkoutSchema),
 			onUpdated: ({ form }) => {
 				if (form.message?.toastData) showToast(form.message.toastData);
 				if (form.message?.toastData.type === 'success') {
-					goto(resolve(`/orders/${form.message.responseResult.orders[0].id}`));
+					goto(resolve(`/orders/payment/${form.message.responseResult.orders[0].id}`));
 				}
 			}
 		});
@@ -51,18 +52,18 @@
 	});
 </script>
 
-<h1 class="my-2 text-center">Checkout</h1>
+<h1 class="my-2 text-center">Thông tin thanh toán</h1>
 <form method="POST" class="h-fit w-full" use:enhance action="?/checkout">
 	{#if selectedCart}
-		<div class="grid grid-cols-12 gap-4 max-md:grid-cols-1">
-			<div class="col-span-8 flex h-fit flex-col gap-4 max-md:col-span-1">
+		<div class="grid grid-cols-12 gap-2 max-md:grid-cols-1">
+			<div class="col-span-8 flex h-fit flex-col gap-2 max-md:col-span-1">
 				<div class="rounded-box border bg-base-100 p-4">
-					<h1 class="text-header3 mb-2 font-bold">Checkout Information</h1>
+					<h1 class="text-header3 mb-2 font-bold">Thông tin nhận hàng</h1>
 
 					<FormInput
 						name="shipToName"
-						label="Recipient Name"
-						placeholder="Enter recipient name"
+						label="Tên người nhận"
+						placeholder="Nhập tên người nhận"
 						type="text"
 						superForm={form}
 						{errors}
@@ -70,8 +71,8 @@
 
 					<FormInput
 						name="shipToPhone"
-						label="Phone Number"
-						placeholder="Enter phone number"
+						label="Số điện thoại"
+						placeholder="Nhập số điện thoại"
 						type="text"
 						superForm={form}
 						{errors}
@@ -79,8 +80,8 @@
 
 					<FormInput
 						name="shipToAddress"
-						label="Shipping Address"
-						placeholder="Enter shipping address"
+						label="Địa chỉ nhận hàng"
+						placeholder="Nhập địa chỉ nhận hàng"
 						type="text"
 						superForm={form}
 						{errors}
@@ -88,17 +89,30 @@
 
 					<FormTextArea
 						name="note"
-						label="Note"
-						placeholder="Add a note (optional)"
+						label="Ghi chú"
+						placeholder="Thêm ghi chú (không bắt buộc)"
 						superForm={form}
 						{errors}
 					/>
 				</div>
 				<div class="rounded-box border bg-base-100 p-4">
-					<h1 class="text-header3 mb-2 font-bold">Payment Option</h1>
+					<div class="flex items-center justify-between">
+						<h1 class="text-header3 mb-2 font-bold">Phương thức thanh toán</h1>
+						<p class="flex items-center gap-2">
+							<span class="icon-[fa7-solid--wallet] text-success-content"></span>Số dư ví:
+							{#await data.balancePromise then userBalance}
+								{#if userBalance}
+									<span class="font-serif text-xl font-bold text-success-content"
+										>{formatVND(userBalance.balance)} đ</span
+									>
+								{/if}
+								<span class="text-error">Không thể lấy số dư ví</span>
+							{/await}
+						</p>
+					</div>
 					<FormSelect
 						name="paymentMethod"
-						label="Payment Method"
+						label="Chọn phương thức thanh toán"
 						options={paymentMethodOptions}
 						superForm={form}
 						{errors}
@@ -106,8 +120,8 @@
 
 					<FormInput
 						name="voucherCode"
-						label="Voucher Code"
-						placeholder="Enter voucher code (optional)"
+						label="Mã giảm giá"
+						placeholder="Nhập mã giảm giá (không bắt buộc)"
 						type="text"
 						superForm={form}
 						{errors}
@@ -123,7 +137,7 @@
 					type="submit"
 					disabled={$submitting || !isTainted($tainted)}
 				>
-					Checkout
+					Xác nhận thanh toán
 					{#if $delayed}
 						<span class="loading loading-infinity"></span>
 					{/if}
@@ -132,31 +146,26 @@
 				<FormInput
 					hidden
 					name="walletAmountToUse"
-					label="Wallet Amount to Use"
+					label="Số dư ví sử dụng"
 					placeholder="0"
 					type="number"
 					superForm={form}
 					{errors}
 				/>
 
-				<FormInput
-					hidden
-					name="selectedProductIds"
-					label="selectedProductIds"
-					type="text"
-					superForm={form}
-					{errors}
-				/>
+				{#each $form.selectedProductIds as id}
+					<input type="hidden" name="selectedProductIds" value={id} />
+				{/each}
 			</div>
 		</div>
 	{:else}
 		<div class="flex flex-col items-center">
 			<EmptyPlaceholder
 				icon="icon-[fa7-solid--hourglass-end]"
-				text="This checkout session has expired"
+				text="Phiên thanh toán đã hết hạn"
 				class="h-32"
 			/>
-			<a href="/cart" class="btn btn-primary">Return to your cart</a>
+			<a href="/cart" class="btn btn-primary">Quay lại giỏ hàng</a>
 		</div>
 	{/if}
 </form>

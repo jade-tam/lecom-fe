@@ -1,5 +1,5 @@
 import type { FormSelectOption } from '$lib/components/ui/FormSelect.svelte';
-import type { PaymentMethod } from './OrderCheckout';
+import type { PaymentMethod } from './OrderPaymentGroup';
 
 export const orderStatusOptions = [
 	{ value: 'Pending', title: 'Chờ thanh toán' },

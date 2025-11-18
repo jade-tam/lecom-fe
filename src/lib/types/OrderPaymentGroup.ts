@@ -5,12 +5,16 @@ export const paymentMethodOptions = [
 	{
 		title: 'Pay OS',
 		value: 'payos'
+	},
+	{
+		title: 'Số dư ví',
+		value: 'wallet'
 	}
 ] as const satisfies readonly FormSelectOption[];
 
 export type PaymentMethod = (typeof paymentMethodOptions)[number]['value'];
 
-export type OrderCheckout = {
+export type OrderPaymentGroup = {
 	orders: Order[];
 	paymentUrl: string;
 	totalAmount: number;
