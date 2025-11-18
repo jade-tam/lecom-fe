@@ -7,7 +7,7 @@
 		objectFit = 'object-cover',
 		class: customClass = ''
 	} = $props<{
-		src: string | undefined;
+		src: string | null | undefined;
 		alt?: string;
 		w?: string; // Tailwind width class
 		h?: string; // Tailwind height class

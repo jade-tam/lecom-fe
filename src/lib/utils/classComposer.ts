@@ -2,7 +2,13 @@ import type { CourseActiveStatus } from '$lib/types/Course';
 import type { ProductStatus } from '$lib/types/Product';
 import type { ShopStatus } from '$lib/types/Shop';
 import type { UserActiveStatus, UserRole } from '$lib/types/User';
-import type { OrderStatus, PaymentStatus } from '$lib/types/Order';
+import {
+	orderStatusOptions,
+	shipmentStatusOptions,
+	type OrderStatus,
+	type PaymentStatus
+} from '$lib/types/Order';
+import type { ShipmentStatus } from '$lib/types/Order';
 
 export function getStatusBtnClass(status: ShopStatus) {
 	return status === 'Approved'
@@ -100,6 +106,19 @@ export function getOrderStatusBadgeClass(status: OrderStatus) {
 							: 'badge-error';
 }
 
+export function getOrderStatusStepClass(
+	stepValue: OrderStatus,
+	currentStatus: OrderStatus
+): string {
+	const orderSteps: OrderStatus[] = orderStatusOptions.map((opt) => opt.value);
+	const currentIdx = orderSteps.indexOf(currentStatus);
+	const stepIdx = orderSteps.indexOf(stepValue);
+
+	if (currentStatus === 'Canceled') return 'step-error';
+	if (currentStatus === 'Completed') return stepIdx <= currentIdx ? 'step-success' : '';
+	return stepIdx <= currentIdx ? 'step-warning' : '';
+}
+
 export function getPaymentStatusBadgeClass(status: PaymentStatus) {
 	return status === 'Pending'
 		? 'badge-warning'
@@ -126,4 +145,17 @@ export function getPaymentStatusBtnClass(status: PaymentStatus) {
 					: status === 'PartiallyRefunded'
 						? 'btn-secondary'
 						: 'btn-error';
+}
+
+export function getShipmentStatusStepClass(
+	stepValue: ShipmentStatus,
+	currentStatus: ShipmentStatus
+): string {
+	const shipmentOrder: ShipmentStatus[] = shipmentStatusOptions.map((opt) => opt.value);
+	const currentIdx = shipmentOrder.indexOf(currentStatus);
+	const stepIdx = shipmentOrder.indexOf(stepValue);
+
+	if (currentStatus === 'Returned') return 'step-error';
+	if (currentStatus === 'Delivered') return stepIdx <= currentIdx ? 'step-success' : '';
+	return stepIdx <= currentIdx ? 'step-warning' : '';
 }

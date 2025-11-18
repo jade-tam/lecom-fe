@@ -114,7 +114,6 @@
 										href={`/orders/${row.id}`}
 										class="btn btn-square btn-secondary"
 										aria-label="xem chi tiết"
-										target="_blank"
 									>
 										<span class="icon-[fa7-solid--eye] text-xl"></span>
 									</a>
