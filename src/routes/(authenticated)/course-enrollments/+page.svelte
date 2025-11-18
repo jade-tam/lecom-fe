@@ -15,13 +15,13 @@
 
 <h1 class="my-2 text-center">Enrolled Courses</h1>
 {#if enrollments.length}
-	<div class="flex flex-col gap-4">
+	<div class="flex flex-col gap-2">
 		{#each enrollments as enrollment (enrollment.id)}
 			<div class="flex flex-row rounded-box border bg-base-100 p-4 shadow">
 				<Image
 					src={enrollment.courseThumbnail}
 					alt={enrollment.courseTitle}
-					class="mr-6 h-32 w-32"
+					class="mr-6 h-32 aspect-video"
 				/>
 
 				<div class="flex flex-1 flex-col">
