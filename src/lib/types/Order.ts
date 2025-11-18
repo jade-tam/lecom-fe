@@ -1,4 +1,5 @@
 import type { FormSelectOption } from '$lib/components/ui/FormSelect.svelte';
+import type { PaymentMethod } from './OrderCheckout';
 
 export const orderStatusOptions = [
 	{ value: 'Pending', title: 'Chờ thanh toán' },
@@ -59,6 +60,8 @@ export interface Order {
 	total: number;
 	status: OrderStatus;
 	paymentStatus: PaymentStatus;
+	estimatedDelivery: string;
+	paymentMethod: PaymentMethod;
 	shipmentStatus: ShipmentStatus; // <-- Added here
 	balanceReleased: boolean;
 	createdAt: string; // ISO 8601 timestamp

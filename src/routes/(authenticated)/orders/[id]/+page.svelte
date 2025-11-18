@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
 	import StatusSteps from '$lib/components/ui/StatusSteps.svelte';
 	import ToolTip from '$lib/components/ui/ToolTip.svelte';
@@ -23,11 +24,6 @@
 
 	function handleBack() {
 		goto('/orders');
-	}
-
-	function getShipmentStatusTitle(status: string) {
-		const found = shipmentStatusOptions.find((opt) => opt.value === status);
-		return found ? found.title : status;
 	}
 
 	function getOrderStatusTitle(status: string) {
@@ -102,11 +98,11 @@
 							{item.productName}
 						</p>
 						<div class="flex items-baseline gap-2">
-							<p class="text-sm font-light text-base-content/70">Price:</p>
+							<p class="text-sm font-light text-base-content/70">Giá:</p>
 							<p class="font-serif font-bold text-base-content">
 								{formatVND(item.unitPrice)}
 							</p>
-							<p class="ml-4 text-sm font-light text-base-content/70">Quantity:</p>
+							<p class="ml-4 text-sm font-light text-base-content/70">Số lượng:</p>
 							<p class="font-serif font-bold text-base-content">
 								{item.quantity}
 							</p>
@@ -164,10 +160,10 @@
 				<div class="flex flex-col gap-2">
 					<p class="mb-4 flex items-center gap-2 text-success-content">
 						<span class="icon-[fa7-solid--plane]"></span>
-						Dự kiến giao: ???
-						<!-- <span class="text-error-content"
+						Dự kiến giao:
+						<span class="text-error-content"
 							>{order.estimatedDelivery ? formatDate(order.estimatedDelivery) : '---'}</span
-						> -->
+						>
 					</p>
 					<StatusSteps
 						options={shipmentStatusOptions}
@@ -193,10 +189,17 @@
 				<span class={`mb-2 badge ${getPaymentStatusBadgeClass(order.paymentStatus)}`}>
 					{getPaymentStatusTitle(order.paymentStatus)}
 				</span>
-				<p class="mb-2">Phương thức thanh toán: ???</p>
+				<p class="mb-2">
+					<span class="font-semibold">Phương thức thanh toán:</span>
+					{order.paymentMethod ?? 'Không rõ'}
+				</p>
 			</div>
 		</div>
 	</section>
 {:else}
-	<p class="text-center text-error">Không tìm thấy đơn hàng.</p>
+	<EmptyPlaceholder
+		icon="icon-[fa7-solid--box-open]"
+		text="Không tìm thấy đơn hàng, Đơn hàng bạn đang tìm kiếm không tồn tại hoặc đã bị xóa."
+		description="Đơn hàng bạn đang tìm kiếm không tồn tại hoặc đã bị xóa."
+	/>
 {/if}
