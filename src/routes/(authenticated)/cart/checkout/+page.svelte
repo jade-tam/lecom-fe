@@ -33,7 +33,11 @@
 			onUpdated: ({ form }) => {
 				if (form.message?.toastData) showToast(form.message.toastData);
 				if (form.message?.toastData.type === 'success') {
-					goto(resolve(`/orders/payment/${form.message.responseResult.orders[0].id}`));
+					if (form.message?.responseResult.paymentUrl) {
+						goto(resolve(`/orders/payment/${form.message.responseResult.orders[0].id}`));
+					} else {
+						goto(resolve(`/orders`));
+					}
 				}
 			}
 		});
@@ -103,10 +107,11 @@
 							{#await data.balancePromise then userBalance}
 								{#if userBalance}
 									<span class="font-serif text-xl font-bold text-success-content"
-										>{formatVND(userBalance.balance)} đ</span
+										>{formatVND(userBalance.balance)}</span
 									>
+								{:else}
+									<span class="text-error">Không thể lấy số dư ví</span>
 								{/if}
-								<span class="text-error">Không thể lấy số dư ví</span>
 							{/await}
 						</p>
 					</div>

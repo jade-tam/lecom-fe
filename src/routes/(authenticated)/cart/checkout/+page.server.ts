@@ -23,15 +23,11 @@ export const actions = {
 	checkout: async ({ request, cookies }) => {
 		const form = await superValidate(request, zod4(checkoutSchema));
 
-		console.log('CHECK OUT WITH THIS FORM', form);
-
 		if (!form.valid) {
 			return { form };
 		}
 
 		const formData = form.data;
-
-		console.log('CHECK OUT WITH THIS FORM DATA', formData);
 
 		const { response, responseBody } = await fetchAuthorizedApi(
 			cookies,
@@ -40,10 +36,7 @@ export const actions = {
 			{ ...formData, selectedProductIds: formData.selectedProductIds }
 		);
 
-		const toastData: ToastData = getToastData(
-			responseBody,
-			'Order has been created, proceed to payment.'
-		);
+		const toastData: ToastData = getToastData(responseBody, 'Đơn hàng đã được tạo.');
 
 		if (response.ok) {
 			return message(form, {
