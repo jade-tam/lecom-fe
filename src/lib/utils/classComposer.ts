@@ -2,6 +2,7 @@ import type { CourseActiveStatus } from '$lib/types/Course';
 import type { ProductStatus } from '$lib/types/Product';
 import type { ShopStatus } from '$lib/types/Shop';
 import type { UserActiveStatus, UserRole } from '$lib/types/User';
+import type { OrderStatus, PaymentStatus } from '$lib/types/Order';
 
 export function getStatusBtnClass(status: ShopStatus) {
 	return status === 'Approved'
@@ -65,4 +66,64 @@ export function getUserRoleBtnClass(role: UserRole | UserRole[]) {
 
 export function getUserRoleBadgeClass(role: UserRole | UserRole[]) {
 	return role === 'Admin' ? 'badge-error' : role === 'Seller' ? 'badge-info' : 'badge-secondary';
+}
+
+export function getOrderStatusBtnClass(status: OrderStatus) {
+	return status === 'Pending'
+		? 'btn-warning'
+		: status === 'Paid'
+			? 'btn-info'
+			: status === 'Packed'
+				? 'btn-secondary'
+				: status === 'Shipped'
+					? 'btn-accent'
+					: status === 'Completed'
+						? 'btn-success'
+						: status === 'Canceled'
+							? 'btn-error'
+							: 'btn-error';
+}
+
+export function getOrderStatusBadgeClass(status: OrderStatus) {
+	return status === 'Pending'
+		? 'badge-warning'
+		: status === 'Paid'
+			? 'badge-info'
+			: status === 'Packed'
+				? 'badge-secondary'
+				: status === 'Shipped'
+					? 'badge-accent'
+					: status === 'Completed'
+						? 'badge-success'
+						: status === 'Canceled'
+							? 'badge-error'
+							: 'badge-error';
+}
+
+export function getPaymentStatusBadgeClass(status: PaymentStatus) {
+	return status === 'Pending'
+		? 'badge-warning'
+		: status === 'Succeeded'
+			? 'badge-success'
+			: status === 'Failed'
+				? 'badge-error'
+				: status === 'Refunded'
+					? 'badge-info'
+					: status === 'PartiallyRefunded'
+						? 'badge-secondary'
+						: 'badge-error';
+}
+
+export function getPaymentStatusBtnClass(status: PaymentStatus) {
+	return status === 'Pending'
+		? 'btn-warning'
+		: status === 'Succeeded'
+			? 'btn-success'
+			: status === 'Failed'
+				? 'btn-error'
+				: status === 'Refunded'
+					? 'btn-info'
+					: status === 'PartiallyRefunded'
+						? 'btn-secondary'
+						: 'btn-error';
 }

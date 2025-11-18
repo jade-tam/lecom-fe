@@ -5,15 +5,17 @@
 	const {
 		action,
 		formData,
+		class: className = '',
 		children
 	}: {
 		action: string;
 		formData: Record<string, string>;
+		class?: string;
 		children: Snippet;
 	} = $props();
 </script>
 
-<form method="POST" {action} use:enhance>
+<form method="POST" {action} use:enhance class={className}>
 	<!-- Store Form Data values into hidden input -->
 	{#each Object.entries(formData) as [key, value]}
 		<input type="hidden" name={key} {value} />

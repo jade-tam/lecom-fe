@@ -38,7 +38,7 @@
 		bind:value
 		type="search"
 		class="grow"
-		placeholder="Search..."
+		placeholder="Tìm kiếm..."
 		onkeydown={handleKeydown}
 		{...restAttributes}
 	/>

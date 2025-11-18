@@ -72,21 +72,30 @@
 
 	<div class="flex items-center gap-2 pl-8">
 		{#if userProfile}
-			<button class="btn btn-square btn-ghost" aria-label="Notification">
-				<span class="icon-[fa7-solid--bell] text-xl"></span>
-			</button>
-			<a href="/cart" class="btn relative btn-square btn-ghost btn-secondary" aria-label="Cart">
-				<span class="icon-[fa7-solid--shopping-cart] shrink-0 text-xl"></span>
-				{#await cartCountPromise then cartCount}
-					{#if cartCount}
-						<span
-							class="absolute top-0 right-0.5 badge h-4 w-4 rounded-full badge-xs badge-secondary"
-						>
-							{cartCount}
-						</span>
-					{/if}
-				{/await}
-			</a>
+			<div class="tooltip tooltip-bottom" data-tip="Notifications">
+				<button class="btn btn-square btn-ghost" aria-label="Notification">
+					<span class="icon-[fa7-solid--bell] text-xl"></span>
+				</button>
+			</div>
+			<div class="tooltip tooltip-bottom" data-tip="Cart">
+				<a href="/cart" class="btn relative btn-square btn-ghost btn-secondary" aria-label="Cart">
+					<span class="icon-[fa7-solid--shopping-cart] shrink-0 text-xl"></span>
+					{#await cartCountPromise then cartCount}
+						{#if cartCount}
+							<span
+								class="absolute top-0 right-0.5 badge h-4 w-4 rounded-full badge-xs badge-secondary"
+							>
+								{cartCount}
+							</span>
+						{/if}
+					{/await}
+				</a>
+			</div>
+			<div class="tooltip tooltip-bottom" data-tip="Chat & Messages">
+				<a class="btn btn-square btn-ghost" aria-label="Chat" href="/chat">
+					<span class="icon-[fa7-solid--message] text-xl"></span>
+				</a>
+			</div>
 			<div class="dropdown dropdown-end">
 				<div tabindex="0" role="button" class="btn m-1 btn-square btn-link">
 					<UserAvatar
@@ -105,6 +114,8 @@
 						<li><a href="/seller" class="rounded-field">Seller Dashboard</a></li>
 					{/if}
 					<li><a href="/profile" class="rounded-field">Profile</a></li>
+					<li><a href="/orders" class="rounded-field">My Orders</a></li>
+					<li><a href="/course-enrollments" class="rounded-field">My Enrollments</a></li>
 					<li><a href="/settings" class="rounded-field">Settings</a></li>
 					{#if userRole && haveAuthorization(userRole, 'Customer')}
 						<li><a href="/seller-register" class="rounded-field">Register Shop</a></li>

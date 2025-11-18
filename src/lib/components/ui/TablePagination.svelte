@@ -44,7 +44,7 @@
 
 <div class="flex items-center justify-between gap-4">
 	<p class="text-sm opacity-60">
-		Displaying items {startItemNumber} - {endItemNumber} of {totalItems} results
+		Hiển thị {startItemNumber} - {endItemNumber} trên {totalItems} kết quả
 	</p>
 
 	<div class="join">
