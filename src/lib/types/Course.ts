@@ -43,6 +43,8 @@ export type Lesson = {
 	contentUrl: string;
 	orderIndex: number;
 	linkedProducts: LinkedProduct[];
+	xpReward?: number;
+	isCompleted?: boolean;
 };
 
 type LinkedProduct = {
@@ -67,6 +69,23 @@ export type CourseWithDetail = {
 		name: string;
 		avatar: string;
 		description: string;
+	};
+	sections: Section[];
+};
+
+export type CourseLearning = {
+	course: {
+		id: string;
+		title: string;
+		summary: string;
+		categoryName: string;
+		shopName: string;
+		thumbnail: string;
+	};
+	progress: {
+		completedLessons: number;
+		percent: number;
+		totalLessons: number;
 	};
 	sections: Section[];
 };
