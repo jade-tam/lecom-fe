@@ -1,4 +1,6 @@
 <script lang="ts">
+	import NumberFlow from '@number-flow/svelte';
+
 	let { value = $bindable(1) } = $props<{ value?: number }>();
 
 	function increase() {
@@ -10,9 +12,9 @@
 	}
 </script>
 
-<div>
-	<button type="button" class="btn btn-secondary" onclick={decrease} disabled={value <= 1}>-</button
+<div class="flex gap-3">
+	<button type="button" class="btn btn-square btn-secondary" onclick={decrease} disabled={value <= 1}>-</button
 	>
-	<span class="w-4 p-4 font-serif text-xl font-black">{value}</span>
-	<button type="button" class="btn btn-secondary" onclick={increase}>+</button>
+	<span class="w-6 text-center font-serif text-xl font-black"><NumberFlow {value} /></span>
+	<button type="button" class="btn btn-square btn-secondary" onclick={increase}>+</button>
 </div>

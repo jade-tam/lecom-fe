@@ -35,17 +35,17 @@
 
 <section class="mt-8 flex min-h-screen flex-col items-center">
 	{#if product}
-		<div class="grid w-full grid-cols-2 gap-x-8 gap-y-2">
+		<div class="grid w-full grid-cols-2 gap-x-4 gap-y-2">
 			<div class="col-span-1 max-md:col-span-2">
 				<ImageViewer images={product.images.map((image) => image.url) ?? []} />
 			</div>
 
-			<div class="col-span-1 flex flex-col gap-4 max-md:col-span-2">
+			<div class="col-span-1 flex flex-col gap-2 max-md:col-span-2">
 				<p class="text-header3 font-serif">{product.name}</p>
 				<div class="badge badge-secondary">{product.categoryName}</div>
 				<p class="text-header1 font-serif text-primary-content">{formatVND(product.price)}</p>
 				<p class="text-sm text-base-content/60 italic">
-					<strong>{product.stock}</strong> items in stock
+					Còn <strong>{product.stock}</strong> sản phẩm trong kho
 				</p>
 
 				<QuantitySelector bind:value={$form['quantity']} />
@@ -55,27 +55,30 @@
 						name="quantity"
 						type="number"
 						hidden
-						label="Quantity"
+						label="Số lượng"
 						superForm={form}
 						{errors}
 					/>
 					<FormInput
 						name="productId"
 						type="text"
-						label="productId"
+						label="Mã sản phẩm"
 						superForm={form}
 						{errors}
 						hidden
 					/>
 					<div class="flex gap-2">
 						<button type="submit" class="btn grow btn-primary">
-							<span class="icon-[fa7-solid--cart-plus]"></span>Add to cart
+							<span class="icon-[fa7-solid--cart-plus]"></span>Thêm vào giỏ hàng
 						</button>
-						<div class="tooltip" data-tip={isWishlist ? 'Added to wishlist' : 'Add to wishlist'}>
+						<div
+							class="tooltip"
+							data-tip={isWishlist ? 'Đã thêm vào mục yêu thích' : 'Thêm vào mục yêu thích'}
+						>
 							<button
 								type="button"
 								class="btn btn-square {isWishlist ? 'btn-error' : 'btn-secondary'}"
-								aria-label={isWishlist ? 'Added to wishlist' : 'Add to wishlist'}
+								aria-label={isWishlist ? 'Đã thêm vào mục yêu thích' : 'Thêm vào mục yêu thích'}
 								onclick={() => (isWishlist = !isWishlist)}
 							>
 								<span class="icon-[fa7-solid--heart] btn-xl"></span>
@@ -94,16 +97,16 @@
 				/>
 			</div>
 
-			<div class="col-span-2 mt-2 rounded-box border bg-base-100 p-6 max-md:p-4">
-				<p class="text-header3">Product description</p>
+			<div class="col-span-2 rounded-box border bg-base-100 p-6 max-md:p-4">
+				<p class="text-header3">Chi tiết sản phẩm</p>
 				<div class="prose prose-sm mt-6 whitespace-pre-line">{product.description}</div>
 			</div>
 
-			<div class="col-span-2 mt-2 rounded-box border bg-base-100 p-6 max-md:p-4">
-				<p class="text-header3">Similar products</p>
+			<div class="col-span-2 rounded-box border bg-base-100 p-6 max-md:p-4">
+				<p class="text-header3">Sản phẩm tương tự</p>
 
 				{#await data.similarProductsPromise}
-					<div class="mt-4 grid grid-cols-4 gap-4">
+					<div class="mt-4 grid grid-cols-4 gap-2">
 						<ProductCardSkeleton />
 						<ProductCardSkeleton />
 						<ProductCardSkeleton />
@@ -111,18 +114,18 @@
 					</div>
 				{:then similarProducts}
 					{#if similarProducts.length}
-						<div class="mt-4 grid grid-cols-4 gap-4">
-							{#each similarProducts as products (product.id)}
-								<ProductCard {product} />
+						<div class="mt-4 grid grid-cols-4 gap-2">
+							{#each similarProducts as similarProduct (similarProduct.id)}
+								<ProductCard product={similarProduct} />
 							{/each}
 						</div>
 					{:else}
-						<EmptyPlaceholder text="No similar product found" />
+						<EmptyPlaceholder text="Không tìm thấy sản phẩm tương tự" />
 					{/if}
 				{/await}
 			</div>
 		</div>
 	{:else}
-		<EmptyPlaceholder text="This product is not exist" />
+		<EmptyPlaceholder text="Sản phẩm không tồn tại" />
 	{/if}
 </section>
