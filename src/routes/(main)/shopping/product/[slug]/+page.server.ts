@@ -14,7 +14,7 @@ export async function load({ params, cookies }) {
 	);
 
 	const similarProductsPromise: Promise<Product[]> = getSafeResult(
-		fetchAuthorizedApi(cookies, `/api/recombee/similar/${product?.id}`, 'GET'),
+		fetchAuthorizedApi(cookies, `/api/recombee/product/${product?.slug}/recommend`, 'GET'),
 		[] as Product[]
 	);
 
@@ -27,9 +27,9 @@ export async function load({ params, cookies }) {
 	);
 
 	return {
+		similarProductsPromise,
 		form,
-		product: product,
-		similarProductsPromise
+		product: product
 	};
 }
 
