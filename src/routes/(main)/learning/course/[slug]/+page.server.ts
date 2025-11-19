@@ -1,17 +1,23 @@
-import type { CourseWithDetail } from '$lib/types/Course';
-import { fetchApi, fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi';
+import type { Course, CourseWithDetail } from '$lib/types/Course';
+import { fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi';
 import { fail } from '@sveltejs/kit';
 
-export async function load({ params }) {
+export async function load({ params, cookies }) {
 	const { slug } = params;
 
 	const course: CourseWithDetail | null = await getSafeResult(
-		fetchApi<CourseWithDetail>(`/api/home/courses/${slug}`, 'GET'),
+		fetchAuthorizedApi<CourseWithDetail>(cookies, `/api/home/courses/${slug}`, 'GET'),
 		null
 	);
 
+	const similarCoursesPromise: Promise<Course[]> = getSafeResult(
+		fetchAuthorizedApi(cookies, `/api/recombee/course/${course?.slug}/recommend`, 'GET'),
+		[] as Course[]
+	);
+
 	return {
-		course: course
+		similarCoursesPromise,
+		course
 	};
 }
 
@@ -28,7 +34,10 @@ export const actions = {
 			'POST'
 		);
 
-		const toastData = getToastData(responseBody, 'Course enrolled');
+		const toastData = getToastData(
+			responseBody,
+			'Khoá học đã được thêm vào danh sách học của bạn.'
+		);
 
 		return { toastData };
 	}

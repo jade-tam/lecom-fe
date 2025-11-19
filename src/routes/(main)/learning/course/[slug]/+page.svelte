@@ -1,7 +1,9 @@
 <script lang="ts">
+	import CourseCard from '$lib/components/ui/card/CourseCard.svelte';
 	import ShopCard from '$lib/components/ui/card/ShopCard.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
+	import CourseCardSkeleton from '$lib/components/ui/skeleton/CourseCardSkeleton.svelte';
 	import FormAction from '$lib/components/wrapper/FormAction.svelte';
 	import { formatVideoDuration, toNumericString, toRomanNumeral } from '$lib/utils/converters.js';
 	import showToast from '$lib/utils/showToast.js';
@@ -44,12 +46,15 @@
 				<p class="flex items-center gap-2 text-sm text-secondary-content">
 					<span class="icon-[fa7-solid--swatchbook] shrink-0"></span>{course.categoryName}
 				</p>
+				{#if course.isEnrolled}
+					<div class="badge badge-success">Đã tham gia khoá học</div>
+				{/if}
 				<p class="line-clamp-5">{course.summary}</p>
 				<div class="mt-2 flex gap-2">
 					{#if course.isEnrolled}
-						<button class="btn grow btn-primary">
-							<span class="icon-[fa7-solid--book-open]"></span>Start learning
-						</button>
+						<a class="btn grow btn-primary" href="/learn/{course.id}">
+							<span class="icon-[fa7-solid--book-open]"></span>Bắt đầu học
+						</a>
 					{:else}
 						<FormAction
 							action="?/enroll"
@@ -59,7 +64,7 @@
 							class="grow"
 						>
 							<button type="submit" class="btn w-full btn-primary"
-								><span class="icon-[fa7-solid--book-open]"></span>Enroll this course</button
+								><span class="icon-[fa7-solid--book-open]"></span>Tham gia khóa học này</button
 							>
 						</FormAction>
 					{/if}
@@ -80,7 +85,7 @@
 		<div class="divider"></div>
 
 		<!-- =================================================================================== -->
-		<h2>Course Content</h2>
+		<h2>Nội dung khóa học</h2>
 		<div class="w-full overflow-hidden rounded-box border bg-base-100 p-0">
 			{#if course.sections}
 				{#each course.sections as section, i (section.id)}
@@ -97,9 +102,7 @@
 											? 'border-b border-secondary'
 											: ''}"
 									>
-										<button class="btn btn-square btn-ghost btn-primary" aria-label="play">
-											<span class="icon-[fa7-solid--circle-play]"></span>
-										</button>
+										<span class="mx-1 icon-[fa7-solid--circle-play] text-sm"></span>
 										<p>{toNumericString(ii + 1)}. {lesson.title}</p>
 										<p class="mr-4 ml-auto flex items-center gap-2 text-xs text-secondary-content">
 											{formatVideoDuration(lesson.durationSeconds)}<span
@@ -109,16 +112,40 @@
 									</div>
 								{/each}
 							{:else}
-								<p class="itatic p-2 text-xs text-base-content/60">This section have no lesson</p>
+								<p class="p-2 text-xs text-base-content/60 italic">Phần này chưa có bài học nào</p>
 							{/if}
 						</div>
 					</div>
 				{/each}
 			{:else}
-				<EmptyPlaceholder text="This course have no content" />
+				<EmptyPlaceholder text="Khóa học này chưa có nội dung" />
 			{/if}
 		</div>
+
+		<!-- =================================================================================== -->
+		<div class="col-span-2 rounded-box border bg-base-100 p-6 max-md:p-4">
+			<p class="text-header3">Khoá học tương tự</p>
+
+			{#await data.similarCoursesPromise}
+				<div class="mt-4 grid grid-cols-4 gap-2">
+					<CourseCardSkeleton />
+					<CourseCardSkeleton />
+					<CourseCardSkeleton />
+					<CourseCardSkeleton />
+				</div>
+			{:then similarCourses}
+				{#if similarCourses.length}
+					<div class="mt-4 grid grid-cols-4 gap-2">
+						{#each similarCourses as similarCourse (similarCourse.id)}
+							<CourseCard course={similarCourse} />
+						{/each}
+					</div>
+				{:else}
+					<EmptyPlaceholder text="Không tìm thấy khóa học tương tự" />
+				{/if}
+			{/await}
+		</div>
 	{:else}
-		<EmptyPlaceholder text="This course is not exist" />
+		<EmptyPlaceholder text="Khóa học không tồn tại" />
 	{/if}
 </section>
