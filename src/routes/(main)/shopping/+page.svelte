@@ -7,8 +7,48 @@
 	const { data } = $props();
 </script>
 
-<section class="mt-8 flex min-h-screen flex-col items-center">
-	<h2 class="text-header1">Discover our shopping products</h2>
+<section class="mt-8 flex flex-col">
+	<h2 class="text-header2">Đề xuất dành cho bạn</h2>
+
+	<div class="mt-4 grid w-full grid-cols-5 items-stretch gap-2">
+		{#each Array(5) as skeleton}
+			<ProductCardSkeleton />
+		{/each}
+	</div>
+</section>
+
+<section class="mt-8 flex flex-col">
+	<h2 class="text-header2">Danh mục được đề xuất 1</h2>
+
+	<div class="mt-4 grid w-full grid-cols-5 items-stretch gap-2">
+		{#each Array(5) as skeleton}
+			<ProductCardSkeleton />
+		{/each}
+	</div>
+</section>
+
+<section class="mt-8 flex flex-col">
+	<h2 class="text-header2">Danh mục được đề xuất 2</h2>
+
+	<div class="mt-4 grid w-full grid-cols-5 items-stretch gap-2">
+		{#each Array(5) as skeleton}
+			<ProductCardSkeleton />
+		{/each}
+	</div>
+</section>
+
+<section class="mt-8 flex flex-col">
+	<h2 class="text-header2">Các sản phẩm bán chạy nhất</h2>
+
+	<div class="mt-4 grid w-full grid-cols-5 items-stretch gap-2">
+		{#each Array(5) as skeleton}
+			<ProductCardSkeleton />
+		{/each}
+	</div>
+</section>
+
+<section class="mt-8 flex flex-col">
+	<h2 class="text-header2">Khám phá các sản phẩm mua sắm</h2>
 
 	<div class="mt-2 flex gap-2 self-start">
 		{#await data.categories}
@@ -25,10 +65,10 @@
 	</div>
 
 	<div
-		class="mt-4 grid w-full grid-cols-4 items-stretch gap-4 max-lg:grid-cols-3 max-md:grid-cols-2"
+		class="mt-4 grid w-full grid-cols-4 items-stretch gap-2 max-lg:grid-cols-3 max-md:grid-cols-2"
 	>
 		{#await data.queryResult}
-			{#each Array(12) as skeleton}
+			{#each Array(8) as skeleton}
 				<ProductCardSkeleton />
 			{/each}
 		{:then result}
@@ -46,10 +86,10 @@
 					/>
 				</div>
 			{:else}
-				<EmptyPlaceholder text="No product found" />
+				<EmptyPlaceholder text="Không có sản phẩm nào" />
 			{/if}
 		{:catch err}
-			<p class="text-error">Error loading products</p>
+			<p class="text-error">Có lỗi xảy ra trong khi đang tải sản phẩm</p>
 		{/await}
 	</div>
 </section>
