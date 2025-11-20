@@ -3,7 +3,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
-	import { formatVideoDuration, toRomanNumeral } from '$lib/utils/converters.js';
+	import { formatVideoDuration, formatVND, toRomanNumeral } from '$lib/utils/converters.js';
 	import showToast from '$lib/utils/showToast';
 
 	const { data, form } = $props();
@@ -111,17 +111,33 @@
 				<!-- Related products -->
 				{#if selectedLesson.linkedProducts?.length}
 					<div class="mt-4">
-						<h3 class="mb-2 font-bold">Sản phẩm liên quan</h3>
-						<div class="flex flex-wrap gap-2">
+						<p class="mb-2 flex items-center gap-2 font-serif font-bold">
+							<span class="icon-[fa7-solid--box-open]"></span>Sản phẩm trong khoá học
+						</p>
+						<div class="flex gap-2">
 							{#each selectedLesson.linkedProducts as product}
-								<div class="flex items-center gap-2 rounded-box border bg-base-200 p-2">
-									<Image src={product.thumbnailUrl} alt={product.name} class="h-10 w-10 rounded" />
-									<div>
-										<p class="font-semibold">{product.name}</p>
-										<p class="text-xs text-base-content/70">{product.shopName}</p>
-										<p class="font-bold text-primary">{product.price}₫</p>
+								<a href="/shopping/product/{product.slug}" class="group flex-1" target="_blank">
+									<div
+										class="flex gap-2 rounded-field border bg-base-100 p-2 duration-200 group-hover:-translate-y-1 group-hover:shadow-lg"
+									>
+										<Image
+											src={product.thumbnailUrl}
+											alt={product.name}
+											class="h-16 w-16 rounded shrink-0"
+											border=""
+										/>
+										<div class="w-full">
+											<p class="flex items-start gap-4 font-bold justify-between">
+												{product.name}
+												<span class="icon-[fa7-solid--external-link] text-sm text-secondary"></span>
+											</p>
+											<p class="text-xs text-base-content/70 italic">{product.categoryName}</p>
+											<p class="font-serif font-bold text-primary-content">
+												{formatVND(product.price)}
+											</p>
+										</div>
 									</div>
-								</div>
+								</a>
 							{/each}
 						</div>
 					</div>

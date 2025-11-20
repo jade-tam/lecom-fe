@@ -53,6 +53,8 @@ type LinkedProduct = {
 	price: number;
 	thumbnailUrl: string;
 	shopName: string;
+	categoryName?: string;
+	slug: string;
 };
 
 // Another version of course data response from public api
