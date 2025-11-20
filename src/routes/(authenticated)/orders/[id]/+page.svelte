@@ -149,7 +149,7 @@
 					<div class="divider"></div>
 					<div class="flex justify-between text-lg font-bold">
 						<span>Tổng đơn hàng</span>
-						<span class="font-serif text-primary-content">{formatVND(order.total)}</span>
+						<span class="font-serif text-2xl text-primary-content">{formatVND(order.total)}</span>
 					</div>
 				</div>
 			</div>

@@ -3,12 +3,10 @@
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import TableFilter from '$lib/components/ui/TableFilter.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
-	import FormConfirmDropdownAction from '$lib/components/wrapper/FormConfirmDropdownAction.svelte';
 	import { orderStatusOptions, type Order } from '$lib/types/Order';
 	import {
 		getOrderStatusBadgeClass,
-		getOrderStatusBtnClass,
-		getPaymentStatusBadgeClass
+		getOrderStatusBtnClass
 	} from '$lib/utils/classComposer';
 	import { formatDate, formatVND } from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
@@ -21,17 +19,19 @@
 		pageSize: pageSize,
 		data: orders,
 		columns: [
-			// { id: 'orderCode', key: 'orderCode', name: 'Mã đơn hàng' },
-			{ id: 'shopName', key: 'shopName', name: 'Cửa hàng' },
-			{ id: 'customerName', key: 'customerName', name: 'Khách hàng' },
-			{ id: 'shipToName', key: 'shipToName', name: 'Người nhận' },
-			{ id: 'total', key: 'total', name: 'Tổng tiền' },
+			{ id: 'details', key: 'details', name: 'Sản phẩm', sortable: false },
+			{ id: 'shopName', key: 'shopName', name: 'Cửa hàng', sortable: false },
 			{ id: 'status', key: 'status', name: 'Trạng thái đơn' },
-			{ id: 'paymentStatus', key: 'paymentStatus', name: 'Thanh toán' },
-			{ id: 'createdAt', key: 'createdAt', name: 'Ngày tạo' },
-			{ id: 'completedAt', key: 'completedAt', name: 'Ngày hoàn thành' }
-		]
+			{ id: 'createdAt', key: 'createdAt', name: 'Đặt hàng lúc' }
+		],
+		initialSort: 'createdAt',
+		initialSortDirection: 'desc'
 	});
+
+	function getOrderStatusTitle(status: string) {
+		const found = orderStatusOptions.find((opt) => opt.value === status);
+		return found ? found.title : status;
+	}
 </script>
 
 <div class="my-2 flex items-end justify-between">
@@ -86,7 +86,28 @@
 					<tr>
 						{#each table.columns as column (column.id)}
 							{#if column.id === 'total'}
-								<td>{formatVND(row.total)}</td>
+								<td class="font-serif text-xl font-bold">{formatVND(row.total)}</td>
+							{:else if column.id === 'details'}
+								<td>
+									<div class="flex flex-col gap-2">
+										{#each row.details as item (item.productId)}
+											<div class="flex items-center gap-2">
+												<Image
+													class="rounded-object h-12 w-12 object-cover"
+													src={item.productImage}
+													alt={item.productName}
+												/>
+												<div class="flex flex-col">
+													<p class="font-semibold">{item.productName}</p>
+													<p class="text-sm text-base-content/60">
+														Số lượng: {item.quantity} &nbsp;|&nbsp; Giá:
+														{formatVND(item.unitPrice)}
+													</p>
+												</div>
+											</div>
+										{/each}
+									</div>
+								</td>
 							{:else if column.id === 'createdAt' || column.id === 'completedAt'}
 								<td>
 									{row[column.key] && typeof row[column.key] === 'string'
@@ -95,12 +116,8 @@
 								</td>
 							{:else if column.id === 'status'}
 								<td>
-									<div class={`badge ${getOrderStatusBadgeClass(row.status)}`}>{row.status}</div>
-								</td>
-							{:else if column.id === 'paymentStatus'}
-								<td>
-									<div class={`badge ${getPaymentStatusBadgeClass(row.paymentStatus)}`}>
-										{row.paymentStatus}
+									<div class={`badge ${getOrderStatusBadgeClass(row.status)}`}>
+										{getOrderStatusTitle(row.status)}
 									</div>
 								</td>
 							{:else}
@@ -110,12 +127,8 @@
 						<td>
 							<div class="flex gap-1">
 								<div class="tooltip" data-tip="Xem chi tiết">
-									<a
-										href={`/orders/${row.id}`}
-										class="btn btn-square btn-secondary"
-										aria-label="xem chi tiết"
-									>
-										<span class="icon-[fa7-solid--eye] text-xl"></span>
+									<a href={`/orders/${row.id}`} class="btn btn-secondary" aria-label="xem chi tiết">
+										<span class="icon-[fa7-solid--eye] text-xl"></span>Xem chi tiết
 									</a>
 								</div>
 							</div>
