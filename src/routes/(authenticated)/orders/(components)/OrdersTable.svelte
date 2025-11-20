@@ -37,7 +37,7 @@
 <div class="my-2 flex items-end justify-between">
 	<div class="flex flex-col">
 		<h1 class="text-header3 font-bold">Lịch sử đơn hàng</h1>
-		<p class="text-base-content/60">Xem, chỉnh sửa và quản lý các đơn hàng của bạn.</p>
+		<p class="text-base-content/60">Xem lịch sử và trạng thái các đơn hàng của bạn.</p>
 	</div>
 
 	<div class="flex gap-2">
