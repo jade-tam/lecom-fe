@@ -1,7 +1,7 @@
 <script>
 	import OrdersTable from './(components)/OrdersTable.svelte';
 
-	const { data, form } = $props();
+	const { data } = $props();
 
 	$inspect(data.orders);
 </script>
