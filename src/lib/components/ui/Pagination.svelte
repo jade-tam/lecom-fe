@@ -46,22 +46,27 @@
 
 <div class="flex items-center justify-between gap-4">
 	<p class="text-sm opacity-60">
-		Displaying items {startItemNumber} - {endItemNumber} of {totalItems} results
+		Đang hiển thị sản phẩm {startItemNumber} - {endItemNumber} trên tổng số {totalItems} sản phẩm
 	</p>
 
 	<div class="join">
 		<!-- Previous button -->
-		<button class="btn join-item" disabled={page <= 1} onclick={() => handlePageClick(page - 1)}>
-			Prev
+		<button
+			class="btn join-item btn-square"
+			aria-label="Prev page"
+			disabled={page <= 1}
+			onclick={() => handlePageClick(page - 1)}
+		>
+			<span class="icon-[fa7-solid--chevron-left]"></span>
 		</button>
 
 		<!-- Page buttons -->
 		{#each visiblePages as p}
 			{#if p === '...'}
-				<button class="btn-disabled btn join-item">...</button>
+				<button class="btn-disabled btn join-item btn-square">...</button>
 			{:else}
 				<button
-					class="btn join-item {page === p ? 'btn-active btn-primary' : ''}"
+					class="btn join-item btn-square {page === p ? 'btn-active btn-primary' : ''}"
 					onclick={() => handlePageClick(p)}
 				>
 					{p}
@@ -71,11 +76,12 @@
 
 		<!-- Next button -->
 		<button
-			class="btn join-item"
+			class="btn join-item btn-square"
 			disabled={page >= totalPages}
 			onclick={() => handlePageClick(page + 1)}
+			aria-label="Next page"
 		>
-			Next
+			<span class="icon-[fa7-solid--chevron-right]"></span>
 		</button>
 	</div>
 </div>
