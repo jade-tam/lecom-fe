@@ -23,7 +23,7 @@ export const actions = {
 			'PUT'
 		);
 
-		const toastData = getToastData(responseBody, 'User has been activated');
+		const toastData = getToastData(responseBody, 'Người dùng đã được kích hoạt');
 
 		return { toastData };
 	},
@@ -40,7 +40,7 @@ export const actions = {
 			'PUT'
 		);
 
-		const toastData = getToastData(responseBody, 'User has been deactivated');
+		const toastData = getToastData(responseBody, 'Người dùng đã bị vô hiệu hóa');
 
 		return { toastData };
 	},
@@ -53,7 +53,46 @@ export const actions = {
 
 		const { responseBody } = await fetchAuthorizedApi(cookies, `/api/admin/user/${id}`, 'DELETE');
 
-		const toastData = getToastData(responseBody, 'User has been deleted');
+		const toastData = getToastData(responseBody, 'Đã xoá người dùng');
+
+		return { toastData };
+	},
+
+	toggleRole: async ({ request, cookies }) => {
+		const data = await request.formData();
+		const userId = data.get('userId');
+		const role = data.get('role');
+		const isAlreadyHaveRole = data.get('isAlreadyHaveRole');
+
+		if (!userId || !role || !isAlreadyHaveRole)
+			return fail(400, { message: 'Lỗi, thiếu dữ liệu cần thiết' });
+
+		let responseBody;
+		if (isAlreadyHaveRole === 'true') {
+			const { responseBody: resBody } = await fetchAuthorizedApi(
+				cookies,
+				`/api/admin/user/role/remove`,
+				'POST',
+				{
+					userId,
+					role
+				}
+			);
+			responseBody = resBody;
+		} else {
+			const { responseBody: resBody } = await fetchAuthorizedApi(
+				cookies,
+				`/api/admin/user/role/assign`,
+				'POST',
+				{
+					userId,
+					role
+				}
+			);
+			responseBody = resBody;
+		}
+
+		const toastData = getToastData(responseBody, 'Vai trò đã được cập nhật');
 
 		return { toastData };
 	}

@@ -31,6 +31,10 @@ export const userRoleOptions = [
 	{
 		title: 'Admin',
 		value: 'Admin'
+	},
+	{
+		title: 'Moderator',
+		value: 'Moderator'
 	}
 ] as const satisfies readonly FormSelectOption[];
 

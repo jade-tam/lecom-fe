@@ -9,6 +9,7 @@ import {
 	type PaymentStatus
 } from '$lib/types/Order';
 import type { ShipmentStatus } from '$lib/types/Order';
+import { haveAuthorization } from './others';
 
 export function getStatusBtnClass(status: ShopStatus) {
 	return status === 'Approved'
@@ -67,11 +68,23 @@ export function getUserActiveStatusBadgeClass(active: UserActiveStatus) {
 }
 
 export function getUserRoleBtnClass(role: UserRole | UserRole[]) {
-	return role === 'Admin' ? 'btn-error' : role === 'Seller' ? 'btn-info' : 'btn-secondary';
+	return haveAuthorization(role, 'Admin')
+		? 'btn-error'
+		: haveAuthorization(role, 'Moderator')
+			? 'btn-info'
+			: haveAuthorization(role, 'Seller')
+				? 'btn-secondary'
+				: '';
 }
 
 export function getUserRoleBadgeClass(role: UserRole | UserRole[]) {
-	return role === 'Admin' ? 'badge-error' : role === 'Seller' ? 'badge-info' : 'badge-secondary';
+	return haveAuthorization(role, 'Admin')
+		? 'badge-error'
+		: haveAuthorization(role, 'Moderator')
+			? 'badge-info'
+			: haveAuthorization(role, 'Seller')
+				? 'badge-secondary'
+				: '';
 }
 
 export function getOrderStatusBtnClass(status: OrderStatus) {
