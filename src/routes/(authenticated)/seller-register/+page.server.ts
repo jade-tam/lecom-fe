@@ -36,7 +36,7 @@ export const actions: Actions = {
 
 		const toastData: ToastData = getToastData(
 			responseBody,
-			'Your request has been sent. We will check your registration and response within 48 hours.'
+			'Yêu cầu đăng ký của bạn đã được gửi. Chúng tôi sẽ kiểm tra và phản hồi lại trong vòng 48 giờ.'
 		);
 
 		if (response.ok) {

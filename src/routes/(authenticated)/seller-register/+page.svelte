@@ -31,19 +31,19 @@
 </script>
 
 <div class="my-2 flex justify-center">
-	<h2>Register Shop Now</h2>
+	<h2>Đăng ký mở cửa hàng</h2>
 </div>
 
-<!-- HERE IS THE FORM -->
+<!-- FORM ĐĂNG KÝ -->
 <form method="POST" class="h-fit w-full rounded-box border bg-base-100 p-4 pt-2" use:enhance>
-	<h3>Personal Information</h3>
+	<h3>Thông tin cá nhân</h3>
 	<FormInput
 		name="ownerFullName"
-		label="Full name"
+		label="Họ và tên"
 		class="max-w-[400px]"
 		icon="icon-[fa7-solid--circle-user]"
-		placeholder="Enter your full name here..."
-		help="Your full name which show on your personal ID card"
+		placeholder="Nhập họ và tên của bạn..."
+		help="Họ và tên như trên giấy tờ tùy thân"
 		type="text"
 		superForm={form}
 		{errors}
@@ -51,11 +51,11 @@
 
 	<FormInput
 		name="ownerDateOfBirth"
-		label="Date Of Birth"
+		label="Ngày sinh"
 		class="max-w-[400px]"
-		placeholder="Enter your date of birth..."
+		placeholder="Nhập ngày sinh của bạn..."
 		icon="icon-[fa7-solid--calendar-alt]"
-		help="Must match the date that show on your personal ID card"
+		help="Phải trùng với ngày sinh trên giấy tờ tùy thân"
 		type="date"
 		superForm={form}
 		{errors}
@@ -63,11 +63,11 @@
 
 	<FormInput
 		name="ownerPersonalIdNumber"
-		label="Personal ID Number"
+		label="Số CMND/CCCD"
 		class="max-w-[400px]"
-		placeholder="Enter your ID number..."
+		placeholder="Nhập số CMND/CCCD..."
 		icon="icon-[fa7-solid--id-card]"
-		help="Must match the ID that show on your personal ID card"
+		help="Phải trùng với số trên giấy tờ tùy thân"
 		type="text"
 		superForm={form}
 		{errors}
@@ -78,7 +78,7 @@
 			class="aspect-video"
 			aspectRatio="16:9"
 			name="ownerPersonalIdFrontUrl"
-			label="Personal ID Front Image"
+			label="Ảnh mặt trước CMND/CCCD"
 			icon="icon-[fa7-solid--image]"
 			superForm={form}
 			{errors}
@@ -89,22 +89,22 @@
 			aspectRatio="16:9"
 			name="ownerPersonalIdBackUrl"
 			icon="icon-[fa7-solid--image]"
-			label="Personal ID Back Image"
+			label="Ảnh mặt sau CMND/CCCD"
 			superForm={form}
 			{errors}
 		/>
 	</div>
 
 	<div class="divider"></div>
-	<h3>Shop Information</h3>
+	<h3>Thông tin cửa hàng</h3>
 
 	<div class="grid grid-cols-12 gap-4">
 		<div class="col-span-4">
 			<FormInput
 				name="shopName"
-				label="Shop Name"
+				label="Tên cửa hàng"
 				icon="icon-[fa7-solid--shop]"
-				placeholder="Enter your shop name..."
+				placeholder="Nhập tên cửa hàng..."
 				class="max-w-[400px]"
 				type="text"
 				superForm={form}
@@ -113,10 +113,10 @@
 
 			<FormInput
 				name="shopPhoneNumber"
-				label="Shop Phone Number"
+				label="Số điện thoại cửa hàng"
 				class="max-w-[400px]"
 				icon="icon-[fa7-solid--phone-square]"
-				placeholder="This is your shop contact number..."
+				placeholder="Số liên hệ cửa hàng..."
 				type="text"
 				superForm={form}
 				{errors}
@@ -126,7 +126,7 @@
 			<FormMediaInput
 				aspectRatio="1:1"
 				name="shopAvatar"
-				label="Shop Avatar"
+				label="Ảnh đại diện cửa hàng"
 				class="h-39 w-38"
 				icon="icon-[fa7-solid--image]"
 				superForm={form}
@@ -134,7 +134,7 @@
 			/>
 			<FormMediaInput
 				name="shopBanner"
-				label="Shop Banner"
+				label="Ảnh banner cửa hàng"
 				class="h-39 w-full"
 				icon="icon-[fa7-solid--image]"
 				superForm={form}
@@ -146,9 +146,9 @@
 
 	<FormInput
 		name="shopDescription"
-		label="Shop Description"
+		label="Mô tả cửa hàng"
 		icon="icon-[fa7-solid--align-justify]"
-		placeholder="Enter your shop description..."
+		placeholder="Nhập mô tả cửa hàng..."
 		type="text"
 		superForm={form}
 		{errors}
@@ -156,9 +156,9 @@
 
 	<FormInput
 		name="shopAddress"
-		label="Shop Address"
+		label="Địa chỉ cửa hàng"
 		icon="icon-[fa7-solid--location-dot]"
-		placeholder="Where is your shop location..."
+		placeholder="Địa chỉ cửa hàng..."
 		type="text"
 		superForm={form}
 		{errors}
@@ -169,8 +169,8 @@
 		options={shopBusinessOptions}
 		icon="icon-[fa7-solid--briefcase]"
 		class="max-w-[400px]"
-		label="Shop Business Type"
-		placeholder="Shop Business Type"
+		label="Loại hình kinh doanh"
+		placeholder="Chọn loại hình kinh doanh"
 		superForm={form}
 		{errors}
 	/>
@@ -182,9 +182,9 @@
 			value: cat.id
 		}))}
 		class="max-w-[400px]"
-		label="Shop Category"
-		placeholder="Shop category"
-		help="Products and courses on your shop will focus on this category"
+		label="Danh mục khoá học chính"
+		placeholder="Chọn danh mục khoá học chính"
+		help="Các khóa học của cửa hàng sẽ tập trung vào danh mục này"
 		superForm={form}
 		{errors}
 	/>
@@ -194,10 +194,10 @@
 		buttonClass="max-h-32"
 		mediaType="Document"
 		name="ownershipDocumentUrl"
-		label="Shop Ownership Document"
-		placeholder="Upload document here"
+		label="Tài liệu sở hữu cửa hàng"
+		placeholder="Tải lên tài liệu tại đây"
 		icon="icon-[fa7-solid--file-text]"
-		help="Upload an official document proving ownership of your business — for example, a business registration certificate or store lease agreement. Accepted formats: DOC, DOCX, or PDF"
+		help="Tải lên giấy tờ chứng minh quyền sở hữu kinh doanh — ví dụ: giấy đăng ký kinh doanh hoặc hợp đồng thuê mặt bằng. Định dạng chấp nhận: DOC, DOCX hoặc PDF"
 		superForm={form}
 		{errors}
 	/>
@@ -205,8 +205,7 @@
 	<div class="my-2 text-right text-sm">
 		<label class="flex items-center justify-end gap-2">
 			<p>
-				I confirm that the information provided is accurate and I also agree to the platform’s
-				mentor policies and terms.
+				Tôi xác nhận rằng thông tin cung cấp là chính xác và tôi đồng ý với các chính sách, điều khoản dành cho người bán của nền tảng.
 			</p>
 			<input
 				type="checkbox"
@@ -223,7 +222,7 @@
 	</div>
 
 	<button class="btn mt-2 w-full btn-primary" disabled={$submitting}>
-		Submit
+		Gửi thông tin đăng ký
 		{#if $delayed}
 			<span class="loading loading-spinner"></span>
 		{/if}
