@@ -16,19 +16,22 @@
 		data: shops,
 		columns: [
 			{ id: 'id', key: 'id', name: 'ID' },
-			{ id: 'shopAvatar', key: 'shopAvatar', name: 'Avatar' },
-			{ id: 'name', key: 'name', name: 'Name' },
-			{ id: 'ownerFullName', key: 'ownerFullName', name: 'Owner Full Name' },
-			{ id: 'phoneNumber', key: 'phoneNumber', name: 'Phone Number' },
-			{ id: 'businessType', key: 'businessType', name: 'Business Type' },
-			{ id: 'categoryName', key: 'categoryName', name: 'Category' },
-			{ id: 'status', key: 'status', name: 'Status' }
+			{ id: 'shopAvatar', key: 'shopAvatar', name: 'Ảnh đại diện' },
+			{ id: 'name', key: 'name', name: 'Tên cửa hàng' },
+			{ id: 'ownerFullName', key: 'ownerFullName', name: 'Chủ cửa hàng' },
+			{ id: 'phoneNumber', key: 'phoneNumber', name: 'Số điện thoại' },
+			{ id: 'businessType', key: 'businessType', name: 'Loại hình kinh doanh' },
+			{ id: 'categoryName', key: 'categoryName', name: 'Danh mục' },
+			{ id: 'status', key: 'status', name: 'Trạng thái' }
 		]
 	});
 </script>
 
-<div class="my-2 flex justify-between">
-	<h2>Shops Management</h2>
+<div class="my-2 flex items-end justify-between">
+	<div class="flex flex-col">
+		<h1 class="text-header3 font-bold">Quản lý cửa hàng</h1>
+		<p class="text-base-content/60">Xem thông tin chi tiết và xét duyệt các cửa hàng trên nền tảng.</p>
+	</div>
 
 	<div class="flex gap-2">
 		<TableFilter
@@ -70,7 +73,7 @@
 						</th>
 					{/each}
 
-					<th>Action</th>
+					<th>Thao tác</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -78,11 +81,11 @@
 					<tr>
 						{#each table.columns as column (column.id)}
 							{#if column.id === 'status'}
-								<td
-									><div class={`badge ${getStatusBadgeClass(row.status)}`}>
+								<td>
+									<div class={`badge ${getStatusBadgeClass(row.status)}`}>
 										{row[column.key]}
-									</div></td
-								>
+									</div>
+								</td>
 							{:else if column.id === 'shopAvatar'}
 								<td>
 									<Image src={row.shopAvatar} class="h-12 w-12" alt="avatar" />
@@ -95,13 +98,13 @@
 							<a
 								href={`/admin/shops-management/${row.id}`}
 								class="btn {row.status === 'Pending' ? 'btn-primary' : 'btn-secondary'}"
-								aria-label="view details"
+								aria-label="xem chi tiết"
 							>
 								<span
 									class="{row.status === 'Pending'
 										? 'icon-[fa7-solid--vote-yea]'
 										: 'icon-[fa7-solid--eye]'} text-xl"
-								></span>{row.status === 'Pending' ? 'Review' : 'Details'}
+								></span>{row.status === 'Pending' ? 'Xét duyệt' : 'Chi tiết'}
 							</a>
 						</td>
 					</tr>
