@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { USER_PROFILE_CONTEXT, USER_ROLE_CONTEXT } from '$lib/consts/contexts';
-	import type { UserProfile } from '$lib/types/UserProfile';
-	import { getContext } from 'svelte';
-	import UserAvatar from '../ui/UserAvatar.svelte';
 	import type { SidebarLayoutItem } from '$lib/consts/sidebarLayout';
 	import type { UserRole } from '$lib/types/User';
+	import type { UserProfile } from '$lib/types/UserProfile';
+	import { getUserRoleBadgeClass } from '$lib/utils/classComposer';
+	import { getContext } from 'svelte';
+	import UserAvatar from '../ui/UserAvatar.svelte';
 
 	const {
 		sidebarLayoutItems,
@@ -16,10 +17,10 @@
 	} = $props();
 
 	const getUser = getContext<() => UserProfile>(USER_PROFILE_CONTEXT);
-	const getRole = getContext<() => UserRole>(USER_ROLE_CONTEXT);
+	const getRoles = getContext<() => UserRole | UserRole[]>(USER_ROLE_CONTEXT);
 
 	const userProfile = $derived(getUser());
-	const role = $derived(getRole());
+	const roles = $derived(getRoles());
 
 	let logoutModalRef: HTMLDialogElement;
 
@@ -28,11 +29,11 @@
 	}
 </script>
 
-<div class="flex h-screen w-84 flex-col border bg-base-200 p-4">
-	<a class="btn flex h-fit w-full flex-col items-center justify-center btn-ghost" href="/">
+<div class="flex h-screen w-84 flex-col border bg-base-200 p-2">
+	<a class="btn flex h-fit w-full flex-col gap-0 items-start justify-start px-0 btn-ghost" href="/">
 		<!-- <img class="size-6 md:size-7" src="/images/logo-transparent-512.png" alt="logo" /> -->
 		<p class="ml-2 font-serif text-5xl font-black">Lecom</p>
-		<p class="ml-2 text-lg font-black">{title}</p>
+		<p class="ml-2 font-black">{title}</p>
 	</a>
 
 	<div class="mt-6 flex grow flex-col gap-1">
@@ -68,37 +69,45 @@
 	</div>
 
 	<div class="flex items-center gap-2">
-		<div class="tooltip grow" data-tip="Profile">
+		<div class="tooltip grow" data-tip="Hồ sơ">
 			<a
-				class="btn flex min-w-0 flex-1 justify-start gap-2 px-2 btn-soft"
+				class="btn flex min-w-0 flex-1 justify-start gap-2 px-2 btn-soft btn-lg"
 				class:btn-active={page.url.pathname.startsWith('/profile')}
 				href="/profile"
 			>
 				<UserAvatar
 					avatar_url={userProfile?.imageUrl ?? null}
 					letter={userProfile?.userName[0].toUpperCase()}
-					sizeClass={'w-7 h-7'}
+					sizeClass={'w-8 h-8'}
 				/>
-				<div class="min-w-0 text-left">
-					<p class="text-xs font-medium">{userProfile?.fullName ?? '---'}</p>
-					<p class="truncate text-[0.65rem] font-light">{userProfile?.userName}</p>
-				</div>
-				<div
-					class="ml-auto badge badge-xs {role === 'Admin'
-						? 'badge-error'
-						: role === 'Seller'
-							? 'badge-info'
-							: 'badge-error'}"
-				>
-					{role}
+				<div class="flex flex-col gap-0.5 text-left">
+					<div class="flex items-center gap-2">
+						<p class="text-xs font-medium">{userProfile?.fullName ?? '---'}</p>
+						<p class="truncate text-[0.65rem] font-light">{userProfile?.userName}</p>
+					</div>
+					<div class="flex gap-1">
+						{#if Array.isArray(roles)}
+							{#each roles as role}
+								{#if role !== 'Customer'}
+									<div class="ml-auto badge badge-xs {getUserRoleBadgeClass(role)}">
+										{role}
+									</div>
+								{/if}
+							{/each}
+						{:else if roles}
+							<div class="ml-auto badge badge-xs {getUserRoleBadgeClass(roles)}">
+								{roles}
+							</div>
+						{/if}
+					</div>
 				</div>
 			</a>
 		</div>
 
-		<div class="tooltip" data-tip="Settings">
+		<div class="tooltip" data-tip="Cài đặt">
 			<a
-				class="btn btn-square btn-soft"
-				aria-label="Settings"
+				class="btn btn-square btn-soft btn-lg"
+				aria-label="Cài đặt"
 				class:btn-active={page.url.pathname.startsWith('/settings')}
 				href="/settings"
 			>
@@ -106,10 +115,10 @@
 			</a>
 		</div>
 
-		<div class="tooltip" data-tip="Logout">
+		<div class="tooltip" data-tip="Đăng xuất">
 			<button
-				class="btn btn-square btn-soft"
-				aria-label="Open logout modal"
+				class="btn btn-square btn-soft btn-lg"
+				aria-label="Mở hộp thoại đăng xuất"
 				onclick={() => openModal()}
 			>
 				<span class="icon-[fa7-solid--sign-out-alt] text-xl"></span>
@@ -120,18 +129,20 @@
 
 <dialog bind:this={logoutModalRef} class="modal">
 	<div class="modal-box">
-		<h3 class="text-lg font-bold">Are you leaving?</h3>
-		<p class="py-4">This action will log you out. You can always signing back in.</p>
+		<h3 class="text-lg font-bold">Bạn muốn đăng xuất?</h3>
+		<p class="py-4">
+			Thao tác này sẽ đăng xuất bạn khỏi hệ thống. Bạn có thể đăng nhập lại bất cứ lúc nào.
+		</p>
 		<div class="modal-action">
 			<form method="dialog">
 				<!-- if there is a button in form, it will close the modal -->
-				<button class="btn">Nope</button>
+				<button class="btn">Không</button>
 			</form>
-			<a class="btn btn-error" href="/auth/logout">Logout</a>
+			<a class="btn btn-error" href="/auth/logout">Đăng xuất</a>
 		</div>
 	</div>
 
 	<form method="dialog" class="modal-backdrop">
-		<button>close</button>
+		<button>Đóng</button>
 	</form>
 </dialog>

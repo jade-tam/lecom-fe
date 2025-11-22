@@ -62,6 +62,16 @@ const handleAuthGuard: Handle = async ({ event, resolve }) => {
 		}
 	}
 
+	if (routeId.startsWith('/(moderator)')) {
+		if (!user) {
+			redirect(303, '/auth/login');
+		}
+
+		if (!haveAuthorization(user.role, 'Moderator')) {
+			redirect(303, '/unauthorized');
+		}
+	}
+
 	return resolve(event);
 };
 

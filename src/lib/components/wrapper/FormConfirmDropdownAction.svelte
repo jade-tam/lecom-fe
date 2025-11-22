@@ -10,6 +10,7 @@
 		dropdownDirection = 'dropdown-left dropdown-center',
 		confirmButtonClass = 'btn-error',
 		confirmButtonIcon = 'icon-[fa7-solid--check-circle]',
+		confirmButtonText = 'Xác nhận',
 		children
 	}: {
 		label: string;
@@ -19,6 +20,7 @@
 		dropdownDirection?: string;
 		confirmButtonClass?: string;
 		confirmButtonIcon?: string;
+		confirmButtonText?: string;
 		children: Snippet;
 	} = $props();
 </script>
@@ -39,7 +41,7 @@
 			<p class="font-bold">{label}</p>
 			<p class="text-xs text-base-content/60">{description}</p>
 			<button class="btn mt-1 {confirmButtonClass}" type="submit">
-				<span class={confirmButtonIcon}></span>Confirm
+				<span class={confirmButtonIcon}></span>{confirmButtonText}
 			</button>
 		</div>
 	</div>

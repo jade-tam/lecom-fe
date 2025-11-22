@@ -107,21 +107,38 @@
 					tabindex="-1"
 					class="dropdown-content menu z-1 w-52 rounded-field bg-base-100 p-2 shadow-sm"
 				>
-					{#if userRole && haveAuthorization(userRole, 'Admin')}
-						<li><a href="/admin" class="rounded-field">Quản lý Admin</a></li>
-					{/if}
-					{#if userRole && haveAuthorization(userRole, 'Seller')}
-						<li><a href="/seller" class="rounded-field">Quản lý cửa hàng</a></li>
-					{/if}
 					<li><a href="/profile" class="rounded-field">Trang cá nhân</a></li>
 					<li><a href="/orders" class="rounded-field">Lịch sử đơn hàng</a></li>
 					<li><a href="/course-enrollments" class="rounded-field">Khóa học của tôi</a></li>
 					<li><a href="/settings" class="rounded-field">Cài đặt</a></li>
-					{#if userRole && haveAuthorization(userRole, 'Customer')}
-						<li><a href="/seller-register" class="rounded-field">Đăng ký bán hàng</a></li>
-					{/if}
 					<li><a href="/help-and-feedback" class="rounded-field">Trợ giúp & Phản hồi</a></li>
-					<li><a href="/auth/logout" class="rounded-field text-error">Đăng xuất</a></li>
+
+					<div class="divider mx-2 my-0"></div>
+
+					{#if userRole && haveAuthorization(userRole, 'Admin')}
+						<li class="text-error-content">
+							<a href="/admin" class="rounded-field">Trang quản trị hệ thống</a>
+						</li>
+					{/if}
+					{#if userRole && haveAuthorization(userRole, 'Seller')}
+						<li class="text-secondary-content">
+							<a href="/seller" class="rounded-field">Trang quản lý cửa hàng</a>
+						</li>
+					{/if}
+					{#if userRole && haveAuthorization(userRole, 'Moderator')}
+						<li class="text-info-content">
+							<a href="/moderator" class="rounded-field">Trang quản lý kiểm duyệt</a>
+						</li>
+					{/if}
+					{#if userRole && !haveAuthorization(userRole, 'Seller')}
+						<li>
+							<a href="/seller-register" class="rounded-field">Đăng ký bán hàng</a>
+						</li>
+					{/if}
+
+					<div class="divider mx-2 my-0"></div>
+
+					<li><a href="/auth/logout" class="rounded-field text-error-content">Đăng xuất</a></li>
 				</ul>
 			</div>
 		{:else}

@@ -2,6 +2,7 @@
 	import { page } from '$app/state';
 	import {
 		adminSidebarLayout,
+		moderatorSidebarLayout,
 		sellerSidebarLayout,
 		type SidebarLayoutItem
 	} from '$lib/consts/sidebarLayout';
@@ -12,7 +13,11 @@
 		return items.flatMap((item) => [item, ...(item.subItems ? flattenSidebar(item.subItems) : [])]);
 	}
 
-	const allSidebarItems = flattenSidebar([...adminSidebarLayout, ...sellerSidebarLayout]);
+	const allSidebarItems = flattenSidebar([
+		...moderatorSidebarLayout,
+		...sellerSidebarLayout,
+		...adminSidebarLayout
+	]);
 
 	const breadcrumbs = $derived.by(() => {
 		const segments = page.url.pathname.split('/').filter(Boolean);

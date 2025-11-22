@@ -1,3 +1,5 @@
+import { resolve } from '$app/paths';
+
 export type SidebarLayoutItem = {
 	href: string;
 	title: string;
@@ -8,49 +10,49 @@ export type SidebarLayoutItem = {
 export const adminSidebarLayout: SidebarLayoutItem[] = [
 	{
 		href: '/admin/dashboard',
-		title: 'Dashboard',
+		title: 'Tổng quan',
 		iconClass: 'icon-[fa7-solid--tachometer-alt] text-xl'
 	},
 	{
 		href: '/admin/analytics',
-		title: 'Analytics',
+		title: 'Phân tích',
 		iconClass: 'icon-[fa7-solid--chart-line] text-xl'
 	},
 	{
 		href: '/admin/users-management',
-		title: 'Users Management',
+		title: 'Quản lý người dùng',
 		iconClass: 'icon-[fa7-solid--users-cog] text-xl'
 	},
 	{
 		href: '/admin/courses-management',
-		title: 'Courses Management',
+		title: 'Quản lý khóa học',
 		iconClass: 'icon-[fa7-solid--book-open] text-xl'
 	},
 	{
 		href: '/admin/shops-management',
-		title: 'Shops Management',
+		title: 'Quản lý cửa hàng',
 		iconClass: 'icon-[fa7-solid--shop] text-xl'
 	},
 	{
 		href: '/admin/categories-management',
-		title: 'Categories Management',
+		title: 'Quản lý danh mục',
 		iconClass: 'icon-[fa7-solid--swatchbook] text-xl',
 		subItems: [
 			{
 				href: '/admin/course-categories-management',
-				title: 'Course Categories',
+				title: 'Danh mục khóa học',
 				iconClass: 'icon-[fa7-solid--book] text-xl'
 			},
 			{
 				href: '/admin/product-categories-management',
-				title: 'Product Categories',
+				title: 'Danh mục sản phẩm',
 				iconClass: 'icon-[fa7-solid--box-open] text-xl'
 			}
 		]
 	},
 	{
 		href: '/admin/reports-and-feedbacks',
-		title: 'Reports & Feedbacks',
+		title: 'Báo cáo & Phản hồi',
 		iconClass: 'icon-[fa7-solid--file-waveform] text-xl'
 	}
 ];
@@ -58,32 +60,45 @@ export const adminSidebarLayout: SidebarLayoutItem[] = [
 export const sellerSidebarLayout: SidebarLayoutItem[] = [
 	{
 		href: '/seller/dashboard',
-		title: 'Dashboard',
+		title: 'Tổng quan',
 		iconClass: 'icon-[fa7-solid--tachometer-alt] text-xl'
 	},
 	{
 		href: '/seller/my-shop',
-		title: 'My Shop',
+		title: 'Cửa hàng của tôi',
 		iconClass: 'icon-[fa7-solid--store] text-xl'
 	},
 	{
 		href: '/seller/products',
-		title: 'Products',
+		title: 'Sản phẩm',
 		iconClass: 'icon-[fa7-solid--box-open] text-xl'
 	},
 	{
 		href: '/seller/courses',
-		title: 'Courses',
+		title: 'Khóa học',
 		iconClass: 'icon-[fa7-solid--book] text-xl'
 	},
 	{
 		href: '/seller/orders',
-		title: 'Orders',
+		title: 'Đơn hàng',
 		iconClass: 'icon-[fa7-solid--money-check-alt] text-xl'
 	},
 	{
 		href: '/seller/analytics',
-		title: 'Analytics',
+		title: 'Phân tích',
 		iconClass: 'icon-[fa7-solid--chart-column] text-xl'
+	}
+];
+
+export const moderatorSidebarLayout: SidebarLayoutItem[] = [
+	{
+		href: resolve('/(moderator)/moderator/products-management'),
+		title: 'Duyệt sản phẩm',
+		iconClass: 'icon-[fa7-solid--box-open] text-xl'
+	},
+	{
+		href: resolve('/(moderator)/moderator/courses-management'),
+		title: 'Duyệt khóa học',
+		iconClass: 'icon-[fa7-solid--book] text-xl'
 	}
 ];
