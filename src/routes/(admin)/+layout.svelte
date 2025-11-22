@@ -31,6 +31,6 @@
 	</div>
 	<div class="drawer-side">
 		<label for="main-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-		<DrawerSideContent sidebarLayoutItems={adminSidebarLayout} title="Admin Dashboard" />
+		<DrawerSideContent sidebarLayoutItems={adminSidebarLayout} title="Trang quản trị hệ thống" />
 	</div>
 </div>

@@ -48,14 +48,14 @@
 
 <form method="POST" class="mt-2 h-fit w-full rounded-box border bg-base-100 p-4" use:enhance>
 	<div class="flex items-center justify-between">
-		<h1 class="text-header3 font-bold">Basic Information</h1>
+		<h1 class="text-header3 font-bold">Thông tin cơ bản</h1>
 		<div class="badge {getProductStatusBadgeClass($form['status'])}">{$form['status']}</div>
 	</div>
 
 	<FormInput
 		name="name"
-		label="Product Name"
-		placeholder="Enter name here..."
+		label="Tên sản phẩm"
+		placeholder="Nhập tên sản phẩm..."
 		type="text"
 		superForm={form}
 		{errors}
@@ -63,8 +63,8 @@
 
 	<FormTextArea
 		name="description"
-		label="Description"
-		placeholder="Enter description here..."
+		label="Mô tả sản phẩm"
+		placeholder="Nhập mô tả sản phẩm..."
 		superForm={form}
 		{errors}
 	/>
@@ -76,22 +76,22 @@
 		}))}
 		class="max-w-[360px]"
 		name="categoryId"
-		label="Product Category"
+		label="Danh mục sản phẩm"
 		superForm={form}
 		{errors}
 	/>
 
-	<h1 class="text-header3 mt-8 font-bold">Product Media</h1>
+	<h1 class="text-header3 mt-8 font-bold">Hình ảnh sản phẩm</h1>
 
-	<FormMultiImageInput name="images" label="Product Images" superForm={form} {errors} />
+	<FormMultiImageInput name="images" label="Ảnh sản phẩm" superForm={form} {errors} />
 
-	<h1 class="text-header3 mt-8 font-bold">Stock & Pricing</h1>
+	<h1 class="text-header3 mt-8 font-bold">Kho & Giá bán</h1>
 
 	<div class="grid grid-cols-2 gap-4">
 		<FormInput
 			name="price"
-			label="Price (đ)"
-			placeholder="Enter price here..."
+			label="Giá bán (đ)"
+			placeholder="Nhập giá bán..."
 			type="number"
 			superForm={form}
 			{errors}
@@ -99,8 +99,8 @@
 
 		<FormInput
 			name="stock"
-			label="Stock Quantity"
-			placeholder="Enter stock quantity here..."
+			label="Số lượng kho"
+			placeholder="Nhập số lượng kho..."
 			type="number"
 			superForm={form}
 			{errors}
@@ -114,21 +114,21 @@
 			onclick={() => handleSubmit('Draft')}
 			disabled={$submitting}
 		>
-			Save as Draft
+			Lưu sản phẩm
 			{#if $delayed}
 				<span class="loading loading-infinity"></span>
 			{/if}
 		</button>
-		<button
+		<!-- <button
 			class="btn btn-primary"
 			type="button"
 			onclick={() => handleSubmit('Published')}
 			disabled={$submitting}
 		>
-			Publish Product
+			Lưu sản phẩm
 			{#if $delayed}
 				<span class="loading loading-infinity"></span>
 			{/if}
-		</button>
+		</button> -->
 	</div>
 </form>
