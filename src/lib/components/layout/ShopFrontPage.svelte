@@ -54,15 +54,15 @@
 		</div>
 	</div>
 	{#if haveSellerAction}
-		<div class="absolute top-3 right-3 flex gap-2">
+		<div class="absolute top-3 right-3 flex gap-2 flex-wrap justify-end">
 			<a class="btn btn-info" href="/seller/my-shop/update"
-				><span class="icon-[fa7-solid--edit]"></span>Update Shop Info</a
+				><span class="icon-[fa7-solid--edit]"></span>Cập nhật thông tin</a
 			>
 			<a class="btn btn-primary" href="/seller/products"
-				><span class="icon-[fa7-solid--box-open]"></span>Manage Products</a
+				><span class="icon-[fa7-solid--box-open]"></span>Quản lý sản phẩm</a
 			>
 			<a class="btn btn-secondary" href="/seller/courses"
-				><span class="icon-[fa7-solid--book]"></span>Manage Courses</a
+				><span class="icon-[fa7-solid--book]"></span>Quản lý khóa học</a
 			>
 		</div>
 	{/if}
@@ -72,18 +72,18 @@
 	<label class="tab gap-2 text-primary-content hover:text-primary-content">
 		<input type="radio" name="my_tab" checked />
 		<span class="icon-[fa7-solid--box-open]"></span>
-		Products ({products.length})
+		Sản phẩm ({products.length})
 	</label>
 
 	<div class="tab-content">
 		<div class="grid grid-cols-4 gap-4 pt-4 max-md:grid-cols-2">
-			{#if products}
+			{#if products && products.length}
 				{#each products as product (product.id)}
 					<ProductCard {product} />
 				{/each}
 			{:else}
 				<div class="col-span-4 max-md:col-span-2">
-					<EmptyPlaceholder text="No product found" />
+					<EmptyPlaceholder text="Không tìm thấy sản phẩm nào" />
 				</div>
 			{/if}
 		</div>
@@ -92,18 +92,18 @@
 	<label class="tab gap-2 text-secondary-content hover:text-secondary-content">
 		<input type="radio" name="my_tab" />
 		<span class="icon-[fa7-solid--book]"></span>
-		Courses ({courses.length})
+		Khóa học ({courses.length})
 	</label>
 
 	<div class="tab-content">
 		<div class="grid grid-cols-4 gap-4 pt-4">
-			{#if courses}
+			{#if courses && courses.length}
 				{#each courses as course (course.id)}
 					<CourseCard {course} />
 				{/each}
 			{:else}
 				<div class="col-span-4">
-					<EmptyPlaceholder text="No course found" />
+					<EmptyPlaceholder text="Không tìm thấy khóa học nào" />
 				</div>
 			{/if}
 		</div>
@@ -111,9 +111,9 @@
 </div>
 
 <div class="mt-4 flex flex-col items-center gap-4 rounded-box border bg-base-100 p-4">
-	<p class="font-serif font-bold">Get in Touch</p>
+	<p class="font-serif font-bold">Liên hệ với cửa hàng</p>
 	<a class="btn btn-sm btn-success" href="tel:{shop.phoneNumber}"
-		><span class="icon-[fa7-solid--phone] shrink-0"></span>Call us now</a
+		><span class="icon-[fa7-solid--phone] shrink-0"></span>Gọi ngay</a
 	>
 	<div class="flex gap-2">
 		{#if shop.shopFacebook}
@@ -147,5 +147,5 @@
 			</a>
 		{/if}
 	</div>
-	<p class="text-sm text-base-content/60">Follow to receive shop updates and exclusive offers.</p>
+	<p class="text-sm text-base-content/60">Theo dõi để nhận thông báo và ưu đãi độc quyền từ cửa hàng.</p>
 </div>

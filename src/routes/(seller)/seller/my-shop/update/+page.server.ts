@@ -35,7 +35,7 @@ export const actions: Actions = {
 			formData
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Shop information has been updated');
+		const toastData: ToastData = getToastData(responseBody, 'Thông tin shop đã được cập nhật');
 
 		if (response.ok) {
 			return message(form, toastData);

@@ -13,5 +13,5 @@
 		haveSellerAction
 	/>
 {:else}
-	<EmptyPlaceholder text="Something is wrong, we cannot found your shop" />
+	<EmptyPlaceholder text="Có lỗi xảy ra, không tìm thấy shop của bạn." />
 {/if}
