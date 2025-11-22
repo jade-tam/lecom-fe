@@ -27,7 +27,7 @@ export const actions = {
 			'DELETE'
 		);
 
-		const toastData = getToastData(responseBody, 'Product has been deleted');
+		const toastData = getToastData(responseBody, 'Đã xoá sản phẩm');
 
 		return { toastData };
 	}

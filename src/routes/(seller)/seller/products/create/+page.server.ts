@@ -31,7 +31,10 @@ export const actions: Actions = {
 			formData
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Product has been created');
+		const toastData: ToastData = getToastData(
+			responseBody,
+			'Sản phẩm đã được thêm, cần chờ phê duyệt'
+		);
 
 		if (response.ok) {
 			return message(form, toastData);
