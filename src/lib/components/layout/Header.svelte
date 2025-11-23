@@ -100,7 +100,10 @@
 				</a>
 			</div>
 			<div class="tooltip tooltip-bottom" data-tip="Thông báo">
-				<button class="btn btn-square btn-ghost btn-primary text-primary-content" aria-label="Notification">
+				<button
+					class="btn btn-square text-primary-content btn-ghost btn-primary"
+					aria-label="Notification"
+				>
 					<span class="icon-[mingcute--bell-ringing-fill] text-2xl"></span>
 				</button>
 			</div>

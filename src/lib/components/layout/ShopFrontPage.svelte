@@ -54,7 +54,7 @@
 		</div>
 	</div>
 	{#if haveSellerAction}
-		<div class="absolute top-3 right-3 flex gap-2 flex-wrap justify-end">
+		<div class="absolute top-3 right-3 flex flex-wrap justify-end gap-2">
 			<a class="btn btn-info" href="/seller/my-shop/update"
 				><span class="icon-[fa7-solid--edit]"></span>Cập nhật thông tin</a
 			>
@@ -147,5 +147,7 @@
 			</a>
 		{/if}
 	</div>
-	<p class="text-sm text-base-content/60">Theo dõi để nhận thông báo và ưu đãi độc quyền từ cửa hàng.</p>
+	<p class="text-sm text-base-content/60">
+		Theo dõi để nhận thông báo và ưu đãi độc quyền từ cửa hàng.
+	</p>
 </div>

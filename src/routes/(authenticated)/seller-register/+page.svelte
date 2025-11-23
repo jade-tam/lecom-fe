@@ -205,7 +205,8 @@
 	<div class="my-2 text-right text-sm">
 		<label class="flex items-center justify-end gap-2">
 			<p>
-				Tôi xác nhận rằng thông tin cung cấp là chính xác và tôi đồng ý với các chính sách, điều khoản dành cho người bán của nền tảng.
+				Tôi xác nhận rằng thông tin cung cấp là chính xác và tôi đồng ý với các chính sách, điều
+				khoản dành cho người bán của nền tảng.
 			</p>
 			<input
 				type="checkbox"

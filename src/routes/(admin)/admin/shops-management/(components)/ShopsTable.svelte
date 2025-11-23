@@ -30,7 +30,9 @@
 <div class="my-2 flex items-end justify-between">
 	<div class="flex flex-col">
 		<h1 class="text-header3 font-bold">Quản lý cửa hàng</h1>
-		<p class="text-base-content/60">Xem thông tin chi tiết và xét duyệt các cửa hàng trên nền tảng.</p>
+		<p class="text-base-content/60">
+			Xem thông tin chi tiết và xét duyệt các cửa hàng trên nền tảng.
+		</p>
 	</div>
 
 	<div class="flex gap-2">

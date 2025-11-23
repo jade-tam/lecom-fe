@@ -67,7 +67,7 @@
 								>
 									<button
 										type="submit"
-										class="btn btn-sm btn-square btn-secondary"
+										class="btn btn-square btn-sm btn-secondary"
 										onclick={() => null}
 										disabled={item.quantity <= 1}>-</button
 									>
@@ -82,8 +82,10 @@
 										quantityChange: String(1)
 									}}
 								>
-									<button type="submit" class="btn btn-sm btn-square btn-secondary" onclick={() => null}
-										>+</button
+									<button
+										type="submit"
+										class="btn btn-square btn-sm btn-secondary"
+										onclick={() => null}>+</button
 									>
 								</FormAction>
 							</div>
@@ -104,7 +106,8 @@
 								<button
 									type="button"
 									class="btn mt-2 btn-square btn-sm btn-error"
-									aria-label="xóa sản phẩm"><span class="icon-[fa7-solid--trash-alt]"></span></button
+									aria-label="xóa sản phẩm"
+									><span class="icon-[fa7-solid--trash-alt]"></span></button
 								>
 							</FormConfirmDropdownAction>
 						</div>

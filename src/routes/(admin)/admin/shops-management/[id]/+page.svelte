@@ -24,7 +24,11 @@
 
 <div class="my-2 flex items-center justify-between">
 	<div class="flex gap-3">
-		<a href="/admin/shops-management/" aria-label="Quay lại danh sách cửa hàng" class="btn btn-square">
+		<a
+			href="/admin/shops-management/"
+			aria-label="Quay lại danh sách cửa hàng"
+			class="btn btn-square"
+		>
 			<span class="icon-[fa7-solid--arrow-left]"></span>
 		</a>
 		<h2>Chi tiết cửa hàng</h2>
@@ -96,7 +100,11 @@
 		<p class="font-bold text-secondary italic">{shop.categoryName}</p>
 		<div class="mt-1 flex items-center gap-2">
 			<div class={`badge ${getStatusBadgeClass(shop.status)}`}>
-				{shop.status === 'Pending' ? 'Chờ duyệt' : shop.status === 'Approved' ? 'Đã duyệt' : 'Đã từ chối'}
+				{shop.status === 'Pending'
+					? 'Chờ duyệt'
+					: shop.status === 'Approved'
+						? 'Đã duyệt'
+						: 'Đã từ chối'}
 			</div>
 			{#if shop.status === 'Approved'}
 				<p class="text-xs italic">Hoạt động từ {formatDate(shop.approvedAt)}</p>

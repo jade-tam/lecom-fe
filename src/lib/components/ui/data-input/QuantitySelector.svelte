@@ -13,7 +13,11 @@
 </script>
 
 <div class="flex gap-3">
-	<button type="button" class="btn btn-square btn-secondary" onclick={decrease} disabled={value <= 1}>-</button
+	<button
+		type="button"
+		class="btn btn-square btn-secondary"
+		onclick={decrease}
+		disabled={value <= 1}>-</button
 	>
 	<span class="w-6 text-center font-serif text-xl font-black"><NumberFlow {value} /></span>
 	<button type="button" class="btn btn-square btn-secondary" onclick={increase}>+</button>

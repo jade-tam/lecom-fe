@@ -21,7 +21,7 @@
 				<Image
 					src={enrollment.courseThumbnail}
 					alt={enrollment.courseTitle}
-					class="mr-6 h-32 aspect-video"
+					class="mr-6 aspect-video h-32"
 				/>
 
 				<div class="flex flex-1 flex-col">

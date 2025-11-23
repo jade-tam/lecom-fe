@@ -123,11 +123,11 @@
 										<Image
 											src={product.thumbnailUrl}
 											alt={product.name}
-											class="h-16 w-16 rounded shrink-0"
+											class="h-16 w-16 shrink-0 rounded"
 											border=""
 										/>
 										<div class="w-full">
-											<p class="flex items-start gap-4 font-bold justify-between">
+											<p class="flex items-start justify-between gap-4 font-bold">
 												{product.name}
 												<span class="icon-[fa7-solid--external-link] text-sm text-secondary"></span>
 											</p>

@@ -194,8 +194,9 @@
 					{order.paymentMethod ?? 'Không rõ'}
 				</p>
 				{#if order.paymentStatus === 'Pending'}
-					<p class="text-sm text-primary-content flex gap-2 items-center">
-						<span class="icon-[fa7-solid--circle-info]"></span>Sản phẩm cần được thanh toán ngay để đơn hàng được xử lý.
+					<p class="flex items-center gap-2 text-sm text-primary-content">
+						<span class="icon-[fa7-solid--circle-info]"></span>Sản phẩm cần được thanh toán ngay để
+						đơn hàng được xử lý.
 					</p>
 					<a href="/orders/payment/{order.id}" class="btn mt-2 btn-block btn-primary"
 						>Tiến hành thanh toán</a

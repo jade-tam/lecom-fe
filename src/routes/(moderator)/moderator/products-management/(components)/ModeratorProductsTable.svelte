@@ -31,7 +31,9 @@
 <div class="my-2 flex items-end justify-between">
 	<div class="flex flex-col">
 		<h1 class="text-header3 font-bold">Sản phẩm chờ duyệt</h1>
-		<p class="text-base-content/60">Xem thông tin sản phẩm và thực hiện thao tác duyệt hoặc từ chối.</p>
+		<p class="text-base-content/60">
+			Xem thông tin sản phẩm và thực hiện thao tác duyệt hoặc từ chối.
+		</p>
 	</div>
 
 	<div class="flex gap-2">

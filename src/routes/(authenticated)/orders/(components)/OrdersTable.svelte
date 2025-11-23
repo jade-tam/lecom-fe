@@ -4,10 +4,7 @@
 	import TableFilter from '$lib/components/ui/TableFilter.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
 	import { orderStatusOptions, type Order } from '$lib/types/Order';
-	import {
-		getOrderStatusBadgeClass,
-		getOrderStatusBtnClass
-	} from '$lib/utils/classComposer';
+	import { getOrderStatusBadgeClass, getOrderStatusBtnClass } from '$lib/utils/classComposer';
 	import { formatDate, formatVND } from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
 

@@ -38,7 +38,7 @@
 </script>
 
 <!-- Profile summary card -->
-<div class="flex justify-between items-end max-md:grid max-md:grid-cols-1">
+<div class="flex items-end justify-between max-md:grid max-md:grid-cols-1">
 	<div>
 		<a href={resolve('/profile')} class="btn mt-2 btn-sm" aria-label="Quay lại">
 			<span class="icon-[fa7-solid--arrow-left]"></span> Trở về trang cá nhân
@@ -49,11 +49,12 @@
 		</p>
 	</div>
 	<!-- Add this summary card below the page description, above the tabs -->
-	<div class="mt-2 flex max-w-xs flex-col gap-1 rounded-box border bg-base-100 p-3 h-fit">
+	<div class="mt-2 flex h-fit max-w-xs flex-col gap-1 rounded-box border bg-base-100 p-3">
 		<div class="flex items-center gap-2 text-sm">
 			<span class="icon-[fa7-solid--trophy] text-warning"></span>
 			<span class=""
-				><strong>{completedAchievementsCount} / {achievementsData.achievements.length}</strong> Thành tựu đã đạt được</span
+				><strong>{completedAchievementsCount} / {achievementsData.achievements.length}</strong> Thành
+				tựu đã đạt được</span
 			>
 		</div>
 		<progress

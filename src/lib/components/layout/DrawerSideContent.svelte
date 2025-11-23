@@ -30,7 +30,7 @@
 </script>
 
 <div class="flex h-screen w-84 flex-col border bg-base-200 p-2">
-	<a class="btn flex h-fit w-full flex-col gap-0 items-start justify-start px-0 btn-ghost" href="/">
+	<a class="btn flex h-fit w-full flex-col items-start justify-start gap-0 px-0 btn-ghost" href="/">
 		<!-- <img class="size-6 md:size-7" src="/images/logo-transparent-512.png" alt="logo" /> -->
 		<p class="ml-2 font-serif text-5xl font-black">Lecom</p>
 		<p class="ml-2 font-black">{title}</p>
