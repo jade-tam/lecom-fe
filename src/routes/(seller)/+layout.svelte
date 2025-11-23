@@ -1,4 +1,5 @@
 <script>
+	import { resolve } from '$app/paths';
 	import DrawerSideContent from '$lib/components/layout/DrawerSideContent.svelte';
 	import Breadcrumb from '$lib/components/ui/Breadcrumb.svelte';
 	import { sellerSidebarLayout } from '$lib/consts/sidebarLayout';
@@ -21,9 +22,21 @@
 				</label>
 				<Breadcrumb />
 			</div>
-			<button class="btn btn-square btn-soft" aria-label="notification">
-				<span class="icon-[fa7-solid--bell] text-2xl"></span>
-			</button>
+			<div class="flex items-center gap-2">
+				<a
+					class="btn text-info-content btn-ghost btn-info"
+					aria-label="Chat"
+					href={resolve('/seller/chat')}
+				>
+					<span class="icon-[mingcute--message-4-fill] text-2xl"></span> Tin nhắn
+				</a>
+				<button
+					class="btn btn-square text-primary-content btn-ghost btn-primary"
+					aria-label="Notification"
+				>
+					<span class="icon-[mingcute--bell-ringing-fill] text-2xl"></span>
+				</button>
+			</div>
 		</div>
 		<div class="mx-auto h-full w-full max-w-7xl p-4 pt-0">
 			{@render children()}

@@ -1,4 +1,6 @@
 import { addToCartSchema } from '$lib/schemas/cartSchema.js';
+import { openChatSchema } from '$lib/schemas/chatSchema.js';
+import type { Conversation } from '$lib/types/Chat.js';
 import type { Product } from '$lib/types/Product';
 import { fetchApi, fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi';
 import type { ToastData } from '$lib/utils/showToast.js';
@@ -57,5 +59,27 @@ export const actions = {
 		} else {
 			return message(form, toastData, { status: 400 });
 		}
+	},
+	openChat: async ({ request, cookies }) => {
+		const form = await superValidate(request, zod4(openChatSchema));
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		const { productId, toAI } = form.data;
+
+		const { responseBody } = await fetchAuthorizedApi<Conversation>(
+			cookies,
+			`/api/chat${toAI ? '/ai' : '/seller'}/start`,
+			'POST',
+			{
+				productId
+			}
+		);
+
+		const toastData: ToastData = getToastData(responseBody, 'Start new conversation with shop');
+
+		return { toastData, responseBody };
 	}
 };

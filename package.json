@@ -51,6 +51,8 @@
 	},
 	"dependencies": {
 		"@careswitch/svelte-data-table": "^0.6.3",
+		"@iconify-json/mingcute": "^1.2.5",
+		"@microsoft/signalr": "^10.0.0",
 		"@number-flow/svelte": "^0.3.9",
 		"svelte-easy-crop": "^5.0.0",
 		"svelte-sonner": "^1.0.5"

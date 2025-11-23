@@ -72,14 +72,13 @@
 
 	<div class="flex items-center gap-2 pl-8">
 		{#if userProfile}
-			<div class="tooltip tooltip-bottom" data-tip="Thông báo">
-				<button class="btn btn-square btn-ghost" aria-label="Notification">
-					<span class="icon-[fa7-solid--bell] text-xl"></span>
-				</button>
-			</div>
 			<div class="tooltip tooltip-bottom" data-tip="Giỏ hàng">
-				<a href="/cart" class="btn relative btn-square btn-ghost btn-secondary" aria-label="Cart">
-					<span class="icon-[fa7-solid--shopping-cart] shrink-0 text-xl"></span>
+				<a
+					href="/cart"
+					class="btn relative btn-square text-secondary-content btn-ghost btn-secondary"
+					aria-label="Cart"
+				>
+					<span class="icon-[mingcute--shopping-cart-2-fill] shrink-0 text-2xl"></span>
 					{#await cartCountPromise then cartCount}
 						{#if cartCount}
 							<span
@@ -92,9 +91,18 @@
 				</a>
 			</div>
 			<div class="tooltip tooltip-bottom" data-tip="Trò chuyện & Tin nhắn">
-				<a class="btn btn-square btn-ghost" aria-label="Chat" href="/chat">
-					<span class="icon-[fa7-solid--message] text-xl"></span>
+				<a
+					class="btn btn-square text-info-content btn-ghost btn-info"
+					aria-label="Chat"
+					href="/chat"
+				>
+					<span class="icon-[mingcute--message-4-fill] text-2xl"></span>
 				</a>
+			</div>
+			<div class="tooltip tooltip-bottom" data-tip="Thông báo">
+				<button class="btn btn-square btn-ghost btn-primary text-primary-content" aria-label="Notification">
+					<span class="icon-[mingcute--bell-ringing-fill] text-2xl"></span>
+				</button>
 			</div>
 			<div class="dropdown dropdown-end">
 				<div tabindex="0" role="button" class="btn m-1 btn-square btn-link">

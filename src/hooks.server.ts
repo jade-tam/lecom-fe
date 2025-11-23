@@ -27,6 +27,8 @@ const handleToken: Handle = async ({ event, resolve }) => {
 			name: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
 			role: payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
 		};
+	} else {
+		event.locals.user = null;
 	}
 
 	return resolve(event);

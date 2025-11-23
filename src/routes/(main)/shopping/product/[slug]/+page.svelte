@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import ProductCard from '$lib/components/ui/card/ProductCard.svelte';
 	import ShopCard from '$lib/components/ui/card/ShopCard.svelte';
 	import QuantitySelector from '$lib/components/ui/data-input/QuantitySelector.svelte';
@@ -6,15 +8,16 @@
 	import FormInput from '$lib/components/ui/FormInput.svelte';
 	import ImageViewer from '$lib/components/ui/ImageViewer.svelte';
 	import ProductCardSkeleton from '$lib/components/ui/skeleton/ProductCardSkeleton.svelte';
+	import FormAction from '$lib/components/wrapper/FormAction.svelte';
+	import { getUserProfile } from '$lib/context/appContext.js';
 	import { addToCartSchema, type AddToCartSchema } from '$lib/schemas/cartSchema.js';
-	import { registerShopSchema } from '$lib/schemas/registerShopSchema.js';
 	import { formatVND } from '$lib/utils/converters.js';
 	import type { ToastData } from '$lib/utils/showToast.js';
 	import showToast from '$lib/utils/showToast.js';
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 
-	const { data } = $props();
+	const { data, form: normalForm } = $props();
 	const product = $derived(data.product);
 
 	const { form, errors, message, enhance, submitting, delayed } = superForm<
@@ -29,6 +32,24 @@
 			showToast($message);
 		}
 	});
+
+	$effect(() => {
+		if (normalForm?.toastData) {
+			showToast(normalForm.toastData);
+
+			console.log(normalForm?.responseBody);
+
+			if (normalForm.toastData.type === 'success') {
+				goto(
+					resolve('/(authenticated)/chat/[conversationId]', {
+						conversationId: normalForm.responseBody.result.id
+					})
+				);
+			}
+		}
+	});
+
+	const userProfile = $derived(getUserProfile());
 
 	let isWishlist = $state(false);
 </script>
@@ -48,44 +69,69 @@
 					Còn <strong>{product.stock}</strong> sản phẩm trong kho
 				</p>
 
-				<QuantitySelector bind:value={$form['quantity']} />
+				{#if userProfile}
+					<QuantitySelector bind:value={$form['quantity']} />
 
-				<form action="?/addToCart" use:enhance method="POST">
-					<FormInput
-						name="quantity"
-						type="number"
-						hidden
-						label="Số lượng"
-						superForm={form}
-						{errors}
-					/>
-					<FormInput
-						name="productId"
-						type="text"
-						label="Mã sản phẩm"
-						superForm={form}
-						{errors}
-						hidden
-					/>
-					<div class="flex gap-2">
-						<button type="submit" class="btn grow btn-primary">
-							<span class="icon-[fa7-solid--cart-plus]"></span>Thêm vào giỏ hàng
-						</button>
-						<div
-							class="tooltip"
-							data-tip={isWishlist ? 'Đã thêm vào mục yêu thích' : 'Thêm vào mục yêu thích'}
-						>
-							<button
-								type="button"
-								class="btn btn-square {isWishlist ? 'btn-error' : 'btn-secondary'}"
-								aria-label={isWishlist ? 'Đã thêm vào mục yêu thích' : 'Thêm vào mục yêu thích'}
-								onclick={() => (isWishlist = !isWishlist)}
-							>
-								<span class="icon-[fa7-solid--heart] btn-xl"></span>
+					<form action="?/addToCart" use:enhance method="POST">
+						<FormInput
+							name="quantity"
+							type="number"
+							hidden
+							label="Số lượng"
+							superForm={form}
+							{errors}
+						/>
+						<FormInput
+							name="productId"
+							type="text"
+							label="Mã sản phẩm"
+							superForm={form}
+							{errors}
+							hidden
+						/>
+						<div class="flex gap-2">
+							<button type="submit" class="btn grow btn-primary">
+								<span class="icon-[fa7-solid--cart-plus]"></span>Thêm vào giỏ hàng
 							</button>
+							<div
+								class="tooltip"
+								data-tip={isWishlist ? 'Đã thêm vào mục yêu thích' : 'Thêm vào mục yêu thích'}
+							>
+								<button
+									type="button"
+									class="btn btn-square {isWishlist ? 'btn-error' : 'btn-secondary'}"
+									aria-label={isWishlist ? 'Đã thêm vào mục yêu thích' : 'Thêm vào mục yêu thích'}
+									onclick={() => (isWishlist = !isWishlist)}
+								>
+									<span class="icon-[fa7-solid--heart] btn-xl"></span>
+								</button>
+							</div>
+						</div>
+					</form>
+
+					<div class="mt-2 flex flex-col gap-2">
+						<p class="flex items-center gap-2 font-serif font-bold text-info-content">
+							<span class="icon-[mingcute--message-4-fill]"></span>Liên hệ hỗ trợ
+						</p>
+						<div class="flex gap-1">
+							<FormAction action="?/openChat" formData={{ productId: product.id, toAI: 'false' }}>
+								<button type="submit" class="btn btn-sm btn-info">
+									<span class="icon-[mingcute--send-fill] text-lg"></span>Gửi tin nhắn cho cửa hàng
+								</button>
+							</FormAction>
+							<FormAction action="?/openChat" formData={{ productId: product.id, toAI: 'true' }}>
+								<button type="submit" class="btn btn-sm btn-warning">
+									<span class="icon-[mingcute--ai-fill] text-lg"></span>Hỏi AI về sản phẩm
+								</button>
+							</FormAction>
 						</div>
 					</div>
-				</form>
+				{:else}
+					<a type="submit" class="btn btn-primary" href={resolve('/auth/login')}>
+						<span class="icon-[mingcute--arrow-to-right-fill] text-lg"></span>Đăng nhập để mua hàng
+						ngay
+					</a>
+				{/if}
 
 				<ShopCard
 					shop={{
