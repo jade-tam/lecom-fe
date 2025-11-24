@@ -4,7 +4,7 @@ import { redirect } from '@sveltejs/kit';
 
 export async function load({ parent }) {
 	const parentData = await parent();
-	const allConversations: Conversation[] = parentData.allConversations;
+	const allConversations: Conversation[] = await parentData.allConversationsPromise;
 	const latestConversation: Conversation | null = allConversations.length
 		? allConversations[0]
 		: null;

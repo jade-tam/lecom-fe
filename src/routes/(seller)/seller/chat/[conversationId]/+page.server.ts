@@ -1,17 +1,19 @@
 import { chatSchema } from '$lib/schemas/chatSchema.js';
-import type { ChatMessage } from '$lib/types/Chat';
+import type { ChatMessage, Conversation } from '$lib/types/Chat';
 import { fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi';
 import type { ToastData } from '$lib/utils/showToast';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 
-export async function load({ cookies, params, parent }) {
+export async function load({ cookies, params }) {
 	const { conversationId } = params;
-	const parentData = await parent();
 
-	const conversation = parentData.allConversations.find((c) => c.id === conversationId);
+	const conversationPromise = getSafeResult(
+		fetchAuthorizedApi<Conversation>(cookies, `/api/chat/seller/${conversationId}`, 'GET'),
+		null
+	);
 
-	const messages: ChatMessage[] = await getSafeResult(
+	const messagesPromise = getSafeResult(
 		fetchAuthorizedApi<ChatMessage[]>(cookies, `/api/chat/${conversationId}/messages`, 'GET'),
 		[] as ChatMessage[]
 	);
@@ -19,10 +21,10 @@ export async function load({ cookies, params, parent }) {
 	const form = await superValidate(zod4(chatSchema));
 
 	return {
-		form,
-		conversation,
+		conversationPromise,
 		token: cookies.get('token'),
-		messages
+		messagesPromise,
+		form
 	};
 }
 

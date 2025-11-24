@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { invalidate } from '$app/navigation';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
 	import UserAvatar from '$lib/components/ui/UserAvatar.svelte';
@@ -12,7 +13,7 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 
-	const { dataForm, dataConversation, dataMessages, token } = $props();
+	const { dataForm, dataConversation, dataMessages, token, isSellerChat = false } = $props();
 
 	const conversation = $derived(dataConversation);
 	let messages = $state(dataMessages);
@@ -91,11 +92,15 @@
 							? 'text-warning-content'
 							: 'text-secondary-content'}"
 					>
-						<span
-							class="text-2xl {conversation?.isAIChat
-								? 'icon-[mingcute--ai-line]'
-								: 'icon-[mingcute--shop-line]'}"
-						></span>
+						{#if isSellerChat}
+							<span class="icon-[mingcute--user-3-fill] text-2xl"></span>
+						{:else}
+							<span
+								class="text-2xl {conversation?.isAIChat
+									? 'icon-[mingcute--ai-line]'
+									: 'icon-[mingcute--shop-line]'}"
+							></span>
+						{/if}
 						{conversation?.displayName}
 					</p>
 					<p class="text-xs text-base-content/70 italic">
@@ -159,9 +164,12 @@
 					name="content"
 					bind:this={messageInput}
 					bind:value={$form['content']}
+					disabled={$submitting}
 				/>
 				<button type="submit" class="btn btn-info" disabled={$submitting}
-					><span class="icon-[fa7-solid--paper-plane]"></span>Gửi</button
+					><span class="icon-[fa7-solid--paper-plane]"></span>{$submitting
+						? 'Đang gửi...'
+						: 'Gửi'}{#if $delayed}<span class="loading loading-infinity"></span>{/if}</button
 				>
 			</form>
 		</div>

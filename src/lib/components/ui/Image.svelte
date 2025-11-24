@@ -30,7 +30,6 @@
 			{src}
 			{alt}
 			class={`h-full w-full ${objectFit}`}
-			loading="lazy"
 			draggable="false"
 			onerror={handleError}
 		/>
