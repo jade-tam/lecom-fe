@@ -5,7 +5,7 @@
 	const { data } = $props();
 </script>
 
-{#await Promise.all( [data.conversationPromise, data.messagesPromise] )}
+{#await Promise.all([data.conversationPromise, data.messagesPromise])}
 	<ConversationSkeleton />
 {:then [conversation, messages]}
 	<Conversation

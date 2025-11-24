@@ -18,9 +18,7 @@
 	</div>
 
 	<!-- Chat messages skeleton -->
-	<div class="mt-2 flex-1 overflow-y-auto rounded-field border bg-secondary/10 p-4">
-
-	</div>
+	<div class="mt-2 flex-1 overflow-y-auto rounded-field border bg-secondary/10 p-4"></div>
 
 	<!-- Chat input skeleton -->
 	<div class="mt-2 bg-base-100">
