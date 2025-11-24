@@ -36,7 +36,7 @@
 	</legend>
 	<label class="input w-full" class:hidden>
 		{#if icon}
-			<span class={`${icon} text-secondary-content`}></span>
+			<span class={`text-xl ${icon}`}></span>
 		{/if}
 		<input {name} bind:value={$superForm[name]} {...restInputAttr} />
 		{#if postfix}

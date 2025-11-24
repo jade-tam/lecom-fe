@@ -56,6 +56,11 @@ export const adminSidebarLayout: SidebarLayoutItem[] = [
 		iconClass: 'icon-[mingcute--ticket-fill] text-xl'
 	},
 	{
+		href: '/admin/redeem-rule-config',
+		title: 'Cài đặt mục đổi thưởng',
+		iconClass: 'icon-[mingcute--store-fill] text-xl'
+	},
+	{
 		href: '/admin/reports-and-feedbacks',
 		title: 'Báo cáo & Phản hồi',
 		iconClass: 'icon-[mingcute--file-warning-fill] text-xl'

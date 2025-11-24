@@ -2,12 +2,12 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
-	import AdminVoucherForm from '$lib/components/form/AdminVoucherForm.svelte';
+	import AdminRedeemRuleForm from '$lib/components/form/AdminRedeemRuleForm.svelte';
 
 	const { data } = $props();
 
 	function handleBack() {
-		goto(resolve('/admin/voucher-config'));
+		goto(resolve('/admin/redeem-rule-config'));
 	}
 </script>
 
@@ -16,14 +16,14 @@
 		<button class="btn btn-sm" aria-label="Quay lại" onclick={handleBack}>
 			<span class="icon-[fa7-solid--arrow-left]"></span> Trở về
 		</button>
-		<h1 class="text-header3 font-bold">Tạo phiếu giảm giá mới</h1>
+		<h1 class="text-header3 font-bold">Cập nhật mục đổi thưởng</h1>
 	</AnimatedDiv>
 
 	<AnimatedDiv class="mt-1 mb-2 flex items-center gap-4" animateVars={{ translateX: -20 }}>
-		<p class="text-base-content/60">Tạo phiếu giảm giá mới trên hệ thống.</p>
+		<p class="text-base-content/60">Chỉnh sửa các thông tin liên quan tới mục đổi thưởng.</p>
 	</AnimatedDiv>
 
 	<AnimatedDiv animateVars={{ translateY: 20 }}>
-		<AdminVoucherForm dataForm={data.form} />
+		<AdminRedeemRuleForm dataForm={data.form} isEdit />
 	</AnimatedDiv>
 </div>

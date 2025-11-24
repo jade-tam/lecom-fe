@@ -41,7 +41,7 @@
 	</legend>
 
 	<select class="select w-full" {name} bind:value={$superForm[name]} {...restSelectAttr}>
-		<option disabled selected value={''}>Select an option</option>
+		<option disabled selected value={''}>Lựa chọn</option>
 		{#each options as option}
 			<option value={option.value}>{option.title}</option>
 		{/each}

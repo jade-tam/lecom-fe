@@ -1,3 +1,5 @@
+import type { FormSelectOption } from '$lib/components/ui/FormSelect.svelte';
+
 export type GamificationProfile = {
 	level: number;
 	currentXP: number;
@@ -67,3 +69,10 @@ export type ApiUserAchivements = {
 	}[]; // danh sách categories, ví dụ: [{ value: 'learning', title: 'Học tập' }, ...]
 	achievements: Achievement[];
 }; // api lấy danh sách achievements của ng dùng  (hiện tại chưa có) trả về kiểu này
+
+export type RedeemRule = {
+	id: string;
+	reward: string;
+	costPoints: number;
+	active: boolean;
+};

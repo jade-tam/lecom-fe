@@ -1,6 +1,6 @@
 <script>
 	import showToast from '$lib/utils/showToast';
-	import AdminVouchersTable from './(components)/AdminVouchersTable.svelte';
+	import AdminRedeemRulesTable from './(components)/AdminRedeemRulesTable.svelte';
 
 	const { data, form } = $props();
 
@@ -11,4 +11,4 @@
 	});
 </script>
 
-<AdminVouchersTable vouchersPromise={data.vouchersPromise} />
+<AdminRedeemRulesTable redeemRulesPromise={data.redeemRulesPromise} />
