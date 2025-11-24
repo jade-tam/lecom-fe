@@ -32,7 +32,13 @@
 		tween?.kill();
 
 		// Run new animation
-		tween = gsap.from(containerRef, animateVars);
+		tween = gsap.from(containerRef, {
+			delay: 0,
+			ease: 'power4.inOut',
+			opacity: 0,
+			duration: 0.3,
+			...animateVars
+		});
 
 		return () => {
 			tween?.kill();

@@ -10,6 +10,7 @@
 		superForm,
 		errors,
 		name,
+		postfix,
 		hidden = false,
 		class: className = '',
 		...restInputAttr
@@ -20,6 +21,7 @@
 		name: string;
 		hidden?: boolean;
 		class?: string;
+		postfix?: string;
 		superForm: SuperFormData<any>;
 		errors: SuperFormErrors<Record<string, string>>;
 	} = $props();
@@ -37,6 +39,9 @@
 			<span class={`${icon} text-secondary-content`}></span>
 		{/if}
 		<input {name} bind:value={$superForm[name]} {...restInputAttr} />
+		{#if postfix}
+			<span class="ml-2 font-black text-primary-content italic">{postfix}</span>
+		{/if}
 	</label>
 	{#if $errors[name]}
 		{#each $errors[name] as error}

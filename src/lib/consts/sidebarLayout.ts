@@ -11,27 +11,27 @@ export const adminSidebarLayout: SidebarLayoutItem[] = [
 	{
 		href: '/admin/dashboard',
 		title: 'Tổng quan',
-		iconClass: 'icon-[fa7-solid--tachometer-alt] text-xl'
+		iconClass: 'icon-[mingcute--dashboard-3-fill] text-xl'
 	},
 	{
 		href: '/admin/analytics',
 		title: 'Phân tích',
-		iconClass: 'icon-[fa7-solid--chart-line] text-xl'
+		iconClass: 'icon-[mingcute--chart-vertical-fill] text-xl'
 	},
 	{
 		href: '/admin/users-management',
 		title: 'Quản lý người dùng',
-		iconClass: 'icon-[fa7-solid--users-cog] text-xl'
+		iconClass: 'icon-[mingcute--user-setting-fill] text-xl'
 	},
-	{
-		href: '/admin/courses-management',
-		title: 'Quản lý khóa học',
-		iconClass: 'icon-[fa7-solid--book-open] text-xl'
-	},
+	// {
+	// 	href: '/admin/courses-management',
+	// 	title: 'Quản lý khóa học',
+	// 	iconClass: 'icon-[fa7-solid--book-open] text-xl'
+	// },
 	{
 		href: '/admin/shops-management',
 		title: 'Quản lý cửa hàng',
-		iconClass: 'icon-[fa7-solid--shop] text-xl'
+		iconClass: 'icon-[mingcute--shop-fill] text-xl'
 	},
 	{
 		href: '/admin/categories-management',
@@ -41,19 +41,24 @@ export const adminSidebarLayout: SidebarLayoutItem[] = [
 			{
 				href: '/admin/course-categories-management',
 				title: 'Danh mục khóa học',
-				iconClass: 'icon-[fa7-solid--book] text-xl'
+				iconClass: 'icon-[mingcute--notebook-2-fill] text-xl'
 			},
 			{
 				href: '/admin/product-categories-management',
 				title: 'Danh mục sản phẩm',
-				iconClass: 'icon-[fa7-solid--box-open] text-xl'
+				iconClass: 'icon-[mingcute--box-2-fill] text-xl'
 			}
 		]
 	},
 	{
+		href: '/admin/voucher-config',
+		title: 'Cài đặt phiếu giảm giá',
+		iconClass: 'icon-[mingcute--ticket-fill] text-xl'
+	},
+	{
 		href: '/admin/reports-and-feedbacks',
 		title: 'Báo cáo & Phản hồi',
-		iconClass: 'icon-[fa7-solid--file-waveform] text-xl'
+		iconClass: 'icon-[mingcute--file-warning-fill] text-xl'
 	}
 ];
 
