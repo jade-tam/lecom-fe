@@ -28,15 +28,16 @@
 
 <main class="w-screen bg-base-200">
 	<div class="mx-auto flex min-h-screen max-w-md items-center p-2">
-		<!-- HERE IS THE FORM -->
+		<!-- FORM ĐĂNG NHẬP -->
 		<form method="POST" class="h-fit w-full rounded-box border bg-base-100 p-4 md:p-8" use:enhance>
-			<h1 class="mb-4 font-serif text-5xl">Welcome back!</h1>
-			<h1 class="mb-6 text-right font-serif text-xl">Sign in to continue your journey.</h1>
+			<h1 class="mb-4 text-center">Đăng nhập</h1>
+			<p class="text-header2">Chào mừng trở lại!</p>
+			<p class="mb-4 text-sm">Đăng nhập để tiếp tục cuộc hành trình của bạn.</p>
 
 			<FormInput
 				name="username"
-				label="Username"
-				placeholder="Enter your cool username..."
+				label="Tên đăng nhập"
+				placeholder="Nhập tên đăng nhập của bạn..."
 				type="text"
 				icon="icon-[fa7-solid--circle-user]"
 				superForm={form}
@@ -45,8 +46,8 @@
 
 			<FormInput
 				name="password"
-				label="Password"
-				placeholder="Your super secret password..."
+				label="Mật khẩu"
+				placeholder="Nhập mật khẩu bí mật..."
 				type="password"
 				icon="icon-[fa7-solid--star-of-life]"
 				superForm={form}
@@ -54,18 +55,18 @@
 			/>
 
 			<a class="float-end py-2 pl-2 text-xs font-bold" href="/auth/forgot-password"
-				>Forgot password?</a
+				>Quên mật khẩu?</a
 			>
 
 			<button class="btn mt-2 w-full btn-primary" disabled={$submitting}
-				>Login
+				>Đăng nhập
 				{#if $delayed}
 					<span class="loading loading-md loading-dots"></span>
 				{/if}
 			</button>
 
 			<a class="btn mt-6 w-full btn-ghost btn-sm" href="/auth/register"
-				>New user? Let's <strong>Register a new account</strong>.</a
+				>Bạn là người dùng mới? <strong>Đăng ký tài khoản</strong>.</a
 			>
 		</form>
 	</div>

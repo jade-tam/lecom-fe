@@ -24,7 +24,7 @@ export const actions: Actions = {
 
 		const { response, responseBody } = await fetchApi('/api/Auth/login', 'POST', formData);
 
-		const responseToastData: ToastData = getToastData(responseBody, 'Logged in');
+		const responseToastData: ToastData = getToastData(responseBody, 'Đăng nhập thành công');
 
 		if (response.ok) {
 			storeTokens(

@@ -1,5 +1,5 @@
-import { PUBLIC_API_URL } from '$env/static/public';
 import { registerSchema } from '$lib/schemas/registerSchema';
+import { fetchApi, getToastData } from '$lib/utils/externalApi';
 import type { ToastData } from '$lib/utils/showToast';
 import { fail, type Actions } from '@sveltejs/kit';
 import { message, superValidate } from 'sveltekit-superforms';
@@ -12,7 +12,7 @@ export const load = async () => {
 };
 
 export const actions: Actions = {
-	default: async ({ request, fetch }) => {
+	default: async ({ request }) => {
 		const form = await superValidate(request, zod4(registerSchema));
 
 		if (!form.valid) {
@@ -25,25 +25,11 @@ export const actions: Actions = {
 			dateOfBirth: new Date(form.data.dateOfBirth).toISOString()
 		};
 
-		const res = await fetch(PUBLIC_API_URL + '/api/Auth/register', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(formData)
-		});
+		const { response, responseBody } = await fetchApi('/api/Auth/register', 'POST', formData);
 
-		const responseData = await res.json();
+		const responseToastData: ToastData = getToastData(responseBody, 'Đã gửi thông tin đăng ký');
 
-		const responseToastData: ToastData = {
-			type: responseData.isSuccess ? 'success' : 'error',
-			title: responseData.isSuccess ? 'Success' : 'Error',
-			description: responseData.isSuccess
-				? responseData.result.message
-				: responseData.errorMessages.join('. ')
-		};
-
-		if (res.ok) {
+		if (response.ok) {
 			return message(form, responseToastData);
 		} else {
 			return message(form, responseToastData, { status: 400 });
