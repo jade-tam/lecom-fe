@@ -16,16 +16,16 @@
 	class={`avatar-online avatar ${avatar_url ? '' : 'avatar-placeholder'} ${sizeClass} rounded-full border`}
 >
 	{#if isImageUploading}
-		<div class={`rounded-full`}>
+		<div class={`w-full rounded-full`}>
 			<span class="loading loading-xl loading-spinner"></span>
 		</div>
 	{:else if avatar_url}
-		<div class={`rounded-full`}>
+		<div class={`w-full rounded-full`}>
 			<img src={avatar_url} alt="avatar" />
 		</div>
 	{:else}
-		<div class={`rounded-full bg-secondary text-neutral-content`}>
-			<span class="text-sm font-black text-secondary-content">{letter}</span>
+		<div class={`[container-type:size] w-full rounded-full bg-secondary text-neutral-content`}>
+			<span class="text-[40cqw] font-black text-secondary-content">{letter}</span>
 		</div>
 	{/if}
 </div>

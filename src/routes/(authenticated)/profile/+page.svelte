@@ -21,18 +21,16 @@
 <div
 	class="mt-2 flex grid-cols-10 items-center justify-between gap-6 rounded-box border bg-base-100 p-4 max-md:flex-col"
 >
-	<div class="flex justify-center">
-		<UserAvatar
-			avatar_url={userProfile.imageUrl}
-			letter={userProfile.userName.charAt(0).toUpperCase()}
-			sizeClass="w-full aspect-square max-w-28"
-		/>
-	</div>
+	<UserAvatar
+		avatar_url={userProfile.imageUrl}
+		letter={userProfile.userName.charAt(0).toUpperCase()}
+		sizeClass="w-full aspect-square max-w-24"
+	/>
 
 	<div class="col-span-3 flex flex-col gap-2 max-md:w-full">
 		<div class="flex flex-col">
 			<p class="text-xs text-base-content/60">Họ và tên</p>
-			<p class="font-semibold">{userProfile.fullName}</p>
+			<p class="font-semibold">{userProfile.fullName ?? 'Không rõ'}</p>
 		</div>
 		<div class="flex flex-col">
 			<p class="text-xs text-base-content/60">Email</p>
@@ -40,7 +38,7 @@
 		</div>
 		<div class="flex flex-col">
 			<p class="text-xs text-base-content/60">Số điện thoại</p>
-			<p class="font-semibold">{userProfile.phoneNumber}</p>
+			<p class="font-semibold">{userProfile.phoneNumber ?? 'Không rõ'}</p>
 		</div>
 	</div>
 
@@ -55,7 +53,7 @@
 		</div>
 		<div class="flex flex-col">
 			<p class="text-xs text-base-content/60">Địa chỉ</p>
-			<p class="font-semibold">{userProfile.address}</p>
+			<p class="font-semibold">{userProfile.address ?? 'Không rõ'}</p>
 		</div>
 	</div>
 
