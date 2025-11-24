@@ -28,7 +28,7 @@
 				{ id: 'email', key: 'email', name: 'Email' },
 				{ id: 'phoneNumber', key: 'phoneNumber', name: 'Số điện thoại' },
 				{ id: 'dateOfBirth', key: 'dateOfBirth', name: 'Ngày sinh' },
-				{ id: 'role', key: 'role', name: 'Vai trò' },
+				{ id: 'roles', key: 'roles', name: 'Vai trò' },
 				{ id: 'isActive', key: 'isActive', name: 'Trạng thái hoạt động' }
 			]
 		})
@@ -43,7 +43,7 @@
 
 	<div class="flex gap-2">
 		<TableFilter
-			name="role"
+			name="roles"
 			{table}
 			options={userRoleOptions}
 			getFilterBtnClass={getUserRoleBtnClass}
@@ -93,12 +93,22 @@
 								>
 							{:else if column.id === 'dateOfBirth'}
 								<td>{formatDate(row.dateOfBirth)}</td>
-							{:else if column.id === 'role'}
-								<td
-									><div class={`badge ${getUserRoleBadgeClass(row.role)}`}>
-										{userRoleOptions.find((option) => option.value === row.role)?.title}
-									</div></td
-								>
+							{:else if column.id === 'roles'}
+								<td class="flex flex-col gap-1">
+									{#if Array.isArray(row.roles)}
+										{#each row.roles as role}
+											{#if role !== 'Customer'}
+												<div class="badge badge-sm {getUserRoleBadgeClass(role)}">
+													{role}
+												</div>
+											{/if}
+										{/each}
+									{:else if row.roles}
+										<div class="badge badge-sm {getUserRoleBadgeClass(row.roles)}">
+											{row.roles}
+										</div>
+									{/if}
+								</td>
 							{:else}
 								<td>{row[column.key]}</td>
 							{/if}
@@ -137,7 +147,7 @@
 										<div class="flex gap-2">
 											<form method="POST" action="?/toggleRole" use:enhance>
 												<button
-													class={`btn ${haveAuthorization(row.role, 'Moderator') ? '' : 'btn-dash'} btn-sm ${getUserRoleBtnClass('Moderator')}`}
+													class={`btn ${haveAuthorization(row.roles, 'Moderator') ? '' : 'btn-dash'} btn-sm ${getUserRoleBtnClass('Moderator')}`}
 													type="submit"
 													name="role"
 													aria-label="Moderator"
@@ -149,12 +159,12 @@
 												<input
 													type="hidden"
 													name="isAlreadyHaveRole"
-													value={haveAuthorization(row.role, 'Moderator')}
+													value={haveAuthorization(row.roles, 'Moderator')}
 												/>
 											</form>
 											<form method="POST" action="?/toggleRole" use:enhance>
 												<button
-													class={`btn ${haveAuthorization(row.role, 'Admin') ? '' : 'btn-dash'} btn-sm ${getUserRoleBtnClass('Admin')}`}
+													class={`btn ${haveAuthorization(row.roles, 'Admin') ? '' : 'btn-dash'} btn-sm ${getUserRoleBtnClass('Admin')}`}
 													type="submit"
 													name="role"
 													aria-label="Admin"
@@ -166,7 +176,7 @@
 												<input
 													type="hidden"
 													name="isAlreadyHaveRole"
-													value={haveAuthorization(row.role, 'Admin')}
+													value={haveAuthorization(row.roles, 'Admin')}
 												/>
 											</form>
 										</div>

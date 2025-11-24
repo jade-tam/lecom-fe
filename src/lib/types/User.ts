@@ -16,7 +16,7 @@ export type User = {
 	address: string;
 	dateOfBirth: string;
 	isActive: boolean;
-	role: UserRole | UserRole[];
+	roles: UserRole | UserRole[];
 };
 
 export const userRoleOptions = [
