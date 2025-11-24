@@ -25,7 +25,7 @@
 				{ id: 'discountValue', key: 'discountValue', name: 'Giá trị giảm' },
 				{ id: 'maxDiscountAmount', key: 'maxDiscountAmount', name: 'Giảm tối đa' },
 				{ id: 'minOrderAmount', key: 'minOrderAmount', name: 'Đơn tối thiểu' },
-				{ id: 'quantityAvailable', key: 'quantityAvailable', name: 'Số lượng còn lại' },
+				{ id: 'quantityAvailable', key: 'quantityAvailable', name: 'Còn lại' },
 				{ id: 'startDate', key: 'startDate', name: 'Hiệu lực từ' },
 				{ id: 'endDate', key: 'endDate', name: 'Hết hiệu lực' },
 				{ id: 'isActive', key: 'isActive', name: 'Trạng thái' }
@@ -135,7 +135,17 @@
 											type="button"
 											aria-label="Xem chi tiết"
 										>
-											<span class="icon-[mingcute--eye-line] text-2xl"></span>
+											<span class="icon-[mingcute--eye-fill] text-2xl"></span>
+										</a>
+									</div>
+									<div class="tooltip" data-tip="Chỉnh sửa">
+										<a
+											href={resolve(`/admin/voucher-config/${row.id}/update`)}
+											class="btn btn-square btn-warning"
+											type="button"
+											aria-label="Chỉnh sửa"
+										>
+											<span class="icon-[mingcute--edit-4-fill] text-2xl"></span>
 										</a>
 									</div>
 									<FormConfirmDropdownAction
@@ -146,7 +156,7 @@
 									>
 										<div class="tooltip" data-tip="Xóa">
 											<button class="btn btn-square btn-error" type="button" aria-label="xóa">
-												<span class="icon-[mingcute--delete-2-line] text-2xl"></span>
+												<span class="icon-[mingcute--delete-2-fill] text-2xl"></span>
 											</button>
 										</div>
 									</FormConfirmDropdownAction>

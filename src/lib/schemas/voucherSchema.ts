@@ -47,3 +47,9 @@ export const createVoucherSchema = z
 	});
 
 export type CreateVoucherSchema = z.infer<typeof createVoucherSchema>;
+
+export const updateVoucherSchema = createVoucherSchema.safeExtend({
+	id: z.string().min(1, 'Không tìm thấy ID')
+});
+
+export type UpdateVoucherSchema = z.infer<typeof updateVoucherSchema>;

@@ -179,3 +179,10 @@ export function parseUtcToLocal(dateStr: string): Date {
 	}
 	return new Date(dateStr);
 }
+
+export function toDateInputValue(str: string) {
+	if (!str) return '';
+	const date = new Date(str);
+	const pad = (n: number) => n.toString().padStart(2, '0');
+	return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}

@@ -8,8 +8,9 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import ToolTip from '../ui/ToolTip.svelte';
+	import { resolve } from '$app/paths';
 
-	const { dataForm } = $props();
+	const { dataForm, isEdit = false } = $props();
 
 	const { form, errors, message, enhance, submitting, delayed, tainted, isTainted, submit } =
 		superForm<
@@ -26,7 +27,7 @@
 			showToast($message.toastData);
 
 			if ($message.toastData.type === 'success') {
-				goto('/admin/vouchers');
+				goto(resolve('/admin/voucher-config'));
 			}
 		}
 	});
@@ -166,8 +167,21 @@
 		</fieldset>
 	</div>
 
+	{#if isEdit}
+		<FormInput
+			name="id"
+			label="ID phiếu giảm giá"
+			placeholder="ID phiếu giảm giá..."
+			type="text"
+			superForm={form}
+			{errors}
+			readonly
+			hidden
+		/>
+	{/if}
+
 	<button class="btn mt-6 w-full btn-primary" type="submit" disabled={$submitting}>
-		Tạo voucher
+		{isEdit ? 'Cập nhật voucher' : 'Tạo voucher'}
 		{#if $delayed}
 			<span class="loading loading-md loading-infinity"></span>
 		{/if}
