@@ -7,6 +7,7 @@
 	import { superForm } from 'sveltekit-superforms';
 	import SmallProfileSummary from '../(components)/SmallProfileSummary.svelte';
 	import RewardStoreItem from './(components)/RewardStoreItem.svelte';
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 
 	const { data } = $props();
 	let boosterRewards: RewardStoreItemType[] = $state([]);
@@ -41,7 +42,7 @@
 
 <!-- Profile summary card -->
 <div class="flex justify-between max-md:grid max-md:grid-cols-1">
-	<div>
+	<AnimatedDiv animateVars={{ translateX: -24 }} class="max-md:mb-4">
 		<a href={resolve('/profile')} class="btn mt-2 btn-sm" aria-label="Quay lại">
 			<span class="icon-[fa7-solid--arrow-left]"></span> Trở về trang cá nhân
 		</a>
@@ -49,7 +50,7 @@
 		<p class="text-base-content/60">
 			Sử dụng xu của bạn để mở khóa các vật phẩm hỗ trợ học tập và phiếu mua sắm.
 		</p>
-	</div>
+	</AnimatedDiv>
 	{#await data.gamificationProfilePromise then gamificationProfile}
 		{#if gamificationProfile}
 			<SmallProfileSummary {gamificationProfile} />
@@ -70,7 +71,7 @@
 			{#if boosterRewards.length}
 				<div class="grid grid-cols-4 gap-2 max-md:grid-cols-1">
 					{#each boosterRewards as booster, index (booster.rewardCode)}
-						<RewardStoreItem item={booster} gadgetIconIndex={index} />
+						<RewardStoreItem item={booster} itemIndex={index} />
 					{/each}
 				</div>
 			{/if}
@@ -84,8 +85,8 @@
 		<div class="tab-content border-base-300 bg-base-100 p-4">
 			{#if voucherRewards.length}
 				<div class="grid grid-cols-4 gap-2 max-md:grid-cols-1">
-					{#each voucherRewards as voucher (voucher.rewardCode)}
-						<RewardStoreItem item={voucher} />
+					{#each voucherRewards as voucher, index (voucher.rewardCode)}
+						<RewardStoreItem item={voucher} itemIndex={index} />
 					{/each}
 				</div>
 			{/if}

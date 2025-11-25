@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import UserAvatar from '$lib/components/ui/UserAvatar.svelte';
 	import { USER_PROFILE_CONTEXT } from '$lib/consts/contexts';
 	import type { GamificationProfile } from '$lib/types/Gamification';
@@ -12,7 +13,10 @@
 	const userProfile = $derived(user());
 </script>
 
-<div class="mt-2 flex shrink-0 items-center gap-4 rounded-box border bg-base-100 p-3">
+<AnimatedDiv
+	animateVars={{ translateX: 24 }}
+	class="mt-2 flex shrink-0 items-center gap-4 rounded-box border bg-base-100 p-3"
+>
 	<UserAvatar
 		avatar_url={userProfile.imageUrl}
 		letter={userProfile.userName.charAt(0).toUpperCase()}
@@ -50,4 +54,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</AnimatedDiv>
