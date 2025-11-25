@@ -2,8 +2,8 @@
 	import Image from '$lib/components/ui/Image.svelte';
 	import { onMount } from 'svelte';
 
-	let { images }: { images: string[] } = $props();
-	let selected = $state(images?.[0] ?? '');
+	let { images, viewTransitionName }: { images: string[], viewTransitionName?: string } = $props();
+	let selected = $derived(images?.[0] ?? '');
 	let fullscreen = $state(false);
 
 	function selectImage(src: string) {
@@ -21,6 +21,7 @@
 		window.addEventListener('keydown', handleKey);
 		return () => window.removeEventListener('keydown', handleKey);
 	});
+
 </script>
 
 <!-- Main image area -->
@@ -40,6 +41,7 @@
 				objectFit="object-cover"
 				border=""
 				class="h-full w-full"
+				viewTransitionName={viewTransitionName}
 			/>
 		</button>
 	{/if}

@@ -5,7 +5,8 @@
 		rounded = 'rounded-field',
 		border = 'border',
 		objectFit = 'object-cover',
-		class: customClass = ''
+		class: customClass = '',
+		viewTransitionName
 	} = $props<{
 		src: string | null | undefined;
 		alt?: string;
@@ -15,6 +16,7 @@
 		border?: string; // border class or ''
 		objectFit?: string; // e.g. object-cover, object-contain
 		class?: string; // extra classes
+		viewTransitionName?: string;
 	}>();
 
 	let isImageError = $state(false);
@@ -24,7 +26,10 @@
 	}
 </script>
 
-<div class={`overflow-hidden bg-secondary ${rounded} ${border} ${customClass}`}>
+<div
+	class={`overflow-hidden bg-secondary ${rounded} ${border} ${customClass}`}
+	style={viewTransitionName ? `view-transition-name: ${viewTransitionName};` : ''}
+>
 	{#if src && !isImageError}
 		<img {src} {alt} class={`h-full w-full ${objectFit}`} draggable="false" onerror={handleError} />
 	{:else}

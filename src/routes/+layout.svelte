@@ -4,11 +4,23 @@
 	import { setContext } from 'svelte';
 	import { Toaster } from 'svelte-sonner';
 	import '../app.css';
+	import { onNavigate } from '$app/navigation';
 
 	let { children, data } = $props();
 
 	setContext(USER_PROFILE_CONTEXT, () => data.userProfile);
 	setContext(USER_ROLE_CONTEXT, () => data.userRole);
+
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 </script>
 
 <svelte:head>
