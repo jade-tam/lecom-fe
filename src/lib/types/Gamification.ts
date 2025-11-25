@@ -31,15 +31,16 @@ export type Quest = {
 	deadline: string;
 };
 
-export type RewardStoreItem = {
+export type RewardStoreItemType = {
 	id: string;
-	type: 'booster' | 'voucher';
+	type: 'Booster' | 'Voucher';
 	title: string; // e.g., "Double XP Boost"
 	description: string; // e.g., "Doubles the XP you earn for a limited time."
 	durationDescription: string; // e.g., "Active for 24 hours" || "single-use"
 	coinCost: number;
 	imageUrl: string;
 	redeemable: boolean; // Be tự set nút "đổi thưởng" có thể nhấn được hay không tuỳ trường hợp
+	rewardCode: string; // Mã dùng để redeem phần thưởng, ví dụ: "DOUBLE_XP_24H"
 };
 
 export type Achievement = {
@@ -58,8 +59,8 @@ export type Achievement = {
 };
 
 export type ApiGamificationRewards = {
-	boosters: RewardStoreItem[];
-	vouchers: RewardStoreItem[];
+	boosters: RewardStoreItemType[];
+	vouchers: RewardStoreItemType[];
 }; // /api/gamification/rewards trả về kiểu này
 
 export type ApiUserAchivements = {

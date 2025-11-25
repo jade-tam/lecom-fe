@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import type { RedeemRewardSchema } from '$lib/schemas/redeemRewardSchema';
+	import type { RewardStoreItemType } from '$lib/types/Gamification';
 	import type { ToastData } from '$lib/utils/showToast';
 	import showToast from '$lib/utils/showToast';
 	import { superForm } from 'sveltekit-superforms';
@@ -8,7 +9,9 @@
 	import RewardStoreItem from './(components)/RewardStoreItem.svelte';
 
 	const { data } = $props();
-	const rewardStoreData = $derived(data.rewardStoreData);
+	let boosterRewards: RewardStoreItemType[] = $state([]);
+	let voucherRewards: RewardStoreItemType[] = $state([]);
+	let isLoading = $state(true);
 
 	const { form, errors, message, enhance, submitting, delayed } = superForm<
 		RedeemRewardSchema,
@@ -20,6 +23,20 @@
 			showToast($message.toastData);
 		}
 	});
+
+	$effect(() => {
+		const setVouchers = async () => {
+			const { boosters, vouchers } = await data.rewardStoreDataPromise;
+			boosterRewards = boosters;
+			voucherRewards = vouchers;
+			isLoading = false;
+		};
+
+		setVouchers();
+	});
+
+	$inspect(voucherRewards);
+	$inspect(boosterRewards);
 </script>
 
 <!-- Profile summary card -->
@@ -50,10 +67,10 @@
 			Vật phẩm hỗ trợ
 		</label>
 		<div class="tab-content border-base-300 bg-base-100 p-4">
-			{#if rewardStoreData?.boosters}
+			{#if boosterRewards.length}
 				<div class="grid grid-cols-4 gap-2 max-md:grid-cols-1">
-					{#each rewardStoreData.boosters as booster}
-						<RewardStoreItem item={booster} />
+					{#each boosterRewards as booster, index (booster.rewardCode)}
+						<RewardStoreItem item={booster} gadgetIconIndex={index} />
 					{/each}
 				</div>
 			{/if}
@@ -65,9 +82,9 @@
 			Phiếu giảm giá
 		</label>
 		<div class="tab-content border-base-300 bg-base-100 p-4">
-			{#if rewardStoreData?.vouchers}
+			{#if voucherRewards.length}
 				<div class="grid grid-cols-4 gap-2 max-md:grid-cols-1">
-					{#each rewardStoreData.vouchers as voucher}
+					{#each voucherRewards as voucher (voucher.rewardCode)}
 						<RewardStoreItem item={voucher} />
 					{/each}
 				</div>

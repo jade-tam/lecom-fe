@@ -57,14 +57,32 @@
 <section class="mt-8 flex min-h-screen flex-col items-center">
 	{#if product}
 		<div class="grid w-full grid-cols-12 gap-x-4 gap-y-2 max-md:grid-cols-1">
-			<div class="col-span-5 max-md:col-span-1" >
-				<ImageViewer images={product.images.map((image) => image.url) ?? []} viewTransitionName={`product-image-${product.id}`} />
+			<div class="col-span-5 max-md:col-span-1">
+				<ImageViewer
+					images={product.images.map((image) => image.url) ?? []}
+					viewTransitionName={`product-image-${product.id}`}
+				/>
 			</div>
 
 			<div class="col-span-7 flex flex-col gap-2 max-md:col-span-1">
-				<p class="text-header3 font-serif" style={`view-transition-name: product-name-${product.id};`}>{product.name}</p>
-				<div class="badge badge-secondary" style={`view-transition-name: product-category-${product.id};`}>{product.categoryName}</div>
-				<p class="text-header1 font-serif text-primary-content" style={`view-transition-name: product-price-${product.id};`}>{formatVND(product.price)}</p>
+				<p
+					class="text-header3 font-serif"
+					style={`view-transition-name: product-name-${product.id};`}
+				>
+					{product.name}
+				</p>
+				<div
+					class="badge badge-secondary"
+					style={`view-transition-name: product-category-${product.id};`}
+				>
+					{product.categoryName}
+				</div>
+				<p
+					class="text-header1 font-serif text-primary-content"
+					style={`view-transition-name: product-price-${product.id};`}
+				>
+					{formatVND(product.price)}
+				</p>
 				<p class="text-sm text-base-content/60 italic">
 					Còn <strong>{product.stock}</strong> sản phẩm trong kho
 				</p>

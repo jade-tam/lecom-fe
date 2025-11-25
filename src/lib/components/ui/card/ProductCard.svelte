@@ -18,12 +18,27 @@
 			alt={product.name}
 			viewTransitionName={`product-image-${product.id}`}
 		/>
-		<p class="line-clamp-2 font-semibold" style={`view-transition-name: product-name-${product.id};`}>{product.name}</p>
-		<div class="badge badge-sm badge-secondary" style={`view-transition-name: product-category-${product.id};`}>{product.categoryName}</div>
+		<p
+			class="line-clamp-2 font-semibold"
+			style={`view-transition-name: product-name-${product.id};`}
+		>
+			{product.name}
+		</p>
+		<div
+			class="badge badge-sm badge-secondary"
+			style={`view-transition-name: product-category-${product.id};`}
+		>
+			{product.categoryName}
+		</div>
 		<div class="flex items-center gap-2">
 			<Image class="h-8 w-8 rounded-full" src={product.shopAvatar} alt={product.shopName} />
 			<p class="text-sm">{product.shopName ?? 'Unknown shop'}</p>
 		</div>
-		<p class="ml-1 font-serif text-xl font-black" style={`view-transition-name: product-price-${product.id};`}>{formatVND(product.price)}</p>
+		<p
+			class="ml-1 font-serif text-xl font-black"
+			style={`view-transition-name: product-price-${product.id};`}
+		>
+			{formatVND(product.price)}
+		</p>
 	</div>
 </a>
