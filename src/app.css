@@ -2,7 +2,9 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 @plugin "@iconify/tailwind4";
-@plugin "daisyui";
+@plugin "daisyui" {
+	themes: all;
+}
 
 @plugin "daisyui/theme" {
 	name: 'lecomlight';
