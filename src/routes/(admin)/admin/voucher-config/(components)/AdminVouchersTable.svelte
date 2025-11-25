@@ -110,11 +110,13 @@
 									</td>
 								{:else if column.id === 'maxDiscountAmount' || column.id === 'minOrderAmount'}
 									<td class="font-serif font-bold">
-										{formatVND(row[column.key] as number)}
+										{row[column.key] !== null ? formatVND(row[column.key] as number) : '---'}
 									</td>
 								{:else if column.id === 'isActive'}
 									<td>
-										<div class={`badge ${row.isActive ? 'badge-success' : 'badge-error'}`}>
+										<div
+											class={`badge  badge-xs ${row.isActive ? 'badge-success' : 'badge-error'}`}
+										>
 											{row.isActive ? 'Hoạt động' : 'Hết hiệu lực'}
 										</div>
 									</td>
