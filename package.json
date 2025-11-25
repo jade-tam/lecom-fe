@@ -54,6 +54,7 @@
 		"@iconify-json/mingcute": "^1.2.5",
 		"@microsoft/signalr": "^10.0.0",
 		"@number-flow/svelte": "^0.3.9",
+		"@vercel/speed-insights": "^1.2.0",
 		"gsap": "^3.13.0",
 		"svelte-easy-crop": "^5.0.0",
 		"svelte-sonner": "^1.0.5"
