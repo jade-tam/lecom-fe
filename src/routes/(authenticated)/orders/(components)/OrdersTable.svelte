@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import TableFilter from '$lib/components/ui/TableFilter.svelte';
@@ -32,14 +33,14 @@
 </script>
 
 <div class="my-2 flex items-end justify-between">
-	<div class="flex flex-col">
+	<AnimatedDiv animateVars={{ translateX: -16 }} class="flex flex-col">
 		<h1 class="text-header3 font-bold">Lịch sử đơn hàng</h1>
 		<p class="text-base-content/60">Xem lịch sử và trạng thái các đơn hàng của bạn.</p>
-	</div>
+	</AnimatedDiv>
 
-	<div class="flex gap-2">
+	<AnimatedDiv animateVars={{ translateX: 16 }} class="flex gap-2">
 		<SearchInput bind:value={table.globalFilter} />
-	</div>
+	</AnimatedDiv>
 </div>
 
 <TableFilter
@@ -49,7 +50,7 @@
 	getFilterBtnClass={getOrderStatusBtnClass}
 />
 
-<div class="mt-2 rounded-box border bg-base-100 p-4">
+<AnimatedDiv animateVars={{ translateY: 16 }} class="mt-2 rounded-box border bg-base-100 p-4">
 	<div class="overflow-x-auto">
 		<table class="table">
 			<thead>
@@ -135,8 +136,8 @@
 			</tbody>
 		</table>
 
-		<div class="flex justify-end">
+		<div class="flex justify-end overflow-hidden">
 			<TablePagination {table} {pageSize} />
 		</div>
 	</div>
-</div>
+</AnimatedDiv>

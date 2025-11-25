@@ -13,9 +13,9 @@
 	{#each options as step}
 		<li class={`step ${getStepClass(step.value, status)}`}>
 			<span class="step-icon">
-				<span class={icons[step.value] ?? 'icon-[fa7-solid--circle-question]'}></span>
+				<span class="text-xl {icons[step.value] ?? 'icon-[fa7-solid--circle-question]'}"></span>
 			</span>
-			<span>{step.title}</span>
+			<span class="text-xs font-light">{step.title}</span>
 		</li>
 	{/each}
 </ul>

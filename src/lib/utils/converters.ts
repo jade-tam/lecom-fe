@@ -1,3 +1,5 @@
+import type { Voucher } from '$lib/types/Voucher';
+
 export function toPascalCase(segment: string) {
 	return segment
 		.split('-') // split by dash
@@ -185,4 +187,21 @@ export function toDateInputValue(str: string) {
 	const date = new Date(str);
 	const pad = (n: number) => n.toString().padStart(2, '0');
 	return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+
+export function getVoucherTitle(voucher: Voucher) {
+	if (!voucher) return '';
+	const typeTitle = voucher.discountType === 'Percentage' ? 'Giảm ' : 'Giảm ';
+	const discountValue =
+		voucher.discountType === 'Percentage'
+			? `${voucher.discountValue}%`
+			: `${voucher.discountValue.toLocaleString()}₫`;
+	const minOrder = voucher.minOrderAmount
+		? `Đơn tối thiểu ${voucher.minOrderAmount.toLocaleString()}₫`
+		: '';
+	const maxDiscount =
+		voucher.maxDiscountAmount && voucher.discountType === 'Percentage'
+			? `, giảm tối đa ${voucher.maxDiscountAmount.toLocaleString()}₫`
+			: '';
+	return `${voucher.code} - ${typeTitle} ${discountValue}${maxDiscount}${minOrder ? ' | ' + minOrder : ''}`;
 }

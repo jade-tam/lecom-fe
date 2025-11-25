@@ -4,6 +4,7 @@ import type { ShopStatus } from '$lib/types/Shop';
 import type { UserActiveStatus, UserRole } from '$lib/types/User';
 import {
 	orderStatusOptions,
+	paymentStatusOptions,
 	shipmentStatusOptions,
 	type OrderStatus,
 	type PaymentStatus
@@ -92,15 +93,17 @@ export function getOrderStatusBtnClass(status: OrderStatus) {
 		? 'btn-warning'
 		: status === 'Paid'
 			? 'btn-info'
-			: status === 'Packed'
+			: status === 'Processing'
 				? 'btn-secondary'
-				: status === 'Shipped'
+				: status === 'Shipping'
 					? 'btn-accent'
 					: status === 'Completed'
 						? 'btn-success'
-						: status === 'Canceled'
+						: status === 'Cancelled' || status === 'PaymentFailed'
 							? 'btn-error'
-							: 'btn-error';
+							: status === 'Refunded'
+								? 'btn-info'
+								: 'btn-error';
 }
 
 export function getOrderStatusBadgeClass(status: OrderStatus) {
@@ -108,15 +111,17 @@ export function getOrderStatusBadgeClass(status: OrderStatus) {
 		? 'badge-warning'
 		: status === 'Paid'
 			? 'badge-info'
-			: status === 'Packed'
+			: status === 'Processing'
 				? 'badge-secondary'
-				: status === 'Shipped'
+				: status === 'Shipping'
 					? 'badge-accent'
 					: status === 'Completed'
 						? 'badge-success'
-						: status === 'Canceled'
+						: status === 'Cancelled' || status === 'PaymentFailed'
 							? 'badge-error'
-							: 'badge-error';
+							: status === 'Refunded'
+								? 'badge-info'
+								: 'badge-error';
 }
 
 export function getOrderStatusStepClass(
@@ -127,37 +132,59 @@ export function getOrderStatusStepClass(
 	const currentIdx = orderSteps.indexOf(currentStatus);
 	const stepIdx = orderSteps.indexOf(stepValue);
 
-	if (currentStatus === 'Canceled') return 'step-error';
+	if (currentStatus === 'Cancelled' || currentStatus === 'PaymentFailed')
+		return stepIdx <= currentIdx ? 'step-error' : '';
 	if (currentStatus === 'Completed') return stepIdx <= currentIdx ? 'step-success' : '';
+	if (currentStatus === 'Refunded') return stepIdx <= currentIdx ? 'step-info' : '';
 	return stepIdx <= currentIdx ? 'step-warning' : '';
 }
 
 export function getPaymentStatusBadgeClass(status: PaymentStatus) {
-	return status === 'Pending'
-		? 'badge-warning'
-		: status === 'Succeeded'
-			? 'badge-success'
-			: status === 'Failed'
-				? 'badge-error'
-				: status === 'Refunded'
-					? 'badge-info'
-					: status === 'PartiallyRefunded'
-						? 'badge-secondary'
-						: 'badge-error';
+	switch (status) {
+		case 'Pending':
+			return 'badge-warning';
+		case 'Paid':
+			return 'badge-success';
+		case 'Failed':
+			return 'badge-error';
+		case 'Refunded':
+			return 'badge-info';
+		case 'PartiallyRefunded':
+			return 'badge-secondary';
+		default:
+			return 'badge-error';
+	}
 }
 
 export function getPaymentStatusBtnClass(status: PaymentStatus) {
-	return status === 'Pending'
-		? 'btn-warning'
-		: status === 'Succeeded'
-			? 'btn-success'
-			: status === 'Failed'
-				? 'btn-error'
-				: status === 'Refunded'
-					? 'btn-info'
-					: status === 'PartiallyRefunded'
-						? 'btn-secondary'
-						: 'btn-error';
+	switch (status) {
+		case 'Pending':
+			return 'btn-warning';
+		case 'Paid':
+			return 'btn-success';
+		case 'Failed':
+			return 'btn-error';
+		case 'Refunded':
+			return 'btn-info';
+		case 'PartiallyRefunded':
+			return 'btn-secondary';
+		default:
+			return 'btn-error';
+	}
+}
+
+export function getPaymentStatusStepClass(
+	stepValue: PaymentStatus,
+	currentStatus: PaymentStatus
+): string {
+	const paymentOrder: PaymentStatus[] = paymentStatusOptions.map((opt) => opt.value);
+	const currentIdx = paymentOrder.indexOf(currentStatus);
+	const stepIdx = paymentOrder.indexOf(stepValue);
+
+	if (currentStatus === 'Failed') return stepIdx <= currentIdx ? 'step-error' : '';
+	if (currentStatus === 'Paid') return stepIdx <= currentIdx ? 'step-success' : '';
+	if (currentStatus === 'Refunded') return stepIdx <= currentIdx ? 'step-info' : '';
+	return stepIdx <= currentIdx ? 'step-warning' : '';
 }
 
 export function getShipmentStatusStepClass(
@@ -168,7 +195,7 @@ export function getShipmentStatusStepClass(
 	const currentIdx = shipmentOrder.indexOf(currentStatus);
 	const stepIdx = shipmentOrder.indexOf(stepValue);
 
-	if (currentStatus === 'Returned') return 'step-error';
+	if (currentStatus === 'Returned') return stepIdx <= currentIdx ? 'step-error' : '';
 	if (currentStatus === 'Delivered') return stepIdx <= currentIdx ? 'step-success' : '';
 	return stepIdx <= currentIdx ? 'step-warning' : '';
 }

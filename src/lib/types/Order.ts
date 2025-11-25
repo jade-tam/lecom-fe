@@ -4,27 +4,30 @@ import type { PaymentMethod } from './OrderPaymentGroup';
 export const orderStatusOptions = [
 	{ value: 'Pending', title: 'Chờ thanh toán' },
 	{ value: 'Paid', title: 'Đã thanh toán' },
-	{ value: 'Packed', title: 'Đã đóng gói' },
-	{ value: 'Shipped', title: 'Đã giao hàng' },
-	{ value: 'Completed', title: 'Hoàn thành' },
-	{ value: 'Canceled', title: 'Đã hủy đơn' }
+	{ value: 'Processing', title: 'Chờ đóng gói' },
+	{ value: 'Shipping', title: 'Đang vận chuyển' },
+	{ value: 'Completed', title: 'Đã hoàn thành' },
+	{ value: 'Cancelled', title: 'Đơn đã huỷ' },
+	{ value: 'Refunded', title: 'Đã hoàn tiền' },
+	{ value: 'PaymentFailed', title: 'Thanh toán thất bại' }
 ] as const satisfies readonly FormSelectOption[];
 
 export type OrderStatus = (typeof orderStatusOptions)[number]['value'];
 
 export const paymentStatusOptions = [
 	{ value: 'Pending', title: 'Chờ thanh toán' },
-	{ value: 'Succeeded', title: 'Thanh toán thành công' },
+	{ value: 'Paid', title: 'Đã thanh toán' },
 	{ value: 'Failed', title: 'Thanh toán thất bại' },
-	{ value: 'Refunded', title: 'Đã hoàn tiền' },
-	{ value: 'PartiallyRefunded', title: 'Đã hoàn tiền một phần' }
+	// { value: 'PartiallyRefunded', title: 'Đã hoàn tiền một phần' },
+	{ value: 'Refunded', title: 'Đã hoàn tiền' }
+	// { value: 'Cancelled', title: 'Đã huỷ' }
 ] as const satisfies readonly FormSelectOption[];
 
 export type PaymentStatus = (typeof paymentStatusOptions)[number]['value'];
 
 // Add ShipmentStatus options and type
 export const shipmentStatusOptions = [
-	{ value: 'Ready', title: 'Đang chuẩn bị hàng' },
+	{ value: 'Ready', title: 'Chờ đóng gói' },
 	{ value: 'InTransit', title: 'Đang vận chuyển' },
 	{ value: 'Delivered', title: 'Đã giao' },
 	{ value: 'Returned', title: 'Đã trả hàng' }

@@ -21,11 +21,6 @@ export const checkoutSchema = z.object({
 		.array(z.string().min(1, 'Product ID is required'))
 		.min(1, 'Select at least one product'),
 	paymentMethod: z.string().min(2, 'Payment method is required'),
-	walletAmountToUse: z
-		.number()
-		.min(0, 'Wallet amount must be zero or positive')
-		.nullable()
-		.default(null),
 	note: z.string().max(500, 'Note is too long').optional()
 });
 

@@ -1,19 +1,21 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
 	import StatusSteps from '$lib/components/ui/StatusSteps.svelte';
 	import ToolTip from '$lib/components/ui/ToolTip.svelte';
 	import {
-		shipmentStatusOptions,
 		orderStatusOptions,
-		paymentStatusOptions
+		paymentStatusOptions,
+		shipmentStatusOptions
 	} from '$lib/types/Order';
-	import type { Order } from '$lib/types/Order.js';
+	import type { Order, ShipmentStatus } from '$lib/types/Order.js';
 	import {
 		getOrderStatusBadgeClass,
 		getOrderStatusStepClass,
 		getPaymentStatusBadgeClass,
+		getPaymentStatusStepClass,
 		getShipmentStatusStepClass
 	} from '$lib/utils/classComposer';
 	import { formatDate, formatVND } from '$lib/utils/converters';
@@ -21,6 +23,24 @@
 
 	const { data } = $props();
 	const order: Order | null = $derived(data.order);
+	const shipmentStatus: ShipmentStatus = $derived.by(() => {
+		switch (order?.status) {
+			case 'Pending':
+			case 'Paid':
+			case 'Processing':
+			case 'PaymentFailed':
+				return 'Ready';
+			case 'Shipping':
+				return 'InTransit';
+			case 'Completed':
+				return 'Delivered';
+			case 'Cancelled':
+			case 'Refunded':
+				return 'Returned';
+			default:
+				return 'Ready';
+		}
+	});
 
 	function handleBack() {
 		goto('/orders');
@@ -40,7 +60,7 @@
 {#if order}
 	<!-- Top section like the image -->
 	<div class="mt-2 mb-2 flex flex-wrap items-center justify-between">
-		<div class="flex items-center gap-4">
+		<AnimatedDiv animateVars={{ translateX: -16 }} class="flex items-center gap-4">
 			<button class="btn btn-sm" aria-label="Quay lại" onclick={handleBack}>
 				<span class="icon-[fa7-solid--arrow-left]"></span> Trở về
 			</button>
@@ -50,40 +70,48 @@
 			<span class={`ml-2 badge ${getOrderStatusBadgeClass(order.status)}`}>
 				{getOrderStatusTitle(order.status)}
 			</span>
-		</div>
-		<div class="flex items-center gap-2">
+		</AnimatedDiv>
+		<AnimatedDiv animateVars={{ translateX: 16 }} class="flex items-center gap-2">
 			<button class="btn btn-sm btn-secondary" aria-label="Hóa đơn" disabled
 				><span class="icon-[fa7-solid--scroll]"></span> Hóa đơn
 			</button>
 			<button class="btn btn-sm btn-info" aria-label="Theo dõi đơn hàng" disabled>
 				<span class="icon-[fa7-solid--location]"></span>Theo dõi đơn hàng
 			</button>
-		</div>
+		</AnimatedDiv>
 	</div>
 	<div class="mb-2 flex items-center gap-4">
 		<p class="text-xs text-base-content/70">Ngày đặt hàng: {formatDate(order.createdAt)}</p>
 	</div>
 
 	<!-- Order Status Steps -->
-	<section class="mb-2 flex flex-col items-center rounded-box border bg-base-100 p-4">
+	<AnimatedDiv
+		animateVars={{ translatey: 16, delay: 0.1 }}
+		class="mb-2 flex flex-col items-center rounded-box border bg-base-100 p-4"
+	>
 		<h3 class="mb-4 text-lg font-bold">Trạng thái đơn hàng</h3>
 		<StatusSteps
 			options={orderStatusOptions}
 			status={order.status}
 			icons={{
-				Pending: 'icon-[fa7-solid--clock]',
-				Paid: 'icon-[fa7-solid--money-bill]',
-				Packed: 'icon-[fa7-solid--boxes-alt]',
-				Shipped: 'icon-[fa7-solid--house-circle-check]',
-				Completed: 'icon-[fa7-solid--check-circle]',
-				Canceled: 'icon-[fa7-solid--ban]'
+				Pending: 'icon-[mingcute--time-duration-line]',
+				Paid: 'icon-[mingcute--cash-line]',
+				Processing: 'icon-[mingcute--package-2-line]',
+				Shipping: 'icon-[mingcute--truck-line]',
+				Completed: 'icon-[mingcute--check-circle-line]',
+				Cancelled: 'icon-[mingcute--forbid-circle-line]',
+				Refunded: 'icon-[mingcute--card-refund-line]',
+				PaymentFailed: 'icon-[mingcute--close-circle-line]'
 			}}
 			getStepClass={getOrderStatusStepClass}
 		/>
-	</section>
+	</AnimatedDiv>
 
 	<!-- Product List Section -->
-	<section class="mb-2 rounded-box border bg-base-100 p-4">
+	<AnimatedDiv
+		animateVars={{ translatey: 16, delay: 0.15 }}
+		class="mb-2 rounded-box border bg-base-100 p-4"
+	>
 		<h2 class="mb-2 text-lg font-bold">Danh sách sản phẩm</h2>
 		<div class="flex flex-1 flex-col gap-2">
 			{#each order.details as item (item.id)}
@@ -120,13 +148,16 @@
 				</div>
 			{/each}
 		</div>
-	</section>
+	</AnimatedDiv>
 
 	<!-- Add this after your order details section -->
 	<section class="mb-6">
 		<div class="grid grid-cols-3 gap-2 max-md:grid-cols-1">
 			<!-- Order Summary -->
-			<div class="rounded-box border bg-base-100 p-4">
+			<AnimatedDiv
+				animateVars={{ translateY: 16, delay: 0.2 }}
+				class="rounded-box border bg-base-100 p-4"
+			>
 				<h2 class="mb-2 text-lg font-bold">Tóm tắt đơn hàng</h2>
 				<div class="flex flex-col gap-2">
 					<div class="flex justify-between">
@@ -152,27 +183,33 @@
 						<span class="font-serif text-2xl text-primary-content">{formatVND(order.total)}</span>
 					</div>
 				</div>
-			</div>
+			</AnimatedDiv>
 
 			<!-- Delivery Info -->
-			<div class="rounded-box border bg-base-100 p-4">
+			<AnimatedDiv
+				animateVars={{ translateY: 16, delay: 0.25 }}
+				class="rounded-box border bg-base-100 p-4"
+			>
 				<h2 class="mb-2 text-lg font-bold">Thông tin giao hàng</h2>
 				<div class="flex flex-col gap-2">
-					<p class="mb-4 flex items-center gap-2 text-success-content">
-						<span class="icon-[fa7-solid--plane]"></span>
-						Dự kiến giao:
-						<span class="text-error-content"
-							>{order.estimatedDelivery ? formatDate(order.estimatedDelivery) : '---'}</span
-						>
-					</p>
+					{#if shipmentStatus === 'InTransit'}
+						<p class="mb-4 flex items-center gap-2 text-success-content">
+							<span class="icon-[fa7-solid--plane]"></span>
+							Dự kiến giao:
+							<span class="text-info-content italic"
+								>{order.estimatedDelivery
+									? formatDate(order.estimatedDelivery)
+									: '3 - 5 ngày kể từ khi vận chuyển'}</span
+							>
+						</p>{/if}
 					<StatusSteps
 						options={shipmentStatusOptions}
-						status={order.shipmentStatus}
+						status={shipmentStatus}
 						icons={{
-							Ready: 'icon-[fa7-solid--box-open]',
-							InTransit: 'icon-[fa7-solid--truck]',
-							Delivered: 'icon-[fa7-solid--house-circle-check]',
-							Returned: 'icon-[fa7-solid--rotate-left]'
+							Ready: 'icon-[mingcute--package-2-line]',
+							InTransit: 'icon-[mingcute--truck-line]',
+							Delivered: 'icon-[mingcute--home-3-line]',
+							Returned: 'icon-[mingcute--back-line]'
 						}}
 						getStepClass={getShipmentStatusStepClass}
 					/>
@@ -181,18 +218,28 @@
 					<p><span class="font-semibold">Số điện thoại:</span> {order.shipToPhone}</p>
 					<p><span class="font-semibold">Địa chỉ:</span> {order.shipToAddress}</p>
 				</div>
-			</div>
+			</AnimatedDiv>
 
 			<!-- Payment Info -->
-			<div class="rounded-box border bg-base-100 p-4">
+			<AnimatedDiv
+				animateVars={{ translateY: 16, delay: 0.3 }}
+				class="rounded-box border bg-base-100 p-4"
+			>
 				<h2 class="mb-2 text-lg font-bold">Trạng thái thanh toán</h2>
-				<span class={`mb-2 badge ${getPaymentStatusBadgeClass(order.paymentStatus)}`}>
+				<span class={`mb-6 badge ${getPaymentStatusBadgeClass(order.paymentStatus)}`}>
 					{getPaymentStatusTitle(order.paymentStatus)}
 				</span>
-				<p class="mb-2">
-					<span class="font-semibold">Phương thức thanh toán:</span>
-					{order.paymentMethod ?? 'Không rõ'}
-				</p>
+				<StatusSteps
+					options={paymentStatusOptions}
+					status={order.paymentStatus}
+					icons={{
+						Pending: 'icon-[mingcute--time-line]',
+						Paid: 'icon-[mingcute--cash-line]',
+						Failed: 'icon-[mingcute--forbid-circle-line]',
+						Refunded: 'icon-[mingcute--card-refund-line]'
+					}}
+					getStepClass={getPaymentStatusStepClass}
+				/>
 				{#if order.paymentStatus === 'Pending'}
 					<p class="flex items-center gap-2 text-sm text-primary-content">
 						<span class="icon-[fa7-solid--circle-info]"></span>Sản phẩm cần được thanh toán ngay để
@@ -202,7 +249,7 @@
 						>Tiến hành thanh toán</a
 					>
 				{/if}
-			</div>
+			</AnimatedDiv>
 		</div>
 	</section>
 {:else}

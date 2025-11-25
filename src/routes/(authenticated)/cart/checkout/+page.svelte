@@ -3,23 +3,33 @@
 	import { resolve } from '$app/paths';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import FormInput from '$lib/components/ui/FormInput.svelte';
-	import FormSelect from '$lib/components/ui/FormSelect.svelte';
+	import FormSelect, { type FormSelectOption } from '$lib/components/ui/FormSelect.svelte';
 	import FormTextArea from '$lib/components/ui/FormTextArea.svelte';
 	import { SELECTED_CART_SESSION } from '$lib/consts/contexts';
 	import { checkoutSchema, type CheckoutSchema } from '$lib/schemas/checkoutSchema';
 	import type { Cart } from '$lib/types/Cart.js';
 	import { paymentMethodOptions, type OrderPaymentGroup } from '$lib/types/OrderPaymentGroup';
+	import { type Voucher } from '$lib/types/Voucher';
+	import { formatVND, getVoucherTitle } from '$lib/utils/converters';
 	import type { ToastData } from '$lib/utils/showToast';
 	import showToast from '$lib/utils/showToast';
 	import { onMount } from 'svelte';
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import OrderSummary from '../(components)/OrderSummary.svelte';
-	import { formatVND } from '$lib/utils/converters';
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 
 	const { data } = $props();
 
 	let selectedCart: Cart | null = $state(null);
+	let isLoadingVoucher = $state<boolean>(true);
+	let myVouchers = $state<Voucher[]>([]);
+	let voucherOptions: FormSelectOption[] = $derived(
+		myVouchers.map((voucher) => ({
+			title: getVoucherTitle(voucher),
+			value: voucher.code
+		}))
+	);
 
 	const { form, errors, message, enhance, submitting, delayed, tainted, isTainted, submit } =
 		superForm<
@@ -48,6 +58,15 @@
 			: [];
 	});
 
+	$effect(() => {
+		const setVoucherOptions = async () => {
+			myVouchers = await data.myVouchersPromise;
+			isLoadingVoucher = false;
+		};
+
+		setVoucherOptions();
+	});
+
 	onMount(() => {
 		const raw = sessionStorage.getItem(SELECTED_CART_SESSION);
 		if (raw) {
@@ -56,12 +75,17 @@
 	});
 </script>
 
-<h1 class="my-2 text-center">Thông tin thanh toán</h1>
+<AnimatedDiv animateVars={{ translateY: -16 }}>
+	<h1 class="my-2 text-center">Thông tin thanh toán</h1>
+</AnimatedDiv>
 <form method="POST" class="h-fit w-full" use:enhance action="?/checkout">
 	{#if selectedCart}
 		<div class="grid grid-cols-12 gap-2 max-md:grid-cols-1">
 			<div class="col-span-8 flex h-fit flex-col gap-2 max-md:col-span-1">
-				<div class="rounded-box border bg-base-100 p-4">
+				<AnimatedDiv
+					animateVars={{ translateY: 16, delay: 0.1 }}
+					class="rounded-box border bg-base-100 p-4"
+				>
 					<h1 class="text-header3 mb-2 font-bold">Thông tin nhận hàng</h1>
 
 					<FormInput
@@ -98,15 +122,20 @@
 						superForm={form}
 						{errors}
 					/>
-				</div>
-				<div class="rounded-box border bg-base-100 p-4">
+				</AnimatedDiv>
+				<AnimatedDiv
+					animateVars={{ translateY: 16, delay: 0.2 }}
+					class="rounded-box border bg-base-100 p-4"
+				>
 					<div class="flex items-center justify-between">
 						<h1 class="text-header3 mb-2 font-bold">Phương thức thanh toán</h1>
 						<p class="flex items-center gap-2">
 							<span class="icon-[fa7-solid--wallet] text-success-content"></span>Số dư ví:
-							{#await data.balancePromise then userBalance}
+							{#await data.balancePromise}
+								<span class="loading loading-infinity"></span>
+							{:then userBalance}
 								{#if userBalance}
-									<span class="font-serif text-xl font-bold text-success-content"
+									<span class="mb-0.5 font-serif text-xl font-bold text-success-content"
 										>{formatVND(userBalance.balance)}</span
 									>
 								{:else}
@@ -123,19 +152,34 @@
 						{errors}
 					/>
 
-					<FormInput
-						name="voucherCode"
-						label="Mã giảm giá"
-						placeholder="Nhập mã giảm giá (không bắt buộc)"
-						type="text"
-						superForm={form}
-						{errors}
-					/>
-				</div>
+					{#await data.balancePromise then userBalance}
+						{#if userBalance !== null && $form['paymentMethod'] === 'wallet' && selectedCart.subtotal > userBalance.balance}
+							<p class="mt-1 text-sm text-error">Số dư ví không đủ</p>
+						{/if}
+					{/await}
+
+					{#if isLoadingVoucher}
+						<p>Đang tải danh sách phiếu giảm giá <span class="loading loading-infinity"></span></p>
+					{:else}
+						<FormSelect
+							options={voucherOptions}
+							name="voucherCode"
+							label="Mã giảm giá"
+							superForm={form}
+							placeholder={myVouchers.length
+								? 'Chọn mã giảm giá (không bắt buộc)'
+								: 'Bạn không có mã giảm giá nào'}
+							{errors}
+						/>
+					{/if}
+				</AnimatedDiv>
 			</div>
 
 			<div class="col-span-4 h-fit rounded-box border bg-base-100 p-4 max-md:col-span-1">
-				<OrderSummary {selectedCart} />
+				<OrderSummary
+					{selectedCart}
+					selectedVoucher={myVouchers.find((v) => v.code === $form.voucherCode)}
+				/>
 
 				<button
 					class="btn mt-4 btn-block btn-primary"
@@ -147,16 +191,6 @@
 						<span class="loading loading-infinity"></span>
 					{/if}
 				</button>
-
-				<FormInput
-					hidden
-					name="walletAmountToUse"
-					label="Số dư ví sử dụng"
-					placeholder="0"
-					type="number"
-					superForm={form}
-					{errors}
-				/>
 
 				{#each $form.selectedProductIds as id}
 					<input type="hidden" name="selectedProductIds" value={id} />

@@ -18,6 +18,7 @@
 		name,
 		hidden = false,
 		class: className = '',
+		placeholder = 'Lựa chọn',
 		...restSelectAttr
 	}: HTMLSelectAttributes & {
 		label: string;
@@ -41,7 +42,7 @@
 	</legend>
 
 	<select class="select w-full" {name} bind:value={$superForm[name]} {...restSelectAttr}>
-		<option disabled selected value={''}>Lựa chọn</option>
+		<option disabled selected value={''} class="italic">{placeholder}</option>
 		{#each options as option}
 			<option value={option.value}>{option.title}</option>
 		{/each}

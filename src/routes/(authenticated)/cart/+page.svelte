@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto, invalidate } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import { SELECTED_CART_SESSION } from '$lib/consts/contexts';
 	import type { Cart, ShopGroupedItems } from '$lib/types/Cart.js';
 	import showToast from '$lib/utils/showToast.js';
@@ -69,22 +70,29 @@
 	}
 </script>
 
-<h1 class="my-2 text-center">Giỏ hàng của bạn</h1>
+<AnimatedDiv animateVars={{ translateY: -16 }}>
+	<h1 class="my-2 text-center">Giỏ hàng của bạn</h1>
+</AnimatedDiv>
+
 {#if cart}
-	<div class="grid grid-cols-12 gap-4 max-md:grid-cols-1">
-		<div
+	<div class="grid grid-cols-12 gap-2 max-md:grid-cols-1">
+		<AnimatedDiv
+			animateVars={{ translateY: 16, delay: 0.1 }}
 			class="col-span-8 flex max-h-[1000px] flex-col gap-4 overflow-auto rounded-box border bg-base-100 p-4 max-md:col-span-1"
 		>
 			<CartProductList {cart} bind:checked />
-		</div>
+		</AnimatedDiv>
 
-		<div class="col-span-4 rounded-box border bg-base-100 p-4 max-md:col-span-1">
+		<AnimatedDiv
+			animateVars={{ translateY: 16, delay: 0.2 }}
+			class="col-span-4 rounded-box border bg-base-100 p-4 max-md:col-span-1"
+		>
 			<OrderSummary {selectedCart} />
 			<button
 				onclick={() => handleProceedToCheckout()}
 				class="btn mt-2 btn-block btn-primary"
 				disabled={!selectedCart.items.length}>Tiến hành thanh toán</button
 			>
-		</div>
+		</AnimatedDiv>
 	</div>
 {/if}

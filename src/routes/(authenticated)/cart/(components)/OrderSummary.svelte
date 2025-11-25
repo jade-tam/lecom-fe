@@ -5,8 +5,22 @@
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import { formatVND } from '$lib/utils/converters';
 	import NumberFlow from '@number-flow/svelte';
+	import { FIXED_SHIPPING_FEE } from '$lib/config/paymentConfig';
+	import type { Voucher } from '$lib/types/Voucher';
 
-	const { selectedCart }: { selectedCart: Cart } = $props();
+	const { selectedCart, selectedVoucher }: { selectedCart: Cart; selectedVoucher?: Voucher } =
+		$props();
+
+	const discountAmount = $derived(
+		selectedVoucher
+			? Math.min(
+					selectedVoucher.discountType === 'FixedAmount'
+						? selectedVoucher.discountValue
+						: (selectedCart.subtotal * selectedVoucher.discountValue) / 100,
+					selectedVoucher.maxDiscountAmount ?? Infinity
+				)
+			: 0
+	);
 </script>
 
 <h2 class="text-header3">Tổng quan đơn hàng</h2>
@@ -37,10 +51,40 @@
 		<EmptyPlaceholder class="h-24" text="Chọn sản phẩm để thanh toán" />
 	{/if}
 	<div class="divider my-0"></div>
+
 	<div class="flex items-end justify-between">
-		<p class="font-bold">Tổng tạm tính:</p>
-		<p class="font-serif text-2xl font-bold text-primary-content">
+		<p class="">Tổng phí sản phẩm</p>
+		<p class="font-serif font-bold">
 			<NumberFlow value={selectedCart.subtotal} format={formatVND} /> đ
+		</p>
+	</div>
+
+	<div class="flex items-end justify-between">
+		<p class="">Phiếu giảm giá</p>
+		<p class="font-serif font-bold text-success-content">
+			-<NumberFlow value={discountAmount} format={formatVND} /> đ
+		</p>
+	</div>
+
+	<div class="flex items-end justify-between">
+		<p class="">Tổng phí giao hàng</p>
+		<p class="font-serif font-bold text-info-content">
+			<NumberFlow value={selectedCart.items.length * FIXED_SHIPPING_FEE} format={formatVND} /> đ
+		</p>
+	</div>
+
+	<div class="divider my-0"></div>
+
+	<div class="flex items-end justify-between">
+		<p class="font-bold">Tổng thanh toán</p>
+		<p class="font-serif text-2xl font-bold text-primary-content">
+			<NumberFlow
+				value={Math.max(
+					0,
+					selectedCart.subtotal - discountAmount + selectedCart.items.length * FIXED_SHIPPING_FEE
+				)}
+				format={formatVND}
+			/> đ
 		</p>
 	</div>
 </div>

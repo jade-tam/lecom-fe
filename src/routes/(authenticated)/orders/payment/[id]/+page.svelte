@@ -13,7 +13,7 @@
 		return found ? found.title : method;
 	}
 
-	$inspect(group);
+	let isPaymentUrlOpened = $state(false);
 </script>
 
 <h1 class="my-2 text-center text-2xl font-bold">Thanh toán đơn hàng</h1>
@@ -90,10 +90,15 @@
 							>
 						</div>
 						<div class="flex flex-col items-end">
-							<span class="text-sm text-base-content/70">Giảm giá áp dụng</span>
+							<span class="text-sm text-base-content/70">Giảm giá áp dụng </span>
 							<span class="font-serif font-bold text-success-content"
 								>- {formatVND(order.discount)}</span
 							>
+							{#if group.voucherCodeUsed}
+								<span class="mt-1 badge badge-xs font-serif font-black badge-success"
+									>{group.voucherCodeUsed}</span
+								>
+							{/if}
 						</div>
 						<div class="divider mx-0 divider-horizontal"></div>
 						<div class="flex flex-col items-end">
@@ -117,25 +122,11 @@
 			</div>
 			<div class="flex justify-between">
 				<span>Phương thức thanh toán</span>
-				<span class="font-serif font-bold font-semibold"
-					>{getPaymentMethodTitle(group.paymentMethod)}</span
-				>
+				<span class="font-serif font-bold">{getPaymentMethodTitle(group.paymentMethod)}</span>
 			</div>
 			<div class="flex justify-between">
 				<span>Số dư ví sử dụng</span>
 				<span class="font-serif font-bold">{formatVND(group.walletAmountUsed)}</span>
-			</div>
-			{#if group.voucherCodeUsed}
-				<div class="flex justify-between">
-					<span>Mã giảm giá áp dụng</span>
-					<span class="badge badge-info">{group.voucherCodeUsed}</span>
-				</div>
-			{/if}
-			<div class="flex justify-between">
-				<span>Giảm giá áp dụng</span>
-				<span class="font-serif font-bold text-success-content"
-					>- {formatVND(group.discountApplied)}</span
-				>
 			</div>
 			<div class="divider my-2"></div>
 			<div class="flex justify-between">
@@ -147,10 +138,20 @@
 		</div>
 	</section>
 
-	<div class="mb-16 flex justify-center">
-		<a href={group.paymentUrl} target="_blank" class="btn btn-block btn-lg btn-primary"
-			>Thanh toán ngay</a
+	<div class="mb-16 flex justify-center gap-2">
+		<a
+			href={group.paymentUrl}
+			onclick={() => (isPaymentUrlOpened = true)}
+			target="_blank"
+			class="btn grow btn-primary"
+			>Đi tới trang thanh toán <span class="icon-[mingcute--external-link-line]"></span></a
 		>
+		{#if isPaymentUrlOpened}<a
+				href={group.orders[0] ? `/orders/${group.orders[0].id}` : '/orders'}
+				class="btn grow btn-secondary"
+				>Đã thanh toán? kiểm tra trạng thái đơn<span class="icon-[mingcute--checks-line]"></span></a
+			>
+		{/if}
 	</div>
 {:else}
 	<EmptyPlaceholder

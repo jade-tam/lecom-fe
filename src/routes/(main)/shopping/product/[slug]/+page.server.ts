@@ -52,7 +52,7 @@ export const actions = {
 			formData
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Product has been added to cart');
+		const toastData: ToastData = getToastData(responseBody, 'Sản phẩm đã được thêm vào giỏ');
 
 		if (response.ok) {
 			return message(form, toastData);
