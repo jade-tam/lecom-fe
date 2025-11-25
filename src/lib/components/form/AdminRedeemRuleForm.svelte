@@ -92,8 +92,9 @@
 				<option value="Voucher">Phiếu giảm giá</option>
 			</select>
 		</fieldset>
-
-		{#if isLoading}
+		{#if isEdit}
+			<p class="mt-2 font-serif text-xl font-bold">Mục đổi thưởng ID: {$form['id']}</p>
+		{:else if isLoading}
 			<p class="mt-2 text-xs font-semibold">Đang tải phiếu giảm giá...</p>
 			<div class="mt-2 h-8 skeleton rounded-field"></div>
 		{:else}
