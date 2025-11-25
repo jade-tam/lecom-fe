@@ -1,10 +1,14 @@
 <script lang="ts">
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import type { Quest } from '$lib/types/Gamification';
 
-	const { quest }: { quest: Quest } = $props();
+	const { quest, index }: { quest: Quest; index: number } = $props();
 </script>
 
-<div class="flex flex-col gap-2 rounded-box border bg-base-200 p-4">
+<AnimatedDiv
+	animateVars={{ translateY: 20, delay: 0.1 * index }}
+	class="flex flex-col gap-2 rounded-box border bg-base-200 p-4"
+>
 	<div class="flex items-center justify-between">
 		<div>
 			<p class="flex items-center gap-2 font-semibold">
@@ -47,4 +51,4 @@
 			</div>
 		{/if}
 	</div>
-</div>
+</AnimatedDiv>
