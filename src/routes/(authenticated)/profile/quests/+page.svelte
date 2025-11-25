@@ -11,7 +11,6 @@
 
 	const { data } = $props();
 
-
 	const { form, errors, message, enhance, submitting, delayed } = superForm<
 		QuestClaimSchema,
 		{ toastData: ToastData }
