@@ -13,11 +13,11 @@ export const adminSidebarLayout: SidebarLayoutItem[] = [
 		title: 'Tổng quan',
 		iconClass: 'icon-[mingcute--dashboard-3-fill] text-xl'
 	},
-	{
-		href: '/admin/analytics',
-		title: 'Phân tích',
-		iconClass: 'icon-[mingcute--chart-vertical-fill] text-xl'
-	},
+	// {
+	// 	href: '/admin/analytics',
+	// 	title: 'Phân tích',
+	// 	iconClass: 'icon-[mingcute--chart-vertical-fill] text-xl'
+	// },
 	{
 		href: '/admin/users-management',
 		title: 'Quản lý người dùng',
@@ -71,44 +71,44 @@ export const sellerSidebarLayout: SidebarLayoutItem[] = [
 	{
 		href: '/seller/dashboard',
 		title: 'Tổng quan',
-		iconClass: 'icon-[fa7-solid--tachometer-alt] text-xl'
+		iconClass: 'icon-[mingcute--dashboard-3-fill] text-xl'
 	},
 	{
 		href: '/seller/my-shop',
 		title: 'Cửa hàng của tôi',
-		iconClass: 'icon-[fa7-solid--store] text-xl'
+		iconClass: 'icon-[mingcute--shop-fill] text-xl'
 	},
 	{
 		href: '/seller/products',
-		title: 'Sản phẩm',
-		iconClass: 'icon-[fa7-solid--box-open] text-xl'
+		title: 'Quản lý sản phẩm',
+		iconClass: 'icon-[mingcute--box-2-fill] text-xl'
 	},
 	{
 		href: '/seller/courses',
-		title: 'Khóa học',
-		iconClass: 'icon-[fa7-solid--book] text-xl'
+		title: 'Quản lý khóa học',
+		iconClass: 'icon-[mingcute--notebook-2-fill] text-xl'
 	},
 	{
 		href: '/seller/orders',
-		title: 'Đơn hàng',
-		iconClass: 'icon-[fa7-solid--money-check-alt] text-xl'
-	},
-	{
-		href: '/seller/analytics',
-		title: 'Phân tích',
-		iconClass: 'icon-[fa7-solid--chart-column] text-xl'
+		title: 'Danh sách đơn hàng',
+		iconClass: 'icon-[mingcute--cash-fill] text-xl'
 	}
+	// {
+	// 	href: '/seller/analytics',
+	// 	title: 'Phân tích',
+	// 	iconClass: 'icon-[mingcute--chart-vertical-fill] text-xl'
+	// }
 ];
 
 export const moderatorSidebarLayout: SidebarLayoutItem[] = [
 	{
 		href: resolve('/(moderator)/moderator/products-management'),
 		title: 'Duyệt sản phẩm',
-		iconClass: 'icon-[fa7-solid--box-open] text-xl'
+		iconClass: 'icon-[mingcute--box-2-fill] text-xl'
 	},
 	{
 		href: resolve('/(moderator)/moderator/courses-management'),
 		title: 'Duyệt khóa học',
-		iconClass: 'icon-[fa7-solid--book] text-xl'
+		iconClass: 'icon-[mingcute--notebook-2-fill] text-xl'
 	}
 ];

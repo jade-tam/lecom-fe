@@ -5,6 +5,7 @@ import type { ApiResponseBody } from '$lib/types/ApiResponseBody';
 import { redirect, type Cookies } from '@sveltejs/kit';
 import { clearTokens, storeTokens } from './others';
 import type { ToastData } from './showToast';
+import { invalidate } from '$app/navigation';
 
 const logger = createLogger('API');
 
@@ -177,8 +178,6 @@ export async function fetchAuthorizedApi<T>(
 			logger.warn(apiPrefix, "Can't refresh new token");
 
 			clearTokens(cookies);
-
-			throw redirect(303, resolve('/auth/login'));
 		}
 	}
 

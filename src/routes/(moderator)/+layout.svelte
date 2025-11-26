@@ -17,7 +17,7 @@
 		<div class="flex items-center justify-between border-b-2 border-base-300 p-4">
 			<div class="flex items-center gap-4">
 				<label for="main-drawer" class="drawer-button btn btn-square btn-soft xl:hidden">
-					<span class="icon-[fa7-solid--bars-staggered] text-2xl"></span>
+					<span class="icon-[mingcute--layout-leftbar-open-fill] text-2xl"></span>
 				</label>
 				<Breadcrumb />
 			</div>
