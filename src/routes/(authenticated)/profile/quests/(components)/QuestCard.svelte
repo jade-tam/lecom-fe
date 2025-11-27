@@ -1,8 +1,12 @@
 <script lang="ts">
 	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
-	import type { Quest } from '$lib/types/Gamification';
+	import { questStatusOptions, type Quest } from '$lib/types/Gamification';
+	import { getQuestStatusBadgeClass } from '$lib/utils/classComposer';
+	import { getTitleFromOptionList } from '$lib/utils/converters';
 
 	const { quest, index }: { quest: Quest; index: number } = $props();
+
+	const isCompleted = quest.status === 'Completed' || quest.status === 'Claimed';
 </script>
 
 <AnimatedDiv
@@ -18,37 +22,31 @@
 		</div>
 		<div class="flex flex-col items-end gap-1">
 			<span class="flex items-center gap-1 text-sm font-bold text-success-content">
-				+{quest.xpReward} XP <span class="icon-[fa7-solid--clover] text-xs"></span>
+				+{quest.rewardXP} XP <span class="icon-[fa7-solid--clover] text-xs"></span>
 			</span>
 			<span class="flex items-center gap-1 text-sm font-bold text-yellow-500">
-				+{quest.coinReward} <span class="icon-[fa7-solid--coins] text-xs"></span>
+				+{quest.rewardPoints} <span class="icon-[fa7-solid--coins] text-xs"></span>
 			</span>
 		</div>
 	</div>
 	<div class="mt-2 flex items-center gap-x-2.5">
 		<progress
-			class="progress w-84 {quest.isCompleted ? 'progress-success' : 'progress-secondary'}"
-			value={quest.currentCount}
-			max={quest.targetCount}
+			class="progress w-84 {isCompleted ? 'progress-success' : 'progress-secondary'}"
+			value={quest.currentValue}
+			max={quest.targetValue}
 		></progress>
-		<span class="text-xs text-base-content/70">{quest.currentCount}/{quest.targetCount}</span>
-		{#if quest.isCompleted}
-			<div class="ml-auto badge shrink-0 badge-success">
-				<span class="icon-[fa7-solid--check-circle] text-xs"></span>Hoàn thành
-			</div>
-			{#if !quest.isRewardClaimed}
-				<button type="submit" name="userQuestId" value={quest.id} class="btn btn-sm btn-primary"
-					><span class="icon-[fa7-solid--coins] text-xs"></span>Nhận thưởng</button
-				>
-			{:else}
-				<div class="badge shrink-0 badge-success">
-					<span class="icon-[fa7-solid--coins] text-xs"></span>Đã nhận thưởng
-				</div>
-			{/if}
-		{:else}
-			<div class="ml-auto badge shrink-0 badge-secondary">
-				<span class="icon-[fa7-solid--ellipsis] text-xs"></span>Đang thực hiện
-			</div>
+		<span class="text-xs text-base-content/70">{quest.currentValue}/{quest.targetValue}</span>
+
+		<div class="ml-auto badge shrink-0 {getQuestStatusBadgeClass(quest.status)}">
+			<span class="icon-[fa7-solid--ellipsis] text-xs"></span>{getTitleFromOptionList(
+				quest.status,
+				questStatusOptions
+			)}
+		</div>
+		{#if isCompleted && !quest.isRewardClaimed}
+			<button type="submit" name="userQuestId" value={quest.id} class="btn btn-sm btn-primary"
+				><span class="icon-[fa7-solid--coins] text-xs"></span>Nhận thưởng</button
+			>
 		{/if}
 	</div>
 </AnimatedDiv>

@@ -13,15 +13,19 @@
 		title: string;
 		icon: string;
 	} = $props();
+
+	const nonCompletedQuests = $derived(
+		quests.filter((q) => q.status !== 'Completed' && q.status !== 'Claimed')
+	);
 </script>
 
 <AnimatedDiv animateVars={{ translateY: 20 }} class="mt-2 rounded-box border bg-base-100 p-4">
 	<div class="mb-2 flex flex-wrap items-center gap-2">
 		<span class="{icon} shrink-0 text-xl text-warning-content"></span>
 		<span class="font-serif text-lg font-bold">{title}</span>
-		{#if quests.filter((q) => !q.isCompleted).length > 0}
+		{#if nonCompletedQuests.length > 0}
 			<span class="ml-2 badge badge-secondary"
-				>{quests.filter((q) => !q.isCompleted).length} nhiệm vụ chưa hoàn thành</span
+				><strong>{nonCompletedQuests.length}</strong> nhiệm vụ chưa hoàn thành</span
 			>
 		{:else}
 			<span class="ml-2 badge badge-success">Đã hoàn thành tất cả nhiệm vụ</span>

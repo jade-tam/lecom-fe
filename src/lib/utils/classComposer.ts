@@ -11,6 +11,7 @@ import {
 } from '$lib/types/Order';
 import type { ShipmentStatus } from '$lib/types/Order';
 import { haveAuthorization } from './others';
+import type { QuestStatus } from '$lib/types/Gamification';
 
 export function getStatusBtnClass(status: ShopStatus) {
 	return status === 'Approved'
@@ -200,4 +201,34 @@ export function getShipmentStatusStepClass(
 	if (currentStatus === 'Delivered') return stepIdx <= currentIdx ? 'step-success' : '';
 	if (currentStatus === 'InTransit') return stepIdx <= currentIdx ? 'step-info' : '';
 	return stepIdx <= currentIdx ? 'step-warning' : '';
+}
+
+export function getQuestStatusBtnClass(status: QuestStatus) {
+	switch (status) {
+		case 'NotStarted':
+			return '';
+		case 'InProgress':
+			return 'btn-secondary';
+		case 'Completed':
+			return 'btn-warning';
+		case 'Claimed':
+			return 'btn-success';
+		default:
+			return 'btn-secondary';
+	}
+}
+
+export function getQuestStatusBadgeClass(status: QuestStatus) {
+	switch (status) {
+		case 'NotStarted':
+			return '';
+		case 'InProgress':
+			return 'badge-secondary';
+		case 'Completed':
+			return 'badge-warning';
+		case 'Claimed':
+			return 'badge-success';
+		default:
+			return 'badge-secondary';
+	}
 }

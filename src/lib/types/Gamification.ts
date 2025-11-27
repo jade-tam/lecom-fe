@@ -18,17 +18,26 @@ export type GamificationProfile = {
 	recentlyCompletedAchievements: Achievement[]; // Danh sách 4 thành tựu vừa hoàn thành gần đây
 };
 
+export const questStatusOptions = [
+	{ value: 'NotStarted', title: 'Chưa bắt đầu' },
+	{ value: 'InProgress', title: 'Đang thực hiện' },
+	{ value: 'Completed', title: 'Hoàn thành' },
+	{ value: 'Claimed', title: 'Đã nhận thưởng' }
+] as const satisfies readonly FormSelectOption[];
+
+export type QuestStatus = (typeof questStatusOptions)[number]['value'];
+
 export type Quest = {
 	id: string;
 	title: string;
 	description: string;
-	currentCount: number;
-	targetCount: number;
-	xpReward: number;
-	coinReward: number;
-	isCompleted: boolean;
+	currentValue: number;
+	targetValue: number;
+	rewardXP: number;
+	rewardPoints: number;
+	status: QuestStatus;
+	period: 'Daily' | 'Weekly' | 'Monthly';
 	isRewardClaimed: boolean;
-	deadline: string;
 };
 
 export type RewardStoreItemType = {

@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import { type QuestClaimSchema } from '$lib/schemas/questClaimSchema';
+	import type { GamificationProfile } from '$lib/types/Gamification';
 	import type { ToastData } from '$lib/utils/showToast';
 	import showToast from '$lib/utils/showToast';
 	import { superForm } from 'sveltekit-superforms';
 	import SmallProfileSummary from '../(components)/SmallProfileSummary.svelte';
 	import QuestGroup from './(components)/QuestGroup.svelte';
-	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 
 	const { data } = $props();
 
@@ -20,6 +21,16 @@
 		if ($message?.toastData) {
 			showToast($message.toastData);
 		}
+	});
+
+	$effect(() => {
+		async function showGameProfile() {
+			const gameProfile: GamificationProfile | null = await data.gamificationProfilePromise;
+
+			console.log(gameProfile);
+		}
+
+		showGameProfile();
 	});
 </script>
 
