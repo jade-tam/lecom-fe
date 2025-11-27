@@ -178,6 +178,8 @@ export async function fetchAuthorizedApi<T>(
 			logger.warn(apiPrefix, "Can't refresh new token");
 
 			clearTokens(cookies);
+
+			throw redirect(303, resolve('/auth/login'));
 		}
 	}
 
