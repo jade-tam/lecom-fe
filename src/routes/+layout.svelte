@@ -5,6 +5,9 @@
 	import { Toaster } from 'svelte-sonner';
 	import '../app.css';
 	import { onNavigate } from '$app/navigation';
+	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
+
+	injectSpeedInsights();
 
 	let { children, data } = $props();
 
