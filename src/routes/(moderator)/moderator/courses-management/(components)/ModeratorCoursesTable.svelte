@@ -46,20 +46,20 @@
 					{#each table.columns as column (column.id)}
 						<th>
 							<button
-								class="flex items-center"
+								class="flex items-center gap-1"
 								onclick={() => table.toggleSort(column.id)}
 								disabled={!table.isSortable(column.id)}
 							>
 								{column.name}
 								<!-- SORT BUTTON -->
 								{#if table.isSortable(column.id)}
-									<span class="ml-2">
-										{#if table.getSortState(column.id) === 'asc'}
-											<span class="icon-[fa7-solid--sort-asc]"></span>
-										{:else if table.getSortState(column.id) === 'desc'}
-											<span class="icon-[fa7-solid--sort-desc]"></span>
-										{:else}{/if}
-									</span>
+									{#if table.getSortState(column.id) === 'asc'}
+										<span class="icon-[mingcute--sort-ascending-fill] text-primary-content"></span>
+									{:else if table.getSortState(column.id) === 'desc'}
+										<span class="icon-[mingcute--sort-descending-fill] text-primary-content"></span>
+									{:else}
+										<span class="icon-[mingcute--menu-fill] text-base-content/20"></span>
+									{/if}
 								{/if}
 							</button>
 						</th>

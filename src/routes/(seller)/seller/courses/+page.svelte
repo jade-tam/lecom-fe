@@ -6,8 +6,6 @@
 
 	const { data, form } = $props();
 
-	$inspect(form);
-
 	$effect(() => {
 		if (form?.toastData) {
 			showToast(form.toastData);

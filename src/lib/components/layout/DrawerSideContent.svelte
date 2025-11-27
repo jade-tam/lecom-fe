@@ -89,13 +89,13 @@
 						{#if Array.isArray(roles)}
 							{#each roles as role}
 								{#if role !== 'Customer'}
-									<div class="ml-auto badge badge-xs {getUserRoleBadgeClass(role)}">
+									<div class="badge badge-xs {getUserRoleBadgeClass(role)}">
 										{role}
 									</div>
 								{/if}
 							{/each}
 						{:else if roles}
-							<div class="ml-auto badge badge-xs {getUserRoleBadgeClass(roles)}">
+							<div class="badge badge-xs {getUserRoleBadgeClass(roles)}">
 								{roles}
 							</div>
 						{/if}
