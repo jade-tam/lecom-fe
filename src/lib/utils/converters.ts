@@ -1,3 +1,4 @@
+import type { FormSelectOption } from '$lib/components/ui/FormSelect.svelte';
 import type { Voucher } from '$lib/types/Voucher';
 
 export function toPascalCase(segment: string) {
@@ -204,4 +205,12 @@ export function getVoucherTitle(voucher: Voucher) {
 			? `, giảm tối đa ${voucher.maxDiscountAmount.toLocaleString()}₫`
 			: '';
 	return `${voucher.code} - ${typeTitle} ${discountValue}${maxDiscount}${minOrder ? ' | ' + minOrder : ''}`;
+}
+
+export function getTitleFromOptionList(
+	value: string,
+	options: readonly FormSelectOption[]
+): string {
+	const found = options.find((opt) => opt.value === value);
+	return found ? found.title : value;
 }

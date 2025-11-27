@@ -3,13 +3,13 @@ import type { PaymentMethod } from './OrderPaymentGroup';
 
 export const orderStatusOptions = [
 	{ value: 'Pending', title: 'Chờ thanh toán' },
-	{ value: 'Paid', title: 'Đã thanh toán' },
+	{ value: 'Paid', title: 'Chờ xác nhận' },
 	{ value: 'Processing', title: 'Chờ đóng gói' },
 	{ value: 'Shipping', title: 'Đang vận chuyển' },
 	{ value: 'Completed', title: 'Đã hoàn thành' },
 	{ value: 'Cancelled', title: 'Đơn đã huỷ' },
-	{ value: 'Refunded', title: 'Đã hoàn tiền' },
-	{ value: 'PaymentFailed', title: 'Thanh toán thất bại' }
+	{ value: 'Refunded', title: 'Đã hoàn tiền' }
+	// { value: 'PaymentFailed', title: 'Thanh toán thất bại' }
 ] as const satisfies readonly FormSelectOption[];
 
 export type OrderStatus = (typeof orderStatusOptions)[number]['value'];

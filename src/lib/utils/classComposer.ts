@@ -92,36 +92,36 @@ export function getOrderStatusBtnClass(status: OrderStatus) {
 	return status === 'Pending'
 		? 'btn-warning'
 		: status === 'Paid'
-			? 'btn-info'
+			? 'btn-secondary'
 			: status === 'Processing'
 				? 'btn-secondary'
 				: status === 'Shipping'
-					? 'btn-accent'
+					? 'btn-info'
 					: status === 'Completed'
 						? 'btn-success'
-						: status === 'Cancelled' || status === 'PaymentFailed'
-							? 'btn-error'
-							: status === 'Refunded'
-								? 'btn-info'
-								: 'btn-error';
+						: // : status === 'Cancelled' || status === 'PaymentFailed'
+							// 	? 'btn-error'
+							status === 'Refunded'
+							? 'btn-success'
+							: 'btn-error';
 }
 
 export function getOrderStatusBadgeClass(status: OrderStatus) {
 	return status === 'Pending'
 		? 'badge-warning'
 		: status === 'Paid'
-			? 'badge-info'
+			? 'badge-secondary'
 			: status === 'Processing'
 				? 'badge-secondary'
 				: status === 'Shipping'
-					? 'badge-accent'
+					? 'badge-info'
 					: status === 'Completed'
 						? 'badge-success'
-						: status === 'Cancelled' || status === 'PaymentFailed'
-							? 'badge-error'
-							: status === 'Refunded'
-								? 'badge-info'
-								: 'badge-error';
+						: // : status === 'Cancelled' || status === 'PaymentFailed'
+							// 	? 'badge-error'
+							status === 'Refunded'
+							? 'badge-success'
+							: 'badge-error';
 }
 
 export function getOrderStatusStepClass(
@@ -132,10 +132,11 @@ export function getOrderStatusStepClass(
 	const currentIdx = orderSteps.indexOf(currentStatus);
 	const stepIdx = orderSteps.indexOf(stepValue);
 
-	if (currentStatus === 'Cancelled' || currentStatus === 'PaymentFailed')
-		return stepIdx <= currentIdx ? 'step-error' : '';
+	if (currentStatus === 'Cancelled') return stepIdx <= currentIdx ? 'step-error' : '';
+	if (currentStatus === 'Shipping') return stepIdx <= currentIdx ? 'step-info' : '';
 	if (currentStatus === 'Completed') return stepIdx <= currentIdx ? 'step-success' : '';
-	if (currentStatus === 'Refunded') return stepIdx <= currentIdx ? 'step-info' : '';
+	if (currentStatus === 'Processing') return stepIdx <= currentIdx ? 'step-secondary' : '';
+	if (currentStatus === 'Refunded') return stepIdx <= currentIdx ? 'step-success' : '';
 	return stepIdx <= currentIdx ? 'step-warning' : '';
 }
 
@@ -149,8 +150,8 @@ export function getPaymentStatusBadgeClass(status: PaymentStatus) {
 			return 'badge-error';
 		case 'Refunded':
 			return 'badge-info';
-		case 'PartiallyRefunded':
-			return 'badge-secondary';
+		// case 'PartiallyRefunded':
+		// 	return 'badge-secondary';
 		default:
 			return 'badge-error';
 	}
@@ -166,8 +167,8 @@ export function getPaymentStatusBtnClass(status: PaymentStatus) {
 			return 'btn-error';
 		case 'Refunded':
 			return 'btn-info';
-		case 'PartiallyRefunded':
-			return 'btn-secondary';
+		// case 'PartiallyRefunded':
+		// 	return 'btn-secondary';
 		default:
 			return 'btn-error';
 	}
@@ -195,7 +196,8 @@ export function getShipmentStatusStepClass(
 	const currentIdx = shipmentOrder.indexOf(currentStatus);
 	const stepIdx = shipmentOrder.indexOf(stepValue);
 
-	if (currentStatus === 'Returned') return stepIdx <= currentIdx ? 'step-error' : '';
+	if (currentStatus === 'Returned') return stepIdx <= currentIdx ? 'step-success' : '';
 	if (currentStatus === 'Delivered') return stepIdx <= currentIdx ? 'step-success' : '';
+	if (currentStatus === 'InTransit') return stepIdx <= currentIdx ? 'step-info' : '';
 	return stepIdx <= currentIdx ? 'step-warning' : '';
 }

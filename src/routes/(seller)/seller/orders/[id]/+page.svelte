@@ -15,7 +15,7 @@
 </script>
 
 {#if order}
-	<OrderDetail {order} />
+	<OrderDetail {order} isSellerView />
 {:else}
 	<EmptyPlaceholder
 		icon="icon-[fa7-solid--box-open]"

@@ -1,7 +1,7 @@
 import { orderStatusOptions, type Order } from '$lib/types/Order.js';
-import { getTitleFromOptionList } from '$lib/utils/converters';
+import { getTitleFromOptionList } from '$lib/utils/converters.js';
 import { fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi';
-import { fail } from '@sveltejs/kit';
+import { fail } from 'sveltekit-superforms/client';
 
 export const load = async ({ cookies, params }) => {
 	const { id } = params;
@@ -17,7 +17,7 @@ export const load = async ({ cookies, params }) => {
 };
 
 export const actions = {
-	updateStatus: async ({ request, cookies }) => {
+	updateStatusSeller: async ({ request, cookies }) => {
 		const data = await request.formData();
 		const id = data.get('id') as string;
 		const status = data.get('status') as string;
