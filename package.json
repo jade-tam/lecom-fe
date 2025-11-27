@@ -55,7 +55,9 @@
 		"@microsoft/signalr": "^10.0.0",
 		"@number-flow/svelte": "^0.3.9",
 		"@vercel/speed-insights": "^1.2.0",
+		"cally": "^0.8.0",
 		"gsap": "^3.13.0",
+		"layerchart": "2.0.0-next.43",
 		"svelte-easy-crop": "^5.0.0",
 		"svelte-sonner": "^1.0.5"
 	}

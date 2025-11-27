@@ -9,7 +9,7 @@
 	<div class="mt-4 flex justify-between">
 		<div class="grow">
 			<p class="">Thay đổi giao diện</p>
-			<p class="mt-1 text-sm font-light text-base-content/75 mb-2">
+			<p class="mt-1 mb-2 text-sm font-light text-base-content/75">
 				Tùy chỉnh màu sắc hiển thị trên toàn bộ ứng dụng
 			</p>
 			<ThemeSwitcher />

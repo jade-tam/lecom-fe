@@ -27,6 +27,27 @@ export function formatDate(input: string | Date): string {
 	}
 }
 
+export function formatDateTime(input: string | Date): string {
+	try {
+		const date = input instanceof Date ? input : new Date(input);
+
+		if (isNaN(date.getTime())) {
+			throw new Error('Invalid date input');
+		}
+
+		const day = String(date.getDate()).padStart(2, '0');
+		const month = String(date.getMonth() + 1).padStart(2, '0');
+		const year = date.getFullYear();
+		const hours = String(date.getHours()).padStart(2, '0');
+		const minutes = String(date.getMinutes()).padStart(2, '0');
+
+		return `${day}-${month}-${year} ${hours}:${minutes}`;
+	} catch (error) {
+		console.error('Date formatting error:', error);
+		return '';
+	}
+}
+
 export function getTimeSince(dateInput: string | Date): string {
 	const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
 	if (isNaN(date.getTime())) return '';
@@ -67,14 +88,12 @@ export function getTimeSince(dateInput: string | Date): string {
 }
 
 export function formatVND(amount: number): string {
-	return amount
-		.toLocaleString('vi-VN', {
-			style: 'currency',
-			currency: 'VND',
+	return (
+		amount.toLocaleString('en-US', {
 			minimumFractionDigits: 0,
 			maximumFractionDigits: 0
-		})
-		.replace('₫', 'đ'); // optional: lowercase for style consistency
+		}) + ' ₫'
+	);
 }
 
 export function toRomanNumeral(num: number): string {
@@ -188,6 +207,13 @@ export function toDateInputValue(str: string) {
 	const date = new Date(str);
 	const pad = (n: number) => n.toString().padStart(2, '0');
 	return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+
+export function toDateISO(date: Date | string): string {
+	if (!date) return '';
+	const d = typeof date === 'string' ? new Date(date) : date;
+	const pad = (n: number) => n.toString().padStart(2, '0');
+	return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
 export function getVoucherTitle(voucher: Voucher) {
