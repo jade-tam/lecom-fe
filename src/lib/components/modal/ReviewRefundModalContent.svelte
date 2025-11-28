@@ -12,8 +12,10 @@
 	const {
 		dataForm,
 		refund,
+		isAdminView,
 		onFormActionSuccess
-	}: { dataForm: any; refund: Refund; onFormActionSuccess?: () => void } = $props();
+	}: { dataForm: any; refund: Refund; isAdminView?: boolean; onFormActionSuccess?: () => void } =
+		$props();
 
 	const { form, errors, message, enhance, submitting, delayed, tainted, isTainted, reset } =
 		superForm<
@@ -78,7 +80,15 @@
 		</div>
 	</div>
 
-	<h4 class=" mt-4 text-base">Phản hồi của cửa hàng</h4>
+	{#if isAdminView}
+		<h4 class=" mt-4 text-base">Phản hồi của cửa hàng</h4>
+
+		<p class="mt-2 flex items-center gap-2 text-lg text-success-content">
+			<span class="icon-[mingcute--checks-fill]"></span>Đã chấp thuận
+		</p>
+	{/if}
+
+	<h4 class=" mt-4 text-base">Phản hồi của {isAdminView ? 'quản trị viên' : 'cửa hàng'}</h4>
 
 	<div class="mt-2 flex items-center gap-4">
 		<label class="flex items-center gap-2">

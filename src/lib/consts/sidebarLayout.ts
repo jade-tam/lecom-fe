@@ -34,6 +34,11 @@ export const adminSidebarLayout: SidebarLayoutItem[] = [
 		iconClass: 'icon-[mingcute--shop-fill] text-xl'
 	},
 	{
+		href: '/admin/refund-review',
+		title: 'Xét duyệt hoàn tiền',
+		iconClass: 'icon-[mingcute--card-refund-fill] text-xl'
+	},
+	{
 		href: '/admin/categories-management',
 		title: 'Quản lý danh mục',
 		iconClass: 'icon-[fa7-solid--swatchbook] text-xl',
@@ -60,6 +65,7 @@ export const adminSidebarLayout: SidebarLayoutItem[] = [
 		title: 'Cài đặt mục đổi thưởng',
 		iconClass: 'icon-[mingcute--store-fill] text-xl'
 	},
+
 	{
 		href: '/admin/reports-and-feedbacks',
 		title: 'Báo cáo & Phản hồi',
