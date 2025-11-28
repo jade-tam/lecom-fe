@@ -43,7 +43,7 @@
 
 <div class="rounded-box border bg-base-100 p-4">
 	<div class="overflow-x-auto">
-		<table class="table">
+		<table class="table table-sm">
 			<thead>
 				<tr class="text-base-content">
 					{#each table.columns as column (column.id)}

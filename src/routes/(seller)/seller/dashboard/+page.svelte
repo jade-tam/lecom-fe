@@ -247,9 +247,15 @@
 					>
 				</div>
 				<div class="stat-desc text-warning-content">
-					Chờ duyệt: <strong class="ml-1 font-serif text-lg"
+					Đang chờ duyệt: <strong class="ml-1 font-serif text-lg"
 						>{dashboardData.refundSummary.pendingCount}</strong
 					>
+					{#if dashboardData.refundSummary.pendingCount > 0}
+						<a
+							href={resolve('/(seller)/seller/refunds')}
+							class="ping ml-2 badge animate-pulse badge-xs badge-warning">Có yêu cầu mới</a
+						>
+					{/if}
 				</div>
 				<div class="stat-desc text-success-content">
 					Đã chấp thuận: <strong class="ml-1 font-serif text-lg"

@@ -12,6 +12,7 @@ import {
 import type { ShipmentStatus } from '$lib/types/Order';
 import { haveAuthorization } from './others';
 import type { QuestStatus } from '$lib/types/Gamification';
+import type { RefundStatus } from '$lib/types/Refund';
 
 export function getStatusBtnClass(status: ShopStatus) {
 	return status === 'Approved'
@@ -228,6 +229,19 @@ export function getQuestStatusBadgeClass(status: QuestStatus) {
 			return 'badge-warning';
 		case 'Claimed':
 			return 'badge-success';
+		default:
+			return 'badge-secondary';
+	}
+}
+
+export function getRefundStatusClass(status: RefundStatus, type: 'btn' | 'badge') {
+	switch (status) {
+		case 'PendingShop':
+			return type === 'btn' ? 'btn-secondary' : 'badge-secondary';
+		case 'PendingAdmin':
+			return type === 'btn' ? 'btn-error' : 'badge-error';
+		case 'Refunded':
+			return type === 'btn' ? 'btn-info' : 'badge-info';
 		default:
 			return 'badge-secondary';
 	}

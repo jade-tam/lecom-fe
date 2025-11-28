@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
@@ -39,6 +40,9 @@
 	</AnimatedDiv>
 
 	<AnimatedDiv animateVars={{ translateX: 16 }} class="flex gap-2">
+		<a href={resolve('/(authenticated)/refunds')} class="btn btn-sm btn-info"
+			><span class="icon-[mingcute--refresh-anticlockwise-1-fill]"></span>Lịch sử hoàn tiền</a
+		>
 		<SearchInput bind:value={table.globalFilter} />
 	</AnimatedDiv>
 </div>
@@ -52,7 +56,7 @@
 
 <AnimatedDiv animateVars={{ translateY: 16 }} class="mt-2 rounded-box border bg-base-100 p-4">
 	<div class="overflow-x-auto">
-		<table class="table">
+		<table class="table table-sm">
 			<thead>
 				<tr class="text-base-content">
 					{#each table.columns as column (column.id)}

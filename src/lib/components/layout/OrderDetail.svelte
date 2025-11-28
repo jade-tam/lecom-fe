@@ -19,10 +19,15 @@
 	import { formatDate, formatVND, getTitleFromOptionList } from '$lib/utils/converters';
 	import NumberFlow from '@number-flow/svelte';
 	import AnimatedDiv from '../animate/AnimatedDiv.svelte';
-	import FormConfirmDropdownAction from '../wrapper/FormConfirmDropdownAction.svelte';
+	import OpenModalButton from '../modal/OpenModalButton.svelte';
+	import RefundModalContent from '../modal/RefundModalContent.svelte';
 	import FormConfirmPopoverButton from '../wrapper/FormConfirmPopoverButton.svelte';
 
-	const { order, isSellerView = false }: { order: Order; isSellerView?: boolean } = $props();
+	const {
+		order,
+		isSellerView = false,
+		refundFormData
+	}: { order: Order; isSellerView?: boolean; refundFormData?: any } = $props();
 
 	const shipmentStatus: ShipmentStatus = $derived.by(() => {
 		switch (order?.status) {
@@ -140,6 +145,15 @@
 			>
 				<span class="icon-[mingcute--check-circle-fill]"></span>Xác nhận đã nhận hàng
 			</FormConfirmPopoverButton>
+		{/if}
+		{#if !isSellerView && order.status === 'Completed' && refundFormData}
+			<OpenModalButton
+				openButtonProps={{ class: 'btn btn-sm btn-error' }}
+				ModalContent={RefundModalContent}
+				ModalContentProps={{ dataForm: refundFormData }}
+				><span class="icon-[mingcute--refresh-anticlockwise-1-line]"></span>Yêu cầu trả hàng hoàn
+				tiền
+			</OpenModalButton>
 		{/if}
 	</AnimatedDiv>
 </div>
@@ -272,7 +286,7 @@
 						Ready: 'icon-[mingcute--package-2-line]',
 						InTransit: 'icon-[mingcute--truck-line]',
 						Delivered: 'icon-[mingcute--home-3-line]',
-						Returned: 'icon-[mingcute--back-line]'
+						Returned: 'icon-[mingcute--refresh-anticlockwise-1-line]'
 					}}
 					getStepClass={getShipmentStatusStepClass}
 				/>
