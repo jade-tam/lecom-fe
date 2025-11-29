@@ -14,7 +14,7 @@
 	} = $props();
 </script>
 
-<form class="flex items-center justify-end gap-1">
+<form class="flex flex-wrap items-center justify-end gap-1">
 	<div class="mr-2 flex items-center">
 		<span class="icon-[fa7-solid--filter] text-secondary"></span>
 	</div>

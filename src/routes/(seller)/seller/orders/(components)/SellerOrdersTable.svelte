@@ -8,7 +8,12 @@
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
 	import { orderStatusOptions, type Order } from '$lib/types/Order';
 	import { getOrderStatusBadgeClass, getOrderStatusBtnClass } from '$lib/utils/classComposer';
-	import { formatDate, formatVND, getTitleFromOptionList } from '$lib/utils/converters';
+	import {
+		formatDate,
+		formatDateTime,
+		formatVND,
+		getTitleFromOptionList
+	} from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
 
 	const { ordersPromise }: { ordersPromise: Promise<Order[]> } = $props();
@@ -44,8 +49,8 @@
 
 <div class="my-2 flex items-end justify-between">
 	<AnimatedDiv animateVars={{ translateX: -16 }} class="flex flex-col">
-		<h1 class="text-header3 font-bold">Đơn hàng của cửa hàng</h1>
-		<p class="text-base-content/60">Xem và quản lý các đơn hàng của shop.</p>
+		<h1 class="text-header3 font-bold">Danh sách đơn hàng</h1>
+		<p class="text-base-content/60">Xem và quản lý các đơn hàng trong cửa hàng của bạn.</p>
 	</AnimatedDiv>
 
 	<AnimatedDiv animateVars={{ translateX: 16 }} class="flex gap-2">
@@ -100,9 +105,11 @@
 						<tr>
 							{#each table.columns as column (column.id)}
 								{#if column.id === 'total'}
-									<td class="font-serif text-xl font-bold">{formatVND(row.total)}</td>
+									<td class="font-serif text-xl font-bold whitespace-nowrap text-success-content"
+										>{formatVND(row.total)}</td
+									>
 								{:else if column.id === 'orderCode'}
-									<td>
+									<td class=" max-w-80">
 										<div class="flex flex-col gap-2">
 											<p class="flex items-center gap-1 font-serif text-lg font-bold">
 												<span class="icon-[mingcute--barcode-scan-fill] shrink-0"
@@ -112,13 +119,13 @@
 												{#each row.details as item (item.productId)}
 													<div class="flex items-center gap-2">
 														<img
-															class="rounded-object h-12 w-12 object-cover"
+															class="h-12 w-12 rounded-field object-cover"
 															src={item.productImage}
 															alt={item.productName}
 														/>
 														<div class="flex flex-col">
-															<p class="font-semibold">{item.productName}</p>
-															<p class="text-sm text-base-content/60">
+															<p class="line-clamp-2 font-semibold">{item.productName}</p>
+															<p class="text-base-content/60">
 																Số lượng: {item.quantity} &nbsp;|&nbsp; Giá:
 																{formatVND(item.unitPrice)}
 															</p>
@@ -129,29 +136,30 @@
 										</div>
 									</td>
 								{:else if column.id === 'createdAt'}
-									<td>
+									<td class="font-semibold">
 										{row[column.key] && typeof row[column.key] === 'string'
-											? formatDate(row[column.key] as string)
+											? formatDateTime(row[column.key] as string)
 											: '-'}
 									</td>
 								{:else if column.id === 'status'}
-									<td>
-										<div class={`badge ${getOrderStatusBadgeClass(row.status)}`}>
+									<td class="whitespace-nowrap">
+										<div class={`badge badge-sm ${getOrderStatusBadgeClass(row.status)}`}>
 											{getTitleFromOptionList(row.status, orderStatusOptions)}
 										</div>
 									</td>
 								{:else if column.id === 'customerName'}
 									<td>
 										<div class="flex flex-col gap-1">
-											<p class="font-bold">{row.customerName ?? 'Không tên'}</p>
+											<p class="text-sm font-bold">{row.customerName ?? 'Không tên'}</p>
 											<p
-												class="mt-1 line-clamp-1 flex items-center gap-1 text-sm text-base-content/70"
+												class="mt-1 line-clamp-1 flex items-center gap-1 text-xs text-base-content/70"
 											>
-												<span class="icon-[mingcute--user-3-fill]"></span>{row.shipToName}
-												<span class="ml-4 icon-[mingcute--phone-fill]"></span>{row.shipToPhone}
+												<span class="icon-[mingcute--user-3-fill] shrink-0"></span>{row.shipToName}
+												<span class="ml-4 icon-[mingcute--phone-fill] shrink-0"
+												></span>{row.shipToPhone}
 											</p>
-											<p class="line-clamp-1 flex items-center gap-1 text-sm text-base-content/70">
-												<span class="icon-[mingcute--map-pin-fill]"></span>
+											<p class="line-clamp-1 flex items-center gap-1 text-xs text-base-content/70">
+												<span class="icon-[mingcute--map-pin-fill] shrink-0"></span>
 												{row.shipToAddress}
 											</p>
 										</div>
@@ -160,7 +168,7 @@
 									<td>{row[column.key] ?? '-'}</td>
 								{/if}
 							{/each}
-							<td>
+							<td class="whitespace-nowrap">
 								<div class="flex gap-1">
 									<div class="tooltip" data-tip="Xem chi tiết">
 										<a
@@ -168,7 +176,7 @@
 											class="btn btn-secondary"
 											aria-label="xem chi tiết"
 										>
-											<span class="icon-[fa7-solid--eye] text-xl"></span>Xem chi tiết
+											<span class="icon-[mingcute--document-2-line] text-xl"></span>Chi tiết
 										</a>
 									</div>
 								</div>

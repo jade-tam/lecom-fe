@@ -41,7 +41,7 @@ export function formatDateTime(input: string | Date): string {
 		const hours = String(date.getHours()).padStart(2, '0');
 		const minutes = String(date.getMinutes()).padStart(2, '0');
 
-		return `${day}-${month}-${year} ${hours}:${minutes}`;
+		return `${hours}:${minutes} • ${day}-${month}-${year} `;
 	} catch (error) {
 		console.error('Date formatting error:', error);
 		return '';
