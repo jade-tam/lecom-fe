@@ -1,7 +1,6 @@
 import type { CourseActiveStatus } from '$lib/types/Course';
-import type { ProductStatus } from '$lib/types/Product';
-import type { ShopStatus } from '$lib/types/Shop';
-import type { UserActiveStatus, UserRole } from '$lib/types/User';
+import type { QuestStatus } from '$lib/types/Gamification';
+import type { ShipmentStatus } from '$lib/types/Order';
 import {
 	orderStatusOptions,
 	paymentStatusOptions,
@@ -9,10 +8,12 @@ import {
 	type OrderStatus,
 	type PaymentStatus
 } from '$lib/types/Order';
-import type { ShipmentStatus } from '$lib/types/Order';
-import { haveAuthorization } from './others';
-import type { QuestStatus } from '$lib/types/Gamification';
+import type { ProductStatus } from '$lib/types/Product';
 import type { RefundStatus } from '$lib/types/Refund';
+import type { ShopStatus } from '$lib/types/Shop';
+import type { UserActiveStatus, UserRole } from '$lib/types/User';
+import type { WalletTransactionBalanceType, WalletTransactionType } from '$lib/types/Wallet';
+import { haveAuthorization } from './others';
 
 export function getStatusBtnClass(status: ShopStatus) {
 	return status === 'Approved'
@@ -244,5 +245,43 @@ export function getRefundStatusClass(status: RefundStatus, type: 'btn' | 'badge'
 			return type === 'btn' ? 'btn-info' : 'badge-info';
 		default:
 			return 'badge-secondary';
+	}
+}
+
+export function getWalletTransactionBalanceTypeClass(
+	type: WalletTransactionBalanceType,
+	variant: 'badge' | 'btn' = 'badge'
+) {
+	switch (type) {
+		case 'Pending':
+			return variant === 'badge' ? 'badge-warning' : 'btn-warning';
+		case 'Available':
+			return variant === 'badge' ? 'badge-success' : 'btn-success';
+		default:
+			return variant === 'badge' ? 'badge-secondary' : 'btn-secondary';
+	}
+}
+
+export function getWalletTransactionTypeClass(
+	type: WalletTransactionType,
+	variant: 'badge' | 'btn' = 'badge'
+) {
+	switch (type) {
+		case 'OrderRevenue':
+			return variant === 'badge' ? 'badge-success' : 'btn-success';
+		case 'PlatformFee':
+			return variant === 'badge' ? 'badge-warning' : 'btn-warning';
+		case 'Withdrawal':
+			return variant === 'badge' ? 'badge-info' : 'btn-info';
+		case 'Refund':
+			return variant === 'badge' ? 'badge-error' : 'btn-error';
+		case 'Adjustment':
+			return variant === 'badge' ? 'badge-secondary' : 'btn-secondary';
+		case 'Payment':
+			return variant === 'badge' ? 'badge-primary' : 'btn-primary';
+		case 'BalanceRelease':
+			return variant === 'badge' ? 'badge-accent' : 'btn-accent';
+		default:
+			return variant === 'badge' ? 'badge-secondary' : 'btn-secondary';
 	}
 }

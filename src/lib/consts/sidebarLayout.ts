@@ -103,6 +103,11 @@ export const sellerSidebarLayout: SidebarLayoutItem[] = [
 		href: '/seller/refunds',
 		title: 'Yêu cầu hoàn tiền',
 		iconClass: 'icon-[mingcute--card-refund-fill] text-xl'
+	},
+	{
+		href: '/seller/wallet',
+		title: 'Ví cửa hàng',
+		iconClass: 'icon-[mingcute--wallet-3-fill] text-xl'
 	}
 	// {
 	// 	href: '/seller/analytics',

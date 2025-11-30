@@ -289,8 +289,11 @@
 			</div>
 
 			<div class="col-span-1 stat rounded-box bg-base-100 lg:col-span-4">
-				<div class="stat-title flex items-center gap-1 text-sm font-bold text-base-content">
-					<span class="icon-[mingcute--wallet-3-fill] text-lg"></span>Số dư ví cửa hàng
+				<div class="stat-title flex items-center justify-between gap-1 text-sm font-bold text-base-content">
+					<p class="flex items-center gap-1">
+						<span class="icon-[mingcute--wallet-3-fill] text-lg"></span>Số dư ví cửa hàng
+					</p>
+					<a href={resolve('/seller/wallet')} class="btn btn-xs btn-secondary"><span class="icon-[mingcute--paper-2-line]"></span>Lịch sử giao dịch</a>
 				</div>
 				<div class="stat-value font-serif font-bold text-success-content">
 					<strong class="font-serif font-bold"
