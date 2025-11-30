@@ -36,18 +36,15 @@ export const actions = {
 	updateStatus: async ({ request, cookies }) => {
 		const data = await request.formData();
 		const id = data.get('id') as string;
-		const status = data.get('status') as string;
 
-		if (!id || !status) return fail(400, { message: 'Error, Missing required data' });
+		if (!id) return fail(400, { message: 'Error, Missing required data' });
 
-		const { responseBody } = await fetchAuthorizedApi(cookies, `/api/orders/${id}/status`, 'PUT', {
-			status: status
-		});
+		const { responseBody } = await fetchAuthorizedApi(cookies, `/api/orders/${id}/confirm`, 'POST');
 
 		const toastData = getToastData(
 			responseBody,
-			`Đơn hàng đã được cập nhật trạng thái ${getTitleFromOptionList(status, orderStatusOptions)}.`,
-			'Không thể cập nhật trạng thái của đơn hàng.'
+			`Đơn hàng đã được xác nhận là đã nhận hàng.`,
+			'Không thể xác nhận đơn hàng.'
 		);
 
 		return { toastData };
