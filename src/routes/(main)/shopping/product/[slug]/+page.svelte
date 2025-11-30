@@ -4,6 +4,7 @@
 	import ProductCard from '$lib/components/ui/card/ProductCard.svelte';
 	import ShopCard from '$lib/components/ui/card/ShopCard.svelte';
 	import QuantitySelector from '$lib/components/ui/data-input/QuantitySelector.svelte';
+	import Rating from '$lib/components/ui/data-input/Rating.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import FormInput from '$lib/components/ui/FormInput.svelte';
 	import ImageViewer from '$lib/components/ui/ImageViewer.svelte';
@@ -71,11 +72,16 @@
 				>
 					{product.name}
 				</p>
-				<div
-					class="badge badge-secondary"
-					style={`view-transition-name: product-category-${product.id};`}
-				>
-					{product.categoryName}
+				<div class="flex items-center gap-4">
+					<div style={`view-transition-name: product-rating-${product.id};`}>
+						<Rating defaultValue={1.4} readonly={true} />
+					</div>
+					<div
+						class="badge badge-sm badge-secondary"
+						style={`view-transition-name: product-category-${product.id};`}
+					>
+						{product.categoryName}
+					</div>
 				</div>
 				<p
 					class="text-header1 font-serif text-primary-content"
@@ -83,8 +89,14 @@
 				>
 					{formatVND(product.price)}
 				</p>
-				<p class="text-sm text-base-content/60 italic">
-					Còn <strong>{product.stock}</strong> sản phẩm trong kho
+				<p class="text-sm text-base-content/70 italic">
+					{#if product.stock === 0}
+						Hết hàng
+					{:else if product.stock <= 5}
+						Chỉ còn <strong>{product.stock}</strong> sản phẩm trong kho, hãy nhanh tay mua kẻo hết!
+					{:else}
+						Còn <strong>{product.stock}</strong> sản phẩm trong kho
+					{/if}
 				</p>
 
 				{#if userProfile}
@@ -108,9 +120,15 @@
 							hidden
 						/>
 						<div class="flex gap-2">
-							<button type="submit" class="btn grow btn-primary">
-								<span class="icon-[fa7-solid--cart-plus]"></span>Thêm vào giỏ hàng
-							</button>
+							{#if product.stock > 0}
+								<button type="submit" class="btn grow btn-primary">
+									<span class="icon-[fa7-solid--cart-plus]"></span>Thêm vào giỏ hàng
+								</button>
+							{:else}
+								<button type="button" class="btn-disabled btn grow" disabled>
+									<span class="icon-[fa7-solid--cart-plus]"></span>Đã hết hàng
+								</button>
+							{/if}
 							<div
 								class="tooltip"
 								data-tip={isWishlist ? 'Đã thêm vào mục yêu thích' : 'Thêm vào mục yêu thích'}
@@ -166,11 +184,11 @@
 				<div class="prose prose-sm mt-6 whitespace-pre-line">{product.description}</div>
 			</div>
 
-			<div class="col-span-12 rounded-box border bg-base-100 p-6 max-md:col-span-1 max-md:p-4">
+			<div class="col-span-12 mt-2 max-md:col-span-1">
 				<p class="text-header3">Sản phẩm tương tự</p>
 
 				{#await data.similarProductsPromise}
-					<div class="mt-4 grid grid-cols-4 gap-2">
+					<div class="mt-2 grid grid-cols-4 gap-2">
 						<ProductCardSkeleton />
 						<ProductCardSkeleton />
 						<ProductCardSkeleton />
@@ -178,7 +196,7 @@
 					</div>
 				{:then similarProducts}
 					{#if similarProducts.length}
-						<div class="mt-4 grid grid-cols-4 gap-2">
+						<div class="mt-2 grid grid-cols-4 gap-2">
 							{#each similarProducts as similarProduct (similarProduct.id)}
 								<ProductCard product={similarProduct} />
 							{/each}

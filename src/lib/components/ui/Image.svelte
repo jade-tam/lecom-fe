@@ -34,7 +34,7 @@
 		<img {src} {alt} class={`h-full w-full ${objectFit}`} draggable="false" onerror={handleError} />
 	{:else}
 		<div class="flex h-full flex-col items-center justify-center">
-			<span class="icon-[fa7-solid--file-circle-xmark] text-2xl text-base-content/60"></span>
+			<span class="icon-[fa7-solid--file-circle-xmark] text-2xl text-secondary-content"></span>
 		</div>
 	{/if}
 </div>

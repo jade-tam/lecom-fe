@@ -1,10 +1,12 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import CourseCard from '$lib/components/ui/card/CourseCard.svelte';
 	import ShopCard from '$lib/components/ui/card/ShopCard.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
 	import CourseCardSkeleton from '$lib/components/ui/skeleton/CourseCardSkeleton.svelte';
 	import FormAction from '$lib/components/wrapper/FormAction.svelte';
+	import { getUserProfile } from '$lib/context/appContext';
 	import { formatVideoDuration, toNumericString, toRomanNumeral } from '$lib/utils/converters.js';
 	import showToast from '$lib/utils/showToast.js';
 
@@ -12,6 +14,8 @@
 	const course = $derived(data.course);
 
 	let isWishlist = $state(false);
+
+	const userProfile = $derived(getUserProfile());
 
 	$effect(() => {
 		if (form?.toastData) {
@@ -46,29 +50,36 @@
 				<p class="flex items-center gap-2 text-sm text-secondary-content">
 					<span class="icon-[fa7-solid--swatchbook] shrink-0"></span>{course.categoryName}
 				</p>
-				{#if course.isEnrolled}
-					<div class="badge badge-success">Đã tham gia khoá học</div>
-				{/if}
-				<p class="line-clamp-5">{course.summary}</p>
-				<div class="mt-2 flex gap-2">
+				{#if userProfile}
 					{#if course.isEnrolled}
-						<a class="btn grow btn-primary" href="/learn/{course.id}">
-							<span class="icon-[fa7-solid--book-open]"></span>Bắt đầu học
-						</a>
-					{:else}
-						<FormAction
-							action="?/enroll"
-							formData={{
-								courseId: course.id
-							}}
-							class="grow"
-						>
-							<button type="submit" class="btn w-full btn-primary"
-								><span class="icon-[fa7-solid--book-open]"></span>Tham gia khóa học này</button
-							>
-						</FormAction>
+						<div class="badge badge-success">Đã tham gia khoá học</div>
 					{/if}
-				</div>
+					<p class="line-clamp-5">{course.summary}</p>
+					<div class="mt-2 flex gap-2">
+						{#if course.isEnrolled}
+							<a class="btn grow btn-primary" href="/learn/{course.id}">
+								<span class="icon-[fa7-solid--book-open]"></span>Bắt đầu học
+							</a>
+						{:else}
+							<FormAction
+								action="?/enroll"
+								formData={{
+									courseId: course.id
+								}}
+								class="grow"
+							>
+								<button type="submit" class="btn w-full btn-primary"
+									><span class="icon-[fa7-solid--book-open]"></span>Tham gia khóa học này</button
+								>
+							</FormAction>
+						{/if}
+					</div>
+				{:else}
+					<a type="submit" class="btn btn-primary" href={resolve('/auth/login')}>
+						<span class="icon-[mingcute--arrow-to-right-fill] text-lg"></span>Đăng nhập để bắt đầu học ngay
+						ngay
+					</a>
+				{/if}
 			</div>
 			<div class="flex flex-col gap-2">
 				<ShopCard
