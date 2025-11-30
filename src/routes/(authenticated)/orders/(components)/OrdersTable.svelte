@@ -7,7 +7,7 @@
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
 	import { orderStatusOptions, type Order } from '$lib/types/Order';
 	import { getOrderStatusBadgeClass, getOrderStatusBtnClass } from '$lib/utils/classComposer';
-	import { formatDate, formatVND } from '$lib/utils/converters';
+	import { formatDate, formatDateTime, formatVND } from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
 
 	const { orders }: { orders: Order[] } = $props();
@@ -18,9 +18,10 @@
 		pageSize: pageSize,
 		data: orders,
 		columns: [
-			{ id: 'details', key: 'details', name: 'Sản phẩm', sortable: false },
+			{ id: 'orderCode', key: 'orderCode', name: 'Đơn hàng', sortable: false },
 			{ id: 'shopName', key: 'shopName', name: 'Cửa hàng', sortable: false },
 			{ id: 'status', key: 'status', name: 'Trạng thái đơn' },
+			{ id: 'total', key: 'total', name: 'Tổng tiền' },
 			{ id: 'createdAt', key: 'createdAt', name: 'Đặt hàng lúc' }
 		],
 		initialSort: 'createdAt',
@@ -88,37 +89,52 @@
 					<tr>
 						{#each table.columns as column (column.id)}
 							{#if column.id === 'total'}
-								<td class="font-serif text-xl font-bold">{formatVND(row.total)}</td>
-							{:else if column.id === 'details'}
-								<td>
+								<td class="font-serif text-xl font-bold whitespace-nowrap text-success-content"
+									>{formatVND(row.total)}</td
+								>
+							{:else if column.id === 'orderCode'}
+								<td class=" max-w-80">
 									<div class="flex flex-col gap-2">
-										{#each row.details as item (item.productId)}
-											<div class="flex items-center gap-2">
-												<Image
-													class="rounded-object h-12 w-12 object-cover"
-													src={item.productImage}
-													alt={item.productName}
-												/>
-												<div class="flex flex-col">
-													<p class="font-semibold">{item.productName}</p>
-													<p class="text-sm text-base-content/60">
-														Số lượng: {item.quantity} &nbsp;|&nbsp; Giá:
-														{formatVND(item.unitPrice)}
-													</p>
+										<p class="flex items-center gap-1 font-serif text-lg font-bold">
+											<span class="icon-[mingcute--barcode-scan-fill] shrink-0"
+											></span>{row.orderCode}
+										</p>
+										<div class="flex flex-col gap-2">
+											{#each row.details as item (item.productId)}
+												<div class="flex items-center gap-2">
+													<img
+														class="h-12 w-12 rounded-field object-cover"
+														src={item.productImage}
+														alt={item.productName}
+													/>
+													<div class="flex flex-col">
+														<p class="line-clamp-2 font-semibold">{item.productName}</p>
+														<p class="text-base-content/60">
+															Số lượng: {item.quantity} &nbsp;|&nbsp; Giá:
+															{formatVND(item.unitPrice)}
+														</p>
+													</div>
 												</div>
-											</div>
-										{/each}
+											{/each}
+										</div>
 									</div>
 								</td>
+							{:else if column.id === 'shopName'}
+								<td class=""
+									><a
+										href={resolve(`/shopping/shop/${row.shopId}`)}
+										class="btn font-bold btn-ghost btn-sm">{row.shopName}</a
+									></td
+								>
 							{:else if column.id === 'createdAt' || column.id === 'completedAt'}
-								<td>
+								<td class="font-semibold">
 									{row[column.key] && typeof row[column.key] === 'string'
-										? formatDate(row[column.key] as string)
+										? formatDateTime(row[column.key] as string)
 										: '-'}
 								</td>
 							{:else if column.id === 'status'}
 								<td>
-									<div class={`badge ${getOrderStatusBadgeClass(row.status)}`}>
+									<div class={`badge badge-sm ${getOrderStatusBadgeClass(row.status)}`}>
 										{getOrderStatusTitle(row.status)}
 									</div>
 								</td>
@@ -130,7 +146,7 @@
 							<div class="flex gap-1">
 								<div class="tooltip" data-tip="Xem chi tiết">
 									<a href={`/orders/${row.id}`} class="btn btn-secondary" aria-label="xem chi tiết">
-										<span class="icon-[fa7-solid--eye] text-xl"></span>Xem chi tiết
+										<span class="icon-[fa7-solid--eye] text-xl"></span>Chi tiết
 									</a>
 								</div>
 							</div>
