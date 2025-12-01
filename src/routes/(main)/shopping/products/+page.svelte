@@ -8,19 +8,32 @@
 	import RadioInput from '$lib/components/ui/RadioInput.svelte';
 	import ProductCardSkeleton from '$lib/components/ui/skeleton/ProductCardSkeleton.svelte';
 	import { formatVND } from '$lib/utils/converters.js';
+	import NumberFlow from '@number-flow/svelte';
 
 	const { data } = $props();
 
-	const MAX_PRICE = 50000000;
+	const MAX_PRICE = 5000000;
 
 	const sortByOptions: RadioInputOption[] = [
 		{
 			label: 'Giá tăng dần',
-			value: 'price'
+			value: 'price_asc'
 		},
 		{
 			label: 'Giá giảm dần',
-			value: '-price'
+			value: 'price_desc'
+		},
+		{
+			label: 'Tên A-Z',
+			value: 'name_asc'
+		},
+		{
+			label: 'Tên Z-A',
+			value: 'name_desc'
+		},
+		{
+			label: 'Cũ nhất',
+			value: 'oldest'
 		}
 	];
 
@@ -99,7 +112,7 @@
 							bind:value={category}
 							options={categories.map((cat) => ({
 								label: cat.name,
-								value: cat.id
+								value: cat.slug
 							}))}
 						/>
 					{:else}
@@ -112,19 +125,21 @@
 				<!-- =================================== -->
 				<div class="divider my-0"></div>
 				<p class="font-serif text-lg font-bold text-base-content">Khoảng giá</p>
-				<p class="font-serif text-lg font-bold text-primary-content">0 - {formatVND(maxPrice)}</p>
+				<p class="font-serif text-lg font-bold text-primary-content">
+					0 - <NumberFlow value={maxPrice} format={formatVND} />
+				</p>
 				<div class="w-full max-w-xs">
 					<input
 						type="range"
 						bind:value={maxPrice}
 						min="0"
-						max="50000000"
+						max={MAX_PRICE}
 						class="range range-primary"
-						step="500000"
+						step="100000"
 					/>
 					<div class="mt-2 flex justify-between text-xs">
 						<span>0</span>
-						<span>50,000,000</span>
+						<span>5,000,000</span>
 					</div>
 				</div>
 
