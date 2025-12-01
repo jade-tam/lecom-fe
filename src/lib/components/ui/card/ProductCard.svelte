@@ -24,7 +24,7 @@
 		>
 			{product.name}
 		</p>
-		<div class="flex items-center justify-between">
+		<div class="flex items-center justify-between flex-wrap">
 			<div style={`view-transition-name: product-rating-${product.id};`}>
 				<Rating defaultValue={1.4} readonly={true} />
 			</div>

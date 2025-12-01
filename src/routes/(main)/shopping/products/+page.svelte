@@ -15,11 +15,11 @@
 
 	const sortByOptions: RadioInputOption[] = [
 		{
-			label: 'Lowest Price',
+			label: 'Giá tăng dần',
 			value: 'price'
 		},
 		{
-			label: 'Highest Price',
+			label: 'Giá giảm dần',
 			value: '-price'
 		}
 	];
@@ -74,22 +74,22 @@
 		{#await data.queryResult}
 			<div class="loading loading-infinity"></div>
 		{:then queryResult}
-			<p>
-				Showing <strong>{queryResult.items.length} results</strong>
+			<p class="text-sm font-light text-base-content/70">
+				Đang hiển thị <strong class="font-bold">{queryResult.items.length} kết quả</strong>
 				{#if search}
-					for <span class="font-bold">
+					cho từ khoá tìm kiếm <span class="font-bold">
 						'{search}'
 					</span>
 				{/if}
 			</p>
 		{:catch err}
-			<p class="text-error">Error loading products</p>
+			<p class="text-error">Có lỗi xảy ra khi tải sản phẩm</p>
 		{/await}
 	</div>
 
-	<div class="grid w-full grid-cols-12 gap-6 max-md:grid-cols-1">
-		<div class="col-span-3 h-fit rounded-box border bg-base-100 p-4">
-			<p class="font-serif text-lg font-bold">Filter by category</p>
+	<div class="grid w-full grid-cols-12 gap-2 max-md:grid-cols-1">
+		<div class="col-span-3 h-fit rounded-box border bg-base-100 p-4 text-secondary-content">
+			<p class="font-serif text-lg font-bold text-base-content">Lọc theo danh mục</p>
 			<div class="mt-2 flex flex-col gap-2">
 				{#await data.categories}
 					<div class="loading loading-infinity"></div>
@@ -103,16 +103,16 @@
 							}))}
 						/>
 					{:else}
-						<p class="text-xs text-base-content/60 italic">No category found</p>
+						<p class="text-xs text-base-content/60 italic">Không tìm thấy danh mục</p>
 					{/if}
 				{:catch err}
-					<p class="text-error">Error loading products</p>
+					<p class="text-error">Có lỗi xảy ra khi tải danh mục</p>
 				{/await}
 
 				<!-- =================================== -->
-				<div class="divider mb-1"></div>
-				<p class="font-serif text-lg font-bold">Price range</p>
-				<p class="font-bold text-primary-content">0 - {formatVND(maxPrice)}</p>
+				<div class="divider my-0"></div>
+				<p class="font-serif text-lg font-bold text-base-content">Khoảng giá</p>
+				<p class="font-serif text-lg font-bold text-primary-content">0 - {formatVND(maxPrice)}</p>
 				<div class="w-full max-w-xs">
 					<input
 						type="range"
@@ -129,20 +129,20 @@
 				</div>
 
 				<!-- =================================== -->
-				<div class="divider mb-1"></div>
-				<p class="font-serif text-lg font-bold">Sort by</p>
+				<div class="divider my-0"></div>
+				<p class="font-serif text-lg font-bold text-base-content">Sắp xếp theo</p>
 				<div class="mt-1 flex flex-col gap-2">
 					<RadioInput bind:value={sort} options={sortByOptions} />
 				</div>
 
 				<!-- =================================== -->
 				<div class="divider mb-1"></div>
-				<button class="btn btn-primary" onclick={handleApplyFilter}>Apply</button>
-				<button class="btn" onclick={handleClearAllFilter}>Clear All</button>
+				<button class="btn btn-primary" onclick={handleApplyFilter}>Áp dụng</button>
+				<button class="btn" onclick={handleClearAllFilter}>Xóa tất cả</button>
 			</div>
 		</div>
 		<div
-			class="col-span-9 grid h-fit w-full grid-cols-4 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2"
+			class="col-span-9 grid h-fit w-full grid-cols-4 gap-2 max-lg:grid-cols-3 max-md:grid-cols-2"
 		>
 			{#await data.queryResult}
 				{#each Array(4) as skeleton}
@@ -163,10 +163,10 @@
 						/>
 					</div>
 				{:else}
-					<EmptyPlaceholder text="No product found" />
+					<EmptyPlaceholder text="Không tìm thấy sản phẩm" />
 				{/if}
 			{:catch err}
-				<p class="text-error">Error loading products</p>
+				<p class="text-error">Lỗi tải sản phẩm</p>
 			{/await}
 		</div>
 	</div>
