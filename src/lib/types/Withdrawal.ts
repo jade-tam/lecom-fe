@@ -10,7 +10,7 @@ export const withdrawalStatusOptions = [
 		value: 'Approved'
 	},
 	{
-		title: 'Đã bị từ chối',
+		title: 'Đã bị huỷ',
 		value: 'Rejected'
 	},
 	{

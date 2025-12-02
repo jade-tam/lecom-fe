@@ -1,16 +1,23 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
+	import showToast from '$lib/utils/showToast';
 	import WithdrawalsTable from './(components)/WithdrawalsTable.svelte';
 
-	const { data } = $props();
+	const { data, form } = $props();
+
+	$effect(() => {
+		if (form?.toastData) {
+			showToast(form.toastData);
+		}
+	});
 
 	function handleBack() {
 		history.back();
 	}
 </script>
 
-<div class="my-2 flex justify-between flex-wrap gap-2">
+<div class="my-2 flex flex-wrap justify-between gap-2">
 	<AnimatedDiv animateVars={{ translateX: -20 }} class="flex flex-col">
 		<div class="flex items-center gap-2">
 			<button class="btn btn-sm" aria-label="Quay lại" onclick={handleBack}>

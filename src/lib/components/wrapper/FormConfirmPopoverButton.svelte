@@ -76,12 +76,12 @@
 			<p class="text-xs text-base-content/60">{dropdownContent.description}</p>
 			<div class="mt-1 flex justify-end gap-2">
 				<button
-					class="btn"
+					class="btn btn-sm"
 					type="button"
 					onclick={() => popover?.hidePopover()}
 					disabled={isSubmitting}>Để sau</button
 				>
-				<button type="submit" class="btn {dropdownContent.confirmBtnClass}" disabled={isSubmitting}>
+				<button type="submit" class="btn btn-sm {dropdownContent.confirmBtnClass}" disabled={isSubmitting}>
 					<span class={dropdownContent.confirmBtnIcon}></span>{dropdownContent.confirmBtnText}
 				</button>
 			</div>

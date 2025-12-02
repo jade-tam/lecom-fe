@@ -5,6 +5,8 @@
 	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 	import TableFilter from '$lib/components/ui/TableFilter.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
+	import FormConfirmDropdownAction from '$lib/components/wrapper/FormConfirmDropdownAction.svelte';
+	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
 	import { withdrawalStatusOptions, type Withdrawal } from '$lib/types/Withdrawal';
 	import { getWithdrawalStatusClass } from '$lib/utils/classComposer';
 	import { formatDateTime, formatVND, getTitleFromOptionList } from '$lib/utils/converters';
@@ -45,7 +47,7 @@
 </script>
 
 <AnimatedDiv class="rounded-box border bg-base-100 p-4" animateVars={{ translateY: 24 }}>
-	<div class="mb-2 flex items-start justify-between gap-2 flex-wrap">
+	<div class="mb-2 flex flex-wrap items-start justify-between gap-2">
 		<TableFilter
 			name="status"
 			{table}
@@ -80,6 +82,7 @@
 							</button>
 						</th>
 					{/each}
+					<th>Thao tác</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -125,6 +128,43 @@
 									</td>
 								{/if}
 							{/each}
+							<td>
+								<div class="flex gap-1">
+									<!-- <div class="tooltip" data-tip="Xem chi tiết">
+										<a
+											href={resolve(`/admin/voucher-config/${row.id}`)}
+											class="btn btn-square btn-secondary"
+											type="button"
+											aria-label="Xem chi tiết"
+										>
+											<span class="icon-[mingcute--eye-fill] text-2xl"></span>
+										</a>
+									</div> -->
+									{#if row.status === 'Pending'}
+										<div class="tooltip" data-tip="Huỷ yêu cầu">
+											<FormConfirmPopoverButton
+												action="?/cancelWithdrawal"
+												formData={{ withdrawalId: row.id }}
+												popoverId="cancel-withdrawal-{row.id}"
+												openButtonProps={{
+													class: 'btn btn-square btn-error',
+													type: 'button',
+													'aria-label': 'Huỷ yêu cầu'
+												}}
+												dropdownContent={{
+													label: 'Huỷ yêu cầu?',
+													description: 'Yêu cầu rút tiền của bạn sẽ bị huỷ',
+													confirmBtnClass: 'btn-error',
+													confirmBtnIcon: 'icon-[mingcute--close-circle-line]',
+													confirmBtnText: 'Xác nhận'
+												}}
+											>
+												<span class="icon-[mingcute--delete-2-line] text-xl"></span>
+											</FormConfirmPopoverButton>
+										</div>
+									{/if}
+								</div>
+							</td>
 						</tr>
 					{/each}
 				{:else}

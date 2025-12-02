@@ -1,5 +1,6 @@
 import type { Withdrawal } from '$lib/types/Withdrawal.js';
-import { fetchAuthorizedApi, getSafeResult } from '$lib/utils/externalApi';
+import { fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi';
+import { fail } from '@sveltejs/kit';
 
 export const load = async ({ cookies }) => {
 	const myWithdrawalsPromise: Promise<Withdrawal[]> = getSafeResult(
@@ -10,4 +11,27 @@ export const load = async ({ cookies }) => {
 	return {
 		myWithdrawalsPromise
 	};
+};
+
+export const actions = {
+	cancelWithdrawal: async ({ request, cookies }) => {
+		const data = await request.formData();
+		const withdrawalId = data.get('withdrawalId') as string;
+
+		if (!withdrawalId) return fail(400, { message: 'Error, Missing required data' });
+
+		const { responseBody } = await fetchAuthorizedApi(
+			cookies,
+			`/api/Withdrawal/shop/cancel/${withdrawalId}`,
+			'POST'
+		);
+
+		const toastData = getToastData(
+			responseBody,
+			`Yêu cầu rút tiền đã được huỷ.`,
+			'Không thể huỷ yêu cầu rút tiền.'
+		);
+
+		return { toastData };
+	}
 };
