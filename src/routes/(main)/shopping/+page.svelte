@@ -10,7 +10,7 @@
 	const userProfile = getUserProfile();
 </script>
 
-{#if userProfile}}
+{#if userProfile}
 	<section class="mt-8 flex flex-col">
 		<h2 class="text-header3">Đề xuất dành cho bạn</h2>
 
