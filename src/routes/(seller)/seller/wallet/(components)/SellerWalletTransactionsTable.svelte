@@ -8,7 +8,10 @@
 		walletTransactionTypeOptions,
 		type WalletTransaction
 	} from '$lib/types/Wallet';
-	import { getWalletTransactionBalanceTypeClass, getWalletTransactionTypeClass } from '$lib/utils/classComposer';
+	import {
+		getWalletTransactionBalanceTypeClass,
+		getWalletTransactionTypeClass
+	} from '$lib/utils/classComposer';
 	import { formatDateTime, formatVND, getTitleFromOptionList } from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
 
@@ -25,7 +28,7 @@
 			columns: [
 				{ id: 'createdAt', key: 'createdAt', name: 'Thời gian', sortable: true },
 				{ id: 'type', key: 'type', name: 'Loại giao dịch', sortable: true },
-				{ id: 'amount', key: 'amount', name: 'Số tiền', sortable: true },
+				{ id: 'amount', key: 'amount', name: 'Thay đổi', sortable: true },
 				{ id: 'balanceBefore', key: 'balanceBefore', name: 'Số dư trước', sortable: false },
 				{ id: 'balanceAfter', key: 'balanceAfter', name: 'Số dư sau', sortable: false },
 				{ id: 'balanceType', key: 'balanceType', name: 'Loại số dư', sortable: true },
@@ -60,7 +63,7 @@
 	/>
 </div>
 
-<div class="overflow-x-auto mt-2">
+<div class="mt-2 overflow-x-auto">
 	<table class="table table-xs">
 		<thead>
 			<tr class="text-base-content">
@@ -111,12 +114,12 @@
 										? 'text-success-content'
 										: 'text-error-content'}"
 								>
-									{formatVND(row.amount)}
+									{row.amount > 0 ? '+' : ''}{formatVND(row.amount)}
 								</td>
 							{:else if column.id === 'balanceBefore'}
-								<td class="font-serif text-sm font-bold">{formatVND(row.balanceBefore)}</td>
+								<td class="font-serif text-xs font-bold text-base-content/70">{formatVND(row.balanceBefore)}</td>
 							{:else if column.id === 'balanceAfter'}
-								<td class="font-serif text-sm font-bold">{formatVND(row.balanceAfter)}</td>
+								<td class="font-serif text-xs font-bold text-base-content/70">{formatVND(row.balanceAfter)}</td>
 							{:else if column.id === 'balanceType'}
 								<td>
 									<div
@@ -129,7 +132,7 @@
 									</div>
 								</td>
 							{:else if column.id === 'description'}
-								<td class="max-w-xs truncate">{row.description ?? '-'}</td>
+								<td class="max-w-xs line-clamp-2">{row.description ?? '-'}</td>
 							{:else if column.id === 'performedBy'}
 								<td>{row.performedBy ?? '-'}</td>
 							{:else}
