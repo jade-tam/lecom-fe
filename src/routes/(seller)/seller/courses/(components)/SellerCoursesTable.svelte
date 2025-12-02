@@ -20,10 +20,10 @@
 			pageSize: pageSize,
 			data: courses,
 			columns: [
-				{ id: 'courseThumbnail', key: 'courseThumbnail', name: 'Course Thumbnail' },
-				{ id: 'title', key: 'title', name: 'Title & Summary' },
-				{ id: 'categoryName', key: 'categoryName', name: 'Category' },
-				{ id: 'activeStatus', key: 'active', name: 'Active status' }
+				{ id: 'courseThumbnail', key: 'courseThumbnail', name: 'Ảnh khóa học' },
+				{ id: 'title', key: 'title', name: 'Tiêu đề & mô tả' },
+				{ id: 'categoryName', key: 'categoryName', name: 'Danh mục' },
+				{ id: 'activeStatus', key: 'active', name: 'Trạng thái' }
 			]
 		})
 	);
@@ -31,8 +31,8 @@
 
 <div class="my-2 flex items-end justify-between">
 	<div class="flex flex-col">
-		<h1 class="text-header3 font-bold">Courses</h1>
-		<p class="text-base-content/60">View, edit, and manage your courses.</p>
+		<h1 class="text-header3 font-bold">Quản lý khóa học</h1>
+		<p class="text-base-content/60">Xem, chỉnh sửa và quản lý các khóa học của bạn.</p>
 	</div>
 
 	<div class="flex gap-2">
@@ -44,7 +44,7 @@
 		/>
 		<SearchInput bind:value={table.globalFilter} />
 		<a href="./courses/create" class="btn btn-primary">
-			<span class="mr-1 icon-[fa7-solid--add]"></span>Create Course
+			<span class="mr-1 icon-[fa7-solid--add]"></span>Tạo khóa học
 		</a>
 	</div>
 </div>
@@ -75,7 +75,7 @@
 							</button>
 						</th>
 					{/each}
-					<th>Action</th>
+					<th>Thao tác</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -83,20 +83,20 @@
 					<tr>
 						{#each table.columns as column (column.id)}
 							{#if column.id === 'activeStatus'}
-								<td
-									><div class={`badge ${getCourseActiveStatusBadgeClass(row.active)}`}>
+								<td>
+									<div class={`badge ${getCourseActiveStatusBadgeClass(row.active)}`}>
 										{courseActiveStatusOptions.find((option) => option.value === row.active)?.title}
-									</div></td
-								>
+									</div>
+								</td>
 							{:else if column.id === 'courseThumbnail'}
-								<td
-									><div>
-										<Image alt="product" src={row.courseThumbnail} class="h-20 w-32" />
+								<td>
+									<div>
+										<Image alt="Ảnh khóa học" src={row.courseThumbnail} class="h-20 w-32" />
 									</div>
 								</td>
 							{:else if column.id === 'title'}
-								<td
-									><div class="flex flex-col">
+								<td>
+									<div class="flex flex-col">
 										<p class="line-clamp-1">{row[column.key]}</p>
 										<p class="mt-1 line-clamp-2 text-xs text-base-content/60">{row.summary}</p>
 									</div>
@@ -108,33 +108,33 @@
 						<td>
 							<div class="flex justify-end gap-1">
 								{#if row.active}
-									<div class="tooltip" data-tip="View course">
+									<div class="tooltip" data-tip="Xem khóa học">
 										<a
 											href={`/learning/course/${row['slug']}`}
 											class="btn btn-square btn-secondary"
-											aria-label="view course"
+											aria-label="xem khóa học"
 											target="_blank"
 										>
 											<span class="icon-[fa7-solid--eye] text-xl"></span>
 										</a>
 									</div>
-									<div class="tooltip" data-tip="Update">
+									<div class="tooltip" data-tip="Chỉnh sửa">
 										<a
 											href={`/seller/courses/update/${row.id}`}
 											class="btn btn-square btn-primary"
-											aria-label="update"
+											aria-label="chỉnh sửa"
 										>
 											<span class="icon-[fa7-solid--edit] text-xl"></span>
 										</a>
 									</div>
 									<FormConfirmDropdownAction
-										label="Delete this course?"
-										description="Your course will be deleted forever"
+										label="Xóa khóa học này?"
+										description="Khóa học của bạn sẽ bị xóa vĩnh viễn"
 										action="?/delete"
 										formData={{ id: row.id }}
 									>
-										<div class="tooltip" data-tip="Delete">
-											<button class="btn btn-square btn-error" type="button" aria-label="delete">
+										<div class="tooltip" data-tip="Xóa">
+											<button class="btn btn-square btn-error" type="button" aria-label="xóa">
 												<span class="icon-[fa7-solid--trash-alt] text-xl"></span>
 											</button>
 										</div>

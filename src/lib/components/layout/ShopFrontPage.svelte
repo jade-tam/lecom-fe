@@ -2,6 +2,7 @@
 	import type { Course } from '$lib/types/Course';
 	import type { Product } from '$lib/types/Product';
 	import type { Shop } from '$lib/types/Shop';
+	import AnimatedDiv from '../animate/AnimatedDiv.svelte';
 	import IconFacebook from '../others/IconFacebook.svelte';
 	import IconInstagram from '../others/IconInstagram.svelte';
 	import IconTiktok from '../others/IconTiktok.svelte';
@@ -27,14 +28,20 @@
 	let currentTab: 'Products' | 'Courses' = $state('Products');
 </script>
 
-<div class="relative mt-4 overflow-hidden rounded-box border bg-base-100">
-	<Image src={shop.shopBanner} alt={shop.name} class="h-38 w-full rounded-none" border="" />
-	<div class="flex gap-4 p-8 max-md:p-4">
-		<div>
-			<Image src={shop.shopAvatar} alt={shop.name} class="h-24  w-24 rounded-full" />
-		</div>
-		<div class="flex flex-col gap-3">
+<AnimatedDiv animateVars={{ translateY: -20, duration: 0.4 }} class="relative mt-4 overflow-hidden rounded-box border bg-base-100">
+	<Image
+		src={shop.shopBanner}
+		alt={shop.name}
+		class="h-24 w-full rounded-none brightness-80"
+		border=""
+	/>
+	<div class="flex gap-4 p-4 max-md:p-4">
+		<AnimatedDiv animateVars={{ scale: 0.3, duration: 0.6 }}>
+			<Image src={shop.shopAvatar} alt={shop.name} class="h-24 w-24 rounded-full" />
+		</AnimatedDiv>
+		<AnimatedDiv animateVars={{ translateX: -12, delay: 0.1, duration: 0.6 }} class="flex flex-col gap-2">
 			<h1 class="text-header3">{shop.name}</h1>
+			<p class="line-clamp-1 text-sm text-base-content/70">{shop.description}</p>
 			<div
 				class="flex items-center gap-2 text-xs text-base-content/60 max-md:flex-col max-md:items-start max-md:gap-1"
 			>
@@ -50,8 +57,7 @@
 					<span class="icon-[fa7-solid--swatchbook] shrink-0"></span>{shop.categoryName}
 				</p>
 			</div>
-			<p class="line-clamp-2">{shop.description}</p>
-		</div>
+		</AnimatedDiv>
 	</div>
 	{#if haveSellerAction}
 		<div class="absolute top-3 right-3 flex flex-wrap justify-end gap-2">
@@ -66,7 +72,7 @@
 			>
 		</div>
 	{/if}
-</div>
+</AnimatedDiv>
 
 <div class="tabs-border mt-4 tabs">
 	<label class="tab gap-2 text-primary-content hover:text-primary-content">
@@ -76,7 +82,7 @@
 	</label>
 
 	<div class="tab-content">
-		<div class="grid grid-cols-4 gap-4 pt-4 max-md:grid-cols-2">
+		<div class="grid grid-cols-4 gap-2 pt-4 max-md:grid-cols-2">
 			{#if products && products.length}
 				{#each products as product (product.id)}
 					<ProductCard {product} />
@@ -96,7 +102,7 @@
 	</label>
 
 	<div class="tab-content">
-		<div class="grid grid-cols-4 gap-4 pt-4">
+		<div class="grid grid-cols-4 gap-2 pt-4">
 			{#if courses && courses.length}
 				{#each courses as course (course.id)}
 					<CourseCard {course} />
@@ -110,7 +116,7 @@
 	</div>
 </div>
 
-<div class="mt-4 flex flex-col items-center gap-4 rounded-box border bg-base-100 p-4">
+<AnimatedDiv animateVars={{ translateY: 20, delay: 0.2, duration: 0.6 }} class="mt-4 flex flex-col items-center gap-4 rounded-box border bg-base-100 p-4">
 	<p class="font-serif font-bold">Liên hệ với cửa hàng</p>
 	<a class="btn btn-sm btn-success" href="tel:{shop.phoneNumber}"
 		><span class="icon-[fa7-solid--phone] shrink-0"></span>Gọi ngay</a
@@ -150,4 +156,4 @@
 	<p class="text-sm text-base-content/60">
 		Theo dõi để nhận thông báo và ưu đãi độc quyền từ cửa hàng.
 	</p>
-</div>
+</AnimatedDiv>

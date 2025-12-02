@@ -59,7 +59,7 @@
 	action={mode === 'update' ? '?/updateCourse' : ''}
 >
 	<div class="flex items-center justify-between">
-		<h1 class="text-header3 font-bold">Basic Information</h1>
+		<h1 class="text-header3 font-bold">Thông tin cơ bản</h1>
 		{#if $form.active}
 			<div class="badge {getCourseActiveStatusBadgeClass($form.active)}">
 				{courseActiveStatusOptions.find((option) => option.value === $form.active)?.title}
@@ -70,7 +70,7 @@
 	<div class="flex gap-4">
 		<div>
 			<FormMediaInput
-				label="Course Thumbnail"
+				label="Ảnh khóa học"
 				aspectRatio="16:9"
 				buttonClass="h-48"
 				name="courseThumbnail"
@@ -81,15 +81,15 @@
 		<div class="flex grow flex-col">
 			<FormInput
 				name="title"
-				label="Course Title"
-				placeholder="Enter title here..."
+				label="Tiêu đề khóa học"
+				placeholder="Nhập tiêu đề..."
 				type="text"
 				superForm={form}
 				{errors}
 			/>
 			{#await categories}
 				<fieldset class="fieldset">
-					<legend class="fieldset-legend">Course Category</legend>
+					<legend class="fieldset-legend">Danh mục khóa học</legend>
 					<div class="h-10 w-90 skeleton rounded-field"></div>
 				</fieldset>
 			{:then categories}
@@ -100,7 +100,7 @@
 					}))}
 					class="max-w-[300px]"
 					name="categoryId"
-					label="Course Category"
+					label="Danh mục khóa học"
 					superForm={form}
 					{errors}
 				/>
@@ -110,15 +110,15 @@
 
 	<FormTextArea
 		name="summary"
-		label="Summary"
-		placeholder="Enter summary here..."
+		label="Mô tả ngắn"
+		placeholder="Nhập mô tả ngắn..."
 		superForm={form}
 		{errors}
 	/>
 
 	<div class="mt-4 flex justify-end gap-2">
 		<button class="btn btn-primary" type="submit" disabled={$submitting || !isTainted($tainted)}>
-			{mode === 'create' ? 'Create course' : 'Save changes'}
+			{mode === 'create' ? 'Tạo khóa học' : 'Lưu thay đổi'}
 			{#if $delayed}
 				<span class="loading loading-infinity"></span>
 			{/if}
