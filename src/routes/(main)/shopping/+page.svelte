@@ -2,53 +2,124 @@
 	import ProductCard from '$lib/components/ui/card/ProductCard.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Pagination from '$lib/components/ui/Pagination.svelte';
-	import ProductCardSkeleton from '$lib/components/ui/skeleton/ProductCardSkeleton.svelte';
+	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 
 	const { data } = $props();
 </script>
 
 <section class="mt-8 flex flex-col">
-	<h2 class="text-header2">Đề xuất dành cho bạn</h2>
+	<h2 class="text-header3">Đề xuất dành cho bạn</h2>
 
-	<div class="mt-4 grid w-full grid-cols-5 items-stretch gap-2">
-		{#each Array(5) as skeleton}
-			<ProductCardSkeleton />
+	<div class="mt-2 grid w-full grid-cols-4 items-stretch gap-2">
+		{#await data.productBrowseDataPromise}
+			<LoadingPlaceholder text="Đang tải danh sách sản phẩm" />
+		{:then browseData}
+			{#if browseData?.recommendedProducts.length}
+				{#each browseData.recommendedProducts as product, index (product.id)}
+					<ProductCard {product} {index} />
+				{/each}
+			{:else}
+				<EmptyPlaceholder text="Không có sản phẩm nào được đề xuất" />
+			{/if}
+		{:catch err}
+			<p class="text-error">Có lỗi xảy ra trong khi đang tải sản phẩm đề xuất</p>
+		{/await}
+	</div>
+</section>
+
+{#await data.productBrowseDataPromise}
+	<LoadingPlaceholder text="Đang tải danh sách sản phẩm" />
+{:then browseData}
+	{#if browseData?.recommendedCategories.length}
+		{#each browseData.recommendedCategories as category (category.id)}
+			<section class="mt-8 flex flex-col">
+				<div class="flex items-center gap-4">
+					<h2 class="text-header3">{category.name}</h2>
+					<a href="/shopping/products?category={category.slug}" class="btn btn-xs"
+						>Xem tất cả <span class="icon-[mingcute--arrow-right-fill]"></span></a
+					>
+				</div>
+
+				<div class="mt-2 grid w-full grid-cols-5 items-stretch gap-2">
+					{#if category.products.length}
+						{#each category.products as product, index (product.id)}
+							<ProductCard {product} {index} />
+						{/each}
+					{:else}
+						<EmptyPlaceholder text="Không có sản phẩm nào được đề xuất" />
+					{/if}
+				</div>
+			</section>
 		{/each}
+	{:else}
+		<EmptyPlaceholder text="Không có danh mục nào được đề xuất" />
+	{/if}
+{:catch err}
+	<p class="text-error">Có lỗi xảy ra trong khi đang tải danh mục đề xuất</p>
+{/await}
+
+<section class="mt-8 flex flex-col">
+	<h2 class="text-header3">Sản phẩm đang trending</h2>
+
+	<div class="mt-2 grid w-full grid-cols-5 items-stretch gap-2">
+		{#await data.productBrowseDataPromise}
+			<LoadingPlaceholder text="Đang tải danh sách sản phẩm" />
+		{:then browseData}
+			{#if browseData?.trendingProducts.length}
+				{#each browseData.trendingProducts as product, index (product.id)}
+					<ProductCard {product} {index} />
+				{/each}
+			{:else}
+				<EmptyPlaceholder text="Không có sản phẩm nào" />
+			{/if}
+		{:catch err}
+			<p class="text-error">Có lỗi xảy ra trong khi đang tải sản phẩm</p>
+		{/await}
 	</div>
 </section>
 
 <section class="mt-8 flex flex-col">
-	<h2 class="text-header2">Danh mục được đề xuất 1</h2>
+	<h2 class="text-header3">Các sản phẩm bán chạy nhất</h2>
 
-	<div class="mt-4 grid w-full grid-cols-5 items-stretch gap-2">
-		{#each Array(5) as skeleton}
-			<ProductCardSkeleton />
-		{/each}
+	<div class="mt-2 grid w-full grid-cols-5 items-stretch gap-2">
+		{#await data.productBrowseDataPromise}
+			<LoadingPlaceholder text="Đang tải danh sách sản phẩm" />
+		{:then browseData}
+			{#if browseData?.bestSellerProducts.length}
+				{#each browseData.bestSellerProducts as product, index (product.id)}
+					<ProductCard {product} {index} />
+				{/each}
+			{:else}
+				<EmptyPlaceholder text="Không có sản phẩm nào" />
+			{/if}
+		{:catch err}
+			<p class="text-error">Có lỗi xảy ra trong khi đang tải sản phẩm</p>
+		{/await}
 	</div>
 </section>
 
 <section class="mt-8 flex flex-col">
-	<h2 class="text-header2">Danh mục được đề xuất 2</h2>
+	<h2 class="text-header3">Các sản phẩm mới nhất</h2>
 
-	<div class="mt-4 grid w-full grid-cols-5 items-stretch gap-2">
-		{#each Array(5) as skeleton}
-			<ProductCardSkeleton />
-		{/each}
+	<div class="mt-2 grid w-full grid-cols-5 items-stretch gap-2">
+		{#await data.productBrowseDataPromise}
+			<LoadingPlaceholder text="Đang tải danh sách sản phẩm" />
+		{:then browseData}
+			{#if browseData?.newArrivalProducts.length}
+				{#each browseData.newArrivalProducts as product, index (product.id)}
+					<ProductCard {product} {index} />
+				{/each}
+			{:else}
+				<EmptyPlaceholder text="Không có sản phẩm nào" />
+			{/if}
+		{:catch err}
+			<p class="text-error">Có lỗi xảy ra trong khi đang tải sản phẩm</p>
+		{/await}
 	</div>
 </section>
 
 <section class="mt-8 flex flex-col">
-	<h2 class="text-header2">Các sản phẩm bán chạy nhất</h2>
-
-	<div class="mt-4 grid w-full grid-cols-5 items-stretch gap-2">
-		{#each Array(5) as skeleton}
-			<ProductCardSkeleton />
-		{/each}
-	</div>
-</section>
-
-<section class="mt-8 flex flex-col">
-	<h2 class="text-header2">Khám phá các sản phẩm mua sắm</h2>
+	<h2 class="text-header3">Khám phá các sản phẩm mua sắm</h2>
 
 	<div class="mt-2 flex gap-2 self-start">
 		{#await data.categories}
@@ -68,9 +139,7 @@
 		class="mt-4 grid w-full grid-cols-4 items-stretch gap-2 max-lg:grid-cols-3 max-md:grid-cols-2"
 	>
 		{#await data.queryResult}
-			{#each Array(8) as skeleton}
-				<ProductCardSkeleton />
-			{/each}
+			<LoadingPlaceholder text="Đang tải danh sách sản phẩm" />
 		{:then result}
 			{#if result.items.length}
 				{#each result.items as product (product.id)}

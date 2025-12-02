@@ -1,14 +1,17 @@
 <script lang="ts">
 	import type { Product } from '$lib/types/Product';
 	import { formatVND } from '$lib/utils/converters';
+	import { expoInOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
 	import Rating from '../data-input/Rating.svelte';
 	import Image from '../Image.svelte';
 
-	const { product }: { product: Product } = $props();
+	const { product, index }: { product: Product; index?: number } = $props();
 </script>
 
 <a href="/shopping/product/{product.slug}" class="group">
 	<div
+		in:fly|global={{ y: 20, duration: 800, delay: 0 + (index ?? 0) * 50, easing: expoInOut }}
 		class="flex h-full flex-col gap-1 rounded-field border bg-base-100 p-3 shadow duration-200 group-hover:-translate-y-1 group-hover:shadow-lg"
 	>
 		<Image
@@ -24,7 +27,7 @@
 		>
 			{product.name}
 		</p>
-		<div class="flex items-center justify-between flex-wrap">
+		<div class="flex flex-wrap items-center justify-between">
 			<div style={`view-transition-name: product-rating-${product.id};`}>
 				<Rating defaultValue={1.4} readonly={true} />
 			</div>
