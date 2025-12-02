@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import { formatDateTime, formatVND } from '$lib/utils/converters';
@@ -16,7 +17,7 @@
 	});
 </script>
 
-<div class="my-2 flex items-end justify-between">
+<div class="my-2 flex flex-wrap items-end justify-between gap-2">
 	<AnimatedDiv animateVars={{ translateX: -16 }} class="flex flex-col">
 		<div class="flex items-center gap-2">
 			<h1 class="text-header3 font-bold">Ví cửa hàng</h1>
@@ -26,9 +27,11 @@
 		</p>
 	</AnimatedDiv>
 
-	<!-- <AnimatedDiv animateVars={{ translateX: 16 }} class="flex gap-2">
-		<SearchInput bind:value={table.globalFilter} />
-	</AnimatedDiv> -->
+	<AnimatedDiv animateVars={{ translateX: 16 }} class="flex gap-2">
+		<a href={resolve('/seller/wallet/withdraw')} class="btn btn-success">
+			<span class="icon-[mingcute--bank-line] text-xl"></span>Rút tiền về tài khoản ngân hàng</a
+		>
+	</AnimatedDiv>
 </div>
 
 <div class="flex flex-col gap-2 max-md:grid-cols-1">

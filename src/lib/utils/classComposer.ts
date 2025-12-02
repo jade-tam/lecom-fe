@@ -13,6 +13,7 @@ import type { RefundStatus } from '$lib/types/Refund';
 import type { ShopStatus } from '$lib/types/Shop';
 import type { UserActiveStatus, UserRole } from '$lib/types/User';
 import type { WalletTransactionBalanceType, WalletTransactionType } from '$lib/types/Wallet';
+import type { WithdrawalStatus } from '$lib/types/Withdrawal';
 import { haveAuthorization } from './others';
 
 export function getStatusBtnClass(status: ShopStatus) {
@@ -283,5 +284,23 @@ export function getWalletTransactionTypeClass(
 			return variant === 'badge' ? 'badge-accent' : 'btn-accent';
 		default:
 			return variant === 'badge' ? 'badge-secondary' : 'btn-secondary';
+	}
+}
+
+export function getWithdrawalStatusClass(
+	status: WithdrawalStatus,
+	type: 'btn' | 'badge' = 'badge'
+) {
+	switch (status) {
+		case 'Pending':
+			return type === 'badge' ? 'badge-warning' : 'btn-warning';
+		case 'Approved':
+			return type === 'badge' ? 'badge-success' : 'btn-success';
+		case 'Rejected':
+			return type === 'badge' ? 'badge-error' : 'btn-error';
+		case 'Completed':
+			return type === 'badge' ? 'badge-success' : 'btn-success';
+		default:
+			return type === 'badge' ? 'badge-secondary' : 'btn-secondary';
 	}
 }
