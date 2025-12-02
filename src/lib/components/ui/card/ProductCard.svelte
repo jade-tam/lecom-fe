@@ -19,22 +19,15 @@
 			class="h-38 w-full"
 			rounded="rounded-selector"
 			alt={product.name}
-			viewTransitionName={`product-image-${product.id}`}
 		/>
-		<p
-			class="mt-2 line-clamp-2 text-sm font-semibold"
-			style={`view-transition-name: product-name-${product.id};`}
-		>
+		<p class="mt-2 line-clamp-2 text-sm font-semibold">
 			{product.name}
 		</p>
 		<div class="flex flex-wrap items-center justify-between">
-			<div style={`view-transition-name: product-rating-${product.id};`}>
+			<div>
 				<Rating defaultValue={1.4} readonly={true} />
 			</div>
-			<div
-				class="badge badge-xs badge-secondary"
-				style={`view-transition-name: product-category-${product.id};`}
-			>
+			<div class="badge badge-xs badge-secondary">
 				{product.categoryName}
 			</div>
 		</div>
@@ -44,10 +37,7 @@
 				{product.shopName ?? 'Unknown shop'}
 			</p>
 		</div>
-		<p
-			class="ml-1 font-serif text-xl font-black text-primary-content"
-			style={`view-transition-name: product-price-${product.id};`}
-		>
+		<p class="ml-1 font-serif text-xl font-black text-primary-content">
 			{formatVND(product.price)}
 		</p>
 	</div>
