@@ -17,9 +17,14 @@ const handleToken: Handle = async ({ event, resolve }) => {
 	const token = event.cookies.get('token');
 
 	if (token) {
-		const payload: JwtPayload = parseJwt(token);
+		const payload: JwtPayload | null = parseJwt(token);
 
 		console.log('[HandleToken Hook payload]: ', payload);
+
+		if (!payload) {
+			event.locals.user = null;
+			return resolve(event);
+		}
 
 		event.locals.user = {
 			id: payload.sub,

@@ -3,9 +3,8 @@ import { PUBLIC_API_URL } from '$env/static/public';
 import { createLogger, sanitizeForLog } from '$lib/server/logger';
 import type { ApiResponseBody } from '$lib/types/ApiResponseBody';
 import { redirect, type Cookies } from '@sveltejs/kit';
-import { clearTokens, storeTokens } from './others';
+import { storeTokens } from './others';
 import type { ToastData } from './showToast';
-import { invalidate } from '$app/navigation';
 
 const logger = createLogger('API');
 
@@ -177,9 +176,9 @@ export async function fetchAuthorizedApi<T>(
 		} else {
 			logger.warn(apiPrefix, "Can't refresh new token");
 
-			clearTokens(cookies);
+			// clearTokens(cookies);
 
-			throw redirect(303, resolve('/auth/login'));
+			redirect(303, resolve('/auth/logout'));
 		}
 	}
 
