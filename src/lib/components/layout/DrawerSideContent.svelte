@@ -39,8 +39,9 @@
 	<div class="mt-6 flex grow flex-col gap-1">
 		{#each sidebarLayoutItems as item (item.href)}
 			{#if item.subItems}
-				<div class="flex gap-4 px-4 py-2 text-sm font-semibold">
+				<div class="flex gap-2 px-4 py-2 text-sm font-semibold italic">
 					<span>{item.title}</span>
+					<span class="{item.iconClass}"></span>
 				</div>
 			{:else}
 				<a

@@ -35,7 +35,9 @@
 	$effect(() => {
 		if ($message?.toastData) {
 			showToast($message.toastData);
-			onFormActionSuccess?.();
+			setTimeout(() => {
+				onFormActionSuccess?.();
+			}, 500);
 		}
 	});
 </script>

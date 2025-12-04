@@ -63,3 +63,21 @@ export type WithdrawalDetail = {
 		avatar: string;
 	};
 };
+
+export type AdminWithdrawal = {
+	id: string;
+	shopId: number;
+	shopName: string;
+	sellerName: string;
+	amount: number;
+	bankName: string;
+	bankAccountNumber: string;
+	bankAccountName: string;
+	bankBranch: string;
+	requestedAt: string;
+	note: string | null;
+	shopWallet: {
+		availableBalance: number;
+		pendingBalance: number;
+	};
+};

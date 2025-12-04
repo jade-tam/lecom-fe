@@ -13,21 +13,11 @@ export const adminSidebarLayout: SidebarLayoutItem[] = [
 		title: 'Tổng quan',
 		iconClass: 'icon-[mingcute--dashboard-3-fill] text-xl'
 	},
-	// {
-	// 	href: '/admin/analytics',
-	// 	title: 'Phân tích',
-	// 	iconClass: 'icon-[mingcute--chart-vertical-fill] text-xl'
-	// },
 	{
 		href: '/admin/users-management',
 		title: 'Quản lý người dùng',
 		iconClass: 'icon-[mingcute--user-setting-fill] text-xl'
 	},
-	// {
-	// 	href: '/admin/courses-management',
-	// 	title: 'Quản lý khóa học',
-	// 	iconClass: 'icon-[fa7-solid--book-open] text-xl'
-	// },
 	{
 		href: '/admin/shops-management',
 		title: 'Quản lý cửa hàng',
@@ -41,7 +31,7 @@ export const adminSidebarLayout: SidebarLayoutItem[] = [
 	{
 		href: '/admin/categories-management',
 		title: 'Quản lý danh mục',
-		iconClass: 'icon-[fa7-solid--swatchbook] text-xl',
+		iconClass: 'icon-[mingcute--book-5-line] text-xl',
 		subItems: [
 			{
 				href: '/admin/course-categories-management',
@@ -65,12 +55,28 @@ export const adminSidebarLayout: SidebarLayoutItem[] = [
 		title: 'Cài đặt mục đổi thưởng',
 		iconClass: 'icon-[mingcute--store-fill] text-xl'
 	},
-
 	{
-		href: '/admin/reports-and-feedbacks',
-		title: 'Báo cáo & Phản hồi',
-		iconClass: 'icon-[mingcute--file-warning-fill] text-xl'
+		href: '/admin/withdrawal-review',
+		title: 'Duyệt yêu cầu rút tiền',
+		iconClass: 'icon-[mingcute--card-refund-line] text-xl',
+		subItems: [
+			{
+				href: '/admin/withdrawal-review/customers',
+				title: 'Yêu cầu từ khách hàng',
+				iconClass: 'icon-[mingcute--user-5-fill] text-xl'
+			},
+			{
+				href: '/admin/withdrawal-review/shops',
+				title: 'Yêu cầu từ cửa hàng',
+				iconClass: 'icon-[mingcute--shop-fill] text-xl'
+			}
+		]
 	}
+	// {
+	// 	href: '/admin/reports-and-feedbacks',
+	// 	title: 'Báo cáo & Phản hồi',
+	// 	iconClass: 'icon-[mingcute--file-warning-fill] text-xl'
+	// }
 ];
 
 export const sellerSidebarLayout: SidebarLayoutItem[] = [
@@ -109,11 +115,6 @@ export const sellerSidebarLayout: SidebarLayoutItem[] = [
 		title: 'Ví cửa hàng',
 		iconClass: 'icon-[mingcute--wallet-3-fill] text-xl'
 	}
-	// {
-	// 	href: '/seller/analytics',
-	// 	title: 'Phân tích',
-	// 	iconClass: 'icon-[mingcute--chart-vertical-fill] text-xl'
-	// }
 ];
 
 export const moderatorSidebarLayout: SidebarLayoutItem[] = [
