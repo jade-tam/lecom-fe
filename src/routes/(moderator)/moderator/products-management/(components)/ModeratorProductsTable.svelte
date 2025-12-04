@@ -1,13 +1,13 @@
 <script lang="ts">
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
-	import TableFilter from '$lib/components/ui/TableFilter.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
 	import FormConfirmDropdownAction from '$lib/components/wrapper/FormConfirmDropdownAction.svelte';
-	import { productStatusOptions, type Product } from '$lib/types/Product';
-	import { getProductStatusBadgeClass, getProductStatusBtnClass } from '$lib/utils/classComposer';
-	import { formatDate, formatVND } from '$lib/utils/converters';
+	import { type Product } from '$lib/types/Product';
+	import { getProductStatusBadgeClass } from '$lib/utils/classComposer';
+	import { formatVND } from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
 
 	const { products }: { products: Product[] } = $props();
@@ -29,19 +29,19 @@
 </script>
 
 <div class="my-2 flex items-end justify-between">
-	<div class="flex flex-col">
+	<AnimatedDiv animateVars={{ translateX: -16 }} class="flex flex-col">
 		<h1 class="text-header3 font-bold">Sản phẩm chờ duyệt</h1>
 		<p class="text-base-content/60">
 			Xem thông tin sản phẩm và thực hiện thao tác duyệt hoặc từ chối.
 		</p>
-	</div>
+	</AnimatedDiv>
 
-	<div class="flex gap-2">
+	<AnimatedDiv animateVars={{ translateX: 16 }}>
 		<SearchInput bind:value={table.globalFilter} />
-	</div>
+	</AnimatedDiv>
 </div>
 
-<div class="rounded-box border bg-base-100 p-4">
+<AnimatedDiv animateVars={{ translateY: 16 }} class="rounded-box border bg-base-100 p-4">
 	<div class="overflow-x-auto">
 		<table class="table table-sm">
 			<thead>
@@ -144,4 +144,4 @@
 			<TablePagination {table} {pageSize} />
 		</div>
 	</div>
-</div>
+</AnimatedDiv>
