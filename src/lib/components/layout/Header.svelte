@@ -119,8 +119,9 @@
 					class="dropdown-content menu z-1 w-52 rounded-field bg-base-100 p-2 shadow-sm"
 				>
 					<li><a href="/profile" class="rounded-field">Trang cá nhân</a></li>
-					<li><a href="/orders" class="rounded-field">Lịch sử đơn hàng</a></li>
 					<li><a href="/course-enrollments" class="rounded-field">Khóa học của tôi</a></li>
+					<li><a href="/orders" class="rounded-field">Lịch sử đơn hàng</a></li>
+					<li><a href="/wallet" class="rounded-field">Ví của tôi</a></li>
 					<li><a href="/settings" class="rounded-field">Cài đặt</a></li>
 					<li><a href="/help-and-feedback" class="rounded-field">Trợ giúp & Phản hồi</a></li>
 

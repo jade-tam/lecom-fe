@@ -10,7 +10,8 @@
 	} from '$lib/utils/converters';
 	import AnimatedDiv from '../animate/AnimatedDiv.svelte';
 
-	const { withdrawal }: { withdrawal: WithdrawalDetail } = $props();
+	const { withdrawal, isCustomer }: { withdrawal: WithdrawalDetail; isCustomer: boolean } =
+		$props();
 
 	function handleBack() {
 		history.back();
@@ -33,20 +34,37 @@
 
 <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
 	<!-- Thông tin shop -->
-	<AnimatedDiv animateVars={{ translateY: 16 }} class="rounded-box border bg-base-100 p-4">
-		<h2 class="mb-2 text-lg font-bold">Thông tin cửa hàng</h2>
-		<div class="flex items-center gap-3">
-			<Image
-				src={withdrawal.shop.shopAvatar}
-				alt={withdrawal.shop.shopName}
-				class="h-12 w-12 rounded-full"
-			/>
-			<div>
-				<p class="font-bold">{withdrawal.shop.shopName}</p>
-				<p class="text-xs text-base-content/60">ID: {withdrawal.shop.shopId}</p>
+	{#if !isCustomer}
+		<AnimatedDiv animateVars={{ translateY: 16 }} class="rounded-box border bg-base-100 p-4">
+			<h2 class="mb-2 text-lg font-bold">Thông tin cửa hàng</h2>
+			<div class="flex items-center gap-3">
+				<Image
+					src={withdrawal.shop?.shopAvatar}
+					alt={withdrawal.shop?.shopName}
+					class="h-12 w-12 rounded-full"
+				/>
+				<div>
+					<p class="font-bold">{withdrawal.shop?.shopName}</p>
+					<p class="text-xs text-base-content/60">ID: {withdrawal.shop?.shopId}</p>
+				</div>
 			</div>
-		</div>
-	</AnimatedDiv>
+		</AnimatedDiv>
+	{:else}
+		<AnimatedDiv animateVars={{ translateY: 16 }} class="rounded-box border bg-base-100 p-4">
+			<h2 class="mb-2 text-lg font-bold">Thông tin cá nhân</h2>
+			<div class="flex items-center gap-3">
+				<Image
+					src={withdrawal.customer?.avatar}
+					alt={withdrawal.customer?.userName}
+					class="h-12 w-12 rounded-full"
+				/>
+				<div>
+					<p class="font-bold">{withdrawal.customer?.userName}</p>
+					<p class="text-xs text-base-content/60">ID: {withdrawal.customer?.customerId}</p>
+				</div>
+			</div>
+		</AnimatedDiv>
+	{/if}
 
 	<!-- Thông tin ngân hàng -->
 	<AnimatedDiv animateVars={{ translateY: 16 }} class="rounded-box border bg-base-100 p-4">
@@ -66,7 +84,9 @@
 	<div class="flex flex-col gap-2">
 		<div class="flex justify-between">
 			<span class="font-semibold">Số tiền rút</span>
-			<span class="font-serif font-bold text-success-content text-lg">{formatVND(withdrawal.amount)}</span>
+			<span class="font-serif text-lg font-bold text-success-content"
+				>{formatVND(withdrawal.amount)}</span
+			>
 		</div>
 		<div class="flex justify-between">
 			<span class="font-semibold">Thời gian yêu cầu</span>

@@ -178,7 +178,7 @@ export async function fetchAuthorizedApi<T>(
 
 			// clearTokens(cookies);
 
-			redirect(303, resolve('/auth/logout'));
+			throw redirect(303, resolve('/auth/logout'));
 		}
 	}
 

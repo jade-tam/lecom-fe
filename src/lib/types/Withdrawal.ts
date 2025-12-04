@@ -52,9 +52,14 @@ export type WithdrawalDetail = {
 		bankAccountName: string;
 		bankBranch: string;
 	};
-	shop: {
+	shop?: {
 		shopId: number;
 		shopName: string;
 		shopAvatar: string;
+	};
+	customer?: {
+		customerId: string;
+		userName: string;
+		avatar: string;
 	};
 };

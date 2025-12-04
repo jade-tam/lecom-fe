@@ -11,7 +11,7 @@
 	<LoadingPlaceholder text="Đang tải chi tiết yêu cầu rút tiền..." />
 {:then withdrawal}
 	{#if withdrawal}
-		<WithdrawalDetail {withdrawal} isCustomer={false} />
+		<WithdrawalDetail {withdrawal} isCustomer />
 	{:else}
 		<EmptyPlaceholder text="Yêu cầu rút tiền không tồn tại hoặc đã bị xóa." />
 	{/if}
