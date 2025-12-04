@@ -7,7 +7,7 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 
-	const { dataForm } = $props();
+	const { dataForm, isCustomer = false } = $props();
 
 	const { form, errors, message, enhance, submitting, delayed, tainted, isTainted, submit } =
 		superForm<
@@ -24,7 +24,11 @@
 			showToast($message.toastData);
 
 			if ($message.toastData.type === 'success') {
-				goto(resolve('/seller/wallet/withdraw'));
+				if (isCustomer) {
+					goto(resolve('/wallet/withdraw'));
+				} else {
+					goto(resolve('/seller/wallet/withdraw'));
+				}
 			}
 		}
 	});
