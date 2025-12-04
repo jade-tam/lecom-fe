@@ -35,3 +35,26 @@ export type Withdrawal = {
 	note: string | null;
 	adminNote: string | null;
 };
+
+export type WithdrawalDetail = {
+	id: string;
+	amount: number;
+	status: WithdrawalStatus;
+	requestedAt: string;
+	approvedAt: string | null;
+	completedAt: string | null;
+	rejectionReason: string | null;
+	note: string | null;
+	adminNote: string | null;
+	bank: {
+		bankName: string;
+		bankAccountNumber: string;
+		bankAccountName: string;
+		bankBranch: string;
+	};
+	shop: {
+		shopId: number;
+		shopName: string;
+		shopAvatar: string;
+	};
+};

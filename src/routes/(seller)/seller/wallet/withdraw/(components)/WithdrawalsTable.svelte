@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
@@ -130,16 +131,16 @@
 							{/each}
 							<td>
 								<div class="flex gap-1">
-									<!-- <div class="tooltip" data-tip="Xem chi tiết">
+									<div class="tooltip" data-tip="Xem chi tiết">
 										<a
-											href={resolve(`/admin/voucher-config/${row.id}`)}
+											href={resolve(`/(seller)/seller/wallet/withdraw/[id]`, { id: row.id })}
 											class="btn btn-square btn-secondary"
 											type="button"
 											aria-label="Xem chi tiết"
 										>
-											<span class="icon-[mingcute--eye-fill] text-2xl"></span>
+											<span class="icon-[mingcute--document-2-line] text-xl"></span>
 										</a>
-									</div> -->
+									</div>
 									{#if row.status === 'Pending'}
 										<div class="tooltip" data-tip="Huỷ yêu cầu">
 											<FormConfirmPopoverButton
