@@ -12,7 +12,7 @@
 	<LoadingPlaceholder text="Đang tải chi tiết yêu cầu rút tiền..." />
 {:then withdrawal}
 	{#if withdrawal}
-		<WithdrawalDetail {withdrawal} isCustomer={false} />
+		<WithdrawalDetail {withdrawal} isCustomer />
 		{#if withdrawal.status === 'Pending'}
 			<div>
 				<p class="mt-4 text-sm text-primary-content">

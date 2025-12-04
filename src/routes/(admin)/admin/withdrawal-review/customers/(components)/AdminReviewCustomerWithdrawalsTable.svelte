@@ -5,11 +5,11 @@
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
-	import { withdrawalStatusOptions, type AdminShopWithdrawal } from '$lib/types/Withdrawal';
-	import { formatDateTime, formatVND, getTitleFromOptionList } from '$lib/utils/converters';
+	import { withdrawalStatusOptions, type AdminCustomerWithdrawal } from '$lib/types/Withdrawal';
+	import { formatDateTime, formatVND } from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
 
-	const { withdrawalsPromise }: { withdrawalsPromise: Promise<AdminShopWithdrawal[]> } = $props();
+	const { withdrawalsPromise }: { withdrawalsPromise: Promise<AdminCustomerWithdrawal[]> } = $props();
 	let isLoading = $state(true);
 
 	const pageSize = 12;
@@ -17,18 +17,18 @@
 	const table = $state(
 		new DataTable({
 			pageSize: pageSize,
-			data: [] as AdminShopWithdrawal[],
+			data: [] as AdminCustomerWithdrawal[],
 			columns: [
 				{ id: 'id', key: 'id', name: 'Mã yêu cầu' },
-				{ id: 'shopName', key: 'shopName', name: 'Cửa hàng' },
-				{ id: 'sellerName', key: 'sellerName', name: 'Người bán' },
+				{ id: 'customerName', key: 'customerName', name: 'Khách hàng' },
 				{ id: 'amount', key: 'amount', name: 'Số tiền rút' },
 				{ id: 'bankName', key: 'bankName', name: 'Ngân hàng' },
 				{ id: 'bankAccountNumber', key: 'bankAccountNumber', name: 'Số tài khoản' },
 				{ id: 'bankAccountName', key: 'bankAccountName', name: 'Chủ tài khoản' },
+				{ id: 'bankBranch', key: 'bankBranch', name: 'Chi nhánh' },
 				{ id: 'requestedAt', key: 'requestedAt', name: 'Thời gian yêu cầu' },
 				{ id: 'note', key: 'note', name: 'Ghi chú' },
-				{ id: 'shopWallet', key: 'shopWallet', name: 'Số dư ví' }
+				{ id: 'customerWallet', key: 'customerWallet', name: 'Số dư ví' }
 			]
 		})
 	);
@@ -98,7 +98,7 @@
 											<span class="text-base-content/60 italic">---</span>
 										{/if}
 									</td>
-									{:else if column.id === 'bankAccountNumber'}
+								{:else if column.id === 'bankAccountNumber'}
 									<td class="font-bold text-xs">
 										{row.bankAccountNumber}
 									</td>
@@ -111,15 +111,11 @@
 											</span>
 										</div>
 									</td>
-								{:else if column.id === 'shopWallet'}
+								{:else if column.id === 'customerWallet'}
 									<td class="whitespace-nowrap">
 										<div>
 											<span class="font-bold text-success-content"
-												>Khả dụng: {formatVND(row.shopWallet.availableBalance)}</span
-											><br />
-											<span class="font-bold text-warning-content"
-												>Tạm giữ: {formatVND(row.shopWallet.pendingBalance)}</span
-											>
+												>Số dư: {formatVND(row.customerWallet.balance)}</span>
 										</div>
 									</td>
 								{:else}
@@ -136,7 +132,7 @@
 								<div class="flex gap-1">
 									<div class="tooltip tooltip-left" data-tip="Xem chi tiết và xét duyệt">
 										<a
-											href={resolve(`/(admin)/admin/withdrawal-review/shops/[id]`, { id: row.id })}
+											href={resolve(`/(admin)/admin/withdrawal-review/customers/[id]`, { id: row.id })}
 											class="btn btn-square btn-primary"
 											type="button"
 											aria-label="Xem chi tiết và xét duyệt"

@@ -1,19 +1,8 @@
 <script lang="ts">
 	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
-	import showToast from '$lib/utils/showToast';
 	import AdminReviewShopWithdrawalsTable from './(components)/AdminReviewShopWithdrawalsTable.svelte';
 
 	const { data, form } = $props();
-
-	$effect(() => {
-		if (form?.toastData) {
-			showToast(form.toastData);
-		}
-	});
-
-	function handleBack() {
-		history.back();
-	}
 </script>
 
 <div class="my-2 flex flex-wrap justify-between gap-2">
