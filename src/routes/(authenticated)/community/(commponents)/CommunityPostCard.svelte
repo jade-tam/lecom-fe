@@ -1,33 +1,43 @@
 <script lang="ts">
 	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import TipTapRichTextEditor from '$lib/components/ui/data-input/TipTapRichTextEditor.svelte';
+	import FormInput from '$lib/components/ui/FormInput.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
+	import { createCommentSchema, type CreateCommentSchema } from '$lib/schemas/communityPostSchema';
 	import type { CommunityPost } from '$lib/types/CommunityPost';
 	import { formatDateTime } from '$lib/utils/converters';
+	import showToast, { type ToastData } from '$lib/utils/showToast';
 	import { slide } from 'svelte/transition';
+	import { superForm } from 'sveltekit-superforms';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
 
-	const { post, index, isViewOnly }: { post: CommunityPost; index?: number; isViewOnly?: boolean } =
-		$props();
+	const {
+		post,
+		index,
+		isViewOnly
+	}: { post: CommunityPost & { form?: any }; index?: number; isViewOnly?: boolean } = $props();
 
 	let isCommentOpen = $state(false);
 	let liked = $state(false);
-	let likeCount = $state(0); // You can set this from post.likes if available
-	// let dataForm = $state(null);
-	// let form: SuperForm<CreateCommentSchema, { toastData: ToastData }> | null = $derived.by(() => {
-	// 	if (dataForm) {
-	// 		return superForm(dataForm, {
-	// 			id: 'comment-form-' + post.id,
-	// 			validators: zod4Client(createCommentSchema)
-	// 		});
-	// 	}
+	let likeCount = $state(0);
 
-	// 	return null;
-	// });
+	const { form, errors, message, enhance, submitting, delayed, tainted, isTainted, submit } =
+		superForm<
+			CreateCommentSchema,
+			{
+				toastData: ToastData;
+			}
+		>(post.form, {
+			validators: zod4Client(createCommentSchema)
+		});
 
-	// // On component mount, create the form
-	// onMount(async () => {
-	// 	dataForm = await superValidate(zod4(createCommentSchema));
-	// });
+	$effect(() => {
+		if ($message?.toastData) {
+			if ($message.toastData.type !== 'success') {
+				showToast($message.toastData);
+			}
+		}
+	});
 
 	function handleLike() {
 		liked = !liked;
@@ -37,12 +47,11 @@
 	function handleCommentToggle() {
 		isCommentOpen = !isCommentOpen;
 	}
-
 </script>
 
 <AnimatedDiv
 	animateVars={{ translateY: 16, delay: (index ?? 0) * 100 }}
-	class="mb-4 break-inside-avoid rounded-box border bg-base-100 p-4 shadow-sm"
+	class="mb-4 break-inside-avoid-column rounded-box border bg-base-100 p-4 shadow-sm"
 >
 	<!-- Author Info -->
 	<div class="mb-2 flex items-center gap-3">
@@ -92,47 +101,57 @@
 
 	<!-- Comments Section -->
 	{#if isCommentOpen && !isViewOnly}
-		<div class="mt-4" transition:slide={{ duration: 200 }}>
-			<!-- {#if form !== null}
-				<form use:enhance={form.enhance} class="mb-4 space-y-2">
-
-					<div class="mb-4">
-						<FormInput
-							placeholder="Viết bình luận..."
-							class="w-full"
-							superForm={form.form}
-							name="body"
-							errors={form.errors}
-						/>
-						<button class="btn mt-2 btn-sm btn-primary" type="button">Gửi</button>
-					</div>
-				</form>
-			{/if} -->
-
-			<!-- Existing Comments -->
-			{#if post.comments?.length}
-				<div class="space-y-4">
-					{#each post.comments as comment}
-						<div class="flex items-start gap-3">
-							<Image
-								src={comment.user.avatar}
-								alt={comment.user.userName}
-								class="h-10 w-10 rounded-full object-cover"
-							/>
-							<div>
-								<p class="text-sm font-bold">
-									{comment.user.userName}<span class="ml-2 text-xs font-light text-base-content/60">
-										Bình luận lúc {formatDateTime(comment.createdAt)}
-									</span>
-								</p>
-								<p class="text-sm">{comment.body}</p>
-							</div>
-						</div>
-					{/each}
+		<div class="mt-2" transition:slide={{ duration: 200 }}>
+			<form use:enhance action="?/createComment" method="POST">
+				<div class="flex items-center gap-2">
+					<FormInput
+						placeholder="Viết bình luận..."
+						class="w-full grow"
+						superForm={form}
+						name="body"
+						{errors}
+						hideError
+					/>
+					<button class="btn btn-primary" type="submit"
+						><span class="icon-[mingcute--send-line] text-xl"></span>Gửi</button
+					>
 				</div>
-			{:else}
-				<p class="text-sm text-base-content/60 italic">Chưa có bình luận nào.</p>
-			{/if}
+				<FormInput
+					placeholder="ID bài viết"
+					defaultValue={post.id}
+					superForm={form}
+					name="postId"
+					hidden
+					{errors}
+				/>
+			</form>
 		</div>
 	{/if}
+
+	<div class="mt-4">
+		<!-- Existing Comments -->
+		{#if post.comments?.length}
+			<div class="space-y-4">
+				{#each post.comments as comment}
+					<div class="flex items-start gap-3">
+						<Image
+							src={comment.user.avatar}
+							alt={comment.user.userName}
+							class="h-10 w-10 rounded-full object-cover"
+						/>
+						<div>
+							<p class="text-sm font-bold">
+								{comment.user.userName}<span class="ml-2 text-xs font-light text-base-content/60">
+									Bình luận lúc {formatDateTime(comment.createdAt)}
+								</span>
+							</p>
+							<p class="text-sm">{comment.body}</p>
+						</div>
+					</div>
+				{/each}
+			</div>
+		{:else}
+			<p class="text-sm text-base-content/60 italic">Chưa có bình luận nào.</p>
+		{/if}
+	</div>
 </AnimatedDiv>

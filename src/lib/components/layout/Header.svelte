@@ -2,18 +2,19 @@
 	import { page } from '$app/state';
 	import type { UserProfile } from '$lib/types/UserProfile';
 
+	import { goto } from '$app/navigation';
 	import { USER_PROFILE_CONTEXT, USER_ROLE_CONTEXT } from '$lib/consts/contexts';
 	import type { UserRole } from '$lib/types/User';
+	import { haveAuthorization } from '$lib/utils/others';
 	import { getContext } from 'svelte';
 	import SearchInput from '../ui/SearchInput.svelte';
 	import UserAvatar from '../ui/UserAvatar.svelte';
-	import { goto } from '$app/navigation';
-	import { haveAuthorization } from '$lib/utils/others';
+	import type { Cart } from '$lib/types/Cart';
 
 	const {
-		cartCountPromise
+		cartPromise
 	}: {
-		cartCountPromise: Promise<number>;
+		cartPromise: Promise<Cart | null>;
 	} = $props();
 
 	const getUserProfile = getContext<() => UserProfile | null>(USER_PROFILE_CONTEXT);
@@ -79,12 +80,12 @@
 					aria-label="Cart"
 				>
 					<span class="icon-[mingcute--shopping-cart-2-fill] shrink-0 text-2xl"></span>
-					{#await cartCountPromise then cartCount}
-						{#if cartCount}
+					{#await cartPromise then cart}
+						{#if cart}
 							<span
 								class="absolute top-0 right-0.5 badge h-4 w-4 rounded-full badge-xs badge-secondary"
 							>
-								{cartCount}
+								{cart.items.length}
 							</span>
 						{/if}
 					{/await}

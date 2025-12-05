@@ -2,9 +2,9 @@ import { resolve } from '$app/paths';
 import { PUBLIC_API_URL } from '$env/static/public';
 import { createLogger, sanitizeForLog } from '$lib/server/logger';
 import type { ApiResponseBody } from '$lib/types/ApiResponseBody';
-import { error, redirect, type Cookies } from '@sveltejs/kit';
+import { redirect, type Cookies } from '@sveltejs/kit';
+import { clearTokens, storeTokens } from './others';
 import type { ToastData } from './showToast';
-import showToast from './showToast';
 
 const logger = createLogger('API');
 
@@ -153,33 +153,33 @@ export async function fetchAuthorizedApi<T>(
 		logger.warn(apiPrefix, 'Unauthorized, try to refresh token');
 
 		// Try refresh
-		// const refreshRes = await fetch(`${PUBLIC_API_URL}/api/Auth/refresh-token`, {
-		// 	method: 'POST',
-		// 	headers: { 'Content-Type': 'application/json' },
-		// 	body: JSON.stringify({ refreshToken })
-		// });
+		const refreshRes = await fetch(`${PUBLIC_API_URL}/api/Auth/refresh-token`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ refreshToken })
+		});
 
-		// if (refreshRes.ok) {
-		// 	const refreshedBody = await refreshRes.json();
+		if (refreshRes.ok) {
+			const refreshedBody = await refreshRes.json();
 
-		// 	storeTokens(cookies, refreshedBody.result.token, refreshedBody.result.refreshToken);
+			storeTokens(cookies, refreshedBody.result.token, refreshedBody.result.refreshToken);
 
-		// 	logger.log(apiPrefix, 'Refresh token success, start fetching api again...');
+			logger.log(apiPrefix, 'Refresh token success, start fetching api again...');
 
-		// 	// Retry the original request with new token
-		// 	({ response, responseBody } = await fetchApi<T>(
-		// 		path,
-		// 		method,
-		// 		body,
-		// 		refreshedBody.result.token
-		// 	));
-		// } else {
-		// 	logger.warn(apiPrefix, "Can't refresh new token");
+			// Retry the original request with new token
+			({ response, responseBody } = await fetchApi<T>(
+				path,
+				method,
+				body,
+				refreshedBody.result.token
+			));
+		} else {
+			logger.warn(apiPrefix, "Can't refresh new token");
 
-		// 	// clearTokens(cookies);
+			clearTokens(cookies);
 
-		// 	// throw redirect(303, resolve('/auth/logout'));
-		// }
+			// throw redirect(303, resolve('/auth/logout'));
+		}
 
 		throw redirect(303, resolve('/auth/logout'));
 	}
@@ -208,10 +208,10 @@ export function getSafeResult<T>(
 	fallback: T
 ) {
 	return p.then((r) => {
-		logger.log('getSafeResult', 'Success', r);
+		// logger.log('getSafeResult', 'Success', r);
 
 		if (r.responseBody.statusCode === 401) {
-			throw redirect(307, resolve('/auth/logout'));
+			redirect(307, resolve('/auth/logout'));
 		}
 
 		if (r.response.ok && r.responseBody.isSuccess) {

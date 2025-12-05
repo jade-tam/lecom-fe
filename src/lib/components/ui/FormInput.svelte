@@ -13,6 +13,7 @@
 		postfix,
 		hidden = false,
 		class: className = '',
+		hideError = false,
 		...restInputAttr
 	}: HTMLInputAttributes & {
 		label?: string;
@@ -24,6 +25,7 @@
 		postfix?: string;
 		superForm: SuperFormData<any>;
 		errors: SuperFormErrors<Record<string, string>>;
+		hideError?: boolean;
 	} = $props();
 </script>
 
@@ -45,7 +47,7 @@
 			<span class="ml-2 font-black text-primary-content italic">{postfix}</span>
 		{/if}
 	</label>
-	{#if $errors[name]}
+	{#if $errors[name] && !hideError}
 		{#each $errors[name] as error}
 			<p class="text-error">{error}</p>
 		{/each}
