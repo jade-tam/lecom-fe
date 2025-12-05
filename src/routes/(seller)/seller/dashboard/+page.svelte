@@ -289,35 +289,40 @@
 			</div>
 
 			<div class="col-span-1 stat rounded-box bg-base-100 lg:col-span-4">
-				<div class="stat-title flex items-center justify-between gap-1 text-sm font-bold text-base-content">
+				<div
+					class="stat-title flex items-center justify-between gap-1 text-sm font-bold text-base-content"
+				>
 					<p class="flex items-center gap-1">
 						<span class="icon-[mingcute--wallet-3-fill] text-lg"></span>Số dư ví cửa hàng
 					</p>
-					<a href={resolve('/seller/wallet')} class="btn btn-xs btn-secondary"><span class="icon-[mingcute--paper-2-line]"></span>Lịch sử giao dịch</a>
+					<a href={resolve('/seller/wallet')} class="btn btn-xs btn-secondary"
+						><span class="icon-[mingcute--paper-2-line]"></span>Lịch sử giao dịch</a
+					>
 				</div>
 				<div class="stat-value font-serif font-bold text-success-content">
 					<strong class="font-serif font-bold"
 						>{formatVND(dashboardData.walletSummary.availableBalance)}</strong
 					>
 				</div>
-				<div class="stat-desc text-warning-content">
-					Đang tạm giữ: <strong class="font-serif font-bold"
-						>{formatVND(dashboardData.walletSummary.pendingBalance)}</strong
-					>
-					(Tổng:
+				<div class="text-warning-content text-sm">
+					Tổng:
 					<strong class="font-serif font-bold"
-						>{formatVND(dashboardData.walletSummary.totalBalance)}</strong
+						>{formatVND(dashboardData.walletSummary.totalEarned)}</strong
+					>
+					(Đang tạm giữ:
+					<strong class="font-serif font-bold"
+						>{formatVND(dashboardData.walletSummary.pendingBalance)}</strong
 					>)
 				</div>
 
 				<div class="divider my-1"></div>
 
-				<div class="stat-desc text-warning-content">
+				<div class="text-warning-content text-sm">
 					Số tiền rút đang chờ duyệt: <strong class="font-serif font-bold"
 						>{formatVND(dashboardData.walletSummary.pendingWithdrawalAmount)}</strong
 					>
 				</div>
-				<div class="stat-desc text-success-content">
+				<div class="text-success-content text-sm">
 					Số dư đã rút: <strong class="font-serif font-bold"
 						>{formatVND(dashboardData.walletSummary.approvedWithdrawalAmount)}</strong
 					>

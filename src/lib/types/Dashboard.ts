@@ -70,7 +70,7 @@ export type SellerDashboardData = {
 	walletSummary: {
 		availableBalance: number;
 		pendingBalance: number;
-		totalBalance: number;
+		totalEarned: number;
 		pendingWithdrawalAmount: number;
 		approvedWithdrawalAmount: number;
 		lastUpdatedAt: string;

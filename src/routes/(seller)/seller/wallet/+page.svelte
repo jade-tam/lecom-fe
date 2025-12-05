@@ -42,7 +42,7 @@
 		{#await data.walletSummaryPromise then walletSummary}
 			{#if walletSummary}
 				<div class="flex flex-col rounded-box border bg-base-100 p-4">
-					<div>
+					<div class="flex flex-col gap-1">
 						<h2 class="text-header3 mb-2 flex items-center gap-2">
 							<span class="icon-[mingcute--wallet-3-fill] text-lg"></span>Số dư khả dụng
 						</h2>
@@ -51,28 +51,30 @@
 								>{formatVND(walletSummary.availableBalance)}</strong
 							>
 						</p>
-						<p class="stat-desc text-warning-content">
-							Đang tạm giữ: <strong class="font-serif font-bold"
-								>{formatVND(walletSummary.pendingBalance)}</strong
-							>
-							(Tổng:
-							<strong class="font-serif font-bold">????</strong>)
+						<p class="text-sm text-warning-content">
+							Tổng:
+							<strong class="font-serif font-bold">{formatVND(walletSummary.totalEarned)}</strong>
+							(Đang tạm giữ:
+							<strong class="font-serif font-bold">{formatVND(walletSummary.pendingBalance)}</strong
+							>)
+						</p>
+						<p class="text-sm text-warning-content">
+							Số đơn hàng đang xử lý:
+							<strong class="font-bold">{walletSummary.pendingOrdersCount} Đơn</strong>
 						</p>
 					</div>
 
 					<div class="divider my-1"></div>
 
 					<div class="mb-4">
-						<div class="stat-desc text-warning-content">
+						<div class="text-sm text-warning-content">
 							Số tiền rút đang chờ duyệt: <strong class="font-serif font-bold">
-								<!-- {formatVND(walletSummary.pendingWithdrawalAmount)} -->
-								Không rõ????
+								{formatVND(walletSummary.pendingWithdrawalAmount)}
 							</strong>
 						</div>
-						<div class="stat-desc mt-1 text-success-content">
+						<div class="mt-1 text-sm text-success-content">
 							Số dư đã rút: <strong class="font-serif font-bold">
-								<!-- {formatVND(walletSummary.approvedWithdrawalAmount)} -->
-								Không rõ????
+								{formatVND(walletSummary.approvedWithdrawalAmount)}
 							</strong>
 						</div>
 					</div>

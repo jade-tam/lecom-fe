@@ -110,7 +110,7 @@
 										{/if}
 									</td>
 								{:else if column.id === 'status'}
-									<td>
+									<td class="whitespace-nowrap">
 										<div class={`badge badge-xs ${getWithdrawalStatusClass(row.status, 'badge')}`}>
 											{getTitleFromOptionList(row.status, withdrawalStatusOptions)}
 										</div>

@@ -9,6 +9,8 @@ export type ShopWallet = {
 	totalWithdrawn: number;
 	totalRefunded: number;
 	pendingOrdersCount: number;
+	pendingWithdrawalAmount: number;
+	approvedWithdrawalAmount: number;
 	lastUpdated: string;
 };
 
@@ -45,5 +47,3 @@ export type WalletTransaction = {
 	referenceType: WalletTransactionType;
 	type: WalletTransactionType;
 };
-
-

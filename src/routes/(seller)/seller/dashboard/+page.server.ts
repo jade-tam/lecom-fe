@@ -2,7 +2,7 @@ import type { DashboardViewType, SellerDashboardData } from '$lib/types/Dashboar
 import { toDateISO } from '$lib/utils/converters.js';
 import { fetchAuthorizedApi, getSafeResult } from '$lib/utils/externalApi';
 
-export const load = ({ url, cookies }) => {
+export const load = async ({ url, cookies }) => {
 	const params = new URLSearchParams();
 
 	const view: DashboardViewType = url.searchParams.get('view')
