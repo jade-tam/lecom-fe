@@ -15,7 +15,7 @@
 		class: className = '',
 		...restInputAttr
 	}: HTMLInputAttributes & {
-		label: string;
+		label?: string;
 		icon?: string;
 		help?: string;
 		name: string;
@@ -28,12 +28,14 @@
 </script>
 
 <fieldset class={`fieldset ${className}`}>
-	<legend class="fieldset-legend" class:hidden
-		>{label}
-		{#if help}
-			<ToolTip tip={help} />
-		{/if}
-	</legend>
+	{#if label}
+		<legend class="fieldset-legend" class:hidden
+			>{label}
+			{#if help}
+				<ToolTip tip={help} />
+			{/if}
+		</legend>
+	{/if}
 	<label class="input w-full" class:hidden>
 		{#if icon}
 			<span class={`text-xl ${icon}`}></span>

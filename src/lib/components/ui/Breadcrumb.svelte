@@ -33,6 +33,17 @@
 	function findSidebarItem(href: string) {
 		return allSidebarItems.find((item: SidebarLayoutItem) => item.href === href);
 	}
+
+	function isIdOrUUID(str: string): boolean {
+		const finalPart = str.split('/').pop() ?? '';
+
+		// Check for UUID
+		const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+		// Check for numeric ID
+		const numberRegex = /^\d+$/;
+
+		return uuidRegex.test(finalPart) || numberRegex.test(finalPart);
+	}
 </script>
 
 <div class="breadcrumbs text-sm">
@@ -48,10 +59,14 @@
 					</a>
 				{:else}
 					<span class="pointer-events-none font-bold hover:no-underline!">
-						{#if findSidebarItem(crumb.href)?.iconClass}
-							<span class={findSidebarItem(crumb.href)?.iconClass + ' text-base'}></span>
+						{#if isIdOrUUID(crumb.href)}
+							<span class="icon-[mingcute--document-2-fill] text-base"></span>Chi tiết
+						{:else}
+							{#if findSidebarItem(crumb.href)?.iconClass}
+								<span class={findSidebarItem(crumb.href)?.iconClass + ' text-base'}></span>
+							{/if}
+							{findSidebarItem(crumb.href)?.title ?? crumb.title}
 						{/if}
-						{findSidebarItem(crumb.href)?.title ?? crumb.title}
 					</span>
 				{/if}
 			</li>
