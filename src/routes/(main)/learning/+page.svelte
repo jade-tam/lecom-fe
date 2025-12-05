@@ -2,15 +2,102 @@
 	import CourseCard from '$lib/components/ui/card/CourseCard.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Pagination from '$lib/components/ui/Pagination.svelte';
-	import CourseCardSkeleton from '$lib/components/ui/skeleton/CourseCardSkeleton.svelte';
+	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 
 	const { data } = $props();
 </script>
 
-<section class="mt-8 flex min-h-screen flex-col items-center">
-	<h2 class="text-header1">Discover our learning courses</h2>
+<section class="mt-8 flex flex-col">
+	<h2 class="text-header3">Khóa học đề xuất dành cho bạn</h2>
+	<div class="mt-6 grid w-full grid-cols-4 items-stretch gap-2 gap-y-6">
+		{#await data.courseBrowseDataPromise}
+			<LoadingPlaceholder text="Đang tải danh sách khóa học" />
+		{:then browseData}
+			{#if browseData?.recommendedCourses?.length}
+				{#each browseData.recommendedCourses as course, index (course.id)}
+					<CourseCard {course} {index} />
+				{/each}
+			{:else}
+				<EmptyPlaceholder text="Không có khóa học nào được đề xuất" />
+			{/if}
+		{:catch err}
+			<p class="text-error">Có lỗi xảy ra trong khi đang tải khóa học đề xuất</p>
+		{/await}
+	</div>
+</section>
 
-	<div class="mt-2 flex gap-2 self-start">
+<section class="mt-8 flex flex-col">
+	<h2 class="text-header3">Các khóa học mới nhất</h2>
+	<div class="mt-6 grid w-full grid-cols-4 items-stretch gap-2 gap-y-6">
+		{#await data.courseBrowseDataPromise}
+			<LoadingPlaceholder text="Đang tải danh sách khóa học" />
+		{:then browseData}
+			{#if browseData?.newArrivalCourses?.length}
+				{#each browseData.newArrivalCourses as course, index (course.id)}
+					<CourseCard {course} {index} />
+				{/each}
+			{:else}
+				<EmptyPlaceholder text="Không có khóa học mới nào" />
+			{/if}
+		{:catch err}
+			<p class="text-error">Có lỗi xảy ra trong khi đang tải khóa học mới</p>
+		{/await}
+	</div>
+</section>
+
+{#await data.courseBrowseDataPromise}
+	<LoadingPlaceholder text="Đang tải danh sách khóa học" />
+{:then browseData}
+	{#if browseData?.recommendedCategories?.length}
+		{#each browseData.recommendedCategories as category (category.id)}
+			<section class="mt-8 flex flex-col">
+				<div class="flex items-center gap-4">
+					<h2 class="text-header3">{category.name}</h2>
+					<a href="/learning/courses?category={category.slug}" class="btn btn-xs"
+						>Xem tất cả <span class="icon-[mingcute--arrow-right-fill]"></span></a
+					>
+				</div>
+				<div class="mt-6 grid w-full grid-cols-4 items-stretch gap-2">
+					{#if category.courses.length}
+						{#each category.courses as course, index (course.id)}
+							<CourseCard {course} {index} />
+						{/each}
+					{:else}
+						<EmptyPlaceholder text="Không có khóa học nào trong danh mục này" />
+					{/if}
+				</div>
+			</section>
+		{/each}
+	{:else}
+		<EmptyPlaceholder text="Không có danh mục nào được đề xuất" />
+	{/if}
+{:catch err}
+	<p class="text-error">Có lỗi xảy ra trong khi đang tải danh mục đề xuất</p>
+{/await}
+
+<!--
+{#await data.courseBrowseDataPromise}
+	<LoadingPlaceholder text="Đang tải danh sách danh mục phổ biến" />
+{:then browseData}
+	{#if browseData?.popularCategories?.length}
+		<section class="mt-8 flex flex-col">
+			<h2 class="text-header3">Danh mục phổ biến</h2>
+			<div class="mt-6 flex flex-wrap gap-2">
+				{#each browseData.popularCategories as cat (cat.id)}
+					<a class="btn btn-sm btn-secondary" href="/learning/courses?category={cat.slug}">
+						{cat.name} <span class="badge badge-outline">{cat.count}</span>
+					</a>
+				{/each}
+			</div>
+		</section>
+	{/if}
+{:catch err}
+	<p class="text-error">Có lỗi xảy ra trong khi đang tải danh mục phổ biến</p>
+{/await} -->
+
+<section class="mt-8 flex flex-col">
+	<h2 class="text-header3">Khám phá các danh mục khóa học</h2>
+	<div class="mt-6 flex gap-2 self-start">
 		{#await data.categories}
 			<div class="btn w-32 skeleton rounded-field btn-sm"></div>
 			<div class="btn w-24 skeleton rounded-field btn-sm"></div>
@@ -23,20 +110,20 @@
 			{/each}
 		{/await}
 	</div>
+</section>
 
+<section class="mt-8 flex flex-col">
+	<h2 class="text-header3">Tất cả khóa học</h2>
 	<div
-		class="mt-4 grid w-full grid-cols-4 items-stretch gap-4 max-lg:grid-cols-3 max-md:grid-cols-2"
+		class="mt-4 grid w-full grid-cols-4 items-stretch gap-2 gap-y-6 max-lg:grid-cols-3 max-md:grid-cols-2"
 	>
 		{#await data.queryResult}
-			{#each Array(12) as skeleton}
-				<CourseCardSkeleton />
-			{/each}
+			<LoadingPlaceholder text="Đang tải danh sách khóa học" />
 		{:then result}
 			{#if result.items.length}
-				{#each result.items as course (course.id)}
-					<CourseCard {course} />
+				{#each result.items as course, index (course.id)}
+					<CourseCard {course} {index} />
 				{/each}
-
 				<div class="col-span-full">
 					<Pagination
 						page={result.page}
@@ -46,10 +133,10 @@
 					/>
 				</div>
 			{:else}
-				<EmptyPlaceholder text="No course found" />
+				<EmptyPlaceholder text="Không có khóa học nào" />
 			{/if}
 		{:catch err}
-			<p class="text-error">Error loading courses</p>
+			<p class="text-error">Có lỗi xảy ra trong khi đang tải khóa học</p>
 		{/await}
 	</div>
 </section>

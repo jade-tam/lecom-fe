@@ -5,7 +5,7 @@
 		icon = 'icon-[fa7-solid--ghost]',
 		text,
 		description = '',
-		class: className = 'h-84'
+		class: className = 'h-64'
 	} = $props();
 </script>
 

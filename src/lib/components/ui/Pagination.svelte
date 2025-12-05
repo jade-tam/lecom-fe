@@ -46,7 +46,7 @@
 
 <div class="flex items-center justify-between gap-4">
 	<p class="text-sm opacity-60">
-		Đang hiển thị sản phẩm {startItemNumber} - {endItemNumber} trên tổng số {totalItems} sản phẩm
+		Đang hiển thị sản phẩm <strong>{startItemNumber}</strong> - <strong>{endItemNumber}</strong> trên tổng số <strong>{totalItems}</strong>
 	</p>
 
 	<div class="join">
