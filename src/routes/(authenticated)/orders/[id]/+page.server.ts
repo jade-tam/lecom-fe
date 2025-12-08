@@ -1,4 +1,5 @@
 import { cancelOrderSchema } from '$lib/schemas/cancelOrderSchema.js';
+import { createProductFeedbackSchema } from '$lib/schemas/orderFeedbackSchema';
 import { createRefundSchema, type CreateRefundSchema } from '$lib/schemas/refundSchema.js';
 import { type Order } from '$lib/types/Order.js';
 import { fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi';
@@ -26,11 +27,13 @@ export const load = async ({ cookies, params }) => {
 	);
 
 	const cancelOrderFormData = await superValidate(zod4(cancelOrderSchema));
+	const createProductFeedbackFormData = await superValidate(zod4(createProductFeedbackSchema));
 
 	return {
 		order,
 		refundFormData,
-		cancelOrderFormData
+		cancelOrderFormData,
+		createProductFeedbackFormData
 	};
 };
 
@@ -100,6 +103,34 @@ export const actions = {
 			responseBody,
 			'Đơn hàng đã được hủy thành công.',
 			'Không thể hủy đơn hàng.'
+		);
+
+		if (response.ok) {
+			return message(form, { toastData });
+		} else {
+			return message(form, { toastData }, { status: 400 });
+		}
+	},
+	createOrderFeedback: async ({ request, cookies }) => {
+		const form = await superValidate(request, zod4(createProductFeedbackSchema));
+
+		if (!form.valid) {
+			return superFormFail(400, { form });
+		}
+
+		const formData = form.data;
+
+		const { response, responseBody } = await fetchAuthorizedApi(
+			cookies,
+			`/api/feedback`,
+			'POST',
+			formData
+		);
+
+		const toastData = getToastData(
+			responseBody,
+			'Đánh giá thành công.',
+			'Không thể đánh giá.'
 		);
 
 		if (response.ok) {

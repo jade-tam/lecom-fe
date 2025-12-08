@@ -23,35 +23,35 @@
 	let userRole = $derived(getUserRole());
 </script>
 
-<header class="flex items-center">
+<header class="flex items-center gap-4">
 	<a href="/">
 		<h1 class="text-3xl font-black uppercase">Lecom</h1>
 	</a>
 
-	<div class="shrink-0">
+	<div class="shrink-0 max-sm:hidden">
 		<ul class="flex h-full items-center gap-2 px-6">
 			<li>
 				<a
 					href="/learning"
-					class="btn btn-ghost {page.url.pathname.startsWith('/learning') ? 'font-black' : ''}"
+					class="btn btn-ghost text-success-content {page.url.pathname.startsWith('/learning') ? 'font-black' : ''}"
 				>
-					Học tập
+					<span class="icon-[mingcute--book-2-fill] text-xl"></span>Học tập
 				</a>
 			</li>
 			<li>
 				<a
 					href="/shopping"
-					class="btn btn-ghost {page.url.pathname.startsWith('/shopping') ? 'font-black' : ''}"
+					class="btn btn-ghost text-secondary-content {page.url.pathname.startsWith('/shopping') ? 'font-black' : ''}"
 				>
-					Mua sắm
+					<span class="icon-[mingcute--box-2-fill] text-xl"></span>Mua sắm
 				</a>
 			</li>
 			<li>
 				<a
 					href="/community"
-					class="btn btn-ghost {page.url.pathname.startsWith('/community') ? 'font-black' : ''}"
+					class="btn btn-ghost text-info-content {page.url.pathname.startsWith('/community') ? 'font-black' : ''}"
 				>
-					Cộng đồng
+					<span class="icon-[mingcute--comment-2-fill] text-xl"></span>Cộng đồng
 				</a>
 			</li>
 		</ul>
@@ -71,7 +71,7 @@
 		<div class="grow"></div>
 	{/if}
 
-	<div class="flex items-center gap-2 pl-8">
+	<div class="flex items-center gap-2">
 		{#if userProfile}
 			<div class="tooltip tooltip-bottom" data-tip="Giỏ hàng">
 				<a
@@ -88,6 +88,10 @@
 								{cart.items.length}
 							</span>
 						{/if}
+					{:catch err}
+						<span class="absolute top-0 right-0.5 badge h-4 w-4 rounded-full badge-xs badge-error">
+							?
+						</span>
 					{/await}
 				</a>
 			</div>

@@ -12,10 +12,12 @@
 			showToast(form.toastData);
 		}
 	});
+
+	$inspect(order);
 </script>
 
 {#if order}
-	<OrderDetail {order} refundFormData={data.refundFormData} cancelOrderFormData={data.cancelOrderFormData} />
+	<OrderDetail {order} refundFormData={data.refundFormData} cancelOrderFormData={data.cancelOrderFormData} createProductFeedbackFormData={data.createProductFeedbackFormData} />
 {:else}
 	<EmptyPlaceholder
 		icon="icon-[fa7-solid--box-open]"

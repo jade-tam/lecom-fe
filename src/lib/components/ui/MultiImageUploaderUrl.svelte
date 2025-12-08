@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { ProductImageData } from '$lib/types/Product';
 	import { cropAndUploadImage } from '$lib/utils/imageUploader';
 	import { dragHandle, dragHandleZone } from 'svelte-dnd-action';
 	import type { OnCropCompleteEvent } from 'svelte-easy-crop';
@@ -7,7 +6,7 @@
 	import { fade } from 'svelte/transition';
 
 	export type MultiImageUploaderProps = {
-		value?: ProductImageData[];
+		value?: string[];
 		maxImages?: number;
 		maxFileSize?: number;
 		uploadButtonLabel?: string;
@@ -36,14 +35,14 @@
 	let zoom = $state(1);
 
 	// Local working copy for DnD + uploads
-	let localImages: (ProductImageData & { id: string })[] = $state([]);
+	let localImages: { id: string; url: string }[] = $state([]);
 
 	$effect(() => {
 		// Only initialize once or when value changes length (like on form reset)
 		if (value?.length && localImages.length === 0) {
-			localImages = value.map((img) => ({
-				...img,
-				id: crypto.randomUUID() // ensure unique key for each item
+			localImages = value.map((url) => ({
+				url,
+				id: crypto.randomUUID()
 			}));
 		}
 	});
@@ -52,7 +51,7 @@
 
 	// Sync helper to push local changes back into the form's bound value
 	function syncToForm() {
-		value = localImages.map(({ id, ...img }) => img);
+		value = localImages.map(({ url }) => url);
 	}
 
 	// =============================================================================
@@ -103,9 +102,7 @@
 				...localImages,
 				{
 					id: crypto.randomUUID(),
-					url,
-					orderIndex: localImages.length,
-					isPrimary: localImages.length === 0
+					url
 				}
 			];
 
@@ -139,20 +136,13 @@
 
 	// =============================================================================
 	function removeImage(index: number) {
-		localImages = localImages
-			.filter((_, i) => i !== index)
-			.map((img, i) => ({ ...img, orderIndex: i }));
+		localImages = localImages.filter((_, i) => i !== index);
 		syncToForm();
 	}
 
-	// =============================================================================
 	function handleDndTrigger(e: CustomEvent) {
-		const { items }: { items: (ProductImageData & { id: string })[] } = e.detail;
-		localImages = items.map((item: ProductImageData & { id: string }, i) => ({
-			...item,
-			orderIndex: i,
-			isPrimary: i === 0
-		}));
+		const { items }: { items: { id: string; url: string }[] } = e.detail;
+		localImages = items.map((item: { id: string; url: string }) => ({ ...item }));
 		syncToForm();
 	}
 </script>
@@ -247,7 +237,7 @@
 			</button>
 
 			<!-- Primary indicator -->
-			{#if item.isPrimary}
+			{#if i === 0}
 				<div transition:fade class="absolute top-1 left-1 badge badge-xs badge-primary">
 					Ảnh chính
 				</div>

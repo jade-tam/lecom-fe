@@ -20,21 +20,24 @@
 	import { formatDate, formatVND, getTitleFromOptionList } from '$lib/utils/converters';
 	import NumberFlow from '@number-flow/svelte';
 	import AnimatedDiv from '../animate/AnimatedDiv.svelte';
+	import CancelOrderModalContent from '../modal/CancelOrderModalContent.svelte';
+	import CreateProductFeedbackModalContent from '../modal/CreateProductFeedbackModalContent.svelte';
 	import OpenModalButton from '../modal/OpenModalButton.svelte';
 	import RefundModalContent from '../modal/RefundModalContent.svelte';
 	import FormConfirmPopoverButton from '../wrapper/FormConfirmPopoverButton.svelte';
-	import CancelOrderModalContent from '../modal/CancelOrderModalContent.svelte';
 
 	const {
 		order,
 		isSellerView = false,
 		refundFormData,
-		cancelOrderFormData
+		cancelOrderFormData,
+		createProductFeedbackFormData
 	}: {
 		order: Order;
 		isSellerView?: boolean;
 		refundFormData?: any;
 		cancelOrderFormData: any;
+		createProductFeedbackFormData?: any;
 	} = $props();
 
 	const shipmentStatus: ShipmentStatus = $derived.by(() => {
@@ -64,7 +67,7 @@
 </script>
 
 <!-- Top section like the image -->
-<div class="mt-2 mb-2 flex flex-wrap items-center justify-between">
+<div class="mt-2 mb-2 flex flex-wrap items-center justify-between gap-4">
 	<AnimatedDiv animateVars={{ translateX: -16 }} class="flex items-center gap-4">
 		<button class="btn btn-sm" aria-label="Quay lại" onclick={handleBack}>
 			<span class="icon-[fa7-solid--arrow-left]"></span> Trở về
@@ -234,6 +237,14 @@
 						{item.productCategory}
 					</div>
 				</div>
+				{#if order.status === 'Completed' && createProductFeedbackFormData}
+					<OpenModalButton
+						openButtonProps={{ class: 'btn btn-sm btn-warning' }}
+						ModalContent={CreateProductFeedbackModalContent}
+						ModalContentProps={{ dataForm: createProductFeedbackFormData, orderDetail: item }}
+						><span class="icon-[mingcute--star-line]"></span>Đánh giá sản phẩm
+					</OpenModalButton>
+				{/if}
 				<div class="flex flex-col items-end">
 					<p class="text-sm font-light text-base-content/70">Tổng cộng:</p>
 					<p class="font-serif text-xl font-bold">

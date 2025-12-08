@@ -206,11 +206,16 @@ export function getSafeResult<T>(
 	p: Promise<{ response: Response; responseBody: ApiResponseBody<T> }>,
 	fallback: T
 ) {
-	return p.then((r) => {
-		if (r.response.ok && r.responseBody.isSuccess) {
-			return r.responseBody.result;
-		}
+	return p
+		.then((r) => {
+			if (r.response.ok && r.responseBody.isSuccess) {
+				return r.responseBody.result;
+			}
 
-		return fallback;
-	});
+			return fallback;
+		})
+		.catch((err) => {
+			logger.error('getSafeResult', 'Unexpected error', err);
+			return fallback;
+		});
 }

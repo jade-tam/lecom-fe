@@ -39,7 +39,7 @@
 				label="Tên đăng nhập"
 				placeholder="Nhập tên đăng nhập của bạn..."
 				type="text"
-				icon="icon-[fa7-solid--circle-user]"
+				icon="icon-[mingcute--user-4-fill] text-primary-content"
 				superForm={form}
 				{errors}
 			/>
@@ -49,7 +49,7 @@
 				label="Mật khẩu"
 				placeholder="Nhập mật khẩu bí mật..."
 				type="password"
-				icon="icon-[fa7-solid--star-of-life]"
+				icon="icon-[mingcute--asterisk-fill] text-primary-content"
 				superForm={form}
 				{errors}
 			/>

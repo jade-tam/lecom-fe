@@ -1,7 +1,8 @@
 <script lang="ts">
-	import type { SuperFormData, SuperFormErrors } from 'sveltekit-superforms/client';
+	import type { SuperFormData } from 'sveltekit-superforms/client';
 	import MultiImageUploader, { type MultiImageUploaderProps } from './MultiImageUploader.svelte';
 	import ToolTip from './ToolTip.svelte';
+	import MultiImageUploaderUrl from './MultiImageUploaderUrl.svelte';
 
 	let {
 		label,
@@ -10,6 +11,7 @@
 		errors,
 		name,
 		class: className = '',
+		isUrlOnly = false,
 		...restAttr
 	}: MultiImageUploaderProps & {
 		label: string;
@@ -18,6 +20,7 @@
 		class?: string;
 		superForm: SuperFormData<any>;
 		errors: any;
+		isUrlOnly?: boolean;
 	} = $props();
 </script>
 
@@ -29,7 +32,11 @@
 		{/if}
 	</legend>
 
-	<MultiImageUploader {name} bind:value={$superForm[name]} {...restAttr} />
+	{#if isUrlOnly}
+		<MultiImageUploaderUrl bind:value={$superForm[name]} {...restAttr} />
+	{:else}
+		<MultiImageUploader bind:value={$superForm[name]} {...restAttr} />
+	{/if}
 
 	{#if $errors[name]}
 		{#each $errors[name]._errors as error}

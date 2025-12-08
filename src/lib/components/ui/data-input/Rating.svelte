@@ -1,4 +1,5 @@
 <script lang="ts">
+
 	let {
 		defaultValue,
 		value = $bindable(0),
@@ -20,12 +21,13 @@
 	const emptyStarIconClass = 'icon-[mingcute--star-line]';
 </script>
 
+
 <div class="flex items-center">
 	{#each Array(maxStars) as _, i}
 		<button
 			type="button"
 			disabled={readonly}
-			class="m-0 cursor-pointer border-none bg-transparent p-0"
+			class="m-0 cursor-pointer border-none bg-transparent p-0 {!readonly ? 'text-header2' : ''}"
 			onmouseenter={() => {
 				if (!readonly) hoverValue = i + 1;
 			}}
