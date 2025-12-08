@@ -17,8 +17,7 @@ export async function load({ params }) {
 	} = await getSafeResult(fetchApi(`/api/home/${id}`, 'GET'), {
 		shop: null,
 		products: [],
-		courses: [],
-		message: ''
+		courses: []
 	});
 
 	return {

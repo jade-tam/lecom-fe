@@ -10,7 +10,7 @@
 <section>
 	<div class="my-48 grid grid-cols-2 items-center gap-8 max-md:my-12 max-md:grid-cols-1">
 		<div>
-			<h1">Học tập dễ dàng. Mua sắm thông minh.</h1>
+			<h1>Học tập dễ dàng. Mua sắm thông minh.</h1>
 			<p class="mt-2">
 				Tiếp cận các khóa học trực tuyến 100% miễn phí để nâng cao kiến thức và kỹ năng — đồng thời
 				khám phá những sản phẩm giúp việc học trở nên dễ dàng, thú vị và hiệu quả hơn.
@@ -39,7 +39,8 @@
 			<h3 class="text-header2">Học kiến thức mới — hoàn toàn miễn phí</h3>
 			<p class="mt-2">
 				Tham gia các khóa học trực tuyến được chia sẻ bởi chuyên gia và những người đam mê. Bạn có
-				thể tìm hiểu về hàng ngàn khoá học hoàn toán miễn phí về các lĩnh vực sáng tạo hoặc các kiến thức về phát triển bản thân tại LECOM.
+				thể tìm hiểu về hàng ngàn khoá học hoàn toán miễn phí về các lĩnh vực sáng tạo hoặc các kiến
+				thức về phát triển bản thân tại LECOM.
 			</p>
 
 			<h3 class="mt-8">Danh mục khoá học nổi bật</h3>
@@ -90,9 +91,9 @@
 		<div>
 			<h3 class="text-header2">Mua sắm những sản phẩm và công cụ hỗ trợ cho việc học của bạn.</h3>
 			<p class="mt-2">
-				Từ sổ tay, bộ dụng cụ học tập đến các thiết bị và công cụ sáng tạo — Bạn có thể dễ dàng tìm những sản phẩm
-				hữu ích để giúp bạn luôn có cảm hứng, tập trung và hiệu quả hơn trong quá trình
-				học tập.
+				Từ sổ tay, bộ dụng cụ học tập đến các thiết bị và công cụ sáng tạo — Bạn có thể dễ dàng tìm
+				những sản phẩm hữu ích để giúp bạn luôn có cảm hứng, tập trung và hiệu quả hơn trong quá
+				trình học tập.
 			</p>
 
 			<h3 class="mt-8">Danh mục sản phẩm nổi bật</h3>
@@ -153,9 +154,9 @@
 		<div>
 			<h3 class="text-header2">Dạy điều bạn yêu thích. Bán điều họ cần.</h3>
 			<p class="mt-2">
-				Chia sẻ kiến thức qua các khóa học miễn phí hoặc bán sản phẩm của riêng bạn — tất cả trên cùng
-				một nền tảng. Chúng tôi đã lo phần công nghệ để bạn có thể tập trung vào việc sáng tạo và kết nối với người
-				học.
+				Chia sẻ kiến thức qua các khóa học miễn phí hoặc bán sản phẩm của riêng bạn — tất cả trên
+				cùng một nền tảng. Chúng tôi đã lo phần công nghệ để bạn có thể tập trung vào việc sáng tạo
+				và kết nối với người học.
 			</p>
 
 			<h3 class="mt-8">Lợi ích</h3>

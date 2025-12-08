@@ -5,9 +5,9 @@ import { fetchAuthorizedApi, getSafeResult } from '$lib/utils/externalApi';
 export const load = async ({ url, cookies }) => {
 	const params = new URLSearchParams();
 
-	const view: DashboardViewType = url.searchParams.get('view')
-		? url.searchParams.get('view')
-		: 'custom';
+	const view: DashboardViewType = (
+		url.searchParams.get('view') ? url.searchParams.get('view') : 'custom'
+	) as DashboardViewType;
 	const date = view === 'day' ? url.searchParams.get('date') : null;
 
 	let from = view === 'custom' ? url.searchParams.get('from') : null;

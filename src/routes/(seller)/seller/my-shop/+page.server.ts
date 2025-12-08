@@ -17,8 +17,7 @@ export const load = async ({ cookies }) => {
 	} = await getSafeResult(fetchApi(`/api/home/${responseBody.result.id}`, 'GET'), {
 		shop: null,
 		products: [],
-		courses: [],
-		message: ''
+		courses: []
 	});
 
 	return {
