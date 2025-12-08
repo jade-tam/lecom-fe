@@ -3,7 +3,6 @@ import { PUBLIC_API_URL } from '$env/static/public';
 import { createLogger, sanitizeForLog } from '$lib/server/logger';
 import type { ApiResponseBody } from '$lib/types/ApiResponseBody';
 import { redirect, type Cookies } from '@sveltejs/kit';
-import { clearTokens, storeTokens } from './others';
 import type { ToastData } from './showToast';
 
 const logger = createLogger('API');
@@ -162,7 +161,7 @@ export async function fetchAuthorizedApi<T>(
 		if (refreshRes.ok) {
 			const refreshedBody = await refreshRes.json();
 
-			storeTokens(cookies, refreshedBody.result.token, refreshedBody.result.refreshToken);
+			// storeTokens(cookies, refreshedBody.result.token, refreshedBody.result.refreshToken);
 
 			logger.log(apiPrefix, 'Refresh token success, start fetching api again...');
 
@@ -176,7 +175,7 @@ export async function fetchAuthorizedApi<T>(
 		} else {
 			logger.warn(apiPrefix, "Can't refresh new token");
 
-			clearTokens(cookies);
+			// clearTokens(cookies);
 
 			// throw redirect(303, resolve('/auth/logout'));
 		}
@@ -208,18 +207,8 @@ export function getSafeResult<T>(
 	fallback: T
 ) {
 	return p.then((r) => {
-		// logger.log('getSafeResult', 'Success', r);
-
-		if (r.responseBody.statusCode === 401) {
-			redirect(307, resolve('/auth/logout'));
-		}
-
 		if (r.response.ok && r.responseBody.isSuccess) {
 			return r.responseBody.result;
-		} else {
-			if (r.response.status >= 500) {
-				// error(500, 'Đã có lỗi xảy ra success');
-			}
 		}
 
 		return fallback;
