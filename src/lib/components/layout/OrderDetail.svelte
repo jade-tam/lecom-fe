@@ -7,6 +7,7 @@
 		paymentStatusOptions,
 		shipmentStatusOptions,
 		type Order,
+		type OrderStatus,
 		type ShipmentStatus
 	} from '$lib/types/Order';
 	import {
@@ -22,12 +23,19 @@
 	import OpenModalButton from '../modal/OpenModalButton.svelte';
 	import RefundModalContent from '../modal/RefundModalContent.svelte';
 	import FormConfirmPopoverButton from '../wrapper/FormConfirmPopoverButton.svelte';
+	import CancelOrderModalContent from '../modal/CancelOrderModalContent.svelte';
 
 	const {
 		order,
 		isSellerView = false,
-		refundFormData
-	}: { order: Order; isSellerView?: boolean; refundFormData?: any } = $props();
+		refundFormData,
+		cancelOrderFormData
+	}: {
+		order: Order;
+		isSellerView?: boolean;
+		refundFormData?: any;
+		cancelOrderFormData: any;
+	} = $props();
 
 	const shipmentStatus: ShipmentStatus = $derived.by(() => {
 		switch (order?.status) {
@@ -47,6 +55,8 @@
 				return 'Ready';
 		}
 	});
+
+	const allowCancelStatuses: OrderStatus[] = ['Pending', 'Paid', 'Processing'];
 
 	function handleBack() {
 		history.back();
@@ -153,6 +163,14 @@
 				ModalContentProps={{ dataForm: refundFormData }}
 				><span class="icon-[mingcute--refresh-anticlockwise-1-line]"></span>Yêu cầu trả hàng hoàn
 				tiền
+			</OpenModalButton>
+		{/if}
+		{#if allowCancelStatuses.includes(order.status) && cancelOrderFormData}
+			<OpenModalButton
+				openButtonProps={{ class: 'btn btn-sm btn-error' }}
+				ModalContent={CancelOrderModalContent}
+				ModalContentProps={{ dataForm: cancelOrderFormData }}
+				><span class="icon-[mingcute--close-circle-line]"></span>Huỷ đơn hàng
 			</OpenModalButton>
 		{/if}
 	</AnimatedDiv>
@@ -317,7 +335,7 @@
 				}}
 				getStepClass={getPaymentStatusStepClass}
 			/>
-			{#if order.paymentStatus === 'Pending'}
+			{#if order.status === 'Pending'}
 				<p class="flex items-center gap-2 text-sm text-primary-content">
 					<span class="icon-[fa7-solid--circle-info]"></span>Sản phẩm cần được thanh toán ngay để
 					đơn hàng được xử lý.

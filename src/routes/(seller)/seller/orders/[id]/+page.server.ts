@@ -1,7 +1,10 @@
+import { cancelOrderSchema } from '$lib/schemas/cancelOrderSchema';
 import { orderStatusOptions, type Order } from '$lib/types/Order.js';
 import { getTitleFromOptionList } from '$lib/utils/converters.js';
 import { fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi';
-import { fail } from 'sveltekit-superforms/client';
+import { superValidate } from 'sveltekit-superforms';
+import { zod4 } from 'sveltekit-superforms/adapters';
+import { fail, message } from 'sveltekit-superforms/client';
 
 export const load = async ({ cookies, params }) => {
 	const { id } = params;
@@ -11,8 +14,11 @@ export const load = async ({ cookies, params }) => {
 		null
 	);
 
+	const cancelOrderFormData = await superValidate(zod4(cancelOrderSchema));
+
 	return {
-		order
+		order,
+		cancelOrderFormData
 	};
 };
 
@@ -35,5 +41,34 @@ export const actions = {
 		);
 
 		return { toastData };
+	},
+	cancelOrder: async ({ request, cookies, params }) => {
+		const form = await superValidate(request, zod4(cancelOrderSchema));
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		const formData = form.data;
+		const { id } = params;
+
+		const { response, responseBody } = await fetchAuthorizedApi(
+			cookies,
+			`/api/orders/${id}/cancel`,
+			'POST',
+			formData
+		);
+
+		const toastData = getToastData(
+			responseBody,
+			'Đơn hàng đã được hủy thành công.',
+			'Không thể hủy đơn hàng.'
+		);
+
+		if (response.ok) {
+			return message(form, { toastData });
+		} else {
+			return message(form, { toastData }, { status: 400 });
+		}
 	}
 };

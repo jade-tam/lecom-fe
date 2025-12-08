@@ -15,7 +15,7 @@
 </script>
 
 {#if order}
-	<OrderDetail {order} refundFormData={data.refundFormData} />
+	<OrderDetail {order} refundFormData={data.refundFormData} cancelOrderFormData={data.cancelOrderFormData} />
 {:else}
 	<EmptyPlaceholder
 		icon="icon-[fa7-solid--box-open]"

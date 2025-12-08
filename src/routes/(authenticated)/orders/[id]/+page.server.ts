@@ -1,6 +1,6 @@
+import { cancelOrderSchema } from '$lib/schemas/cancelOrderSchema.js';
 import { createRefundSchema, type CreateRefundSchema } from '$lib/schemas/refundSchema.js';
-import { orderStatusOptions, type Order } from '$lib/types/Order.js';
-import { getTitleFromOptionList } from '$lib/utils/converters';
+import { type Order } from '$lib/types/Order.js';
 import { fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi';
 import { fail } from '@sveltejs/kit';
 import { message, fail as superFormFail, superValidate } from 'sveltekit-superforms';
@@ -20,15 +20,17 @@ export const load = async ({ cookies, params }) => {
 			reasonType: 'ProductIssue',
 			reasonDescription: '',
 			type: 'Full',
-			refundAmount: 0,
-			attachmentUrls: null
+			refundAmount: 0
 		},
 		zod4(createRefundSchema)
 	);
 
+	const cancelOrderFormData = await superValidate(zod4(cancelOrderSchema));
+
 	return {
 		order,
-		refundFormData
+		refundFormData,
+		cancelOrderFormData
 	};
 };
 
@@ -69,6 +71,35 @@ export const actions = {
 			responseBody,
 			`Yêu cầu trả hàng hoàn tiền đã được gửi, vui lòng chờ xử lý.`,
 			'Không thể gửi yêu cầu.'
+		);
+
+		if (response.ok) {
+			return message(form, { toastData });
+		} else {
+			return message(form, { toastData }, { status: 400 });
+		}
+	},
+	cancelOrder: async ({ request, cookies, params }) => {
+		const form = await superValidate(request, zod4(cancelOrderSchema));
+
+		if (!form.valid) {
+			return superFormFail(400, { form });
+		}
+
+		const formData = form.data;
+		const { id } = params;
+
+		const { response, responseBody } = await fetchAuthorizedApi(
+			cookies,
+			`/api/orders/${id}/cancel`,
+			'POST',
+			formData
+		);
+
+		const toastData = getToastData(
+			responseBody,
+			'Đơn hàng đã được hủy thành công.',
+			'Không thể hủy đơn hàng.'
 		);
 
 		if (response.ok) {

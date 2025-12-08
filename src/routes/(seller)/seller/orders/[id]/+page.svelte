@@ -15,7 +15,7 @@
 </script>
 
 {#if order}
-	<OrderDetail {order} isSellerView />
+	<OrderDetail {order} cancelOrderFormData={data.cancelOrderFormData} isSellerView />
 {:else}
 	<EmptyPlaceholder
 		icon="icon-[fa7-solid--box-open]"
