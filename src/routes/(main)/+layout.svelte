@@ -6,7 +6,7 @@
 </script>
 
 <div class="mx-auto max-w-7xl p-4">
-	<Header cartPromise={data.cartCountPromise} />
+	<Header cartPromise={data.cartPromise} />
 
 	{@render children?.()}
 </div>
