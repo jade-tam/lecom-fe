@@ -21,9 +21,7 @@
 				</label>
 				<Breadcrumb />
 			</div>
-			<button class="btn btn-square btn-soft" aria-label="notification">
-				<span class="icon-[fa7-solid--bell] text-2xl"></span>
-			</button>
+			<NotificationButton />
 		</div>
 		<div class="mx-auto h-full w-full max-w-7xl p-4 pt-0">
 			{@render children()}

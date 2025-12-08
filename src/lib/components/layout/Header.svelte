@@ -10,6 +10,7 @@
 	import SearchInput from '../ui/SearchInput.svelte';
 	import UserAvatar from '../ui/UserAvatar.svelte';
 	import type { Cart } from '$lib/types/Cart';
+	import NotificationButton from './NotificationButton.svelte';
 
 	const {
 		cartPromise
@@ -110,14 +111,7 @@
 					<span class="icon-[mingcute--message-4-fill] text-2xl"></span>
 				</a>
 			</div>
-			<div class="tooltip tooltip-bottom" data-tip="Thông báo">
-				<button
-					class="btn btn-square text-primary-content btn-ghost btn-primary"
-					aria-label="Notification"
-				>
-					<span class="icon-[mingcute--bell-ringing-fill] text-2xl"></span>
-				</button>
-			</div>
+			<NotificationButton />
 			<div class="dropdown dropdown-end">
 				<div tabindex="0" role="button" class="btn m-1 btn-square btn-link">
 					<UserAvatar
@@ -156,25 +150,31 @@
 					</li>
 					<li>
 						<a href="/help-and-feedback" class="rounded-field"
-							><span class="text-lg icon-[mingcute--information-fill]"></span>Trợ giúp & Phản
-							hồi</a
+							><span class="icon-[mingcute--information-fill] text-lg"></span>Trợ giúp & Phản hồi</a
 						>
 					</li>
 					<div class="divider mx-2 my-0"></div>
 
 					{#if userRole && haveAuthorization(userRole, 'Admin')}
 						<li class="text-error-content">
-							<a href="/admin" class="rounded-field"><span class="icon-[mingcute--hat-fill] text-lg"></span>Trang quản trị hệ thống</a>
+							<a href="/admin" class="rounded-field"
+								><span class="icon-[mingcute--hat-fill] text-lg"></span>Trang quản trị hệ thống</a
+							>
 						</li>
 					{/if}
 					{#if userRole && haveAuthorization(userRole, 'Seller')}
 						<li class="text-secondary-content">
-							<a href="/seller" class="rounded-field"><span class="icon-[mingcute--shop-fill] text-lg"></span>Trang quản lý cửa hàng</a>
+							<a href="/seller" class="rounded-field"
+								><span class="icon-[mingcute--shop-fill] text-lg"></span>Trang quản lý cửa hàng</a
+							>
 						</li>
 					{/if}
 					{#if userRole && haveAuthorization(userRole, 'Moderator')}
 						<li class="text-info-content">
-							<a href="/moderator" class="rounded-field"><span class="icon-[mingcute--safe-shield-fill] text-lg"></span>Trang quản lý kiểm duyệt</a>
+							<a href="/moderator" class="rounded-field"
+								><span class="icon-[mingcute--safe-shield-fill] text-lg"></span>Trang quản lý kiểm
+								duyệt</a
+							>
 						</li>
 					{/if}
 					{#if userRole && !haveAuthorization(userRole, 'Seller')}
@@ -185,7 +185,11 @@
 
 					<div class="divider mx-2 my-0"></div>
 
-					<li><a href="/auth/logout" class="rounded-field text-error-content"><span class="icon-[mingcute--open-door-fill] text-lg"></span>Đăng xuất</a></li>
+					<li>
+						<a href="/auth/logout" class="rounded-field text-error-content"
+							><span class="icon-[mingcute--open-door-fill] text-lg"></span>Đăng xuất</a
+						>
+					</li>
 				</ul>
 			</div>
 		{:else}

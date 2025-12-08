@@ -1,5 +1,6 @@
 <script>
 	import DrawerSideContent from '$lib/components/layout/DrawerSideContent.svelte';
+	import NotificationButton from '$lib/components/layout/NotificationButton.svelte';
 	import Breadcrumb from '$lib/components/ui/Breadcrumb.svelte';
 	import { adminSidebarLayout } from '$lib/consts/sidebarLayout';
 
@@ -21,9 +22,7 @@
 				</label>
 				<Breadcrumb />
 			</div>
-			<button class="btn btn-square btn-soft" aria-label="notification">
-				<span class="icon-[fa7-solid--bell] text-2xl"></span>
-			</button>
+			<NotificationButton />
 		</div>
 		<div class="mx-auto h-full w-full max-w-7xl p-4 pt-0">
 			{@render children()}

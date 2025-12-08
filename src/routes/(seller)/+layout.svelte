@@ -1,6 +1,7 @@
 <script>
 	import { resolve } from '$app/paths';
 	import DrawerSideContent from '$lib/components/layout/DrawerSideContent.svelte';
+	import NotificationButton from '$lib/components/layout/NotificationButton.svelte';
 	import Breadcrumb from '$lib/components/ui/Breadcrumb.svelte';
 	import { sellerSidebarLayout } from '$lib/consts/sidebarLayout';
 
@@ -30,12 +31,7 @@
 				>
 					<span class="icon-[mingcute--message-4-fill] text-2xl"></span> Tin nhắn
 				</a>
-				<button
-					class="btn btn-square text-primary-content btn-ghost btn-primary"
-					aria-label="Notification"
-				>
-					<span class="icon-[mingcute--bell-ringing-fill] text-2xl"></span>
-				</button>
+				<NotificationButton />
 			</div>
 		</div>
 		<div class="mx-auto h-full w-full max-w-7xl p-4 pt-0">
