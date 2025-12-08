@@ -33,7 +33,9 @@
 			<li>
 				<a
 					href="/learning"
-					class="btn btn-ghost text-success-content {page.url.pathname.startsWith('/learning') ? 'font-black' : ''}"
+					class="btn text-success-content btn-ghost {page.url.pathname.startsWith('/learning')
+						? 'font-black'
+						: ''}"
 				>
 					<span class="icon-[mingcute--book-2-fill] text-xl"></span>Học tập
 				</a>
@@ -41,7 +43,9 @@
 			<li>
 				<a
 					href="/shopping"
-					class="btn btn-ghost text-secondary-content {page.url.pathname.startsWith('/shopping') ? 'font-black' : ''}"
+					class="btn text-secondary-content btn-ghost {page.url.pathname.startsWith('/shopping')
+						? 'font-black'
+						: ''}"
 				>
 					<span class="icon-[mingcute--box-2-fill] text-xl"></span>Mua sắm
 				</a>
@@ -49,7 +53,9 @@
 			<li>
 				<a
 					href="/community"
-					class="btn btn-ghost text-info-content {page.url.pathname.startsWith('/community') ? 'font-black' : ''}"
+					class="btn text-info-content btn-ghost {page.url.pathname.startsWith('/community')
+						? 'font-black'
+						: ''}"
 				>
 					<span class="icon-[mingcute--comment-2-fill] text-xl"></span>Cộng đồng
 				</a>
@@ -121,30 +127,54 @@
 				</div>
 				<ul
 					tabindex="-1"
-					class="dropdown-content menu z-1 w-52 rounded-field bg-base-100 p-2 shadow-sm"
+					class="dropdown-content menu z-1 w-60 rounded-field bg-base-100 p-2 shadow-sm"
 				>
-					<li><a href="/profile" class="rounded-field">Trang cá nhân</a></li>
-					<li><a href="/course-enrollments" class="rounded-field">Khóa học của tôi</a></li>
-					<li><a href="/orders" class="rounded-field">Lịch sử đơn hàng</a></li>
-					<li><a href="/wallet" class="rounded-field">Ví của tôi</a></li>
-					<li><a href="/settings" class="rounded-field">Cài đặt</a></li>
-					<li><a href="/help-and-feedback" class="rounded-field">Trợ giúp & Phản hồi</a></li>
-
+					<li>
+						<a href="/profile" class="rounded-field"
+							><span class="icon-[mingcute--user-4-fill] text-lg"></span>Trang cá nhân</a
+						>
+					</li>
+					<li>
+						<a href="/course-enrollments" class="rounded-field"
+							><span class="icon-[mingcute--book-2-fill] text-lg"></span>Khóa học của tôi</a
+						>
+					</li>
+					<li>
+						<a href="/orders" class="rounded-field"
+							><span class="icon-[mingcute--shopping-bag-2-fill] text-lg"></span>Lịch sử đơn hàng</a
+						>
+					</li>
+					<li>
+						<a href="/wallet" class="rounded-field"
+							><span class="icon-[mingcute--wallet-3-fill] text-lg"></span>Ví của tôi</a
+						>
+					</li>
+					<li>
+						<a href="/settings" class="rounded-field"
+							><span class="icon-[mingcute--settings-3-fill] text-lg"></span>Cài đặt</a
+						>
+					</li>
+					<li>
+						<a href="/help-and-feedback" class="rounded-field"
+							><span class="text-lg icon-[mingcute--information-fill]"></span>Trợ giúp & Phản
+							hồi</a
+						>
+					</li>
 					<div class="divider mx-2 my-0"></div>
 
 					{#if userRole && haveAuthorization(userRole, 'Admin')}
 						<li class="text-error-content">
-							<a href="/admin" class="rounded-field">Trang quản trị hệ thống</a>
+							<a href="/admin" class="rounded-field"><span class="icon-[mingcute--hat-fill] text-lg"></span>Trang quản trị hệ thống</a>
 						</li>
 					{/if}
 					{#if userRole && haveAuthorization(userRole, 'Seller')}
 						<li class="text-secondary-content">
-							<a href="/seller" class="rounded-field">Trang quản lý cửa hàng</a>
+							<a href="/seller" class="rounded-field"><span class="icon-[mingcute--shop-fill] text-lg"></span>Trang quản lý cửa hàng</a>
 						</li>
 					{/if}
 					{#if userRole && haveAuthorization(userRole, 'Moderator')}
 						<li class="text-info-content">
-							<a href="/moderator" class="rounded-field">Trang quản lý kiểm duyệt</a>
+							<a href="/moderator" class="rounded-field"><span class="icon-[mingcute--safe-shield-fill] text-lg"></span>Trang quản lý kiểm duyệt</a>
 						</li>
 					{/if}
 					{#if userRole && !haveAuthorization(userRole, 'Seller')}
@@ -155,7 +185,7 @@
 
 					<div class="divider mx-2 my-0"></div>
 
-					<li><a href="/auth/logout" class="rounded-field text-error-content">Đăng xuất</a></li>
+					<li><a href="/auth/logout" class="rounded-field text-error-content"><span class="icon-[mingcute--open-door-fill]"></span>Đăng xuất</a></li>
 				</ul>
 			</div>
 		{:else}
