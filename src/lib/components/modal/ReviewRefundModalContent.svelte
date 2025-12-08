@@ -25,7 +25,8 @@
 			}
 		>(dataForm, {
 			id: 'refund-form-' + refund.id,
-			validators: zod4Client(reviewRefundSchema)
+			validators: zod4Client(reviewRefundSchema),
+			invalidateAll: false
 		});
 
 	$effect(() => {
@@ -35,9 +36,7 @@
 	$effect(() => {
 		if ($message?.toastData) {
 			showToast($message.toastData);
-			setTimeout(() => {
-				onFormActionSuccess?.();
-			}, 500);
+			onFormActionSuccess?.();
 		}
 	});
 </script>

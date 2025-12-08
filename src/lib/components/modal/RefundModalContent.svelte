@@ -20,7 +20,8 @@
 				toastData: ToastData;
 			}
 		>(dataForm, {
-			validators: zod4Client(createRefundSchema)
+			validators: zod4Client(createRefundSchema),
+			invalidateAll: false
 		});
 
 	$effect(() => {

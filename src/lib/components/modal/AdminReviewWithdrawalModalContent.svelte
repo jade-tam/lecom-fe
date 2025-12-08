@@ -9,6 +9,7 @@
 	import FormInput from '../ui/FormInput.svelte';
 	import FormTextArea from '../ui/FormTextArea.svelte';
 	import Image from '../ui/Image.svelte';
+	import { invalidateAll } from '$app/navigation';
 
 	const {
 		dataForm,
@@ -30,15 +31,15 @@
 			}
 		>(dataForm, {
 			id: 'withdrawal-form-' + withdrawal.id,
-			validators: zod4Client(reviewWithdrawalSchema)
+			validators: zod4Client(reviewWithdrawalSchema),
+			invalidateAll: false
 		});
 
 	$effect(() => {
 		if ($message?.toastData) {
 			showToast($message.toastData);
-			setTimeout(() => {
-				onFormActionSuccess?.();
-			}, 500);
+			onFormActionSuccess?.();
+			invalidateAll();
 		}
 	});
 </script>
