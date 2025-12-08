@@ -55,7 +55,7 @@
 
 	h1,
 	.text-header1 {
-		@apply font-serif text-[2.4rem] font-bold max-md:text-[1.8rem];
+		@apply font-serif text-[2.9rem] font-bold max-md:text-[1.9rem];
 	}
 
 	h2,

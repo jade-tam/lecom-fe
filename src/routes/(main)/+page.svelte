@@ -10,10 +10,10 @@
 <section>
 	<div class="my-48 grid grid-cols-2 items-center gap-8 max-md:my-12 max-md:grid-cols-1">
 		<div>
-			<h1>Learn freely. Shop smartly.</h1>
+			<h1">Học tập dễ dàng. Mua sắm thông minh.</h1>
 			<p class="mt-2">
-				Explore 100% free online courses to grow your skills — and discover products that make
-				learning easier, fun, and more effective.
+				Tiếp cận các khóa học trực tuyến 100% miễn phí để nâng cao kiến thức và kỹ năng — đồng thời
+				khám phá những sản phẩm giúp việc học trở nên dễ dàng, thú vị và hiệu quả hơn.
 			</p>
 		</div>
 
@@ -28,7 +28,7 @@
 <!-- ========================================================================================== -->
 
 <section class="mt-64 flex flex-col items-center max-md:mt-32">
-	<h2 class="text-header1">Free Courses for Everyone</h2>
+	<h2 class="text-header1">Khóa học miễn phí cho mọi người</h2>
 	<div class="my-16 grid grid-cols-2 items-center gap-8 max-md:mb-8 max-md:grid-cols-1">
 		<div class="flex justify-center max-md:justify-center">
 			<div class="max-w-[300px]">
@@ -36,14 +36,13 @@
 			</div>
 		</div>
 		<div>
-			<h3 class="text-header2">Learn something new — completely free</h3>
+			<h3 class="text-header2">Học kiến thức mới — hoàn toàn miễn phí</h3>
 			<p class="mt-2">
-				Dive into hands-on courses built by experts and enthusiasts. Whether you're into technology,
-				creativity, or personal growth, our free courses help you learn practical skills that
-				matter.
+				Tham gia các khóa học trực tuyến được chia sẻ bởi chuyên gia và những người đam mê. Bạn có
+				thể tìm hiểu về hàng ngàn khoá học hoàn toán miễn phí về các lĩnh vực sáng tạo hoặc các kiến thức về phát triển bản thân tại LECOM.
 			</p>
 
-			<h3 class="mt-8">Top Learning Categories</h3>
+			<h3 class="mt-8">Danh mục khoá học nổi bật</h3>
 			<div class="mt-2 flex flex-wrap gap-2">
 				{#await data.landingPageData}
 					{#each Array(4) as skeleton}
@@ -57,13 +56,13 @@
 						</div>
 					{/each}
 				{:catch err}
-					<p class="text-error">Error loading top categories</p>
+					<p class="text-error">Không thể tải danh mục nổi bật</p>
 				{/await}
 			</div>
 		</div>
 	</div>
 
-	<h3 class="self-start">Popular Courses</h3>
+	<h3 class="self-start">Các khóa học phổ biến</h3>
 	<div class="grid w-full grid-cols-4 items-stretch gap-4 py-2 max-md:grid-cols-2">
 		{#await data.landingPageData}
 			{#each Array(4) as skeleton}
@@ -74,28 +73,29 @@
 				<CourseCard {course} />
 			{/each}
 		{:catch err}
-			<p class="text-error">Error loading popular courses</p>
+			<p class="text-error">Không thể tải danh sách khóa học phổ biến</p>
 		{/await}
 	</div>
 
 	<a href="/learning" class="btn mt-8 btn-primary">
-		Explore all courses <span class="icon-[fa7-solid--arrow-right]"></span>
+		Xem tất cả khóa học <span class="icon-[fa7-solid--arrow-right]"></span>
 	</a>
 </section>
 
 <!-- ========================================================================================== -->
 
 <section class="mt-64 flex flex-col items-center max-md:mt-32">
-	<h2 class="text-header1">Products That Help You Learn</h2>
+	<h2 class="text-header1">Mua sắm sản phẩm hỗ trợ cho việc học</h2>
 	<div class="my-16 grid grid-cols-2 items-center gap-8 max-md:mb-8 max-md:grid-cols-1">
 		<div>
-			<h3 class="text-header2">Shop the tools that support your learning.</h3>
+			<h3 class="text-header2">Mua sắm những sản phẩm và công cụ hỗ trợ cho việc học của bạn.</h3>
 			<p class="mt-2">
-				From notebooks and study kits to gadgets and creative tools — find products carefully
-				selected to help you stay inspired, focused, and productive while learning.
+				Từ sổ tay, bộ dụng cụ học tập đến các thiết bị và công cụ sáng tạo — Bạn có thể dễ dàng tìm những sản phẩm
+				hữu ích để giúp bạn luôn có cảm hứng, tập trung và hiệu quả hơn trong quá trình
+				học tập.
 			</p>
 
-			<h3 class="mt-8">Top Product Categories</h3>
+			<h3 class="mt-8">Danh mục sản phẩm nổi bật</h3>
 			<div class="mt-2 flex flex-wrap gap-2">
 				{#await data.landingPageData}
 					{#each Array(4) as skeleton}
@@ -109,7 +109,7 @@
 						</div>
 					{/each}
 				{:catch err}
-					<p class="text-error">Error loading product categories</p>
+					<p class="text-error">Không thể tải danh mục sản phẩm</p>
 				{/await}
 			</div>
 		</div>
@@ -120,7 +120,7 @@
 		</div>
 	</div>
 
-	<h3 class="self-start">Best Seller Products</h3>
+	<h3 class="self-start">Sản phẩm bán chạy nhất</h3>
 	<div class="grid w-full grid-cols-4 items-stretch gap-4 py-2 max-md:grid-cols-2">
 		{#await data.landingPageData}
 			{#each Array(4) as skeleton}
@@ -131,19 +131,19 @@
 				<ProductCard {product} />
 			{/each}
 		{:catch err}
-			<p class="text-error">Error loading best seller products</p>
+			<p class="text-error">Không thể tải danh sách sản phẩm bán chạy</p>
 		{/await}
 	</div>
 
 	<a href="/shopping" class="btn mt-8 btn-primary">
-		Start Shopping Now <span class="icon-[fa7-solid--arrow-right]"></span>
+		Bắt đầu mua sắm ngay <span class="icon-[fa7-solid--arrow-right]"></span>
 	</a>
 </section>
 
 <!-- ========================================================================================== -->
 
 <section class="mt-64 mb-32 flex flex-col items-center max-md:mt-32">
-	<h2 class="text-header1">Teach and Sell with LECOM</h2>
+	<h2 class="text-header1">Dạy học và bán hàng cùng LECOM</h2>
 	<div class="my-16 grid grid-cols-2 items-center gap-8 max-md:mb-8 max-md:grid-cols-1">
 		<div class="flex justify-center max-md:justify-center">
 			<div class="max-w-[300px]">
@@ -151,35 +151,36 @@
 			</div>
 		</div>
 		<div>
-			<h3 class="text-header2">Teach what you love. Sell what they need.</h3>
+			<h3 class="text-header2">Dạy điều bạn yêu thích. Bán điều họ cần.</h3>
 			<p class="mt-2">
-				Share your knowledge with free courses or sell your own products — all on one platform. We
-				handle the tech so you can focus on creating and connecting with learners.
+				Chia sẻ kiến thức qua các khóa học miễn phí hoặc bán sản phẩm của riêng bạn — tất cả trên cùng
+				một nền tảng. Chúng tôi đã lo phần công nghệ để bạn có thể tập trung vào việc sáng tạo và kết nối với người
+				học.
 			</p>
 
-			<h3 class="mt-8">Benefits</h3>
+			<h3 class="mt-8">Lợi ích</h3>
 			<div class="mt-2 flex flex-col gap-2">
 				<div class="badge badge-lg badge-secondary">
 					<span class="icon-[fa7-solid--video]"></span>
-					Create and host courses easily
+					Tạo và quản lý khóa học dễ dàng
 				</div>
 				<div class="badge badge-lg badge-secondary">
 					<span class="icon-[fa7-solid--box-open]"></span>
-					Sell your products directly
+					Bán sản phẩm của bạn trực tiếp
 				</div>
 				<div class="badge badge-lg badge-secondary">
 					<span class="icon-[fa7-solid--credit-card]"></span>
-					Built-in payments
+					Tích hợp công cụ thanh toán sẵn
 				</div>
 				<div class="badge badge-lg badge-secondary">
 					<span class="icon-[fa7-solid--globe-americas]"></span>
-					Reach a growing community
+					Tiếp cận cộng đồng người dùng đang phát triển
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<a href="/auth/register" class="btn mt-8 btn-primary">
-		Register and start selling now <span class="icon-[fa7-solid--arrow-right]"></span>
+		Đăng ký và bắt đầu bán ngay <span class="icon-[fa7-solid--arrow-right]"></span>
 	</a>
 </section>
