@@ -185,7 +185,7 @@
 
 					<div class="divider mx-2 my-0"></div>
 
-					<li><a href="/auth/logout" class="rounded-field text-error-content"><span class="icon-[mingcute--open-door-fill]"></span>Đăng xuất</a></li>
+					<li><a href="/auth/logout" class="rounded-field text-error-content"><span class="icon-[mingcute--open-door-fill] text-lg"></span>Đăng xuất</a></li>
 				</ul>
 			</div>
 		{:else}
