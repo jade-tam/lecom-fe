@@ -111,7 +111,7 @@ export const actions = {
 			return message(form, { toastData }, { status: 400 });
 		}
 	},
-	createOrderFeedback: async ({ request, cookies }) => {
+	createOrderFeedback: async ({ request, cookies, params }) => {
 		const form = await superValidate(request, zod4(createProductFeedbackSchema));
 
 		if (!form.valid) {
@@ -119,19 +119,18 @@ export const actions = {
 		}
 
 		const formData = form.data;
+		const { id } = params;
 
 		const { response, responseBody } = await fetchAuthorizedApi(
 			cookies,
-			`/api/feedback`,
+			`/api/Feedback/by-urls`,
 			'POST',
-			formData
+			{ orderId: id, ...formData }
 		);
 
-		const toastData = getToastData(
-			responseBody,
-			'Đánh giá thành công.',
-			'Không thể đánh giá.'
-		);
+		console.log(formData);
+
+		const toastData = getToastData(responseBody, 'Đánh giá thành công.', 'Không thể đánh giá.');
 
 		if (response.ok) {
 			return message(form, { toastData });

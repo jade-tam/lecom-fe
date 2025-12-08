@@ -48,6 +48,7 @@
 			showToast($message.toastData);
 			onFormActionSuccess?.();
 			invalidateAll();
+			reset();
 		}
 	});
 </script>
