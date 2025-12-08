@@ -1,5 +1,6 @@
 <script>
 	import DrawerSideContent from '$lib/components/layout/DrawerSideContent.svelte';
+	import NotificationButton from '$lib/components/layout/NotificationButton.svelte';
 	import Breadcrumb from '$lib/components/ui/Breadcrumb.svelte';
 	import { moderatorSidebarLayout } from '$lib/consts/sidebarLayout';
 
