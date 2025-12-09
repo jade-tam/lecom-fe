@@ -25,7 +25,9 @@
 			{ id: 'businessType', key: 'businessType', name: 'Loại hình kinh doanh' },
 			{ id: 'categoryName', key: 'categoryName', name: 'Danh mục' },
 			{ id: 'status', key: 'status', name: 'Trạng thái' }
-		]
+		],
+		initialSort: 'status',
+		initialSortDirection: 'desc'
 	});
 </script>
 
@@ -84,7 +86,7 @@
 						{#each table.columns as column (column.id)}
 							{#if column.id === 'status'}
 								<td class="whitespace-nowrap">
-									<div class={`badge ${getStatusBadgeClass(row.status)}`}>
+									<div class={`badge badge-sm ${getStatusBadgeClass(row.status)}`}>
 										{getTitleFromOptionList(row.status, shopStatusOptions)}
 									</div>
 								</td>

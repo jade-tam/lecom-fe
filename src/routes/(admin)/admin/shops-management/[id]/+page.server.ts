@@ -16,7 +16,7 @@ export const actions = {
 		const data = await request.formData();
 		const id = data.get('id');
 
-		if (!id) return fail(400, { message: 'Missing shop id' });
+		if (!id) return fail(400, { message: 'ID cửa hàng bị thiếu' });
 
 		const { responseBody } = await fetchAuthorizedApi(
 			cookies,
@@ -24,7 +24,7 @@ export const actions = {
 			'POST'
 		);
 
-		const toastData = getToastData(responseBody, 'Shop approved');
+		const toastData = getToastData(responseBody, 'Cửa hàng đã được duyệt');
 
 		return { toastData };
 	},
@@ -34,7 +34,7 @@ export const actions = {
 		const id = data.get('id');
 		const reason = data.get('reason');
 
-		if (!id) return fail(400, { message: 'Missing shop id' });
+		if (!id) return fail(400, { message: 'ID cửa hàng bị thiếu' });
 
 		const { responseBody } = await fetchAuthorizedApi(
 			cookies,
@@ -45,7 +45,7 @@ export const actions = {
 			}
 		);
 
-		const toastData = getToastData(responseBody, 'Shop rejected');
+		const toastData = getToastData(responseBody, 'Cửa hàng đã bị từ chối');
 
 		return { toastData };
 	}

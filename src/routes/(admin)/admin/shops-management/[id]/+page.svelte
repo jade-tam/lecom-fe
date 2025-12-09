@@ -115,7 +115,7 @@
 		<p class="mt-2">{shop.description}</p>
 	</div>
 
-	<div class="overflow-auto">
+	<!-- <div class="overflow-auto">
 		<div class="stats mt-4 border">
 			<div class="stat">
 				<div class="stat-figure text-secondary-content">
@@ -158,7 +158,7 @@
 				<div class="stat-desc">145 lượt đánh giá</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<fieldset class="mt-2 fieldset">
 		<legend class="fieldset-legend">Số điện thoại cửa hàng</legend>

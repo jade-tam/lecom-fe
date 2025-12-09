@@ -34,7 +34,7 @@ export const registerShopSchema = z.object({
 
 	businessType: BusinessTypeEnum,
 
-	ownershipDocumentUrl: z.url('Tài liệu về sở hữu cửa hàng không hợp lệ').optional(),
+	ownershipDocumentUrl: z.url('Tài liệu về sở hữu cửa hàng không hợp lệ').nullable(),
 
 	shopAvatar: z.url('Vui lòng tải lên ảnh đại diện cửa hàng'),
 
@@ -69,7 +69,7 @@ export const registerShopSchema = z.object({
 
 	acceptedTerms: z
 		.boolean()
-		.refine((val) => val === true, 'Bạn phải chấp nhẫn các điều khoản trước khi tiếp tục'),
+		.refine((val) => val === true, 'Bạn phải chấp nhận các điều khoản trước khi tiếp tục'),
 
 	ownerFullName: z
 		.string()

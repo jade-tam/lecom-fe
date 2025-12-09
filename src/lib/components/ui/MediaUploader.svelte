@@ -69,7 +69,7 @@
 		if (!file) return;
 
 		if (file.size > maxSizeMB * 1024 * 1024) {
-			showToast({ type: 'error', description: `File too large (max ${maxSizeMB} MB)` });
+			showToast({ type: 'error', description: `File quá lớn (tối đa ${maxSizeMB} MB)` });
 			return;
 		}
 
@@ -120,7 +120,7 @@
 		} catch (err: any) {
 			console.error(err);
 			errorMessage = String(err?.message ?? err);
-			showToast({ type: 'error', description: 'Something went wrong' });
+			showToast({ type: 'error', description: 'Có lỗi xảy ra trong quá trình tải lên' });
 		} finally {
 			uploading = false;
 		}
@@ -169,11 +169,11 @@
 	// crop + upload flow for images
 	async function cropAndUpload() {
 		if (!selectedFile) {
-			showToast({ type: 'error', description: 'No file selected.' });
+			showToast({ type: 'error', description: 'Chưa có file nào được chọn.' });
 			return;
 		}
 		if (!pixelCrop) {
-			showToast({ type: 'error', description: 'Please adjust crop area before uploading.' });
+			showToast({ type: 'error', description: 'Vui lòng điều chỉnh vùng cắt trước khi tải lên.' });
 			return;
 		}
 
@@ -276,7 +276,7 @@
 		<div class="flex flex-col items-center justify-center gap-2 p-4 opacity-60">
 			<span class={icon + ' text-xl'}></span>
 			<span class="text-sm">{placeholder}</span>
-			<span class="text-xs">Maximum size {maxSizeMB} MB</span>
+			<span class="text-xs">Kích thước tối đa {maxSizeMB} MB</span>
 		</div>
 	{/if}
 
@@ -296,7 +296,7 @@
 	}}
 >
 	<div class="modal-box flex h-[70vh] w-[90vw] max-w-2xl flex-col gap-4">
-		<h3 class="font-bold">Crop image</h3>
+		<h3 class="font-bold">Cắt ảnh trước khi tải lên</h3>
 
 		{#if imageSrc}
 			<div class="relative flex-1 overflow-hidden rounded-selector bg-base-100">
@@ -306,6 +306,7 @@
 					bind:zoom
 					aspect={aspectRatio === '1:1' ? 1 : 1.77}
 					oncropcomplete={handleCropComplete}
+					maxZoom={5}
 				/>
 			</div>
 
@@ -314,33 +315,35 @@
 					<input
 						type="range"
 						min="1"
-						max="3"
+						max="5"
 						bind:value={zoom}
 						class="range range-secondary range-sm"
-						step="0.02"
+						step="0.05"
 					/>
 					<div class="flex justify-between text-xs">
 						<span>1x</span>
 						<span>2x</span>
 						<span>3x</span>
+						<span>4x</span>
+						<span>5x</span>
 					</div>
 				</div>
 
-				<div class="ml-auto flex items-center gap-2">
-					<button class="btn btn-ghost" onclick={cancelCrop} disabled={uploading}>Cancel</button>
-					<button class="btn btn-primary" onclick={cropAndUpload} disabled={uploading}>
-						{#if uploading}Uploading...{:else}Crop & Upload{/if}
-					</button>
-				</div>
+			<div class="ml-auto flex items-center gap-2">
+				<button class="btn btn-ghost" onclick={cancelCrop} disabled={uploading}>Hủy</button>
+				<button class="btn btn-primary" onclick={cropAndUpload} disabled={uploading}>
+					{#if uploading}Đang tải lên...{:else}Cắt hình & Tải lên{/if}
+				</button>
+			</div>
 			</div>
 
 			{#if errorMessage}
 				<p class="mt-2 text-error">{errorMessage}</p>
 			{/if}
 		{:else}
-			<p>No image selected.</p>
+			<p>Chưa chọn ảnh nào.</p>
 			<div class="modal-action">
-				<button class="btn" onclick={() => modal?.close()}>Close</button>
+				<button class="btn" onclick={() => modal?.close()}>Đóng</button>
 			</div>
 		{/if}
 	</div>

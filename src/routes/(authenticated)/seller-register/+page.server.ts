@@ -1,17 +1,23 @@
 import { registerShopSchema } from '$lib/schemas/registerShopSchema';
 import type { Category } from '$lib/types/Category';
-import { fetchApi, fetchAuthorizedApi, getToastData } from '$lib/utils/externalApi';
+import type { SellerRegisterStatus } from '$lib/types/Shop';
+import { fetchApi, fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi';
 import type { ToastData } from '$lib/utils/showToast';
 import { fail, type Actions } from '@sveltejs/kit';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 
-export const load = async () => {
+export const load = async ({ cookies }) => {
 	const { responseBody } = await fetchApi<Category[]>('/api/CourseCategory', 'GET');
 	const categories: Category[] = responseBody.result;
 	const form = await superValidate(zod4(registerShopSchema));
 
-	return { form, categories };
+	const registerStatus = await getSafeResult(
+		fetchAuthorizedApi<SellerRegisterStatus>(cookies, '/api/Seller/register-status', 'GET'),
+		null
+	);
+
+	return { registerStatus, form, categories };
 };
 
 export const actions: Actions = {

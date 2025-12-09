@@ -50,3 +50,8 @@ export type Shop = {
 	shopInstagram: string;
 	shopTiktok: string;
 };
+
+export type SellerRegisterStatus = {
+	status: ShopStatus;
+	reason: string;
+};

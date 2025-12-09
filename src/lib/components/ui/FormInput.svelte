@@ -2,6 +2,7 @@
 	import type { HTMLInputAttributes } from 'svelte/elements';
 	import type { SuperFormData, SuperFormErrors } from 'sveltekit-superforms/client';
 	import ToolTip from './ToolTip.svelte';
+	import DateSelector from './data-input/DateSelector.svelte';
 
 	let {
 		label,
@@ -14,6 +15,7 @@
 		hidden = false,
 		class: className = '',
 		hideError = false,
+		withDateSelector = false,
 		...restInputAttr
 	}: HTMLInputAttributes & {
 		label?: string;
@@ -26,6 +28,7 @@
 		superForm: SuperFormData<any>;
 		errors: SuperFormErrors<Record<string, string>>;
 		hideError?: boolean;
+		withDateSelector?: boolean;
 	} = $props();
 </script>
 
@@ -45,6 +48,15 @@
 		<input {name} bind:value={$superForm[name]} {...restInputAttr} />
 		{#if postfix}
 			<span class="ml-2 font-black text-primary-content italic">{postfix}</span>
+		{/if}
+		{#if withDateSelector}
+			<DateSelector
+				openButtonProps={{ class: 'btn btn-xs btn-secondary' }}
+				popoverId="{name}-date-input"
+				bind:date={$superForm[name]}
+			>
+				<span class="icon-[mingcute--calendar-2-line]"></span>Lựa chọn ngày
+			</DateSelector>
 		{/if}
 	</label>
 	{#if $errors[name] && !hideError}
