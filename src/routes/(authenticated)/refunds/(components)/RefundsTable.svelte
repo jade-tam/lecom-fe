@@ -6,7 +6,7 @@
 	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 	import TableFilter from '$lib/components/ui/TableFilter.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
-	import { refundStatusOptions, refundReasonTypeOptions, type Refund } from '$lib/types/Refund';
+	import { refundReasonTypeOptions, refundStatusOptions, type Refund } from '$lib/types/Refund';
 	import { getRefundStatusClass } from '$lib/utils/classComposer';
 	import { formatDate, formatVND, getTitleFromOptionList } from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
@@ -147,11 +147,13 @@
 								<div class="flex gap-1">
 									<div class="tooltip" data-tip="Xem chi tiết">
 										<a
-											href={resolve(`/refunds/${row.id}`)}
+											href={resolve(`/orders/[id]`, {
+												id: row.orderId
+											})}
 											class="btn btn-secondary"
 											aria-label="xem chi tiết"
 										>
-											<span class="icon-[mingcute--document-2-line] text-xl"></span>Chi tiết
+											<span class="icon-[mingcute--document-2-line] text-xl"></span>Chi tiết đơn
 										</a>
 									</div>
 								</div>
