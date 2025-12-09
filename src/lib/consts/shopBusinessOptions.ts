@@ -2,11 +2,11 @@ import type { FormSelectOption } from '$lib/components/ui/FormSelect.svelte';
 
 export const shopBusinessOptions = [
 	{
-		title: 'Personal',
+		title: 'Cá nhân',
 		value: 'personal'
 	},
 	{
-		title: 'Business',
+		title: 'Doanh nghiệp',
 		value: 'business'
 	}
 ] as const satisfies readonly FormSelectOption[];

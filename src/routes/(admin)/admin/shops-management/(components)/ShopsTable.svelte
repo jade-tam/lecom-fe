@@ -6,6 +6,8 @@
 	import { getStatusBadgeClass, getStatusBtnClass } from '$lib/utils/classComposer';
 	import Image from '$lib/components/ui/Image.svelte';
 	import TableFilter from '$lib/components/ui/TableFilter.svelte';
+	import { getTitleFromOptionList } from '$lib/utils/converters';
+	import { shopBusinessOptions } from '$lib/consts/shopBusinessOptions';
 
 	const { shops }: { shops: Shop[] } = $props();
 
@@ -81,15 +83,21 @@
 					<tr>
 						{#each table.columns as column (column.id)}
 							{#if column.id === 'status'}
-								<td>
+								<td class="whitespace-nowrap">
 									<div class={`badge ${getStatusBadgeClass(row.status)}`}>
-										{row[column.key]}
+										{getTitleFromOptionList(row.status, shopStatusOptions)}
 									</div>
+								</td>
+							{:else if column.id === 'businessType'}
+								<td>
+									{getTitleFromOptionList(row.businessType, shopBusinessOptions)}
 								</td>
 							{:else if column.id === 'shopAvatar'}
 								<td>
-									<Image src={row.shopAvatar} class="h-12 w-12" alt="avatar" />
+									<Image src={row.shopAvatar} class="h-12 w-12 rounded-full" alt="avatar" />
 								</td>
+							{:else if column.id === 'name'}
+								<td class="text-sm font-bold">{row.name}</td>
 							{:else}
 								<td>{row[column.key]}</td>
 							{/if}

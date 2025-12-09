@@ -1,7 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
-	import Image from '$lib/components/ui/Image.svelte';
+	import ImageWithFullscreenViewer from '$lib/components/ui/ImageWithFullscreenViewer.svelte';
 	import { getStatusBadgeClass } from '$lib/utils/classComposer';
 	import { formatDate, getTimeSince } from '$lib/utils/converters.js';
 	import showToast from '$lib/utils/showToast.js';
@@ -31,7 +31,7 @@
 		>
 			<span class="icon-[fa7-solid--arrow-left]"></span>
 		</a>
-		<h2>Chi tiết cửa hàng</h2>
+		<h2>Chi tiết cửa hàng: {shop.name}</h2>
 	</div>
 
 	<div class="flex gap-2">
@@ -87,17 +87,17 @@
 	<div class="flex gap-4">
 		<fieldset class="fieldset">
 			<legend class="fieldset-legend">Ảnh đại diện cửa hàng</legend>
-			<Image src={shop.shopAvatar} class="h-32 w-32" alt={shop.name + ' shop'} />
+			<ImageWithFullscreenViewer src={shop.shopAvatar} class="h-32 w-32 rounded-full border" alt={shop.name + ' shop'} />
 		</fieldset>
 		<fieldset class="fieldset w-full">
 			<legend class="fieldset-legend">Ảnh banner cửa hàng</legend>
-			<Image src={shop.shopBanner} alt={shop.name + ' shop'} class="h-32 w-full" />
+			<ImageWithFullscreenViewer src={shop.shopBanner} alt={shop.name + ' shop'} class="h-32 w-full rounded-box border" />
 		</fieldset>
 	</div>
 
 	<div class="mt-2 flex flex-col gap-1 overflow-hidden">
 		<h3 class="text-header2">{shop.name}</h3>
-		<p class="font-bold text-secondary italic">{shop.categoryName}</p>
+		<p class="font-bold text-secondary-content-content italic">Danh mục cửa hàng: {shop.categoryName}</p>
 		<div class="mt-1 flex items-center gap-2">
 			<div class={`badge ${getStatusBadgeClass(shop.status)}`}>
 				{shop.status === 'Pending'
@@ -118,7 +118,7 @@
 	<div class="overflow-auto">
 		<div class="stats mt-4 border">
 			<div class="stat">
-				<div class="stat-figure text-secondary">
+				<div class="stat-figure text-secondary-content">
 					<span class="icon-[fa7-solid--box-archive] text-2xl"></span>
 				</div>
 				<div class="stat-title">Tổng số sản phẩm</div>
@@ -127,7 +127,7 @@
 			</div>
 
 			<div class="stat">
-				<div class="stat-figure text-secondary">
+				<div class="stat-figure text-secondary-content">
 					<span class="icon-[fa7-solid--money-bill-trend-up] text-2xl"> </span>
 				</div>
 				<div class="stat-title">Tổng số đơn bán</div>
@@ -136,7 +136,7 @@
 			</div>
 
 			<div class="stat">
-				<div class="stat-figure text-secondary">
+				<div class="stat-figure text-secondary-content">
 					<span class="icon-[fa7-solid--business-time] text-2xl"></span>
 				</div>
 				<div class="stat-title">Thời gian hoạt động</div>
@@ -150,7 +150,7 @@
 			</div>
 
 			<div class="stat">
-				<div class="stat-figure text-secondary">
+				<div class="stat-figure text-secondary-content">
 					<span class="icon-[fa7-solid--star] text-2xl"></span>
 				</div>
 				<div class="stat-title">Đánh giá cửa hàng</div>
@@ -163,7 +163,7 @@
 	<fieldset class="mt-2 fieldset">
 		<legend class="fieldset-legend">Số điện thoại cửa hàng</legend>
 		<label class="input w-full">
-			<span class={`icon-[fa7-solid--phone-square] text-secondary`}></span>
+			<span class={`icon-[fa7-solid--phone-square] text-secondary-content`}></span>
 			<input value={shop.phoneNumber} readonly />
 		</label>
 	</fieldset>
@@ -171,7 +171,7 @@
 	<fieldset class="fieldset">
 		<legend class="fieldset-legend">Địa chỉ cửa hàng</legend>
 		<label class="input w-full">
-			<span class={`icon-[fa7-solid--location-dot] text-secondary`}></span>
+			<span class={`icon-[fa7-solid--location-dot] text-secondary-content`}></span>
 			<input value={shop.address} readonly />
 		</label>
 	</fieldset>
@@ -180,7 +180,7 @@
 		<fieldset class="fieldset">
 			<legend class="fieldset-legend">Loại hình kinh doanh</legend>
 			<label class="input w-full">
-				<span class={`icon-[fa7-solid--briefcase] text-secondary`}></span>
+				<span class={`icon-[fa7-solid--briefcase] text-secondary-content`}></span>
 				<input value={shop.businessType} readonly />
 			</label>
 		</fieldset>
@@ -188,7 +188,7 @@
 		<fieldset class="fieldset">
 			<legend class="fieldset-legend">Danh mục chính</legend>
 			<label class="input w-full">
-				<span class={`icon-[fa7-solid--swatchbook] text-secondary`}></span>
+				<span class={`icon-[fa7-solid--swatchbook] text-secondary-content`}></span>
 				<input value={shop.categoryName} readonly />
 			</label>
 		</fieldset>
@@ -205,7 +205,7 @@
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend">Họ và tên chủ cửa hàng</legend>
 				<label class="input w-full">
-					<span class={`icon-[fa7-solid--circle-user] text-secondary`}></span>
+					<span class={`icon-[fa7-solid--circle-user] text-secondary-content`}></span>
 					<input value={shop.ownerFullName} readonly />
 				</label>
 			</fieldset>
@@ -213,7 +213,7 @@
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend">Ngày sinh chủ cửa hàng</legend>
 				<label class="input w-full">
-					<span class={`icon-[fa7-solid--calendar-alt] text-secondary`}></span>
+					<span class={`icon-[fa7-solid--calendar-alt] text-secondary-content`}></span>
 					<input value={formatDate(shop.ownerDateOfBirth)} readonly />
 				</label>
 			</fieldset>
@@ -222,7 +222,7 @@
 		<fieldset class="fieldset">
 			<legend class="fieldset-legend">Số CMND/CCCD</legend>
 			<label class="input w-full">
-				<span class={`icon-[fa7-solid--id-card] text-secondary`}></span>
+				<span class={`icon-[fa7-solid--id-card] text-secondary-content`}></span>
 				<input value={shop.ownerPersonalIdNumber} readonly />
 			</label>
 		</fieldset>
@@ -230,12 +230,12 @@
 		<div class="flex w-full gap-4">
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend">Ảnh mặt trước CMND/CCCD</legend>
-				<Image src={shop.ownerPersonalIdFrontUrl} alt="Ảnh mặt trước CMND/CCCD" class="h-32 w-64" />
+				<ImageWithFullscreenViewer src={shop.ownerPersonalIdFrontUrl} alt="Ảnh mặt trước CMND/CCCD" class="h-32 w-64" />
 			</fieldset>
 
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend">Ảnh mặt sau CMND/CCCD</legend>
-				<Image src={shop.ownerPersonalIdBackUrl} alt="Ảnh mặt sau CMND/CCCD" class="h-32 w-64" />
+				<ImageWithFullscreenViewer src={shop.ownerPersonalIdBackUrl} alt="Ảnh mặt sau CMND/CCCD" class="h-32 w-64" />
 			</fieldset>
 		</div>
 	</div>

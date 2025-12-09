@@ -3,19 +3,19 @@ import type { shopBusinessOptions } from '$lib/consts/shopBusinessOptions';
 
 export const shopStatusOptions = [
 	{
-		title: 'Approved',
+		title: 'Đã chấp thuận',
 		value: 'Approved'
 	},
 	{
-		title: 'Pending',
+		title: 'Đang chờ xử lý',
 		value: 'Pending'
 	},
 	{
-		title: 'Rejected',
+		title: 'Đã từ chối',
 		value: 'Rejected'
 	},
 	{
-		title: 'Inactive',
+		title: 'Không hoạt động',
 		value: 'Inactive'
 	}
 ] as const satisfies readonly FormSelectOption[];
