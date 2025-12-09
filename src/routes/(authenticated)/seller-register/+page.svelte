@@ -76,7 +76,7 @@
 	<div class="flex w-full gap-4">
 		<FormMediaInput
 			class="aspect-video"
-			aspectratio="16:9"
+			aspectRatio="16:9"
 			name="ownerPersonalIdFrontUrl"
 			label="Ảnh mặt trước CMND/CCCD"
 			icon="icon-[fa7-solid--image] text-secondary-content text-sm"
@@ -86,7 +86,7 @@
 
 		<FormMediaInput
 			class="aspect-video"
-			aspectratio="16:9"
+			aspectRatio="16:9"
 			name="ownerPersonalIdBackUrl"
 			icon="icon-[fa7-solid--image] text-secondary-content text-sm"
 			label="Ảnh mặt sau CMND/CCCD"
@@ -124,7 +124,7 @@
 		</div>
 		<div class="col-span-8 flex gap-4">
 			<FormMediaInput
-				aspectratio="1:1"
+				aspectRatio="1:1"
 				name="shopAvatar"
 				label="Ảnh đại diện cửa hàng"
 				class="h-39 w-38"
@@ -138,7 +138,7 @@
 				class="h-39 w-full"
 				icon="icon-[fa7-solid--image] text-secondary-content text-sm"
 				superForm={form}
-				aspectratio="16:9"
+				aspectRatio="16:9"
 				{errors}
 			/>
 		</div>
@@ -191,7 +191,7 @@
 	/>
 
 	<FormMediaInput
-		aspectratio="16:9"
+		aspectRatio="16:9"
 		buttonClass="max-h-32"
 		mediaType="Document"
 		name="ownershipDocumentUrl"
