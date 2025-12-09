@@ -42,7 +42,7 @@
 	}
 </script>
 
-<div class="flex items-center justify-between gap-4 mt-4">
+<div class="mt-4 flex items-center justify-between gap-4">
 	<p class="text-sm opacity-60">
 		Hiển thị {startItemNumber} - {endItemNumber} trên {totalItems} kết quả
 	</p>

@@ -28,10 +28,7 @@ export const actions: Actions = {
 			formData
 		);
 
-		const toastData: ToastData = getToastData(
-			responseBody,
-			'Yêu cầu rút tiền đã được tạo.'
-		);
+		const toastData: ToastData = getToastData(responseBody, 'Yêu cầu rút tiền đã được tạo.');
 
 		if (response.ok) {
 			return message(form, { toastData });

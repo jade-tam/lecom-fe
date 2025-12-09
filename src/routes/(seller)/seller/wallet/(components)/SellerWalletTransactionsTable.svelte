@@ -117,9 +117,13 @@
 									{row.amount > 0 ? '+' : ''}{formatVND(row.amount)}
 								</td>
 							{:else if column.id === 'balanceBefore'}
-								<td class="font-serif text-xs font-bold text-base-content/70">{formatVND(row.balanceBefore)}</td>
+								<td class="font-serif text-xs font-bold text-base-content/70"
+									>{formatVND(row.balanceBefore)}</td
+								>
 							{:else if column.id === 'balanceAfter'}
-								<td class="font-serif text-xs font-bold text-base-content/70">{formatVND(row.balanceAfter)}</td>
+								<td class="font-serif text-xs font-bold text-base-content/70"
+									>{formatVND(row.balanceAfter)}</td
+								>
 							{:else if column.id === 'balanceType'}
 								<td>
 									<div
@@ -132,7 +136,7 @@
 									</div>
 								</td>
 							{:else if column.id === 'description'}
-								<td class="max-w-xs line-clamp-2">{row.description ?? '-'}</td>
+								<td class="line-clamp-2 max-w-xs">{row.description ?? '-'}</td>
 							{:else if column.id === 'performedBy'}
 								<td>{row.performedBy ?? '-'}</td>
 							{:else}

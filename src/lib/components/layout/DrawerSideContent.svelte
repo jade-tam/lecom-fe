@@ -41,7 +41,7 @@
 			{#if item.subItems}
 				<div class="flex gap-2 px-4 py-2 text-sm font-semibold italic">
 					<span>{item.title}</span>
-					<span class="{item.iconClass}"></span>
+					<span class={item.iconClass}></span>
 				</div>
 			{:else}
 				<a

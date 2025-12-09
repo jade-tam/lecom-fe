@@ -3,7 +3,6 @@
 	import AdminReviewCustomerWithdrawalsTable from './(components)/AdminReviewCustomerWithdrawalsTable.svelte';
 
 	const { data, form } = $props();
-
 </script>
 
 <div class="my-2 flex flex-wrap justify-between gap-2">

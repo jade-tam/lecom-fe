@@ -16,15 +16,16 @@
 		{#if withdrawal.status === 'Pending'}
 			<div>
 				<p class="mt-4 text-sm text-primary-content">
-					Yêu cầu rút tiền này đang chờ xét duyệt. Vui lòng xem xét kỹ thông tin trước khi
-					phê duyệt hoặc từ chối yêu cầu.
+					Yêu cầu rút tiền này đang chờ xét duyệt. Vui lòng xem xét kỹ thông tin trước khi phê duyệt
+					hoặc từ chối yêu cầu.
 				</p>
 				<OpenModalButton
 					ModalContentProps={{ withdrawal, reviewType: 'shop', dataForm: data.form }}
 					ModalContent={AdminReviewWithdrawalModalContent}
 					openButtonProps={{
-						class: "btn mt-4 btn-primary"
-					}}><span class="icon-[mingcute--clipboard-line]"></span>Xét duyệt yêu cầu rút tiền</OpenModalButton
+						class: 'btn mt-4 btn-primary'
+					}}
+					><span class="icon-[mingcute--clipboard-line]"></span>Xét duyệt yêu cầu rút tiền</OpenModalButton
 				>
 			</div>
 		{/if}

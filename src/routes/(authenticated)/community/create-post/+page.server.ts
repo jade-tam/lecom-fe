@@ -28,7 +28,10 @@ export const actions: Actions = {
 			formData
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Bài viết cộng đồng đã được gửi, vui lòng chờ phê duyệt.');
+		const toastData: ToastData = getToastData(
+			responseBody,
+			'Bài viết cộng đồng đã được gửi, vui lòng chờ phê duyệt.'
+		);
 
 		if (response.ok && responseBody.isSuccess) {
 			return message(form, { toastData });

@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	let {
 		defaultValue,
 		value = $bindable(0),
@@ -20,7 +19,6 @@
 	const halfStarIconClass = 'icon-[mingcute--star-half-fill]';
 	const emptyStarIconClass = 'icon-[mingcute--star-line]';
 </script>
-
 
 <div class="flex items-center">
 	{#each Array(maxStars) as _, i}

@@ -24,5 +24,5 @@
 </div>
 
 <div class="rounded-box border bg-base-100 p-4">
-	<CommunityPostForm dataForm={data.form}  />
+	<CommunityPostForm dataForm={data.form} />
 </div>

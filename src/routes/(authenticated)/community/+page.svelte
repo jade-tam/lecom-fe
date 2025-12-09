@@ -25,7 +25,7 @@
 </div>
 
 {#if data.communityPostsWithForms.length}
-	<div class="w-full columns-1 gap-4 max-md:columns-1h-full">
+	<div class="max-md:columns-1h-full w-full columns-1 gap-4">
 		{#each data.communityPostsWithForms as post (post.id)}
 			<CommunityPostCard {post} />
 		{/each}

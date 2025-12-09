@@ -28,7 +28,10 @@
 	let currentTab: 'Products' | 'Courses' = $state('Products');
 </script>
 
-<AnimatedDiv animateVars={{ translateY: -20, duration: 0.4 }} class="relative mt-4 overflow-hidden rounded-box border bg-base-100">
+<AnimatedDiv
+	animateVars={{ translateY: -20, duration: 0.4 }}
+	class="relative mt-4 overflow-hidden rounded-box border bg-base-100"
+>
 	<Image
 		src={shop.shopBanner}
 		alt={shop.name}
@@ -39,7 +42,10 @@
 		<AnimatedDiv animateVars={{ scale: 0.3, duration: 0.6 }}>
 			<Image src={shop.shopAvatar} alt={shop.name} class="h-24 w-24 rounded-full" />
 		</AnimatedDiv>
-		<AnimatedDiv animateVars={{ translateX: -12, delay: 0.1, duration: 0.6 }} class="flex flex-col gap-2">
+		<AnimatedDiv
+			animateVars={{ translateX: -12, delay: 0.1, duration: 0.6 }}
+			class="flex flex-col gap-2"
+		>
 			<h1 class="text-header3">{shop.name}</h1>
 			<p class="line-clamp-1 text-sm text-base-content/70">{shop.description}</p>
 			<div
@@ -116,7 +122,10 @@
 	</div>
 </div>
 
-<AnimatedDiv animateVars={{ translateY: 20, delay: 0.2, duration: 0.6 }} class="mt-4 flex flex-col items-center gap-4 rounded-box border bg-base-100 p-4">
+<AnimatedDiv
+	animateVars={{ translateY: 20, delay: 0.2, duration: 0.6 }}
+	class="mt-4 flex flex-col items-center gap-4 rounded-box border bg-base-100 p-4"
+>
 	<p class="font-serif font-bold">Liên hệ với cửa hàng</p>
 	<a class="btn btn-sm btn-success" href="tel:{shop.phoneNumber}"
 		><span class="icon-[fa7-solid--phone] shrink-0"></span>Gọi ngay</a

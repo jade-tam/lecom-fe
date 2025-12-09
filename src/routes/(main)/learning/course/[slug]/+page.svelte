@@ -76,8 +76,8 @@
 					</div>
 				{:else}
 					<a type="submit" class="btn btn-primary" href={resolve('/auth/login')}>
-						<span class="icon-[mingcute--arrow-to-right-fill] text-lg"></span>Đăng nhập để bắt đầu học ngay
-						ngay
+						<span class="icon-[mingcute--arrow-to-right-fill] text-lg"></span>Đăng nhập để bắt đầu
+						học ngay ngay
 					</a>
 				{/if}
 			</div>

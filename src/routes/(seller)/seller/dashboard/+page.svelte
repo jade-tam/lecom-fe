@@ -304,7 +304,7 @@
 						>{formatVND(dashboardData.walletSummary.availableBalance)}</strong
 					>
 				</div>
-				<div class="text-warning-content text-sm">
+				<div class="text-sm text-warning-content">
 					Tổng:
 					<strong class="font-serif font-bold"
 						>{formatVND(dashboardData.walletSummary.totalEarned)}</strong
@@ -317,12 +317,12 @@
 
 				<div class="divider my-1"></div>
 
-				<div class="text-warning-content text-sm">
+				<div class="text-sm text-warning-content">
 					Số tiền rút đang chờ duyệt: <strong class="font-serif font-bold"
 						>{formatVND(dashboardData.walletSummary.pendingWithdrawalAmount)}</strong
 					>
 				</div>
-				<div class="text-success-content text-sm">
+				<div class="text-sm text-success-content">
 					Số dư đã rút: <strong class="font-serif font-bold"
 						>{formatVND(dashboardData.walletSummary.approvedWithdrawalAmount)}</strong
 					>

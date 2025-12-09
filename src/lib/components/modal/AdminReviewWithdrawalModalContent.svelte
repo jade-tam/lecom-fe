@@ -84,8 +84,14 @@
 		<h4 class="mb-2 font-bold">Thông tin ngân hàng</h4>
 		<div class="flex flex-col gap-1">
 			<p><strong class="text-info-content">Tên ngân hàng:</strong> {withdrawal.bank.bankName}</p>
-			<p><strong class="text-info-content">Số tài khoản:</strong> {withdrawal.bank.bankAccountNumber}</p>
-			<p><strong class="text-info-content">Chủ tài khoản:</strong> {withdrawal.bank.bankAccountName}</p>
+			<p>
+				<strong class="text-info-content">Số tài khoản:</strong>
+				{withdrawal.bank.bankAccountNumber}
+			</p>
+			<p>
+				<strong class="text-info-content">Chủ tài khoản:</strong>
+				{withdrawal.bank.bankAccountName}
+			</p>
 			<p><strong class="text-info-content">Chi nhánh:</strong> {withdrawal.bank.bankBranch}</p>
 		</div>
 		{#if withdrawal.shop}

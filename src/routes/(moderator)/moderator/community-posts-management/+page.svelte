@@ -11,4 +11,6 @@
 	});
 </script>
 
-<ModeratorCommunityPostsTable moderatorPendingCommunityPostsPromise={data.moderatorPendingCommunityPostsPromise} />
+<ModeratorCommunityPostsTable
+	moderatorPendingCommunityPostsPromise={data.moderatorPendingCommunityPostsPromise}
+/>

@@ -81,7 +81,11 @@
 					onclick={() => popover?.hidePopover()}
 					disabled={isSubmitting}>Để sau</button
 				>
-				<button type="submit" class="btn btn-sm {dropdownContent.confirmBtnClass}" disabled={isSubmitting}>
+				<button
+					type="submit"
+					class="btn btn-sm {dropdownContent.confirmBtnClass}"
+					disabled={isSubmitting}
+				>
 					<span class={dropdownContent.confirmBtnIcon}></span>{dropdownContent.confirmBtnText}
 				</button>
 			</div>

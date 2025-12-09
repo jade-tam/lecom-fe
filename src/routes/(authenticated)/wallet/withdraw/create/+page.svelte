@@ -23,6 +23,6 @@
 	</AnimatedDiv>
 </div>
 
-<AnimatedDiv class="max-w-xl mx-auto" animateVars={{ translateY: 20 }}>
+<AnimatedDiv class="mx-auto max-w-xl" animateVars={{ translateY: 20 }}>
 	<WithdrawForm dataForm={data.form} isCustomer />
 </AnimatedDiv>

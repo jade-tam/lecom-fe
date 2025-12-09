@@ -14,11 +14,14 @@
 	>
 		<Image
 			src={course.courseThumbnail}
-			class="aspect-video h-38 -translate-y-6 group-hover:-translate-y-0 duration-200"
+			class="aspect-video h-38 -translate-y-6 duration-200 group-hover:-translate-y-0"
 			alt={course.title}
 		/>
-		<p class="font-semibold text-sm flex items-start gap-2 line-clamp-2"><span class="icon-[mingcute--book-2-fill] text-success-content text-xl shrink-0"></span>{course.title}</p>
-		<p class="text-xs font-light line-clamp-2">{course.summary}</p>
+		<p class="line-clamp-2 flex items-start gap-2 text-sm font-semibold">
+			<span class="icon-[mingcute--book-2-fill] shrink-0 text-xl text-success-content"
+			></span>{course.title}
+		</p>
+		<p class="line-clamp-2 text-xs font-light">{course.summary}</p>
 		<div class="badge badge-sm badge-success">{course.categoryName}</div>
 		<div class="flex items-center gap-2">
 			<Image class="h-8 w-8 rounded-full" src={course.shopAvatar} alt={course.shopName} />

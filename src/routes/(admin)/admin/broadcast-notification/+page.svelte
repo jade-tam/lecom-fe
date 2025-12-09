@@ -11,9 +11,7 @@
 	</AnimatedDiv>
 
 	<AnimatedDiv class="mt-1 mb-2 flex items-center gap-4" animateVars={{ translateX: -20 }}>
-		<p class="text-base-content/60">
-			Tạo và gửi thông báo người dùng trên hệ thống.
-		</p>
+		<p class="text-base-content/60">Tạo và gửi thông báo người dùng trên hệ thống.</p>
 	</AnimatedDiv>
 
 	<AnimatedDiv animateVars={{ translateY: 20 }}>

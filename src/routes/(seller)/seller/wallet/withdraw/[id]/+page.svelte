@@ -4,7 +4,6 @@
 	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 
 	const { data } = $props();
-
 </script>
 
 {#await data.withdrawalPromise}

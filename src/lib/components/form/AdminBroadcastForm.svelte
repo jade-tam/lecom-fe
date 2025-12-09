@@ -9,7 +9,7 @@
 	import FormSelect from '../ui/FormSelect.svelte';
 
 	const {
-		dataForm,
+		dataForm
 	}: {
 		dataForm: Record<string, any>;
 	} = $props();
@@ -26,7 +26,12 @@
 	});
 </script>
 
-<form method="POST" class="mx-auto max-w-lg rounded-box border bg-base-100 p-4" action="?/createBroadcast" use:enhance>
+<form
+	method="POST"
+	class="mx-auto max-w-lg rounded-box border bg-base-100 p-4"
+	action="?/createBroadcast"
+	use:enhance
+>
 	<div class="grid grid-cols-1 gap-x-4 gap-y-0">
 		<FormSelect
 			name="type"

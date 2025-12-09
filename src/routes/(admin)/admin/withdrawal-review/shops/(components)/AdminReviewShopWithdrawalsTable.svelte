@@ -98,8 +98,8 @@
 											<span class="text-base-content/60 italic">---</span>
 										{/if}
 									</td>
-									{:else if column.id === 'bankAccountNumber'}
-									<td class="font-bold text-xs">
+								{:else if column.id === 'bankAccountNumber'}
+									<td class="text-xs font-bold">
 										{row.bankAccountNumber}
 									</td>
 								{:else if column.id === 'bankName'}

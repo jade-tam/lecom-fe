@@ -9,7 +9,8 @@
 	import { formatDateTime, formatVND } from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
 
-	const { withdrawalsPromise }: { withdrawalsPromise: Promise<AdminCustomerWithdrawal[]> } = $props();
+	const { withdrawalsPromise }: { withdrawalsPromise: Promise<AdminCustomerWithdrawal[]> } =
+		$props();
 	let isLoading = $state(true);
 
 	const pageSize = 12;
@@ -99,7 +100,7 @@
 										{/if}
 									</td>
 								{:else if column.id === 'bankAccountNumber'}
-									<td class="font-bold text-xs">
+									<td class="text-xs font-bold">
 										{row.bankAccountNumber}
 									</td>
 								{:else if column.id === 'bankName'}
@@ -115,7 +116,8 @@
 									<td class="whitespace-nowrap">
 										<div>
 											<span class="font-bold text-success-content"
-												>Số dư: {formatVND(row.customerWallet.balance)}</span>
+												>Số dư: {formatVND(row.customerWallet.balance)}</span
+											>
 										</div>
 									</td>
 								{:else}
@@ -132,7 +134,9 @@
 								<div class="flex gap-1">
 									<div class="tooltip tooltip-left" data-tip="Xem chi tiết và xét duyệt">
 										<a
-											href={resolve(`/(admin)/admin/withdrawal-review/customers/[id]`, { id: row.id })}
+											href={resolve(`/(admin)/admin/withdrawal-review/customers/[id]`, {
+												id: row.id
+											})}
 											class="btn btn-square btn-primary"
 											type="button"
 											aria-label="Xem chi tiết và xét duyệt"
