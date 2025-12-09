@@ -41,7 +41,7 @@
 		name="ownerFullName"
 		label="Họ và tên"
 		class="max-w-[400px]"
-		icon="icon-[fa7-solid--circle-user]"
+		icon="icon-[fa7-solid--circle-user] text-secondary-content text-sm"
 		placeholder="Nhập họ và tên của bạn..."
 		help="Họ và tên như trên giấy tờ tùy thân"
 		type="text"
@@ -54,7 +54,7 @@
 		label="Ngày sinh"
 		class="max-w-[400px]"
 		placeholder="Nhập ngày sinh của bạn..."
-		icon="icon-[fa7-solid--calendar-alt]"
+		icon="icon-[fa7-solid--calendar-alt] text-secondary-content text-sm"
 		help="Phải trùng với ngày sinh trên giấy tờ tùy thân"
 		type="date"
 		superForm={form}
@@ -66,7 +66,7 @@
 		label="Số CMND/CCCD"
 		class="max-w-[400px]"
 		placeholder="Nhập số CMND/CCCD..."
-		icon="icon-[fa7-solid--id-card]"
+		icon="icon-[fa7-solid--id-card] text-secondary-content text-sm"
 		help="Phải trùng với số trên giấy tờ tùy thân"
 		type="text"
 		superForm={form}
@@ -76,19 +76,19 @@
 	<div class="flex w-full gap-4">
 		<FormMediaInput
 			class="aspect-video"
-			aspectRatio="16:9"
+			aspectratio="16:9"
 			name="ownerPersonalIdFrontUrl"
 			label="Ảnh mặt trước CMND/CCCD"
-			icon="icon-[fa7-solid--image]"
+			icon="icon-[fa7-solid--image] text-secondary-content text-sm"
 			superForm={form}
 			{errors}
 		/>
 
 		<FormMediaInput
 			class="aspect-video"
-			aspectRatio="16:9"
+			aspectratio="16:9"
 			name="ownerPersonalIdBackUrl"
-			icon="icon-[fa7-solid--image]"
+			icon="icon-[fa7-solid--image] text-secondary-content text-sm"
 			label="Ảnh mặt sau CMND/CCCD"
 			superForm={form}
 			{errors}
@@ -103,7 +103,7 @@
 			<FormInput
 				name="shopName"
 				label="Tên cửa hàng"
-				icon="icon-[fa7-solid--shop]"
+				icon="icon-[fa7-solid--shop] text-secondary-content text-sm"
 				placeholder="Nhập tên cửa hàng..."
 				class="max-w-[400px]"
 				type="text"
@@ -115,7 +115,7 @@
 				name="shopPhoneNumber"
 				label="Số điện thoại cửa hàng"
 				class="max-w-[400px]"
-				icon="icon-[fa7-solid--phone-square]"
+				icon="icon-[fa7-solid--phone-square] text-secondary-content text-sm"
 				placeholder="Số liên hệ cửa hàng..."
 				type="text"
 				superForm={form}
@@ -124,11 +124,11 @@
 		</div>
 		<div class="col-span-8 flex gap-4">
 			<FormMediaInput
-				aspectRatio="1:1"
+				aspectratio="1:1"
 				name="shopAvatar"
 				label="Ảnh đại diện cửa hàng"
 				class="h-39 w-38"
-				icon="icon-[fa7-solid--image]"
+				icon="icon-[fa7-solid--image] text-secondary-content text-sm"
 				superForm={form}
 				{errors}
 			/>
@@ -136,9 +136,9 @@
 				name="shopBanner"
 				label="Ảnh banner cửa hàng"
 				class="h-39 w-full"
-				icon="icon-[fa7-solid--image]"
+				icon="icon-[fa7-solid--image] text-secondary-content text-sm"
 				superForm={form}
-				aspectRatio="16:9"
+				aspectratio="16:9"
 				{errors}
 			/>
 		</div>
@@ -147,7 +147,7 @@
 	<FormInput
 		name="shopDescription"
 		label="Mô tả cửa hàng"
-		icon="icon-[fa7-solid--align-justify]"
+		icon="icon-[fa7-solid--align-justify] text-secondary-content text-sm"
 		placeholder="Nhập mô tả cửa hàng..."
 		type="text"
 		superForm={form}
@@ -157,7 +157,7 @@
 	<FormInput
 		name="shopAddress"
 		label="Địa chỉ cửa hàng"
-		icon="icon-[fa7-solid--location-dot]"
+		icon="icon-[fa7-solid--location-dot] text-secondary-content text-sm"
 		placeholder="Địa chỉ cửa hàng..."
 		type="text"
 		superForm={form}
@@ -167,7 +167,7 @@
 	<FormSelect
 		name="businessType"
 		options={shopBusinessOptions}
-		icon="icon-[fa7-solid--briefcase]"
+		icon="icon-[fa7-solid--briefcase] text-secondary-content text-sm"
 		class="max-w-[400px]"
 		label="Loại hình kinh doanh"
 		placeholder="Chọn loại hình kinh doanh"
@@ -182,6 +182,7 @@
 			value: cat.id
 		}))}
 		class="max-w-[400px]"
+		icon="icon-[fa7-solid--list] text-secondary-content text-sm"
 		label="Danh mục khoá học chính"
 		placeholder="Chọn danh mục khoá học chính"
 		help="Các khóa học của cửa hàng sẽ tập trung vào danh mục này"
@@ -190,13 +191,13 @@
 	/>
 
 	<FormMediaInput
-		aspectRatio="16:9"
+		aspectratio="16:9"
 		buttonClass="max-h-32"
 		mediaType="Document"
 		name="ownershipDocumentUrl"
 		label="Tài liệu sở hữu cửa hàng"
 		placeholder="Tải lên tài liệu tại đây"
-		icon="icon-[fa7-solid--file-text]"
+		icon="icon-[fa7-solid--file-text] text-secondary-content text-sm"
 		help="Tải lên giấy tờ chứng minh quyền sở hữu kinh doanh — ví dụ: giấy đăng ký kinh doanh hoặc hợp đồng thuê mặt bằng. Định dạng chấp nhận: DOC, DOCX hoặc PDF"
 		superForm={form}
 		{errors}
