@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.yourcompany.lecom",
+      "sha256_cert_fingerprints": [
+        "1EE43D6BF8F97BD9F2C770017BE9B707448442417544C6496CF52260934B92C5"
+      ]
+    }
+  }
+]
