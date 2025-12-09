@@ -1,6 +1,7 @@
 import { addToCartSchema } from '$lib/schemas/cartSchema.js';
 import { openChatSchema } from '$lib/schemas/chatSchema.js';
 import type { Conversation } from '$lib/types/Chat.js';
+import type { FeedbackSummary } from '$lib/types/Feedback.js';
 import type { Product } from '$lib/types/Product';
 import { fetchApi, fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi';
 import type { ToastData } from '$lib/utils/showToast.js';
@@ -20,6 +21,11 @@ export async function load({ params, cookies }) {
 		[] as Product[]
 	);
 
+	const feedbackSummaryPromise = getSafeResult(
+		fetchApi<FeedbackSummary>(`/api/Feedback/product/${product?.id}/summary`, 'GET'),
+		null
+	);
+
 	const form = await superValidate(
 		{
 			productId: product?.id,
@@ -30,6 +36,7 @@ export async function load({ params, cookies }) {
 
 	return {
 		similarProductsPromise,
+		feedbackSummaryPromise,
 		form,
 		product: product
 	};

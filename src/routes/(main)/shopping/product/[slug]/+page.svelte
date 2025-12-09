@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import ProductCard from '$lib/components/ui/card/ProductCard.svelte';
 	import ShopCard from '$lib/components/ui/card/ShopCard.svelte';
+	import ProductFeedbackSummary from '$lib/components/ui/data-display/ProductFeedbackSummary.svelte';
 	import QuantitySelector from '$lib/components/ui/data-input/QuantitySelector.svelte';
 	import Rating from '$lib/components/ui/data-input/Rating.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
@@ -58,14 +60,17 @@
 <section class="mt-8 flex min-h-screen flex-col items-center">
 	{#if product}
 		<div class="grid w-full grid-cols-12 gap-x-4 gap-y-2 max-md:grid-cols-1">
-			<div class="col-span-5 max-md:col-span-1">
+			<AnimatedDiv animateVars={{ translateX: -16 }} class="col-span-5 max-md:col-span-1">
 				<ImageViewer
 					images={product.images.map((image) => image.url) ?? []}
 					viewTransitionName={`product-image-${product.id}`}
 				/>
-			</div>
+			</AnimatedDiv>
 
-			<div class="col-span-7 flex flex-col gap-2 max-md:col-span-1">
+			<AnimatedDiv
+				animateVars={{ translateY: -16 }}
+				class="col-span-7 flex flex-col gap-2 max-md:col-span-1"
+			>
 				<p
 					class="text-header3 font-serif"
 					style={`view-transition-name: product-name-${product.id};`}
@@ -177,12 +182,17 @@
 						shopAvatar: product.shopAvatar
 					}}
 				/>
-			</div>
+			</AnimatedDiv>
 
-			<div class="col-span-12 rounded-box border bg-base-100 p-6 max-md:col-span-1 max-md:p-4">
+			<AnimatedDiv
+				animateVars={{ translateY: 16 }}
+				class="col-span-12 rounded-box border bg-base-100 p-4 max-md:col-span-1 max-md:p-4"
+			>
 				<p class="text-header3">Chi tiết sản phẩm</p>
 				<div class="prose prose-sm mt-6 whitespace-pre-line">{product.description}</div>
-			</div>
+			</AnimatedDiv>
+
+			<ProductFeedbackSummary feedbackSummaryPromise={data.feedbackSummaryPromise} />
 
 			<div class="col-span-12 mt-2 max-md:col-span-1">
 				<p class="text-header3">Sản phẩm tương tự</p>

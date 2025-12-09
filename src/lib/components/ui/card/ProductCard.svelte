@@ -12,11 +12,11 @@
 <a href="/shopping/product/{product.slug}" class="group">
 	<div
 		in:fly|global={{ y: 20, duration: 800, delay: 0 + (index ?? 0) * 50, easing: expoInOut }}
-		class="flex h-full flex-col gap-1 rounded-field border bg-base-100 p-3 shadow duration-200 group-hover:-translate-y-1 group-hover:shadow-lg"
+		class="flex h-full flex-col gap-1 rounded-field border bg-base-100 p-2 shadow duration-200 group-hover:-translate-y-1 group-hover:shadow-lg"
 	>
 		<Image
 			src={product.thumbnailUrl}
-			class="h-38 w-full"
+			class="aspect-square w-full"
 			rounded="rounded-selector"
 			alt={product.name}
 		/>
