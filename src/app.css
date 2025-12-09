@@ -79,6 +79,33 @@
 		border-width: var(--border);
 		border-color: var(--color-base-300);
 	}
+
+	/* Customize scrollbars globally */
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: var(--color-base-100);
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: var(--color-secondary);
+		border-radius: 4px;
+		transition: background 0.3s ease;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: var(--color-secondary);
+		opacity: 0.8;
+	}
+
+	/* Firefox scrollbar */
+	* {
+		scrollbar-color: var(--color-secondary) var(--color-base-100);
+		scrollbar-width: thin;
+	}
 }
 
 html {

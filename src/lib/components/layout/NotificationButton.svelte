@@ -73,7 +73,7 @@
 	style="position-anchor:--{popoverId}"
 >
 	<div
-		class="m-1 flex max-h-[70vh] w-92 flex-col gap-2 overflow-y-auto rounded-field border bg-base-100 p-2 shadow"
+		class="m-1 flex max-h-[70vh] w-92 flex-col gap-2 rounded-field border bg-base-100 p-2 shadow"
 	>
 		<div class="flex justify-between gap-4">
 			<p class="font-serif font-bold">Thông báo</p>
@@ -98,58 +98,55 @@
 				</button>
 			</form>
 		</div>
-		{#if notifications.length === 0}
-			<EmptyPlaceholder text="Bạn chưa có thông báo mới" />
-		{:else}
-			{#each notifications as notification (notification.id)}
-				<div
-					animate:flip={{ duration: 200 }}
-					class="flex flex-col gap-1 rounded-field border p-3 duration-300
-					{notification.isRead ? 'border-base-200 bg-base-200' : 'border-primary bg-primary/30'}"
-				>
-					<div class="flex items-center gap-2">
-						<span class="badge badge-sm badge-primary">{notification.type}</span>
-						<span class="ml-auto text-xs text-base-content/70">
-							{formatDateTime(notification.createdAt)}
-						</span>
-					</div>
-					<div class="mt-1 text-sm font-semibold text-base-content">{notification.title}</div>
-					<div class="mt-1 text-xs text-base-content/70">{notification.content}</div>
-					<!-- {#if notification.content}
-						<a href={notification.content} class="mt-1 link text-xs link-primary">Xem chi tiết</a>
-					{/if} -->
-					<form
-						action="/?/readNotificationById"
-						method="POST"
-						use:enhance={({ formData }) => {
-							formData.set('id', notification.id);
-
-							return async ({ result, update }) => {
-								if (result.type === 'success') {
-									console.log(result);
-
-									// Update notifications array to trigger Svelte reactivity
-									notifications = notifications.map((n) =>
-										n.id === notification.id ? { ...n, isRead: true } : n
-									);
-									unreadCount = notifications.filter((n) => !n.isRead).length;
-									if (result.data) showToast(result.data.toastData as ToastData);
-								}
-							};
-						}}
+		<div class="overflow-y-auto">
+			{#if !notifications.length}
+				<EmptyPlaceholder text="Bạn chưa có thông báo mới" />
+			{:else}
+				{#each notifications as notification (notification.id)}
+					<div
+						animate:flip={{ duration: 200 }}
+						class="flex flex-col gap-1 rounded-field border p-3 duration-300
+						{notification.isRead ? 'border-base-200 bg-base-200' : 'border-primary bg-primary/30'}"
 					>
-						{#if !notification.isRead}
-							<button
-								transition:slide={{ duration: 200 }}
-								class="btn mt-2 btn-xs btn-success"
-								disabled={notification.isRead}
-							>
-								<span class="icon-[mingcute--check-fill]"></span>Đánh dấu đã đọc
-							</button>
-						{/if}
-					</form>
-				</div>
-			{/each}
-		{/if}
+						<div class="flex items-center gap-2">
+							<span class="badge badge-sm badge-primary">{notification.type}</span>
+							<span class="ml-auto text-xs text-base-content/70">
+								{formatDateTime(notification.createdAt)}
+							</span>
+						</div>
+						<div class="mt-1 text-sm font-semibold text-base-content">{notification.title}</div>
+						<div class="mt-1 text-xs text-base-content/70">{notification.content}</div>
+						<form
+							action="/?/readNotificationById"
+							method="POST"
+							use:enhance={({ formData }) => {
+								formData.set('id', notification.id);
+								return async ({ result, update }) => {
+									if (result.type === 'success') {
+										console.log(result);
+										// Update notifications array to trigger Svelte reactivity
+										notifications = notifications.map((n) =>
+											n.id === notification.id ? { ...n, isRead: true } : n
+										);
+										unreadCount = notifications.filter((n) => !n.isRead).length;
+										if (result.data) showToast(result.data.toastData as ToastData);
+									}
+								};
+							}}
+						>
+							{#if !notification.isRead}
+								<button
+									transition:slide={{ duration: 200 }}
+									class="btn mt-2 btn-xs btn-success"
+									disabled={notification.isRead}
+								>
+									<span class="icon-[mingcute--check-fill]"></span>Đánh dấu đã đọc
+								</button>
+							{/if}
+						</form>
+					</div>
+				{/each}
+			{/if}
+		</div>
 	</div>
 </div>
