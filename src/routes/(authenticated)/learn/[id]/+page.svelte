@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
 	import { formatVideoDuration, formatVND, toRomanNumeral } from '$lib/utils/converters.js';
@@ -58,7 +59,18 @@
 </form>
 
 {#if courseLearning}
-	<div class="mt-4 grid grid-cols-12 gap-2 max-md:grid-cols-1">
+	<AnimatedDiv animateVars={{ translateX: -16 }} class="flex flex-col gap-1">
+		<div class="flex items-center gap-2">
+			<button class="btn btn-sm" aria-label="Quay lại" onclick={() => history.back()}>
+				<span class="icon-[fa7-solid--arrow-left]"></span> Trở về
+			</button>
+			<h1 class="text-header3 font-bold">Khóa học: {courseLearning.course.title}</h1>
+		</div>
+		<p class="text-base-content/60">
+			{courseLearning.course.summary}
+		</p>
+	</AnimatedDiv>
+	<div class="mt-2 grid grid-cols-12 gap-2 max-md:grid-cols-1">
 		<!-- Left: Video & Info -->
 		<div class="col-span-8 max-md:col-span-1">
 			{#if selectedLesson}
@@ -143,7 +155,10 @@
 					</div>
 				{/if}
 			{:else}
-				<div class="text-center text-error">Chưa chọn bài học nào</div>
+				<EmptyPlaceholder
+					text="Chưa có bài học được chọn"
+					description="Vui lòng chọn một bài học để bắt đầu học"
+				/>
 			{/if}
 		</div>
 
@@ -191,45 +206,52 @@
 				<p class="mb-2 text-xs text-base-content/70">
 					Lựa chọn một bài học phía dưới để bắt đầu học
 				</p>
-				{#each courseLearning.sections as section, sectionIdx (section.id)}
-					<div class="mb-4">
-						<p class="mb-2 font-bold">{toRomanNumeral(sectionIdx + 1)}. {section.title}</p>
-						<div class="flex flex-col gap-1">
-							{#each section.lessons as lesson, lessonIdx (lesson.id)}
-								<button
-									class="btn flex w-full items-center gap-2 px-3 {lesson.isCompleted
-										? 'btn-success'
-										: 'btn-secondary'} {selectedSectionIdx === sectionIdx &&
-									selectedLessonIdx === lessonIdx
-										? ''
-										: 'btn-outline'}"
-									onclick={() => selectLesson(sectionIdx, lessonIdx)}
-								>
-									<span class="icon-[fa7-solid--circle-play] text-secondary-content"></span>
+				{#if courseLearning.sections.length}
+					{#each courseLearning.sections as section, sectionIdx (section.id)}
+						<div class="mb-4">
+							<p class="mb-2 font-bold">{toRomanNumeral(sectionIdx + 1)}. {section.title}</p>
+							<div class="flex flex-col gap-1">
+								{#each section.lessons as lesson, lessonIdx (lesson.id)}
+									<button
+										class="btn flex w-full items-center gap-2 px-3 {lesson.isCompleted
+											? 'btn-success'
+											: 'btn-secondary'} {selectedSectionIdx === sectionIdx &&
+										selectedLessonIdx === lessonIdx
+											? ''
+											: 'btn-outline'}"
+										onclick={() => selectLesson(sectionIdx, lessonIdx)}
+									>
+										<span class="icon-[fa7-solid--circle-play] text-secondary-content"></span>
 
-									<!-- TEXT BLOCK -->
-									<span class="flex grow flex-col">
-										<span class="line-clamp-1 text-left">
-											{lessonIdx + 1}. {lesson.title}
+										<!-- TEXT BLOCK -->
+										<span class="flex grow flex-col">
+											<span class="line-clamp-1 text-left">
+												{lessonIdx + 1}. {lesson.title}
+											</span>
 										</span>
-									</span>
 
-									<span class="mr-1 text-sm font-light"
-										>{formatVideoDuration(lesson.durationSeconds)}</span
-									>
+										<span class="mr-1 text-sm font-light"
+											>{formatVideoDuration(lesson.durationSeconds)}</span
+										>
 
-									<span class="shrink-0 text-xs font-black text-success-content"
-										>{lesson.xpReward} XP</span
-									>
+										<span class="shrink-0 text-xs font-black text-success-content"
+											>{lesson.xpReward} XP</span
+										>
 
-									{#if lesson.isCompleted}
-										<span class="icon-[fa7-solid--check-circle] text-success-content"></span>
-									{/if}
-								</button>
-							{/each}
+										{#if lesson.isCompleted}
+											<span class="icon-[fa7-solid--check-circle] text-success-content"></span>
+										{/if}
+									</button>
+								{/each}
+							</div>
 						</div>
-					</div>
-				{/each}
+					{/each}
+				{:else}
+					<EmptyPlaceholder
+						text="Khoá học này chưa có bài học nào"
+						description="Nội dung khóa học sẽ được cập nhật trong thời gian sớm nhất"
+					/>
+				{/if}
 			</div>
 		</div>
 	</div>
