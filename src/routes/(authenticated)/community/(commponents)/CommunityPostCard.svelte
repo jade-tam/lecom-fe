@@ -20,6 +20,7 @@
 	let isCommentOpen = $state(false);
 	let liked = $state(false);
 	let likeCount = $state(0);
+	let showAllComments = $state(false);
 
 	const { form, errors, message, enhance, submitting, delayed, tainted, isTainted, submit } =
 		superForm<
@@ -131,9 +132,9 @@
 	<div class="mt-4">
 		<!-- Existing Comments -->
 		{#if post.comments?.length}
-			<div class="space-y-4">
-				{#each post.comments as comment}
-					<div class="flex items-start gap-3">
+			<div class="space-y-4 max-h-82 overflow-y-auto">
+				{#each post.comments.slice(0, showAllComments ? undefined : 2) as comment}
+					<div class="flex items-start gap-3" transition:slide={{ duration: 200 }}>
 						<Image
 							src={comment.user.avatar}
 							alt={comment.user.userName}
@@ -150,6 +151,25 @@
 					</div>
 				{/each}
 			</div>
+
+			<!-- See More Comments Button -->
+			{#if post.comments.length > 2 && !showAllComments}
+				<button
+					class="btn btn-sm btn-ghost mt-3 w-full"
+					onclick={() => (showAllComments = true)}
+				>
+					<span class="icon-[mingcute--down-line]"></span>
+					Xem thêm {post.comments.length - 2} bình luận
+				</button>
+			{:else if showAllComments && post.comments.length > 2}
+				<button
+					class="btn btn-sm btn-ghost mt-3 w-full"
+					onclick={() => (showAllComments = false)}
+				>
+					<span class="icon-[mingcute--up-line]"></span>
+					Ẩn bình luận
+				</button>
+			{/if}
 		{:else}
 			<p class="text-sm text-base-content/60 italic">Chưa có bình luận nào.</p>
 		{/if}
