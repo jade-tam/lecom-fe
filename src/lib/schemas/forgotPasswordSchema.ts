@@ -1,7 +1,7 @@
 import z from 'zod';
 
 export const forgotPasswordSchema = z.object({
-	email: z.email({ message: 'Are you sure this is an email?' })
+	email: z.email({ message: 'Bạn có chắc đây là một email không?' })
 });
 
 export type ForgotPasswordSchema = z.infer<typeof forgotPasswordSchema>;

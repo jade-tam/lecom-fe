@@ -4,11 +4,14 @@ import { z } from 'zod';
 export const productStatusEnum = z.enum(productStatusOptions.map((option) => option.value));
 
 export const createProductSchema = z.object({
-	name: z.string().min(1, 'Name cannot be empty'),
-	categoryId: z.string().min(1, { error: 'Category ID is required' }),
-	description: z.string().min(20, { error: 'Description is required atlest 20 characters' }),
-	price: z.number({ error: 'Price is required' }).nonnegative('Price must be non-negative'),
-	stock: z.number({ error: 'Stock is required' }).int().nonnegative('Stock must be non-negative'),
+	name: z.string().min(1, 'Tên sản phẩm không được để trống'),
+	categoryId: z.string().min(1, { error: 'ID danh mục là bắt buộc' }),
+	description: z.string().min(20, { error: 'Mô tả là bắt buộc, tối thiểu 20 ký tự' }),
+	price: z.number({ error: 'Giá là bắt buộc' }).nonnegative('Giá phải không âm'),
+	stock: z
+		.number({ error: 'Tồn kho là bắt buộc' })
+		.int()
+		.nonnegative('Số lượng tồn kho phải không âm'),
 	status: productStatusEnum.default('Draft'),
 	images: z
 		.union([
@@ -30,7 +33,7 @@ export const createProductSchema = z.object({
 						isPrimary: z.boolean()
 					})
 				)
-				.min(1, { error: 'Please upload at least one image.' })
+				.min(1, { error: 'Vui lòng tải lên ít nhất một ảnh.' })
 		)
 });
 

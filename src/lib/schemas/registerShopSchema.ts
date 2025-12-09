@@ -10,38 +10,35 @@ const BusinessTypeEnum = z.enum(
 
 // Schema
 export const registerShopSchema = z.object({
-	shopName: z
-		.string()
-		.min(1, 'Shop name is required')
-		.max(100, 'Shop name must be at most 100 characters'),
+	shopName: z.string().min(1, 'Tên cửa hàng là bắt buộc').max(100, 'Tên cửa hàng tối đa 100 ký tự'),
 
 	shopDescription: z
 		.string()
-		.min(10, 'Please enter some description about your shop, atleast 10 characters')
-		.max(500, 'Shop description must be at most 500 characters'),
+		.min(10, 'Vui lòng nhập mô tả cửa hàng, ít nhất 10 ký tự')
+		.max(500, 'Mô tả cửa hàng tối đa 500 ký tự'),
 
 	shopPhoneNumber: z
 		.string()
 		.trim()
 		.refine((val) => /^0\d{9}$/.test(val), {
-			message: 'Phone number must be 10 digits and start with 0'
+			message: 'Số điện thoại phải gồm 10 số và bắt đầu bằng số 0'
 		})
 		.refine((val) => vnPrefixes.some((p) => val.startsWith(p)), {
-			message: 'Invalid Vietnam phone number prefix'
+			message: 'Đầu số điện thoại không hợp lệ tại Việt Nam'
 		}),
 
 	shopAddress: z
 		.string()
-		.min(5, 'Shop address is required')
-		.max(200, 'Shop address must be at most 200 characters'),
+		.min(5, 'Địa chỉ cửa hàng là bắt buộc')
+		.max(200, 'Địa chỉ cửa hàng tối đa 200 ký tự'),
 
 	businessType: BusinessTypeEnum,
 
-	ownershipDocumentUrl: z.url('Ownership document must be included'),
+	ownershipDocumentUrl: z.url('Tài liệu về sở hữu cửa hàng không hợp lệ').optional(),
 
-	shopAvatar: z.url('Please upload shop avatar'),
+	shopAvatar: z.url('Vui lòng tải lên ảnh đại diện cửa hàng'),
 
-	shopBanner: z.url('Please upload shop banner'),
+	shopBanner: z.url('Vui lòng tải lên ảnh banner cửa hàng'),
 
 	// shopFacebook: z
 	// 	.url('Facebook link is not a valid URL')
@@ -68,43 +65,43 @@ export const registerShopSchema = z.object({
 	// 		'Instagram link must start with https://instagram.com/'
 	// 	),
 
-	categoryId: z.uuid('Please select a category'),
+	categoryId: z.uuid('Vui lòng chọn một danh mục'),
 
 	acceptedTerms: z
 		.boolean()
-		.refine((val) => val === true, 'You must accept the terms before continue'),
+		.refine((val) => val === true, 'Bạn phải chấp nhẫn các điều khoản trước khi tiếp tục'),
 
 	ownerFullName: z
 		.string()
-		.min(2, 'Owner full name is required')
-		.max(100, 'Owner full name must be at most 100 characters'),
+		.min(2, 'Tên chủ sở hữu là bắt buộc')
+		.max(100, 'Tên chủ sở hữu tối đa 100 ký tự'),
 
 	ownerDateOfBirth: z
-		.string('Please enter your date of birth')
+		.string('Vui lòng nhập ngày sinh của bạn')
 		.trim()
 		.refine(
 			(val) => {
 				const date = new Date(val);
 				return !isNaN(date.getTime());
 			},
-			{ message: 'Invalid date format' }
+			{ message: 'Định dạng ngày không hợp lệ' }
 		)
 		.refine((date) => new Date(date) <= new Date(), {
-			message: 'Date of birth cannot be in the future'
+			message: 'Ngày sinh không được là tương lai'
 		})
 		.refine((date) => {
 			const age =
 				(new Date().getTime() - new Date(date).getTime()) / (1000 * 60 * 60 * 24 * 365.25);
 			return age >= 18;
-		}, 'You must be at least 18 years old to open shop'),
+		}, 'Bạn phải ít nhất 18 tuổi để mở cửa hàng'),
 
 	ownerPersonalIdNumber: z
 		.string()
-		.min(5, 'Personal ID number is required')
-		.max(20, 'Personal ID number must be at most 20 characters'),
+		.min(5, 'Số CMND/CCCD là bắt buộc')
+		.max(20, 'Số CMND/CCCD tối đa 20 ký tự'),
 
-	ownerPersonalIdFrontUrl: z.url('Please upload your front ID image'),
-	ownerPersonalIdBackUrl: z.url('Please upload your back ID image')
+	ownerPersonalIdFrontUrl: z.url('Vui lòng tải lên ảnh mặt trước CMND/CCCD'),
+	ownerPersonalIdBackUrl: z.url('Vui lòng tải lên ảnh mặt sau CMND/CCCD')
 });
 
 export type RegisterShopSchema = z.infer<typeof registerShopSchema>;
