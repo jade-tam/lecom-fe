@@ -7,7 +7,7 @@
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import FormInput from '../ui/FormInput.svelte';
 	import FormTextArea from '../ui/FormTextArea.svelte';
-	import Image from '../ui/Image.svelte';
+	import ImageWithFullscreenViewer from '../ui/ImageWithFullscreenViewer.svelte';
 
 	const {
 		dataForm,
@@ -63,7 +63,7 @@
 		<p class="mt-2 text-base-content/70">Chi tiết: {refund.reasonDescription}</p>
 		<div class="mt-2">
 			<span class="font-bold text-base-content/70">Minh chứng:</span>
-			<Image
+			<ImageWithFullscreenViewer
 				src={refund.attachmentUrls}
 				alt="Refund Evidence"
 				class="mt-2 h-48 w-full rounded-box object-cover"

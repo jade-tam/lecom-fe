@@ -14,8 +14,8 @@
 			description: c.description?.trim() || 'No description'
 		})),
 		columns: [
-			{ id: 'name', key: 'name', name: 'Name' },
-			{ id: 'description', key: 'description', name: 'Description' }
+			{ id: 'name', key: 'name', name: 'Tên danh mục' },
+			{ id: 'description', key: 'description', name: 'Mô tả chi tiết' }
 		]
 	});
 </script>

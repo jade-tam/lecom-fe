@@ -1,17 +1,24 @@
 <script>
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import CategoryTable from './(components)/CategoryTable.svelte';
 
 	const { data } = $props();
 </script>
 
-<div class="my-2 flex justify-between">
-	<h2>Product Categories Management</h2>
-
-	<div>
+<div class="my-2 flex items-end justify-between">
+	<AnimatedDiv animateVars={{ translateX: -16 }} class="flex flex-col gap-1">
+		<div class="flex items-center gap-2">
+			<h1 class="text-header3 font-bold">Quản lý danh mục sản phẩm</h1>
+		</div>
+		<p class="text-base-content/60">
+			Quản lý danh mục sản phẩm, cập nhật thông tin và tổ chức nội dung
+		</p>
+	</AnimatedDiv>
+	<AnimatedDiv animateVars={{ translateX: 16 }} class="flex gap-1">
 		<a href="./product-categories-management/add" class="btn btn-primary">
-			<span class="mr-2 icon-[fa7-solid--add]"></span>Add new category
+			<span class="mr-2 icon-[fa7-solid--plus]"></span>Thêm danh mục
 		</a>
-	</div>
+	</AnimatedDiv>
 </div>
 
 <CategoryTable categories={data.categories} />

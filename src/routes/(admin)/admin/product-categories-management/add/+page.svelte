@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import FormInput from '$lib/components/ui/FormInput.svelte';
 	import { addCategorySchema, type AddCategorySchema } from '$lib/schemas/addCategorySchema.js';
 	import type { ToastData } from '$lib/utils/showToast.js';
@@ -27,26 +28,27 @@
 	});
 </script>
 
-<div class="mx-auto max-w-xl">
-	<div class="my-2 flex justify-between">
-		<div class="flex gap-3">
-			<a
-				href="/admin/course-categories-management"
-				aria-label="return to category list"
-				class="btn btn-square"
-			>
-				<span class="icon-[fa7-solid--arrow-left]"></span>
-			</a>
-			<h2>Add new category</h2>
+<div class="my-2 flex items-end justify-between">
+	<AnimatedDiv animateVars={{ translateX: -16 }} class="flex flex-col gap-1">
+		<div class="flex items-center gap-2">
+			<button class="btn btn-sm" aria-label="Quay lại" onclick={() => history.back()}>
+				<span class="icon-[fa7-solid--arrow-left]"></span> Trở về
+			</button>
+			<h1 class="text-header3 font-bold">Thêm danh mục sản phẩm mới</h1>
 		</div>
-	</div>
+		<p class="text-base-content/60">
+			Tạo một danh mục sản phẩm mới để tổ chức và quản lý sản phẩm của bạn
+		</p>
+	</AnimatedDiv>
+</div>
 
+<div class="mx-auto max-w-xl">
 	<!-- HERE IS THE FORM -->
 	<form method="POST" class="h-fit w-full rounded-box border bg-base-100 p-4 pt-2" use:enhance>
 		<FormInput
 			name="name"
-			label="Category Name"
-			placeholder="Enter name here..."
+			label="Tên danh mục"
+			placeholder="Nhập tên danh mục..."
 			type="text"
 			superForm={form}
 			{errors}
@@ -54,15 +56,15 @@
 
 		<FormInput
 			name="description"
-			label="Category Description"
-			placeholder="Enter description here..."
+			label="Mô tả danh mục"
+			placeholder="Nhập mô tả danh mục..."
 			type="text"
 			superForm={form}
 			{errors}
 		/>
 
 		<button class="btn mt-2 w-full btn-primary" disabled={$submitting}>
-			Add
+			Thêm danh mục
 			{#if $delayed}
 				<span class="loading loading-spinner"></span>
 			{/if}

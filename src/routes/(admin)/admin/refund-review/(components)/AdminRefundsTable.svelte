@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
 	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import OpenModalButton from '$lib/components/modal/OpenModalButton.svelte';
 	import ReviewRefundModalContent from '$lib/components/modal/ReviewRefundModalContent.svelte';
