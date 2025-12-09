@@ -71,12 +71,12 @@ export const adminSidebarLayout: SidebarLayoutItem[] = [
 				iconClass: 'icon-[mingcute--shop-fill] text-xl'
 			}
 		]
+	},
+	{
+		href: '/admin/broadcast-notification',
+		title: 'Thông báo cho mọi người dùng',
+		iconClass: 'icon-[mingcute--announcement-fill] text-xl'
 	}
-	// {
-	// 	href: '/admin/reports-and-feedbacks',
-	// 	title: 'Báo cáo & Phản hồi',
-	// 	iconClass: 'icon-[mingcute--file-warning-fill] text-xl'
-	// }
 ];
 
 export const sellerSidebarLayout: SidebarLayoutItem[] = [

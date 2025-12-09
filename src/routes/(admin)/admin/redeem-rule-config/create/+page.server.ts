@@ -28,8 +28,6 @@ export const actions: Actions = {
 
 		const formData = form.data;
 
-		console.log(formData);
-
 		const { response, responseBody } = await fetchAuthorizedApi(
 			cookies,
 			'/api/admin/redeem-rules',
