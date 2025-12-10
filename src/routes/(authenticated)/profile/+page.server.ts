@@ -1,4 +1,4 @@
-import type { Achievement, GamificationProfile } from '$lib/types/Gamification.js';
+import type { ApiRecentAchievements, GamificationProfile } from '$lib/types/Gamification.js';
 import { fetchAuthorizedApi, getSafeResult } from '$lib/utils/externalApi.js';
 
 export function load({ cookies }) {
@@ -7,10 +7,14 @@ export function load({ cookies }) {
 		null
 	);
 
-	const recentAchievementsPromise = getSafeResult(
-		fetchAuthorizedApi<Achievement[]>(cookies, '/api/gamification/achievements/recent', 'GET'),
-		[]
+	const recentAchievementsDataPromise = getSafeResult(
+		fetchAuthorizedApi<ApiRecentAchievements>(
+			cookies,
+			'/api/gamification/achievements/recent',
+			'GET'
+		),
+		null
 	);
 
-	return { gamificationProfilePromise, recentAchievementsPromise };
+	return { gamificationProfilePromise, recentAchievementsDataPromise };
 }

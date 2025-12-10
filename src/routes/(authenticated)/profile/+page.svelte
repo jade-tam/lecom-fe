@@ -2,6 +2,8 @@
 	import { resolve } from '$app/paths';
 	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
+	import Image from '$lib/components/ui/Image.svelte';
+	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 	import UserAvatar from '$lib/components/ui/UserAvatar.svelte';
 	import { USER_PROFILE_CONTEXT } from '$lib/consts/contexts';
 	import type { UserProfile } from '$lib/types/UserProfile';
@@ -183,5 +185,35 @@
 			><span class="icon-[fa7-solid--medal]"></span>Xem tất cả thành tựu
 		</a>
 	</div>
-	<EmptyPlaceholder text="Không có gì để hiển thị" />
+	{#await data.recentAchievementsDataPromise}
+		<LoadingPlaceholder text="Đang tải thành tựu gần đây..." />
+	{:then recentAchievementsData}
+		{#if recentAchievementsData?.recentAchievements.length}
+			<div class="grid grid-cols-5 gap-4 max-md:grid-cols-3 max-sm:grid-cols-2">
+				{#each recentAchievementsData.recentAchievements as achievement (achievement.id)}
+					<div class="flex flex-col items-center justify-between gap-2 rounded-field border-2 border-warning/50 bg-warning/30 p-4">
+						<div class="mx-auto flex py-2">
+							<Image class="h-16 w-16" src={achievement.imageUrl} alt={achievement.title} border="" />
+						</div>
+						<div>
+							<p class="text-center font-bold text-base-content">
+								{achievement.title}
+							</p>
+							<p class="text-center text-sm text-base-content/60">{achievement.category}</p>
+						</div>
+						<div class="badge badge-success">
+							<span class="icon-[fa7-solid--check-circle] text-xs"></span>Đã đạt được
+						</div>
+						{#if achievement.completedAt}
+							<p class="text-xs text-base-content/60 italic">
+								Hoàn thành ngày {formatDate(achievement.completedAt)}
+							</p>
+						{/if}
+					</div>
+				{/each}
+			</div>
+		{:else}
+			<EmptyPlaceholder text="Bạn chưa đạt được thành tựu nào gần đây." />
+		{/if}
+	{/await}
 </AnimatedDiv>

@@ -86,6 +86,18 @@ export type ApiUserAchivements = {
 	achievements: Achievement[];
 }; // api lấy danh sách achievements của ng dùng  (hiện tại chưa có) trả về kiểu này
 
+export type RecentAchievement = {
+	id: number;
+	title: string;
+	category: string;
+	imageUrl: string;
+	completedAt: string; // ISO date string - ngày hoàn thành
+};
+
+export type ApiRecentAchievements = {
+	recentAchievements: RecentAchievement[];
+};
+
 export type RedeemRule = {
 	id: string;
 	reward: string;
