@@ -52,9 +52,19 @@ export type RewardStoreItemType = {
 	rewardCode: string; // Mã dùng để redeem phần thưởng, ví dụ: "DOUBLE_XP_24H"
 };
 
+export const achievementCategoryOptions = [
+	{ value: 'account', title: 'Tài khoản' },
+	{ value: 'learning', title: 'Học tập' },
+	{ value: 'shopping', title: 'Mua sắm' },
+	{ value: 'social', title: 'Tương tác' }
+] as const satisfies readonly FormSelectOption[];
+
+export type AchievementCategory = (typeof achievementCategoryOptions)[number]['value'];
+
 export type Achievement = {
-	id: string;
-	category: 'learning' | 'shopping' | 'social' | 'special';
+	id: number;
+	code: string;
+	category: string;
 	imageUrl: string;
 	title: string;
 	description: string;
@@ -64,7 +74,7 @@ export type Achievement = {
 	coinReward: number;
 	isCompleted: boolean;
 	isRewardClaimed: boolean;
-	completedAt?: string; // ISO date string - ngày hoàn thành
+	completedAt?: string | null; // ISO date string - ngày hoàn thành
 };
 
 export type ApiGamificationRewards = {
@@ -73,10 +83,6 @@ export type ApiGamificationRewards = {
 }; // /api/gamification/rewards trả về kiểu này
 
 export type ApiUserAchivements = {
-	categories: {
-		value: string;
-		title: string;
-	}[]; // danh sách categories, ví dụ: [{ value: 'learning', title: 'Học tập' }, ...]
 	achievements: Achievement[];
 }; // api lấy danh sách achievements của ng dùng  (hiện tại chưa có) trả về kiểu này
 

@@ -1,76 +1,24 @@
+import { claimAchievementRewardSchema } from '$lib/schemas/claimAchievementRewardSchema.js';
 import { redeemRewardSchema } from '$lib/schemas/redeemRewardSchema.js';
-import type { Achievement, ApiUserAchivements } from '$lib/types/Gamification.js';
+import type { ApiUserAchivements } from '$lib/types/Gamification.js';
 import { fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi.js';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 
 export async function load({ cookies }) {
-	// Mock achievements data
-	const achievementsData: ApiUserAchivements = {
-		categories: [
-			{ value: 'learning', title: 'Học tập' },
-			{ value: 'shopping', title: 'Mua sắm' },
-			{ value: 'social', title: 'Xã hội' },
-			{ value: 'special', title: 'Đặc biệt' }
-		],
-		achievements: [
-			{
-				id: 'achv-1',
-				category: 'learning',
-				imageUrl: '/images/achv-complete-10-lessons.png',
-				title: 'Hoàn thành 10 bài học',
-				description: 'Hoàn thành 10 bài học đầu tiên.',
-				currentCount: 4,
-				targetCount: 10,
-				xpReward: 100,
-				coinReward: 20,
-				isCompleted: false,
-				isRewardClaimed: false
-			},
-			{
-				id: 'achv-2',
-				category: 'shopping',
-				imageUrl: '/images/achv-first-purchase.png',
-				title: 'Mua hàng đầu tiên',
-				description: 'Hoàn thành đơn hàng đầu tiên.',
-				currentCount: 1,
-				targetCount: 1,
-				xpReward: 50,
-				coinReward: 10,
-				isCompleted: true,
-				isRewardClaimed: false,
-				completedAt: new Date().toISOString()
-			},
-			{
-				id: 'achv-3',
-				category: 'social',
-				imageUrl: 'imageUrl',
-				title: 'Mời bạn bè',
-				description: 'Mời một người bạn tham gia hệ thống.',
-				currentCount: 0,
-				targetCount: 1,
-				xpReward: 30,
-				coinReward: 5,
-				isCompleted: true,
-				isRewardClaimed: true,
-				completedAt: 'isoDateString...'
-			}
-		]
-	};
-
-	const achievementsPromise = getSafeResult(
-		fetchAuthorizedApi<Achievement[]>(cookies, '/api/gamification/achievements/all', 'GET'),
-		[]
+	const achievementsDataPromise = getSafeResult(
+		fetchAuthorizedApi<ApiUserAchivements>(cookies, '/api/gamification/achievements/all', 'GET'),
+		null
 	);
 
 	const form = await superValidate(zod4(redeemRewardSchema));
 
-	return { achievementsData, form };
+	return { achievementsDataPromise, form };
 }
 
 export const actions = {
 	claimReward: async ({ request, cookies }) => {
-		const form = await superValidate(request, zod4(redeemRewardSchema));
+		const form = await superValidate(request, zod4(claimAchievementRewardSchema));
 
 		if (!form.valid) {
 			return fail(400, { form });
@@ -80,12 +28,15 @@ export const actions = {
 
 		const { response, responseBody } = await fetchAuthorizedApi(
 			cookies,
-			`/api/gamification/redeem`,
-			'POST',
-			formData
+			`/api/gamification/achievements/${formData.id}/claim`,
+			'POST'
 		);
 
-		const toastData = getToastData(responseBody, 'Đổi phần thưởng thành công!');
+		const toastData = getToastData(
+			responseBody,
+			'Nhận thưởng thành công!',
+			'Không thể nhận thưởng.'
+		);
 
 		if (response.ok) {
 			return message(form, { toastData: toastData });

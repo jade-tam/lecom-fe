@@ -1,15 +1,16 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import type { RedeemRewardSchema } from '$lib/schemas/redeemRewardSchema';
+	import { achievementCategoryOptions, type Achievement } from '$lib/types/Gamification.js';
 	import type { ToastData } from '$lib/utils/showToast';
 	import showToast from '$lib/utils/showToast';
 	import { superForm } from 'sveltekit-superforms';
-	import SmallProfileSummary from '../(components)/SmallProfileSummary.svelte';
-	import RewardStoreItem from './(components)/Achievement.svelte';
-	import Achievement from './(components)/Achievement.svelte';
+	import AchievementCard from './(components)/AchievementCard.svelte';
+	import { getTitleFromOptionList } from '$lib/utils/converters';
 
 	const { data } = $props();
-	const achievementsData = $derived(data.achievementsData);
+	let achievements: Achievement[] = $state([]);
+	let isLoading: boolean = $state(true);
 
 	// Map achievements into categories
 	const achievementCategories = $derived(() => {
@@ -21,9 +22,7 @@
 		return categories;
 	});
 
-	const completedAchievementsCount = $derived(
-		achievementsData.achievements.filter((a) => a.isCompleted).length
-	);
+	const completedAchievementsCount = $derived(achievements.filter((a) => a.isCompleted).length);
 
 	const { form, errors, message, enhance, submitting, delayed } = superForm<
 		RedeemRewardSchema,
@@ -34,6 +33,16 @@
 		if ($message?.toastData) {
 			showToast($message.toastData);
 		}
+	});
+
+	$effect(() => {
+		const setAchievements = async () => {
+			const resolvedData = await data.achievementsDataPromise;
+			achievements = resolvedData?.achievements || [];
+			isLoading = false;
+		};
+
+		setAchievements();
 	});
 </script>
 
@@ -53,31 +62,31 @@
 		<div class="flex items-center gap-2 text-sm">
 			<span class="icon-[fa7-solid--trophy] text-warning"></span>
 			<span class=""
-				><strong>{completedAchievementsCount} / {achievementsData.achievements.length}</strong> Thành
+				><strong>{completedAchievementsCount} / {achievements.length}</strong> Thành
 				tựu đã đạt được</span
 			>
 		</div>
 		<progress
 			class="progress w-full progress-warning"
 			value={completedAchievementsCount}
-			max={achievementsData.achievements.length}
+			max={achievements.length}
 		></progress>
 	</div>
 </div>
 
 <form action="?/claimReward" method="POST" use:enhance>
 	<div class="tabs-lift mt-2 tabs">
-		{#each achievementsData.categories as category, index (category.value)}
+		{#each Object.entries(achievementCategories()) as [categoryKey, categoryAchievements], index (categoryKey)}
 			<label class="tab font-bold text-primary-content hover:text-primary-content">
-				<input type="radio" name="storeTabRadio" checked={index === 0} />
+				<input type="radio" name="achievementTabRadio" checked={index === 0} />
 				<span class="mr-2 icon-[fa7-solid--medal]"></span>
-				{category.title}
+				{getTitleFromOptionList(categoryKey, achievementCategoryOptions)}
 			</label>
 			<div class="tab-content border-base-300 bg-base-100 p-4">
-				{#if achievementsData.achievements.filter((item) => item.category === category.value).length}
+				{#if categoryAchievements.length}
 					<div class="grid grid-cols-5 gap-2 max-md:grid-cols-3 max-sm:grid-cols-1">
-						{#each achievementsData.achievements.filter((item) => item.category === category.value) as achievement}
-							<Achievement {achievement} />
+						{#each categoryAchievements as achievement (achievement.id)}
+							<AchievementCard {achievement} />
 						{/each}
 					</div>
 				{:else}

@@ -13,7 +13,7 @@
 <div
 	class="flex flex-col items-center justify-between gap-2 rounded-field border-2 {achievement.isCompleted
 		? 'border-warning/50 bg-warning/30'
-		: 'border-base-300 bg-base-200'} p-2"
+		: 'border-base-300 bg-base-200'} p-4"
 >
 	<div class="mx-auto flex py-2">
 		<Image class="h-16 w-16" src={achievement.imageUrl} alt={achievement.title} border="" />
@@ -38,7 +38,7 @@
 		</div>
 		<button
 			type="submit"
-			name="userAchievementId"
+			name="id"
 			value={achievement.id}
 			class="btn btn-sm btn-primary"
 			disabled={achievement.isRewardClaimed}
