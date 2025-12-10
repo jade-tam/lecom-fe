@@ -45,12 +45,18 @@
 	popover
 	bind:this={popover}
 	id={popoverId}
-	class="dropdown rounded-box bg-base-100 shadow-lg border"
+	class="dropdown rounded-box border bg-base-100 shadow-lg"
 	style="position-anchor:--{popoverId}"
 >
 	<calendar-date on:change={handleDateSelect} class="cally text-secondary-content" locale="vi-VN">
-		<span class="icon-[mingcute--square-arrow-left-fill] text-xl text-secondary-content/90" slot="previous"></span>
-		<span class="icon-[mingcute--square-arrow-right-fill] text-xl text-secondary-content/90" slot="next"></span>
+		<span
+			class="icon-[mingcute--square-arrow-left-fill] text-xl text-secondary-content/90"
+			slot="previous"
+		></span>
+		<span
+			class="icon-[mingcute--square-arrow-right-fill] text-xl text-secondary-content/90"
+			slot="next"
+		></span>
 		<calendar-month></calendar-month>
 	</calendar-date>
 </div>

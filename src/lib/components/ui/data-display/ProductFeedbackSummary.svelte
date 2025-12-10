@@ -72,7 +72,9 @@
 			<form class="filter">
 				<input class="btn btn-square btn-sm" type="reset" value="×" />
 				{#each [5, 4, 3, 2, 1] as rating}
-					{@const count = (feedbackSummary as unknown as Record<string, number>)[`rating${rating}Count`]}
+					{@const count = (feedbackSummary as unknown as Record<string, number>)[
+						`rating${rating}Count`
+					]}
 					<input
 						type="radio"
 						aria-label={`${rating} sao (${count})`}
@@ -98,7 +100,9 @@
 							/>
 							<div class="flex-1">
 								<p class="text-sm font-semibold">{feedback.userName}</p>
-								<p class="text-xs text-base-content/60">Đánh giá lúc {formatDateTime(feedback.createdAt)}</p>
+								<p class="text-xs text-base-content/60">
+									Đánh giá lúc {formatDateTime(feedback.createdAt)}
+								</p>
 							</div>
 							<Rating defaultValue={feedback.rating} readonly={true} />
 						</div>

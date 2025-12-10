@@ -87,17 +87,27 @@
 	<div class="flex gap-4">
 		<fieldset class="fieldset">
 			<legend class="fieldset-legend">Ảnh đại diện cửa hàng</legend>
-			<ImageWithFullscreenViewer src={shop.shopAvatar} class="h-32 w-32 rounded-full border" alt={shop.name + ' shop'} />
+			<ImageWithFullscreenViewer
+				src={shop.shopAvatar}
+				class="h-32 w-32 rounded-full border"
+				alt={shop.name + ' shop'}
+			/>
 		</fieldset>
 		<fieldset class="fieldset w-full">
 			<legend class="fieldset-legend">Ảnh banner cửa hàng</legend>
-			<ImageWithFullscreenViewer src={shop.shopBanner} alt={shop.name + ' shop'} class="h-32 w-full rounded-box border" />
+			<ImageWithFullscreenViewer
+				src={shop.shopBanner}
+				alt={shop.name + ' shop'}
+				class="h-32 w-full rounded-box border"
+			/>
 		</fieldset>
 	</div>
 
 	<div class="mt-2 flex flex-col gap-1 overflow-hidden">
 		<h3 class="text-header2">{shop.name}</h3>
-		<p class="font-bold text-secondary-content-content italic">Danh mục cửa hàng: {shop.categoryName}</p>
+		<p class="text-secondary-content-content font-bold italic">
+			Danh mục cửa hàng: {shop.categoryName}
+		</p>
 		<div class="mt-1 flex items-center gap-2">
 			<div class={`badge ${getStatusBadgeClass(shop.status)}`}>
 				{shop.status === 'Pending'
@@ -230,12 +240,20 @@
 		<div class="flex w-full gap-4">
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend">Ảnh mặt trước CMND/CCCD</legend>
-				<ImageWithFullscreenViewer src={shop.ownerPersonalIdFrontUrl} alt="Ảnh mặt trước CMND/CCCD" class="h-32 w-64" />
+				<ImageWithFullscreenViewer
+					src={shop.ownerPersonalIdFrontUrl}
+					alt="Ảnh mặt trước CMND/CCCD"
+					class="h-32 w-64"
+				/>
 			</fieldset>
 
 			<fieldset class="fieldset">
 				<legend class="fieldset-legend">Ảnh mặt sau CMND/CCCD</legend>
-				<ImageWithFullscreenViewer src={shop.ownerPersonalIdBackUrl} alt="Ảnh mặt sau CMND/CCCD" class="h-32 w-64" />
+				<ImageWithFullscreenViewer
+					src={shop.ownerPersonalIdBackUrl}
+					alt="Ảnh mặt sau CMND/CCCD"
+					class="h-32 w-64"
+				/>
 			</fieldset>
 		</div>
 	</div>

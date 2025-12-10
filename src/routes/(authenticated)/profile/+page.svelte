@@ -191,9 +191,16 @@
 		{#if recentAchievementsData?.recentAchievements.length}
 			<div class="grid grid-cols-5 gap-4 max-md:grid-cols-3 max-sm:grid-cols-2">
 				{#each recentAchievementsData.recentAchievements as achievement (achievement.id)}
-					<div class="flex flex-col items-center justify-between gap-2 rounded-field border-2 border-warning/50 bg-warning/30 p-4">
+					<div
+						class="flex flex-col items-center justify-between gap-2 rounded-field border-2 border-warning/50 bg-warning/30 p-4"
+					>
 						<div class="mx-auto flex py-2">
-							<Image class="h-16 w-16" src={achievement.imageUrl} alt={achievement.title} border="" />
+							<Image
+								class="h-16 w-16"
+								src={achievement.imageUrl}
+								alt={achievement.title}
+								border=""
+							/>
 						</div>
 						<div>
 							<p class="text-center font-bold text-base-content">

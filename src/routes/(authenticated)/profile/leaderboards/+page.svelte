@@ -163,9 +163,7 @@
 							<td class="text-center">
 								<div class="flex items-center justify-center gap-2">
 									{#if entry.rank <= 3}
-										<div
-											class={`badge bg-gradient-to-br ${getRankBadgeColor(entry.rank)} p-2`}
-										>
+										<div class={`badge bg-gradient-to-br ${getRankBadgeColor(entry.rank)} p-2`}>
 											<span class={getRankIcon(entry.rank)}></span>
 										</div>
 									{:else}
@@ -192,11 +190,15 @@
 							</td>
 							<td class="text-center">
 								<div class="flex items-center justify-center gap-2">
-									<span class="font-bold font-serif text-lg text-success-content">Cấp {entry.level}</span>
+									<span class="font-serif text-lg font-bold text-success-content"
+										>Cấp {entry.level}</span
+									>
 								</div>
 							</td>
 							<td class="text-right">
-								<span class="text-lg font-bold text-success-content font-serif">{entry.score} XP</span>
+								<span class="font-serif text-lg font-bold text-success-content"
+									>{entry.score} XP</span
+								>
 							</td>
 						</tr>
 					{/each}

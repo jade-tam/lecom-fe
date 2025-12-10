@@ -329,12 +329,12 @@
 					</div>
 				</div>
 
-			<div class="ml-auto flex items-center gap-2">
-				<button class="btn btn-ghost" onclick={cancelCrop} disabled={uploading}>Hủy</button>
-				<button class="btn btn-primary" onclick={cropAndUpload} disabled={uploading}>
-					{#if uploading}Đang tải lên...{:else}Cắt hình & Tải lên{/if}
-				</button>
-			</div>
+				<div class="ml-auto flex items-center gap-2">
+					<button class="btn btn-ghost" onclick={cancelCrop} disabled={uploading}>Hủy</button>
+					<button class="btn btn-primary" onclick={cropAndUpload} disabled={uploading}>
+						{#if uploading}Đang tải lên...{:else}Cắt hình & Tải lên{/if}
+					</button>
+				</div>
 			</div>
 
 			{#if errorMessage}

@@ -44,7 +44,7 @@
 	});
 </script>
 
-<div class="{customClass}  rounded-field overflow-hidden">
+<div class="{customClass}  overflow-hidden rounded-field">
 	{#if src && !isImageError}
 		<button
 			type="button"
@@ -52,13 +52,7 @@
 			onclick={openFullscreen}
 			aria-label="Open fullscreen view"
 		>
-			<img
-				{src}
-				{alt}
-				class="h-full w-full object-cover"
-				draggable="false"
-				onerror={handleError}
-			/>
+			<img {src} {alt} class="h-full w-full object-cover" draggable="false" onerror={handleError} />
 		</button>
 	{:else}
 		<div

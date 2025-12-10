@@ -85,7 +85,7 @@ export const actions = {
 			}
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Start new conversation with shop');
+		const toastData: ToastData = getToastData(responseBody, 'Chuyển hướng đến hộp thoại chat');
 
 		return { toastData, responseBody };
 	}

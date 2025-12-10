@@ -31,7 +31,11 @@
 	<div class="mx-auto flex min-h-screen max-w-md items-center p-2">
 		<!-- FORM ĐĂNG NHẬP -->
 		<AnimatedDiv animateVars={{ translateY: 16 }}>
-			<form method="POST" class="h-fit w-full rounded-box border bg-base-100 p-4 md:p-8" use:enhance>
+			<form
+				method="POST"
+				class="h-fit w-full rounded-box border bg-base-100 p-4 md:p-8"
+				use:enhance
+			>
 				<h1 class="mb-4 text-center">Đăng nhập</h1>
 				<p class="text-header2">Chào mừng trở lại!</p>
 				<p class="mb-4 text-sm">Đăng nhập để tiếp tục cuộc hành trình của bạn.</p>

@@ -33,8 +33,12 @@
 	{#if src && !isImageError}
 		<img {src} {alt} class={`h-full w-full ${objectFit}`} draggable="false" onerror={handleError} />
 	{:else}
-		<div class="[container-type:size] flex h-full flex-col items-center justify-center text-secondary-content">
-			<span class="icon-[mingcute--photo-album-line] text-[40cqh] "></span><span class="text-[8cqh]">Không có ảnh</span>
+		<div
+			class="[container-type:size] flex h-full flex-col items-center justify-center text-secondary-content"
+		>
+			<span class="icon-[mingcute--photo-album-line] text-[40cqh]"></span><span class="text-[8cqh]"
+				>Không có ảnh</span
+			>
 		</div>
 	{/if}
 </div>

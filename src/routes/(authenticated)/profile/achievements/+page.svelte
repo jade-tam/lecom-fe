@@ -62,8 +62,7 @@
 		<div class="flex items-center gap-2 text-sm">
 			<span class="icon-[fa7-solid--trophy] text-warning"></span>
 			<span class=""
-				><strong>{completedAchievementsCount} / {achievements.length}</strong> Thành
-				tựu đã đạt được</span
+				><strong>{completedAchievementsCount} / {achievements.length}</strong> Thành tựu đã đạt được</span
 			>
 		</div>
 		<progress

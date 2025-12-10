@@ -132,7 +132,7 @@
 	<div class="mt-4">
 		<!-- Existing Comments -->
 		{#if post.comments?.length}
-			<div class="space-y-4 max-h-82 overflow-y-auto">
+			<div class="max-h-82 space-y-4 overflow-y-auto">
 				{#each post.comments.slice(0, showAllComments ? undefined : 2) as comment}
 					<div class="flex items-start gap-3" transition:slide={{ duration: 200 }}>
 						<Image
@@ -154,18 +154,12 @@
 
 			<!-- See More Comments Button -->
 			{#if post.comments.length > 2 && !showAllComments}
-				<button
-					class="btn btn-sm btn-ghost mt-3 w-full"
-					onclick={() => (showAllComments = true)}
-				>
+				<button class="btn mt-3 w-full btn-ghost btn-sm" onclick={() => (showAllComments = true)}>
 					<span class="icon-[mingcute--down-line]"></span>
 					Xem thêm {post.comments.length - 2} bình luận
 				</button>
 			{:else if showAllComments && post.comments.length > 2}
-				<button
-					class="btn btn-sm btn-ghost mt-3 w-full"
-					onclick={() => (showAllComments = false)}
-				>
+				<button class="btn mt-3 w-full btn-ghost btn-sm" onclick={() => (showAllComments = false)}>
 					<span class="icon-[mingcute--up-line]"></span>
 					Ẩn bình luận
 				</button>
