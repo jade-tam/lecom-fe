@@ -44,14 +44,14 @@
 <!-- Form Tainted Modal -->
 <dialog bind:this={formTaintedModal} class="modal">
 	<div class="modal-box">
-		<h3 class="text-lg font-bold">Do you want to leave?</h3>
-		<p class="py-4">Changes you made may not be saved.</p>
+		<h3 class="text-lg font-bold">Bạn muốn rời khỏi trang?</h3>
+		<p class="py-4">Những thay đổi bạn làm có thể không được lưu.</p>
 		<div class="modal-action">
 			<form method="dialog">
 				<!-- if there is a button in form, it will close the modal -->
-				<button class="btn">Nope</button>
+				<button class="btn">Không</button>
 			</form>
-			<a class="btn btn-error" href="/profile">Leave</a>
+			<a class="btn btn-error" href="/profile">Rời khỏi</a>
 		</div>
 	</div>
 
@@ -61,8 +61,8 @@
 </dialog>
 
 <div class="mx-auto mt-4 max-w-2xl">
-	<h1 class="text-header3 font-bold">Edit Profile</h1>
-	<p class="text-base-content/60">Update your personal details below.</p>
+	<h1 class="text-header3 font-bold">Chỉnh sửa hồ sơ</h1>
+	<p class="text-base-content/60">Cập nhật thông tin cá nhân của bạn bên dưới.</p>
 </div>
 
 <form
@@ -74,7 +74,7 @@
 	<FormInput name="id" label="ID" type="text" superForm={form} hidden {errors} />
 
 	<FormMediaInput
-		label="Avatar"
+		label="Ảnh đại diện"
 		aspectRatio="1:1"
 		buttonClass="rounded-full h-28"
 		name="imageUrl"
@@ -84,11 +84,11 @@
 
 	<FormInput
 		name="fullName"
-		label="Full name"
+		label="Họ và tên"
 		class="w-full"
 		icon="icon-[fa7-solid--circle-user]"
-		placeholder="Enter your full name here..."
-		help="Your full name which show on your personal ID card"
+		placeholder="Nhập họ và tên của bạn tại đây..."
+		help="Họ và tên của bạn sẽ hiển thị trên thẻ CMND/CCCD"
 		type="text"
 		superForm={form}
 		{errors}
@@ -97,21 +97,21 @@
 	<div class="grid w-full grid-cols-2 gap-4 max-md:grid-cols-1">
 		<FormInput
 			name="userName"
-			label="Username"
+			label="Tên đăng nhập"
 			class="w-full"
 			icon="icon-[fa7-solid--circle-user]"
-			placeholder="Enter your user name here..."
-			help="This username will be used for login"
+			placeholder="Nhập tên đăng nhập của bạn tại đây..."
+			help="Tên đăng nhập này sẽ được sử dụng để đăng nhập"
 			type="text"
 			superForm={form}
 			{errors}
 		/>
 		<FormInput
 			name="dateOfBirth"
-			label="Date Of Birth"
+			label="Ngày sinh"
 			class="w-full"
 			icon="icon-[fa7-solid--calendar-alt]"
-			placeholder="Enter your date of birth here..."
+			placeholder="Nhập ngày sinh của bạn tại đây..."
 			type="date"
 			superForm={form}
 			{errors}
@@ -120,10 +120,10 @@
 
 	<FormInput
 		name="phoneNumber"
-		label="Phone Number"
+		label="Số điện thoại"
 		class="w-full"
 		icon="icon-[fa7-solid--phone]"
-		placeholder="Enter your phone number here..."
+		placeholder="Nhập số điện thoại của bạn tại đây..."
 		type="text"
 		superForm={form}
 		{errors}
@@ -131,10 +131,10 @@
 
 	<FormInput
 		name="address"
-		label="Address"
+		label="Địa chỉ"
 		class="w-full"
 		icon="icon-[fa7-solid--location-dot]"
-		placeholder="Enter your address here..."
+		placeholder="Nhập địa chỉ của bạn tại đây..."
 		type="text"
 		superForm={form}
 		{errors}
@@ -142,10 +142,10 @@
 
 	<div class="mt-4 flex gap-2 self-end">
 		<button class="btn btn-soft" type="button" onclick={handleCancel} disabled={$submitting}
-			>Cancel</button
+			>Hủy</button
 		>
 		<button class="btn btn-primary" type="submit" disabled={$submitting || !isTainted($tainted)}>
-			Save changes
+			Lưu thay đổi
 			{#if $delayed}
 				<span class="loading loading-md loading-infinity"></span>
 			{/if}

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import UserAvatar from '$lib/components/ui/UserAvatar.svelte';
 	import { USER_PROFILE_CONTEXT } from '$lib/consts/contexts';
@@ -13,12 +14,15 @@
 	const userProfile = $derived(user());
 </script>
 
-<h1 class="text-header3 mt-4 font-bold">Hồ sơ của tôi</h1>
-<p class="text-base-content/60">
-	Xem thông tin, theo dõi tiến trình, thành tựu và thống kê học tập của bạn.
-</p>
+<AnimatedDiv class="my-2 flex flex-col gap-1" animateVars={{ translateX: -20 }}>
+	<h1 class="text-header3 mt-4 font-bold">Hồ sơ của tôi</h1>
+	<p class="text-base-content/60">
+		Xem thông tin, theo dõi tiến trình, thành tựu và thống kê học tập của bạn.
+	</p>
+</AnimatedDiv>
 
-<div
+<AnimatedDiv
+	animateVars={{ translateY: 20 }}
 	class="mt-2 flex grid-cols-10 items-center justify-between gap-6 rounded-box border bg-base-100 p-4 max-md:flex-col"
 >
 	<UserAvatar
@@ -62,11 +66,14 @@
 			><span class="icon-[fa7-solid--user-edit] text-xl"></span> Chỉnh sửa hồ sơ
 		</a>
 	</div>
-</div>
+</AnimatedDiv>
 
 <!-- ================================================================== -->
 
-<div class="mt-2 flex flex-col gap-2 rounded-box border bg-base-100 p-4">
+<AnimatedDiv
+	animateVars={{ translateY: 20, delay: 0.1 }}
+	class="mt-2 flex flex-col gap-2 rounded-box border bg-base-100 p-4"
+>
 	<h3>Tổng quan hồ sơ</h3>
 	{#await data.gamificationProfilePromise}
 		<div class="grid grid-cols-3 gap-4">
@@ -130,8 +137,8 @@
 					<div class="flex grow items-center gap-2">
 						<span class="grow font-serif text-3xl font-bold text-info-content">#?? Tuần này</span>
 					</div>
-					<button class="btn mt-2 btn-block btn-info"
-						><span class="icon-[fa7-solid--ranking-star]"></span>Xem bảng xếp hạng</button
+					<a href={resolve('/profile/leaderboards')} class="btn mt-2 btn-block btn-info"
+						><span class="icon-[fa7-solid--ranking-star]"></span>Xem bảng xếp hạng</a
 					>
 				</div>
 
@@ -141,8 +148,17 @@
 						class="col-span-3 flex flex-col items-center gap-1 rounded-field border bg-warning p-2 max-md:col-span-1"
 					>
 						<p class="flex items-center gap-2 text-warning-content">
-							<span class="icon-[fa7-solid--fire-alt]"></span>Bạn đang trong chuỗi
+							<span class="icon-[mingcute--fire-fill] text-xl"></span>Bạn đang trong chuỗi
 							<strong>{gamificationProfile.dailyStreak}</strong> ngày học liên tiếp.
+						</p>
+					</div>
+				{:else}
+					<div
+						class="col-span-3 flex flex-col items-center gap-1 rounded-field border bg-base-200 p-2 max-md:col-span-1"
+					>
+						<p class="flex items-center gap-2 text-base-content/70">
+							<span class="icon-[mingcute--fire-fill] text-xl"></span>Bạn không có chuỗi ngày học
+							liên tiếp. Tham gia học hàng ngày để nhận nhiều điểm XP hơn.
 						</p>
 					</div>
 				{/if}
@@ -153,11 +169,14 @@
 	{:catch error}
 		<EmptyPlaceholder text="Không thể tải tổng quan hồ sơ. Có lỗi xảy ra." />
 	{/await}
-</div>
+</AnimatedDiv>
 
 <!-- ================================================================== -->
 
-<div class="mt-2 flex flex-col gap-2 rounded-box border bg-base-100 p-4">
+<AnimatedDiv
+	animateVars={{ translateY: 20, delay: 0.2 }}
+	class="mt-2 flex flex-col gap-2 rounded-box border bg-base-100 p-4"
+>
 	<div class="flex items-center justify-between">
 		<h3>Thành tựu gần đây</h3>
 		<a href={resolve('/profile/achievements')} class="btn btn-primary"
@@ -165,4 +184,4 @@
 		</a>
 	</div>
 	<EmptyPlaceholder text="Không có gì để hiển thị" />
-</div>
+</AnimatedDiv>

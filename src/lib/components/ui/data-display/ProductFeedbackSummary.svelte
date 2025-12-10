@@ -23,10 +23,6 @@
 
 		setfeedbackSummary();
 	});
-
-	function getRatingPercentage(count: number, total: number): number {
-		return total === 0 ? 0 : Math.round((count / total) * 100);
-	}
 </script>
 
 <div class="col-span-12 rounded-box border bg-base-100 p-4 max-md:col-span-1 max-md:p-4">

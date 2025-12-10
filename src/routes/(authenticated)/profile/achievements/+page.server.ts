@@ -1,6 +1,6 @@
 import { redeemRewardSchema } from '$lib/schemas/redeemRewardSchema.js';
-import type { ApiUserAchivements } from '$lib/types/Gamification.js';
-import { fetchAuthorizedApi, getToastData } from '$lib/utils/externalApi.js';
+import type { Achievement, ApiUserAchivements } from '$lib/types/Gamification.js';
+import { fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi.js';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 
@@ -44,7 +44,7 @@ export async function load({ cookies }) {
 			{
 				id: 'achv-3',
 				category: 'social',
-				imageUrl: '/images/achv-invite-friend.png',
+				imageUrl: 'imageUrl',
 				title: 'Mời bạn bè',
 				description: 'Mời một người bạn tham gia hệ thống.',
 				currentCount: 0,
@@ -53,10 +53,15 @@ export async function load({ cookies }) {
 				coinReward: 5,
 				isCompleted: true,
 				isRewardClaimed: true,
-				completedAt: new Date().toISOString()
+				completedAt: 'isoDateString...'
 			}
 		]
 	};
+
+	const achievementsPromise = getSafeResult(
+		fetchAuthorizedApi<Achievement[]>(cookies, '/api/gamification/achievements/all', 'GET'),
+		[]
+	);
 
 	const form = await superValidate(zod4(redeemRewardSchema));
 

@@ -86,3 +86,26 @@ export type RedeemRule = {
 	costPoints: number;
 	active: boolean;
 };
+
+export type LeaderboardEntry = {
+	rank: number;
+	userId: string;
+	displayName: string;
+	avatarUrl: string;
+	score: number;
+	level: number;
+};
+
+export const leaderboardPeriodOptions = [
+	{ value: 'daily', title: 'Hàng ngày' },
+	{ value: 'weekly', title: 'Hàng tuần' },
+	{ value: 'monthly', title: 'Hàng tháng' }
+] as const satisfies readonly FormSelectOption[];
+
+export type LeaderboardPeriod = (typeof leaderboardPeriodOptions)[number]['value'];
+
+export type Leaderboard = {
+	period: LeaderboardPeriod;
+	entries: LeaderboardEntry[];
+	currentUser: LeaderboardEntry;
+};

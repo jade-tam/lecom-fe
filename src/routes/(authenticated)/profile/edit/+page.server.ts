@@ -46,7 +46,7 @@ export const actions: Actions = {
 			formData
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Your profile has been updated');
+		const toastData: ToastData = getToastData(responseBody, 'Hồ sơ đã được cập nhật');
 
 		if (response.ok) {
 			return message(form, toastData);
@@ -72,7 +72,7 @@ export const actions: Actions = {
 			formData
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Your password has been updated');
+		const toastData: ToastData = getToastData(responseBody, 'Mật khẩu của bạn đã được cập nhật');
 
 		if (response.ok) {
 			return message({ ...form, data: responseBody.result }, toastData);
