@@ -60,6 +60,9 @@
 			<span class="font-bold">Lý do: {data.registerStatus?.reason}</span>
 		</div>
 	</div>
+{/if}
+
+{#if data.registerStatus?.status !== 'Pending' && data.registerStatus?.status !== 'Approved'}
 	<!-- FORM ĐĂNG KÝ -->
 	<form method="POST" class="mt-2 h-fit w-full rounded-box border bg-base-100 p-4 pt-2" use:enhance>
 		<h3>Thông tin cá nhân</h3>
