@@ -76,7 +76,7 @@
 					<input
 						type="radio"
 						aria-label={`${rating} sao (${count})`}
-						class="btn btn-sm"
+						class="btn btn-sm btn-primary"
 						name="rating-filter"
 					/>
 				{/each}
@@ -94,10 +94,10 @@
 							<img
 								src={feedback.userAvatar}
 								alt={feedback.userName}
-								class="h-10 w-10 rounded-full object-cover"
+								class="h-9 w-9 rounded-full object-cover"
 							/>
 							<div class="flex-1">
-								<p class="text-sm font-semibold">{feedback.userName}</p>
+								<p class="text-sm font-bold">{feedback.userName}</p>
 								<p class="text-xs text-base-content/60">
 									Đánh giá lúc {formatDateTime(feedback.createdAt)}
 								</p>
@@ -119,9 +119,14 @@
 
 						<!-- Reply -->
 						{#if feedback.reply}
-							<div class="mt-3 rounded-box border-l-4 border-primary bg-primary/10 p-3">
-								<p class="text-xs font-semibold text-primary">Trả lời từ cửa hàng:</p>
-								<p class="mt-1 text-sm text-base-content">{feedback.reply}</p>
+							<div class="mt-3 rounded-box border-l-4 border-secondary bg-secondary/10 p-3">
+								<div class="flex items-center gap-4">
+									<p class="text-sm font-bold text-secondary-content">Trả lời từ cửa hàng</p>
+									<p class="text-xs text-base-content/60">
+										Vào lúc {formatDateTime(feedback.reply.createdAt)}
+									</p>
+								</div>
+								<p class="mt-1 text-sm text-base-content">{feedback.reply.content}</p>
 							</div>
 						{/if}
 					</div>
