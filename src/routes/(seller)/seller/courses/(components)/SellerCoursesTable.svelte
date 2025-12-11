@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import TableFilter from '$lib/components/ui/TableFilter.svelte';
@@ -29,13 +30,15 @@
 	);
 </script>
 
-<div class="my-2 flex items-end justify-between">
-	<div class="flex flex-col">
-		<h1 class="text-header3 font-bold">Quản lý khóa học</h1>
-		<p class="text-base-content/60">Xem, chỉnh sửa và quản lý các khóa học của bạn.</p>
-	</div>
+<div class="my-2 flex flex-wrap items-end justify-between">
+	<AnimatedDiv animateVars={{ translateX: -16 }} class="flex flex-col">
+		<div class="flex items-center gap-2">
+			<h1 class="text-header3 font-bold">Quản lý khóa học</h1>
+		</div>
+		<p class="text-base-content/60">Xem, chỉnh sửa và quản lý các sản phẩm của bạn.</p>
+	</AnimatedDiv>
 
-	<div class="flex gap-2">
+	<AnimatedDiv animateVars={{ translateX: 16 }} class="flex gap-2">
 		<TableFilter
 			name="activeStatus"
 			{table}
@@ -46,10 +49,10 @@
 		<a href="./courses/create" class="btn btn-primary">
 			<span class="mr-1 icon-[fa7-solid--add]"></span>Tạo khóa học
 		</a>
-	</div>
+	</AnimatedDiv>
 </div>
 
-<div class="rounded-box border bg-base-100 p-4">
+<AnimatedDiv animateVars={{ translateY: 16 }} class="rounded-box border bg-base-100 p-4">
 	<div class="overflow-x-auto">
 		<table class="table table-sm">
 			<thead>
@@ -97,7 +100,7 @@
 							{:else if column.id === 'title'}
 								<td>
 									<div class="flex flex-col">
-										<p class="line-clamp-1">{row[column.key]}</p>
+										<p class="line-clamp-1 text-sm font-bold">{row[column.key]}</p>
 										<p class="mt-1 line-clamp-2 text-xs text-base-content/60">{row.summary}</p>
 									</div>
 								</td>
@@ -151,4 +154,4 @@
 			<TablePagination {table} {pageSize} />
 		</div>
 	</div>
-</div>
+</AnimatedDiv>

@@ -147,7 +147,7 @@
 								<div class="flex gap-1">
 									<div class="tooltip" data-tip="Xem chi tiết">
 										<a
-											href={resolve(`/orders/[id]`, {
+											href={resolve(`/(seller)/seller/orders/[id]`, {
 												id: row.orderId
 											})}
 											class="btn btn-secondary"

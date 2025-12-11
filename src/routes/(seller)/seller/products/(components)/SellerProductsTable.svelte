@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
@@ -29,13 +30,15 @@
 	});
 </script>
 
-<div class="my-2 flex items-end justify-between">
-	<div class="flex flex-col">
-		<h1 class="text-header3 font-bold">Quản lý sản phẩm</h1>
+<div class="my-2 flex flex-wrap items-end justify-between">
+	<AnimatedDiv animateVars={{ translateX: -16 }} class="flex flex-col">
+		<div class="flex items-center gap-2">
+			<h1 class="text-header3 font-bold">Quản lý sản phẩm</h1>
+		</div>
 		<p class="text-base-content/60">Xem, chỉnh sửa và quản lý các sản phẩm của bạn.</p>
-	</div>
+	</AnimatedDiv>
 
-	<div class="flex gap-2">
+	<AnimatedDiv animateVars={{ translateX: 16 }} class="flex gap-2">
 		<TableFilter
 			name="status"
 			{table}
@@ -44,12 +47,12 @@
 		/>
 		<SearchInput bind:value={table.globalFilter} />
 		<a href="./products/create" class="btn btn-primary">
-			<span class="mr-1 icon-[fa7-solid--add]"></span>Thêm sản phẩm
+			<span class="mr-1 icon-[fa7-solid--add]"></span>Tạo mới
 		</a>
-	</div>
+	</AnimatedDiv>
 </div>
 
-<div class="rounded-box border bg-base-100 p-4">
+<AnimatedDiv animateVars={{ translateY: 16 }} class="rounded-box border bg-base-100 p-4">
 	<div class="overflow-x-auto">
 		<table class="table table-sm">
 			<thead>
@@ -161,4 +164,4 @@
 			<TablePagination {table} {pageSize} />
 		</div>
 	</div>
-</div>
+</AnimatedDiv>
