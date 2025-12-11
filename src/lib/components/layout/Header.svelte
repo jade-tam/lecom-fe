@@ -88,7 +88,7 @@
 				>
 					<span class="icon-[mingcute--shopping-cart-2-fill] shrink-0 text-2xl"></span>
 					{#await cartPromise then cart}
-						{#if cart}
+						{#if cart && cart.items.length > 0}
 							<span
 								class="absolute top-0 right-0.5 badge h-4 w-4 rounded-full badge-xs badge-secondary"
 							>
