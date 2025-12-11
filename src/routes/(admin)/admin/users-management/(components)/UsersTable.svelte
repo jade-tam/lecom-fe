@@ -93,20 +93,22 @@
 							{:else if column.id === 'dateOfBirth'}
 								<td>{formatDate(row.dateOfBirth)}</td>
 							{:else if column.id === 'roles'}
-								<td class="flex flex-col gap-1">
-									{#if Array.isArray(row.roles)}
-										{#each row.roles as role}
-											{#if role !== 'Customer'}
-												<div class="badge badge-sm {getUserRoleBadgeClass(role)}">
-													{role}
-												</div>
-											{/if}
-										{/each}
-									{:else if row.roles}
-										<div class="badge badge-sm {getUserRoleBadgeClass(row.roles)}">
-											{row.roles}
-										</div>
-									{/if}
+								<td >
+									<div class="flex flex-col gap-1">
+										{#if Array.isArray(row.roles)}
+											{#each row.roles as role}
+												{#if role !== 'Customer'}
+													<div class="badge badge-sm {getUserRoleBadgeClass(role)}">
+														{role}
+													</div>
+												{/if}
+											{/each}
+										{:else if row.roles}
+											<div class="badge badge-sm {getUserRoleBadgeClass(row.roles)}">
+												{row.roles}
+											</div>
+										{/if}
+									</div>
 								</td>
 							{:else}
 								<td>{row[column.key]}</td>

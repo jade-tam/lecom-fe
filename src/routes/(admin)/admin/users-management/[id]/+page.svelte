@@ -7,206 +7,244 @@
 	const user = $derived(data.user);
 </script>
 
-<section class="flex min-h-screen flex-col items-center">
-	<div class="my-2 flex w-full items-center gap-4">
-		<a href="/admin/users-management" aria-label="return to category list" class="btn btn-square">
-			<span class="icon-[fa7-solid--arrow-left]"></span>
-		</a>
-		<div class="flex flex-col">
-			<h1 class="text-header3 font-bold">User details</h1>
-			<p class="text-base-content/60">View all details about user.</p>
-		</div>
-	</div>
-
-	<div class="w-full max-w-7xl space-y-4">
-		<!-- HEADER SUMMARY -->
-		<div class="grid grid-cols-3 gap-4 max-md:grid-cols-1">
-			<!-- Avatar + Basic Info -->
-			<div class="col-span-1 flex flex-col items-center gap-4 rounded-box border bg-base-100 p-6">
-				<Image
-					class="h-36 w-36 rounded-full object-cover"
-					src={user.imageUrl ?? '/images/avatar-placeholder.png'}
-					alt={user.fullName}
-				/>
-
-				<p class="text-header2 text-center font-serif">{user.fullName}</p>
-				<p class="text-sm text-base-content/70">@{user.userName}</p>
-
-				<div class="mt-3 w-full">
-					<p class="text-sm"><strong>Email:</strong> {user.email}</p>
-					<p class="text-sm"><strong>Phone:</strong> {user.phoneNumber ?? '—'}</p>
-					<p class="text-sm"><strong>Date of birth:</strong> {formatDate(user.dateOfBirth)}</p>
-					<p class="text-sm"><strong>Address:</strong> {user.address ?? '—'}</p>
-				</div>
-
-				<div class="badge badge-lg {user.isActive ? 'badge-success' : 'badge-error'} mt-2">
-					{user.isActive ? 'Active' : 'Inactive'}
-				</div>
-			</div>
-
-			<!-- Account Info -->
-			<div class="col-span-2 rounded-box border bg-base-100 p-6">
-				<p class="text-header3 mb-4">Account information</p>
-
-				<div class="grid grid-cols-2 gap-4 max-md:grid-cols-1">
-					<div>
-						<p class="text-sm text-base-content/70">Email confirmed</p>
-						<p class="font-medium">{user.emailConfirmed ? 'Yes' : 'No'}</p>
-					</div>
-
-					<div>
-						<p class="text-sm text-base-content/70">Phone confirmed</p>
-						<p class="font-medium">{user.phoneNumberConfirmed ? 'Yes' : 'No'}</p>
-					</div>
-
-					<div>
-						<p class="text-sm text-base-content/70">Two-factor enabled</p>
-						<p class="font-medium">{user.twoFactorEnabled ? 'Yes' : 'No'}</p>
-					</div>
-
-					<div>
-						<p class="text-sm text-base-content/70">Failed login attempts</p>
-						<p class="font-medium">{user.accessFailedCount}</p>
-					</div>
-
-					<div>
-						<p class="text-sm text-base-content/70">Lockout enabled</p>
-						<p class="font-medium">{user.lockoutEnabled ? 'Yes' : 'No'}</p>
-					</div>
-
-					<div>
-						<p class="text-sm text-base-content/70">User ID</p>
-						<code class="text-xs italic">{user.id}</code>
-					</div>
-				</div>
+<section class="min-h-screen bg-gradient-to-br from-base-200/50 to-base-100">
+	<div class="mx-auto w-full max-w-6xl p-4 md:p-6">
+		<!-- Header -->
+		<div class="mb-6 flex items-center gap-2">
+			<a
+				href="/admin/users-management"
+				aria-label="Quay lại danh sách người dùng"
+				class="btn btn-square btn-ghost"
+			>
+				<span class="icon-[fa7-solid--arrow-left] text-xl"></span>
+			</a>
+			<div class="flex-1">
+				<h1 class="text-3xl font-bold">Chi tiết người dùng</h1>
+				<p class="mt-1 text-base-content/60">Xem thông tin chi tiết về tài khoản người dùng</p>
 			</div>
 		</div>
 
-		<!-- CERTIFICATE + SHOP -->
-		<div class="grid grid-cols-3 gap-4 max-md:grid-cols-1">
-			<div class="col-span-1 rounded-box border bg-base-100 p-4">
-				<p class="text-header3">Certificate</p>
-
-				{#if user.certificateImageUrl}
-					<div class="mt-3">
-						<Image src={user.certificateImageUrl} alt="Certificate" class="w-full rounded-md" />
-						<a
-							href={user.certificateImageUrl}
-							target="_blank"
-							rel="noreferrer"
-							class="mt-2 block text-sm text-primary"
-						>
-							Open full
-						</a>
+		<!-- Main Content -->
+		<div class="space-y-2">
+			<!-- Profile Card -->
+			<div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-base-300">
+				<div class="flex flex-col items-start gap-6 md:flex-row md:items-center">
+					<!-- Avatar & Status -->
+					<div class="flex flex-col items-center gap-3">
+						<Image
+							class="h-32 w-32 rounded-full border-4 border-base-200 object-cover"
+							src={user.imageUrl ?? '/images/avatar-placeholder.png'}
+							alt={user.fullName}
+						/>
+						<div class="badge badge-xs {user.isActive ? 'badge-success' : 'badge-error'} gap-2 px-3 py-2">
+							{user.isActive ? 'Đang hoạt động' : 'Không hoạt động'}
+						</div>
 					</div>
-				{:else}
-					<EmptyPlaceholder text="No certificate" />
-				{/if}
 
-				<div class="divider my-4"></div>
+					<!-- Basic Info -->
+					<div class="flex-1">
+						<div class="space-y-3">
+							<div>
+								<p class="text-2xl font-bold">{user.fullName}</p>
+								<p class="text-base-content/60">@{user.userName}</p>
+							</div>
 
-				<p class="text-header3">Shop</p>
+							<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+								<div class="flex items-start gap-3">
+									<span class="mt-1 icon-[fa7-solid--envelope] text-primary-content"></span>
+									<div>
+										<p class="text-xs font-semibold text-base-content/60">Email</p>
+										<p class="text-sm font-medium break-all">{user.email}</p>
+									</div>
+								</div>
 
-				{#if user.shop}
-					<div class="mt-2">
-						<p class="font-medium">{user.shop.name}</p>
-						<p class="text-sm text-base-content/70">{user.shop.description}</p>
-						<a href={`/shops/${user.shop.id}`} class="mt-2 inline-block text-sm text-primary"
-							>View shop</a
-						>
+								<div class="flex items-start gap-3">
+									<span class="mt-1 icon-[fa7-solid--phone] text-primary-content"></span>
+									<div>
+										<p class="text-xs font-semibold text-base-content/60">Số điện thoại</p>
+										<p class="text-sm font-medium">{user.phoneNumber ?? '—'}</p>
+									</div>
+								</div>
+
+								<div class="flex items-start gap-3">
+									<span class="mt-1 icon-[fa7-solid--calendar] text-primary-content"></span>
+									<div>
+										<p class="text-xs font-semibold text-base-content/60">Ngày sinh</p>
+										<p class="text-sm font-medium">{formatDate(user.dateOfBirth)}</p>
+									</div>
+								</div>
+
+								<div class="flex items-start gap-3">
+									<span class="mt-1 icon-[fa7-solid--map-location-dot] text-primary-content"></span>
+									<div>
+										<p class="text-xs font-semibold text-base-content/60">Địa chỉ</p>
+										<p class="text-sm font-medium">{user.address ?? '—'}</p>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-				{:else}
-					<EmptyPlaceholder text="No shop" />
-				{/if}
+				</div>
 			</div>
 
-			<!-- ACTIVITY / LISTS -->
-			<div class="col-span-2 space-y-6 rounded-box border bg-base-100 p-4">
-				<div>
-					<p class="text-header3">Activity summary</p>
-
-					<div class="mt-4 grid grid-cols-3 gap-4 max-md:grid-cols-1">
-						<div class="rounded-field border p-3">
-							<p class="text-sm text-base-content/70">Posts</p>
-							<p class="font-medium">{user.posts?.length}</p>
+			<!-- Account Security & Activity Grid -->
+			<div class="grid gap-2 md:grid-cols-2">
+				<!-- Account Information -->
+				<div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-base-300">
+					<h2 class="mb-4 flex items-center gap-2 text-lg font-bold">
+						<span class="icon-[fa7-solid--lock]"></span>
+						Thông tin tài khoản
+					</h2>
+					<div class="space-y-3">
+						<div class="flex items-center justify-between border-b pb-2">
+							<p class="text-sm text-base-content/70">Đã xác nhận email</p>
+							<span class="badge {user.emailConfirmed ? 'badge-success' : 'badge-error'}">
+								{user.emailConfirmed ? 'Đã xác nhận' : 'Chưa xác nhận'}
+							</span>
 						</div>
 
-						<div class="rounded-field border p-3">
-							<p class="text-sm text-base-content/70">Comments</p>
-							<p class="font-medium">{user.comments?.length}</p>
+						<div class="flex items-center justify-between border-b pb-2">
+							<p class="text-sm text-base-content/70">Đã xác nhận số điện thoại</p>
+							<span class="badge {user.phoneNumberConfirmed ? 'badge-success' : 'badge-error'}">
+								{user.phoneNumberConfirmed ? 'Đã xác nhận' : 'Chưa xác nhận'}
+							</span>
 						</div>
 
-						<div class="rounded-field border p-3">
-							<p class="text-sm text-base-content/70">Reviews</p>
-							<p class="font-medium">{user.reviews?.length}</p>
+						<div class="flex items-center justify-between border-b pb-2">
+							<p class="text-sm text-base-content/70">Xác thực 2 yếu tố</p>
+							<span class="badge {user.twoFactorEnabled ? 'badge-success' : 'badge-error'}">
+								{user.twoFactorEnabled ? 'Đang bật' : 'Chưa mở'}
+							</span>
+						</div>
+
+						<div class="flex items-center justify-between border-b pb-2">
+							<p class="text-sm text-base-content/70">Trạng thái lockout</p>
+							<span class="badge {user.lockoutEnabled ? 'badge-success' : 'badge-error'}">
+								{user.lockoutEnabled ? 'Đang bật' : 'Đang tắt'}
+							</span>
+						</div>
+
+						<div class="flex items-center justify-between">
+							<p class="text-sm text-base-content/70">Lần đăng nhập thất bại</p>
+							<span
+								class="font-semibold {user.accessFailedCount > 0 ? 'text-warning' : 'text-success'}"
+							>
+								{user.accessFailedCount}
+							</span>
 						</div>
 					</div>
 				</div>
 
-				<div class="divider"></div>
+				<!-- Activity Summary -->
+				<div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-base-300">
+					<h2 class="mb-4 flex items-center gap-2 text-lg font-bold">
+						<span class="icon-[fa7-solid--chart-simple]"></span>
+						Hoạt động
+					</h2>
+					<div class="grid grid-cols-3 gap-3">
+						<div class="rounded-field border-l-4 border-primary bg-primary/5 p-3">
+							<p class="text-xs font-semibold text-base-content/60">Bài viết</p>
+							<p class="font-serif text-2xl font-bold">{user.posts?.length ?? 0}</p>
+						</div>
 
-				<div class="grid grid-cols-2 gap-4 max-md:grid-cols-1">
-					<!-- Enrollments -->
-					<div class="rounded-field border p-3">
-						<p class="text-header4">Enrollments</p>
+						<div class="rounded-field border-l-4 border-secondary bg-secondary/5 p-3">
+							<p class="text-xs font-semibold text-base-content/60">Bình luận</p>
+							<p class="font-serif text-2xl font-bold">{user.comments?.length ?? 0}</p>
+						</div>
 
-						{#if user.enrollments?.length}
-							<ul class="mt-2 space-y-1 text-sm">
-								{#each user.enrollments as e}
-									<li class="truncate">{e}</li>
-								{/each}
-							</ul>
-						{:else}
-							<EmptyPlaceholder text="No enrollments" />
-						{/if}
-					</div>
+						<div class="rounded-field border-l-4 border-success bg-success/5 p-3">
+							<p class="text-xs font-semibold text-base-content/60">Đánh giá</p>
+							<p class="font-serif text-2xl font-bold">{user.reviews?.length ?? 0}</p>
+						</div>
 
-					<!-- Addresses -->
-					<div class="rounded-field border p-3">
-						<p class="text-header4">Additional addresses</p>
+						<div class="rounded-field border-l-4 border-info bg-info/5 p-3">
+							<p class="text-xs font-semibold text-base-content/60">Khóa học</p>
+							<p class="font-serif text-2xl font-bold">{user.enrollments?.length ?? 0}</p>
+						</div>
 
-						{#if user.addresses?.length}
-							<ul class="mt-2 space-y-1 text-sm">
-								{#each user.addresses as a}
-									<li class="truncate">{a}</li>
-								{/each}
-							</ul>
-						{:else}
-							<EmptyPlaceholder text="No addresses" />
-						{/if}
-					</div>
-				</div>
+						<div class="rounded-field border-l-4 border-warning bg-warning/5 p-3">
+							<p class="text-xs font-semibold text-base-content/60">Huy hiệu</p>
+							<p class="font-serif text-2xl font-bold">{user.userBadges?.length ?? 0}</p>
+						</div>
 
-				<div class="divider"></div>
-
-				<div class="grid grid-cols-3 gap-4 max-md:grid-cols-1">
-					<div class="rounded-field border p-3">
-						<p class="text-header4">Badges</p>
-						<p class="font-medium">{user.userBadges?.length}</p>
-					</div>
-
-					<div class="rounded-field border p-3">
-						<p class="text-header4">Vouchers</p>
-						<p class="font-medium">{user.userVouchers?.length}</p>
-					</div>
-
-					<div class="rounded-field border p-3">
-						<p class="text-header4">Notifications</p>
-						<p class="font-medium">{user.notifications?.length}</p>
+						<div class="rounded-field border-l-4 border-accent bg-accent/5 p-3">
+							<p class="text-xs font-semibold text-base-content/60">Phiếu giảm</p>
+							<p class="font-serif text-2xl font-bold">{user.userVouchers?.length ?? 0}</p>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<!-- FULL RAW JSON VIEW -->
+			<!-- Certificate & Shop -->
+			<div class="grid gap-2 md:grid-cols-2">
+				<!-- Certificate -->
+				<div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-base-300">
+					<h2 class="mb-4 flex items-center gap-2 text-lg font-bold">
+						<span class="icon-[fa7-solid--certificate]"></span>
+						Chứng chỉ
+					</h2>
 
-		<div class="mt-6 rounded-box border bg-base-100 p-4">
-			<p class="text-header3 mb-2">Full User JSON</p>
+					{#if user.certificateImageUrl}
+						<div class="space-y-3">
+							<Image
+								src={user.certificateImageUrl}
+								alt="Chứng chỉ"
+								class="w-full rounded-md border border-base-200"
+							/>
+							<a
+								href={user.certificateImageUrl}
+								target="_blank"
+								rel="noreferrer"
+								class="inline-flex items-center gap-2 text-sm text-primary hover:underline"
+							>
+								<span class="icon-[fa7-solid--arrow-up-right-from-square]"></span>
+								Xem đầy đủ
+							</a>
+						</div>
+					{:else}
+						<EmptyPlaceholder text="Không có chứng chỉ" />
+					{/if}
+				</div>
 
-			<div class="mockup-code w-full">
-				<pre class="json-viewer overflow-auto rounded-box p-4 text-sm">
-{JSON.stringify(user, null, 6)}
-</pre>
+				<!-- Shop -->
+				<div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-base-300">
+					<h2 class="mb-4 flex items-center gap-2 text-lg font-bold">
+						<span class="icon-[fa7-solid--shop]"></span>
+						Cửa hàng
+					</h2>
+
+					{#if user.shop}
+						<div class="space-y-3">
+							<div>
+								<p class="font-semibold">{user.shop.name}</p>
+								<p class="mt-1 text-sm text-base-content/70">{user.shop.description}</p>
+							</div>
+							<a
+								href={`/shops/${user.shop.id}`}
+								class="inline-flex items-center gap-2 text-sm text-primary hover:underline"
+							>
+								<span class="icon-[fa7-solid--arrow-right]"></span>
+								Xem cửa hàng
+							</a>
+						</div>
+					{:else}
+						<EmptyPlaceholder text="Chưa có cửa hàng" />
+					{/if}
+				</div>
+			</div>
+
+			<!-- System Info -->
+			<div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-base-300">
+				<h2 class="mb-4 flex items-center gap-2 text-lg font-bold">
+					<span class="icon-[fa7-solid--microchip]"></span>
+					Thông tin hệ thống
+				</h2>
+				<div class="space-y-2 font-mono text-sm">
+					<div class="flex justify-between border-b pb-2">
+						<span class="text-base-content/70">ID người dùng:</span>
+						<code class="text-xs select-all">{user.id}</code>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -216,6 +254,5 @@
 	code {
 		font-family:
 			ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Segoe UI Mono', monospace;
-		font-size: 0.85rem;
 	}
 </style>
