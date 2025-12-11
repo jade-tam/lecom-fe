@@ -3,7 +3,7 @@
 	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 	import TableFilter from '$lib/components/ui/TableFilter.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
-	import { platformWalletTransactionTypeOptions } from '$lib/types/PlatformWallet';
+	import { platformWalletTransactionTypeOptions, type PlatformWalletTransaction } from '$lib/types/PlatformWallet';
 	import {
 		walletTransactionBalanceTypeOptions
 	} from '$lib/types/Wallet';
@@ -23,7 +23,7 @@
 	const table = $state(
 		new DataTable({
 			pageSize: pageSize,
-			data: [] as PlatformWalletTransactionsTable[],
+			data: [] as PlatformWalletTransaction[],
 			columns: [
 				{ id: 'createdAt', key: 'createdAt', name: 'Thời gian', sortable: true },
 				{ id: 'type', key: 'type', name: 'Loại giao dịch', sortable: true },
@@ -122,17 +122,6 @@
 								<td class="font-serif text-xs font-bold text-base-content/70"
 									>{formatVND(row.balanceAfter)}</td
 								>
-							{:else if column.id === 'balanceType'}
-								<td>
-									<div
-										class="badge badge-sm {getWalletTransactionBalanceTypeClass(
-											row.balanceType,
-											'badge'
-										)}"
-									>
-										{getTitleFromOptionList(row.balanceType, walletTransactionBalanceTypeOptions)}
-									</div>
-								</td>
 							{:else if column.id === 'description'}
 								<td class="line-clamp-2">{row.description ?? '-'}</td>
 							{:else if column.id === 'performedBy'}
