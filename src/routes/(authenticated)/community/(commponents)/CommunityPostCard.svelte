@@ -79,7 +79,7 @@
 	{#if !isViewOnly}
 		<div class="flex items-center gap-2">
 			<button
-				class="btn {liked ? 'btn-error' : ''}"
+				class="btn btn-error"
 				type="button"
 				aria-label="Thích"
 				onclick={handleLike}
@@ -90,11 +90,11 @@
 					<span class="ml-1 badge px-1 badge-sm badge-error">{likeCount}</span>
 				{/if}
 			</button>
-			<button class="btn" type="button" aria-label="Bình luận" onclick={handleCommentToggle}>
+			<button class="btn btn-info" type="button" aria-label="Bình luận" onclick={handleCommentToggle}>
 				<span class="icon-[mingcute--comment-line]"></span>
 				<span>Bình luận</span>
 				{#if post.comments?.length}
-					<span class="ml-1 badge px-1 badge-sm badge-secondary">{post.comments.length}</span>
+					<span class="ml-1 badge px-1 badge-sm badge-primary">{post.comments.length}</span>
 				{/if}
 			</button>
 		</div>

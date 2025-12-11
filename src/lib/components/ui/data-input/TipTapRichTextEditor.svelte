@@ -208,7 +208,10 @@
 		</div>
 	{/if}
 
-	<div class="mt-2 rounded-field border bg-base-300 p-4" bind:this={element}></div>
+	<div
+		class="mt-2 rounded-field border bg-base-200 p-4 {editable ? 'min-h-[400px]' : ''}"
+		bind:this={element}
+	></div>
 </div>
 
 <style>
