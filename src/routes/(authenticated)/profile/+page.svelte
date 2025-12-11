@@ -25,48 +25,52 @@
 
 <AnimatedDiv
 	animateVars={{ translateY: 20 }}
-	class="mt-2 flex grid-cols-10 items-center justify-between gap-6 rounded-box border bg-base-100 p-4 max-md:flex-col"
+	class="mt-2 rounded-box border border-base-300 bg-base-100 p-4"
 >
-	<UserAvatar
-		avatar_url={userProfile.imageUrl}
-		letter={userProfile.userName.charAt(0).toUpperCase()}
-		sizeClass="w-full aspect-square max-w-24"
-	/>
+	<div class="flex items-center justify-between gap-6 max-md:flex-col max-md:gap-3">
+		<!-- Avatar and Name -->
+		<div class="flex items-center gap-4 min-w-fit">
+			<UserAvatar
+				avatar_url={userProfile.imageUrl}
+				letter={userProfile.userName.charAt(0).toUpperCase()}
+				sizeClass="w-20 aspect-square shrink-0"
+			/>
+			<div class="flex flex-col gap-0.5">
+				<p class="font-semibold text-base-content">{userProfile.fullName ?? 'Không rõ'}</p>
+				<p class="text-sm text-base-content/60">@{userProfile.userName}</p>
+			</div>
+		</div>
 
-	<div class="col-span-3 flex flex-col gap-2 max-md:w-full">
-		<div class="flex flex-col">
-			<p class="text-xs text-base-content/60">Họ và tên</p>
-			<p class="font-semibold">{userProfile.fullName ?? 'Không rõ'}</p>
+		<!-- Info Grid -->
+		<div class="grid grid-cols-2 gap-3 gap-y-2 flex-1 max-md:w-full max-md:grid-cols-2 max-md:ml-0 ml-16">
+			<div class="min-w-0">
+				<p class="text-sm font-semibold uppercase text-base-content/50 tracking-wider">Email</p>
+				<p class="text-sm font-medium text-base-content truncate">{userProfile.email ?? '–'}</p>
+			</div>
+			<div class="min-w-0">
+				<p class="text-sm font-semibold uppercase text-base-content/50 tracking-wider">Số điện thoại</p>
+				<p class="text-sm font-medium text-base-content truncate">{userProfile.phoneNumber ?? '–'}</p>
+			</div>
+			<div class="min-w-0">
+				<p class="text-sm font-semibold uppercase text-base-content/50 tracking-wider">Ngày sinh</p>
+				<p class="text-sm font-medium text-base-content">{formatDate(userProfile.dateOfBirth)}</p>
+			</div>
+			<div class="min-w-0">
+				<p class="text-sm font-semibold uppercase text-base-content/50 tracking-wider">Địa chỉ</p>
+				<p class="text-sm font-medium text-base-content truncate">{userProfile.address ?? '–'}</p>
+			</div>
 		</div>
-		<div class="flex flex-col">
-			<p class="text-xs text-base-content/60">Email</p>
-			<p class="font-semibold">{userProfile.email ?? 'Chưa cung cấp email'}</p>
-		</div>
-		<div class="flex flex-col">
-			<p class="text-xs text-base-content/60">Số điện thoại</p>
-			<p class="font-semibold">{userProfile.phoneNumber ?? 'Không rõ'}</p>
-		</div>
-	</div>
 
-	<div class="col-span-3 flex flex-col gap-2 max-md:w-full">
-		<div class="flex flex-col">
-			<p class="text-xs text-base-content/60">Tên đăng nhập</p>
-			<p class="font-semibold">{userProfile.userName}</p>
+		<!-- Edit Button -->
+		<div class="shrink-0 max-md:w-full">
+			<a
+				href="/profile/edit"
+				class="btn btn-info btn-sm gap-1.5 w-full max-md:w-full"
+			>
+				<span class="icon-[fa7-solid--user-edit] text-sm"></span>
+				<span class="">Chỉnh sửa</span>
+			</a>
 		</div>
-		<div class="flex flex-col">
-			<p class="text-xs text-base-content/60">Ngày sinh</p>
-			<p class="font-semibold">{formatDate(userProfile.dateOfBirth)}</p>
-		</div>
-		<div class="flex flex-col">
-			<p class="text-xs text-base-content/60">Địa chỉ</p>
-			<p class="font-semibold">{userProfile.address ?? 'Không rõ'}</p>
-		</div>
-	</div>
-
-	<div class="col-span-2 shrink-0 self-start max-md:w-full">
-		<a href="/profile/edit" class="btn float-right btn-soft"
-			><span class="icon-[fa7-solid--user-edit] text-xl"></span> Chỉnh sửa hồ sơ
-		</a>
 	</div>
 </AnimatedDiv>
 
