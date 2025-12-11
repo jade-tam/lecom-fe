@@ -66,7 +66,7 @@
 			</button>
 			<h1 class="text-header3 font-bold">Khóa học: {courseLearning.course.title}</h1>
 		</div>
-		<p class="text-base-content/60">
+		<p class="text-base-content/60 line-clamp-1">
 			{courseLearning.course.summary}
 		</p>
 	</AnimatedDiv>
