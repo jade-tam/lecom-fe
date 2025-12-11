@@ -5,7 +5,7 @@
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import TableFilter from '$lib/components/ui/TableFilter.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
-	import FormConfirmDropdownAction from '$lib/components/wrapper/FormConfirmDropdownAction.svelte';
+	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
 	import { productStatusOptions, type Product } from '$lib/types/Product';
 	import { getProductStatusBadgeClass, getProductStatusBtnClass } from '$lib/utils/classComposer';
 	import { formatDate, formatVND } from '$lib/utils/converters';
@@ -131,18 +131,24 @@
 											<span class="icon-[fa7-solid--edit] text-xl"></span>
 										</a>
 									</div>
-									<FormConfirmDropdownAction
-										label="Xóa sản phẩm này?"
-										description="Sản phẩm của bạn sẽ bị xóa vĩnh viễn"
-										action="?/delete"
-										formData={{ id: row.id }}
-									>
-										<div class="tooltip" data-tip="Xóa">
-											<button class="btn btn-square btn-error" type="button" aria-label="xóa">
-												<span class="icon-[fa7-solid--trash-alt] text-xl"></span>
-											</button>
-										</div>
-									</FormConfirmDropdownAction>
+									<div class="tooltip" data-tip="Xóa">
+										<FormConfirmPopoverButton
+											action="?/delete"
+											formData={{ id: row.id }}
+											popoverId="delete-product-{row.id}"
+											openButtonProps={{ class: 'btn btn-square btn-error' }}
+											dropdownClass="dropdown-bottom dropdown-end"
+											dropdownContent={{
+												label: 'Xóa sản phẩm này?',
+												description: 'Sản phẩm của bạn sẽ bị xóa vĩnh viễn',
+												confirmBtnClass: 'btn-error',
+												confirmBtnIcon: 'icon-[mingcute--checkbox-line]',
+												confirmBtnText: 'Xóa'
+											}}
+										>
+											<span class="icon-[fa7-solid--trash-alt] text-xl"></span>
+										</FormConfirmPopoverButton>
+									</div>
 								</div>
 							</td>
 						</tr>

@@ -2,7 +2,7 @@
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
 	import FormAction from '$lib/components/wrapper/FormAction.svelte';
-	import FormConfirmDropdownAction from '$lib/components/wrapper/FormConfirmDropdownAction.svelte';
+	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
 	import type { Cart } from '$lib/types/Cart';
 	import { formatVND } from '$lib/utils/converters';
 	import NumberFlow from '@number-flow/svelte';
@@ -96,20 +96,22 @@
 								<NumberFlow value={item.lineTotal} format={formatVND} />
 							</p>
 
-							<FormConfirmDropdownAction
-								label="Xóa sản phẩm này?"
-								description="Sản phẩm này sẽ bị xóa khỏi giỏ hàng của bạn"
-								action="?/deleteItem"
-								confirmButtonIcon="icon-[fa7-solid--check-circle]"
-								formData={{ productId: item.productId }}
-							>
-								<button
-									type="button"
-									class="btn mt-2 btn-square btn-sm btn-error"
-									aria-label="xóa sản phẩm"
-									><span class="icon-[fa7-solid--trash-alt]"></span></button
-								>
-							</FormConfirmDropdownAction>
+						<FormConfirmPopoverButton
+							action="?/deleteItem"
+							formData={{ productId: item.productId }}
+							popoverId="delete-item-{item.productId}"
+							openButtonProps={{ class: 'btn mt-2 btn-square btn-sm btn-error' }}
+							dropdownClass="dropdown-bottom dropdown-end"
+							dropdownContent={{
+								label: 'Xóa sản phẩm này?',
+								description: 'Sản phẩm này sẽ bị xóa khỏi giỏ hàng của bạn',
+								confirmBtnClass: 'btn-error',
+								confirmBtnIcon: 'icon-[fa7-solid--check-circle]',
+								confirmBtnText: 'Xóa'
+							}}
+						>
+							<span class="icon-[fa7-solid--trash-alt]"></span>
+						</FormConfirmPopoverButton>
 						</div>
 					</div>
 				{/each}

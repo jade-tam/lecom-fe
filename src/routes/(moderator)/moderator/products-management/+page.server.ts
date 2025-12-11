@@ -48,7 +48,10 @@ export const actions = {
 		const { responseBody } = await fetchAuthorizedApi(
 			cookies,
 			`/api/moderator/products/${id}/reject`,
-			'POST'
+			'POST',
+			{
+				reason: 'Sản phẩm không đáp ứng tiêu chuẩn của chúng tôi. Vui lòng xem lại và thử lại.'
+			}
 		);
 
 		const toastData = getToastData(responseBody, 'Đã từ chối sản phẩm');

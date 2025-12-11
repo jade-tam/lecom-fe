@@ -5,9 +5,8 @@
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
-	import FormConfirmDropdownAction from '$lib/components/wrapper/FormConfirmDropdownAction.svelte';
+	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
 	import type { RedeemRule } from '$lib/types/Gamification';
-	import { formatVND } from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
 
 	const { redeemRulesPromise }: { redeemRulesPromise: Promise<RedeemRule[]> } = $props();
@@ -122,18 +121,24 @@
 											<span class="icon-[mingcute--edit-4-fill] text-2xl"></span>
 										</a>
 									</div>
-									<FormConfirmDropdownAction
-										label={`Xóa mục đổi thưởng ${row.reward}?`}
-										description="Mục này sẽ bị xóa vĩnh viễn"
-										action="?/delete"
-										formData={{ id: row.id }}
-									>
-										<div class="tooltip" data-tip="Xóa">
-											<button class="btn btn-square btn-error" type="button" aria-label="xóa">
-												<span class="icon-[mingcute--delete-2-fill] text-2xl"></span>
-											</button>
-										</div>
-									</FormConfirmDropdownAction>
+									<div class="tooltip" data-tip="Xóa">
+										<FormConfirmPopoverButton
+											action="?/delete"
+											formData={{ id: row.id }}
+											popoverId="delete-rule-{row.id}"
+											openButtonProps={{ class: 'btn btn-error btn-square' }}
+											dropdownClass="dropdown-bottom dropdown-end"
+											dropdownContent={{
+												label: `Xóa mục đổi thưởng ${row.reward}?`,
+												description: 'Mục này sẽ bị xóa vĩnh viễn',
+												confirmBtnClass: 'btn-error',
+												confirmBtnIcon: 'icon-[mingcute--checkbox-line]',
+												confirmBtnText: 'Xóa'
+											}}
+										>
+											<span class="icon-[mingcute--delete-2-fill] text-2xl"></span>
+										</FormConfirmPopoverButton>
+									</div>
 								</div>
 							</td>
 						</tr>

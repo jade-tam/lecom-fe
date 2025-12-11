@@ -3,7 +3,7 @@
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import TableFilter from '$lib/components/ui/TableFilter.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
-	import FormConfirmDropdownAction from '$lib/components/wrapper/FormConfirmDropdownAction.svelte';
+	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
 	import { userActiveStatusOptions, userRoleOptions, type User } from '$lib/types/User';
 	import {
 		getUserActiveStatusBadgeClass,
@@ -183,41 +183,47 @@
 									</div>
 								</div>
 
-								<FormConfirmDropdownAction
-									label="{row.isActive ? 'Vô hiệu hóa' : 'Kích hoạt'} người dùng {row.userName}?"
-									description="Người dùng này sẽ được chuyển sang trạng thái {row.isActive
-										? 'không hoạt động'
-										: 'hoạt động'}."
-									action="?/{row.isActive ? 'deactivate' : 'activate'}"
-									formData={{ id: row.id }}
-								>
-									<div class="tooltip" data-tip={row.isActive ? 'Vô hiệu hóa' : 'Kích hoạt'}>
-										<button
-											type="button"
-											class="btn btn-square btn-primary"
-											aria-label={row.isActive ? 'Vô hiệu hóa' : 'Kích hoạt'}
-										>
-											<span
-												class="{row.isActive
-													? 'icon-[fa7-solid--user-lock]'
-													: 'icon-[fa7-solid--user-check]'} text-xl"
-											></span>
-										</button>
-									</div>
-								</FormConfirmDropdownAction>
+								<div class="tooltip" data-tip={row.isActive ? 'Vô hiệu hóa' : 'Kích hoạt'}>
+									<FormConfirmPopoverButton
+										action="?/{row.isActive ? 'deactivate' : 'activate'}"
+										formData={{ id: row.id }}
+										popoverId="toggle-user-{row.id}"
+										openButtonProps={{ class: 'btn btn-square btn-primary' }}
+										dropdownClass="dropdown-bottom dropdown-end"
+										dropdownContent={{
+											label: `${row.isActive ? 'Vô hiệu hóa' : 'Kích hoạt'} người dùng ${row.userName}?`,
+											description: `Người dùng này sẽ được chuyển sang trạng thái ${row.isActive ? 'không hoạt động' : 'hoạt động'}.`,
+											confirmBtnClass: 'btn-primary',
+											confirmBtnIcon: 'icon-[mingcute--checkbox-line]',
+											confirmBtnText: row.isActive ? 'Vô hiệu hóa' : 'Kích hoạt'
+										}}
+									>
+										<span
+											class="{row.isActive
+												? 'icon-[fa7-solid--user-lock]'
+												: 'icon-[fa7-solid--user-check]'} text-xl"
+										></span>
+									</FormConfirmPopoverButton>
+								</div>
 
-								<FormConfirmDropdownAction
-									label={`Xóa ${row.userName}?`}
-									description="Người dùng này sẽ bị xóa vĩnh viễn"
-									action="?/delete"
-									formData={{ id: row.id }}
-								>
-									<div class="tooltip" data-tip="Xóa">
-										<button class="btn btn-square btn-error" type="button" aria-label="xóa">
-											<span class="icon-[fa7-solid--user-slash] text-xl"></span>
-										</button>
-									</div>
-								</FormConfirmDropdownAction>
+								<div class="tooltip" data-tip="Xóa">
+									<FormConfirmPopoverButton
+										action="?/delete"
+										formData={{ id: row.id }}
+										popoverId="delete-user-{row.id}"
+										openButtonProps={{ class: 'btn btn-square btn-error' }}
+										dropdownClass="dropdown-bottom dropdown-end"
+										dropdownContent={{
+											label: `Xóa ${row.userName}?`,
+											description: 'Người dùng này sẽ bị xóa vĩnh viễn',
+											confirmBtnClass: 'btn-error',
+											confirmBtnIcon: 'icon-[mingcute--checkbox-line]',
+											confirmBtnText: 'Xóa'
+										}}
+									>
+										<span class="icon-[fa7-solid--user-slash] text-xl"></span>
+									</FormConfirmPopoverButton>
+								</div>
 							</div>
 						</td>
 					</tr>

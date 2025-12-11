@@ -4,7 +4,7 @@
 	import FormInput from '$lib/components/ui/FormInput.svelte';
 	import FormMediaInput from '$lib/components/ui/FormMediaInput.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
-	import FormConfirmDropdownAction from '$lib/components/wrapper/FormConfirmDropdownAction.svelte';
+	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
 	import {
 		addCourseLessonSchema,
 		addCourseSectionSchema,
@@ -371,17 +371,22 @@
 					<div class="mt-2 rounded-box bg-base-200 p-4">
 						<div class="flex items-center justify-between">
 							<p class="text-lg font-black">{toRomanNumeral(i + 1)}. {section.title}</p>
-							<FormConfirmDropdownAction
-								formData={{ sectionId: section.id }}
-								label="Xác nhận xóa chương này?"
+							<FormConfirmPopoverButton
 								action="?/deleteSection"
-								description="Chương này và toàn bộ nội dung sẽ bị xóa vĩnh viễn"
-								confirmButtonClass="btn-error"
+								formData={{ sectionId: section.id }}
+								popoverId="delete-section-{section.id}"
+								openButtonProps={{ class: 'btn btn-square btn-sm btn-error' }}
+								dropdownClass="dropdown-bottom dropdown-end"
+								dropdownContent={{
+									label: 'Xác nhận xóa chương này?',
+									description: 'Chương này và toàn bộ nội dung sẽ bị xóa vĩnh viễn',
+									confirmBtnClass: 'btn-error',
+									confirmBtnIcon: 'icon-[mingcute--checkbox-line]',
+									confirmBtnText: 'Xóa'
+								}}
 							>
-								<button class="btn btn-square btn-sm btn-error" type="button" aria-label="delete">
-									<span class="icon-[fa7-solid--trash-alt]"></span>
-								</button>
-							</FormConfirmDropdownAction>
+								<span class="icon-[fa7-solid--trash-alt]"></span>
+							</FormConfirmPopoverButton>
 						</div>
 
 						<div class="mt-2 rounded-field bg-base-300">
@@ -415,55 +420,52 @@
 											>
 												<span class="icon-[fa7-solid--box-open]"></span>Liên kết sản phẩm
 											</button>
-											<FormConfirmDropdownAction
-												formData={{ lessonId: lesson.id }}
-												label="Xác nhận xóa bài học này?"
+											<FormConfirmPopoverButton
 												action="?/deleteLesson"
-												description="Nội dung sẽ bị xóa vĩnh viễn"
-												confirmButtonClass="btn-error"
+												formData={{ lessonId: lesson.id }}
+												popoverId="delete-lesson-{lesson.id}"
+												openButtonProps={{ class: 'btn btn-square btn-xs btn-error' }}
+												dropdownClass="dropdown-bottom dropdown-end"
+												dropdownContent={{
+													label: 'Xác nhận xóa bài học này?',
+													description: 'Nội dung sẽ bị xóa vĩnh viễn',
+													confirmBtnClass: 'btn-error',
+													confirmBtnIcon: 'icon-[mingcute--checkbox-line]',
+													confirmBtnText: 'Xóa'
+												}}
 											>
-												<button
-													class="btn btn-square btn-xs btn-error"
-													type="button"
-													aria-label="delete"
-												>
-													<span class="icon-[fa7-solid--trash-alt]"></span>
-												</button>
-											</FormConfirmDropdownAction>
+												<span class="icon-[fa7-solid--trash-alt]"></span>
+											</FormConfirmPopoverButton>
 										</div>
 
 										<div class="flex flex-wrap items-start gap-3 px-2">
 											<p class="text-xs font-bold">Sản phẩm đã liên kết:</p>
 											{#each lesson.linkedProducts as product (product.id)}
-												<FormConfirmDropdownAction
-													label="Bỏ liên kết sản phẩm này?"
-													description="{product.name} sẽ được bỏ liên kết với {lesson.title}."
-													action="?/unlinkProduct"
-													confirmButtonIcon="icon-[fa7-solid--unlink]"
-													dropdownDirection="dropdown-top"
-													formData={{
-														productId: product.id,
-														lessonId: lesson.id
-													}}
-												>
-													<div class="tooltip tooltip-error" data-tip="Bỏ liên kết sản phẩm">
-														<button
-															class="group btn btn-sm btn-info hover:btn-error"
-															type="button"
-															aria-label="delete"
-														>
-															<Image
-																src={product.thumbnailUrl}
-																alt={product.name}
-																class="h-6 w-6"
-															/>
-															<p>{product.name}</p>
-															<span
-																class="icon-[fa7-solid--link] group-hover:icon-[fa7-solid--unlink]"
-															></span>
-														</button>
-													</div>
-												</FormConfirmDropdownAction>
+												<div class="tooltip tooltip-error" data-tip="Bỏ liên kết sản phẩm">
+													<FormConfirmPopoverButton
+														action="?/unlinkProduct"
+														formData={{
+															productId: product.id,
+															lessonId: lesson.id
+														}}
+														popoverId="unlink-product-{product.id}"
+														openButtonProps={{ class: 'group btn btn-sm btn-info hover:btn-error' }}
+														dropdownClass="dropdown-top dropdown-end"
+														dropdownContent={{
+															label: 'Bỏ liên kết sản phẩm này?',
+															description: `${product.name} sẽ được bỏ liên kết với ${lesson.title}.`,
+															confirmBtnClass: 'btn-error',
+															confirmBtnIcon: 'icon-[fa7-solid--unlink]',
+															confirmBtnText: 'Bỏ liên kết'
+														}}
+													>
+														<Image src={product.thumbnailUrl} alt={product.name} class="h-6 w-6" />
+														<p>{product.name}</p>
+														<span
+															class="icon-[fa7-solid--link] group-hover:icon-[fa7-solid--unlink]"
+														></span>
+													</FormConfirmPopoverButton>
+												</div>
 											{/each}
 										</div>
 									</div>

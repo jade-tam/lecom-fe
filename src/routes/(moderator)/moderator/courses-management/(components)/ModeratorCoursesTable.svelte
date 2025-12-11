@@ -3,7 +3,7 @@
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
-	import FormConfirmDropdownAction from '$lib/components/wrapper/FormConfirmDropdownAction.svelte';
+	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
 	import { type Course } from '$lib/types/Course';
 	import { DataTable } from '@careswitch/svelte-data-table';
 
@@ -75,34 +75,43 @@
 							{/each}
 							<td>
 								<div class="flex justify-end gap-1">
-									<FormConfirmDropdownAction
-										label="Chấp thuận khóa học này?"
-										description="Khóa học sẽ được hiển thị trên cửa hàng của người bán cũng như trang mua sắm."
-										action="?/approve"
-										formData={{ id: row.id }}
-										confirmButtonClass="btn-success"
-										confirmButtonIcon="icon-[fa7-solid--check-square]"
-									>
-										<div class="tooltip tooltip-top" data-tip="Chấp thuận">
-											<button class="btn btn-success" type="button" aria-label="approve">
-												<span class="icon-[fa7-solid--check-square] text-xl"></span>Chấp thuận
-											</button>
-										</div>
-									</FormConfirmDropdownAction>
-									<FormConfirmDropdownAction
-										label="Từ chối khóa học này?"
-										description="Khóa học sẽ không được hiển thị."
-										action="?/reject"
-										formData={{ id: row.id }}
-										confirmButtonClass="btn-error"
-										confirmButtonIcon="icon-[fa7-solid--xmark-square]"
-									>
-										<div class="tooltip tooltip-top" data-tip="Từ chối">
-											<button class="btn btn-error" type="button" aria-label="reject">
-												<span class="icon-[fa7-solid--xmark-square] text-xl"></span>Từ chối
-											</button>
-										</div>
-									</FormConfirmDropdownAction>
+									<div class="tooltip tooltip-top" data-tip="Chấp thuận">
+										<FormConfirmPopoverButton
+											action="?/approve"
+											formData={{ id: row.id }}
+											popoverId="approve-course-{row.id}"
+											openButtonProps={{ class: 'btn btn-success' }}
+											dropdownClass="dropdown-bottom dropdown-end"
+											dropdownContent={{
+												label: 'Chấp thuận khóa học này?',
+												description:
+													'Khóa học sẽ được hiển thị trên cửa hàng của người bán cũng như trang mua sắm.',
+												confirmBtnClass: 'btn-success',
+												confirmBtnIcon: 'icon-[fa7-solid--check-square]',
+												confirmBtnText: 'Chấp thuận'
+											}}
+										>
+											<span class="icon-[fa7-solid--check-square] text-xl"></span>Chấp thuận
+										</FormConfirmPopoverButton>
+									</div>
+									<div class="tooltip tooltip-top" data-tip="Từ chối">
+										<FormConfirmPopoverButton
+											action="?/reject"
+											formData={{ id: row.id }}
+											popoverId="reject-course-{row.id}"
+											openButtonProps={{ class: 'btn btn-error' }}
+											dropdownClass="dropdown-bottom dropdown-end"
+											dropdownContent={{
+												label: 'Từ chối khóa học này?',
+												description: 'Khóa học sẽ không được hiển thị.',
+												confirmBtnClass: 'btn-error',
+												confirmBtnIcon: 'icon-[fa7-solid--xmark-square]',
+												confirmBtnText: 'Từ chối'
+											}}
+										>
+											<span class="icon-[fa7-solid--xmark-square] text-xl"></span>Từ chối
+										</FormConfirmPopoverButton>
+									</div>
 								</div>
 							</td>
 						</tr>

@@ -4,7 +4,7 @@
 	import Image from '$lib/components/ui/Image.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
-	import FormConfirmDropdownAction from '$lib/components/wrapper/FormConfirmDropdownAction.svelte';
+	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
 	import { type Product } from '$lib/types/Product';
 	import { getProductStatusBadgeClass } from '$lib/utils/classComposer';
 	import { formatVND } from '$lib/utils/converters';
@@ -95,34 +95,38 @@
 							{/each}
 							<td>
 								<div class="flex justify-end gap-1">
-									<FormConfirmDropdownAction
-										label="Chấp thuận sản phẩm này?"
-										description="Sản phẩm sẽ được hiển thị trên cửa hàng của người bán cũng như trang mua sắm."
+									<FormConfirmPopoverButton
 										action="?/approve"
 										formData={{ id: row.id }}
-										confirmButtonClass="btn-success"
-										confirmButtonIcon="icon-[fa7-solid--check-square]"
+										popoverId="approve-product-{row.id}"
+										openButtonProps={{ class: 'btn btn-success' }}
+										dropdownClass="dropdown-bottom dropdown-end"
+										dropdownContent={{
+											label: 'Chấp thuận sản phẩm này?',
+											description:
+												'Sản phẩm sẽ được hiển thị trên cửa hàng của người bán cũng như trang mua sắm.',
+											confirmBtnClass: 'btn-success',
+											confirmBtnIcon: 'icon-[mingcute--checkbox-line]',
+											confirmBtnText: 'Chấp thuận'
+										}}
+										><span class="icon-[fa7-solid--check-square] text-xl"></span>Chấp thuận</FormConfirmPopoverButton
 									>
-										<div class="tooltip tooltip-top" data-tip="Chấp thuận">
-											<button class="btn btn-success" type="button" aria-label="approve">
-												<span class="icon-[fa7-solid--check-square] text-xl"></span>Chấp thuận
-											</button>
-										</div>
-									</FormConfirmDropdownAction>
-									<FormConfirmDropdownAction
-										label="Từ chối sản phẩm này?"
-										description="Sản phẩm sẽ không được hiển thị."
+									<FormConfirmPopoverButton
 										action="?/reject"
 										formData={{ id: row.id }}
-										confirmButtonClass="btn-error"
-										confirmButtonIcon="icon-[fa7-solid--xmark-square]"
+										popoverId="reject-product-{row.id}"
+										openButtonProps={{ class: 'btn btn-error' }}
+										dropdownClass="dropdown-bottom dropdown-end"
+										dropdownContent={{
+											label: 'Từ chối sản phẩm này?',
+											description: 'Sản phẩm sẽ không được hiển thị.',
+											confirmBtnClass: 'btn-error',
+											confirmBtnIcon: 'icon-[mingcute--checkbox-line]',
+											confirmBtnText: 'Từ chối'
+										}}
 									>
-										<div class="tooltip tooltip-top" data-tip="Từ chối">
-											<button class="btn btn-error" type="button" aria-label="reject">
-												<span class="icon-[fa7-solid--xmark-square] text-xl"></span>Từ chối
-											</button>
-										</div>
-									</FormConfirmDropdownAction>
+										<span class="icon-[fa7-solid--xmark-square] text-xl"></span>Từ chối
+									</FormConfirmPopoverButton>
 								</div>
 							</td>
 						</tr>
