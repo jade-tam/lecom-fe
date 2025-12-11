@@ -91,3 +91,16 @@ export type CourseLearning = {
 	};
 	sections: Section[];
 };
+
+export type ModeratorPendingLesson = {
+	id: string;
+	title: string;
+	sectionTitle: string;
+	courseTitle: string;
+};
+
+export type ModeratorPendingSection = {
+	id: string;
+	title: string;
+	courseTitle: string;
+};

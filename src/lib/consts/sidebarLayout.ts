@@ -136,7 +136,17 @@ export const moderatorSidebarLayout: SidebarLayoutItem[] = [
 	{
 		href: resolve('/(moderator)/moderator/courses-management'),
 		title: 'Duyệt khóa học',
-		iconClass: 'icon-[mingcute--notebook-2-fill] text-xl'
+		iconClass: 'icon-[mingcute--book-2-fill] text-xl'
+	},
+	{
+		href: resolve('/(moderator)/moderator/courses-section-management'),
+		title: 'Duyệt chương học',
+		iconClass: 'icon-[mingcute--folder-star-fill] text-xl'
+	},
+	{
+		href: resolve('/(moderator)/moderator/courses-lesson-management'),
+		title: 'Duyệt bài học',
+		iconClass: 'icon-[mingcute--video-fill] text-xl'
 	},
 	{
 		href: resolve('/(moderator)/moderator/community-posts-management'),
