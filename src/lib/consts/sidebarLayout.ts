@@ -101,6 +101,11 @@ export const sellerSidebarLayout: SidebarLayoutItem[] = [
 		iconClass: 'icon-[mingcute--box-2-fill] text-xl'
 	},
 	{
+		href: '/seller/feedbacks',
+		title: 'Đánh giá sản phẩm',
+		iconClass: 'icon-[mingcute--star-half-fill] text-xl'
+	},
+	{
 		href: '/seller/courses',
 		title: 'Quản lý khóa học',
 		iconClass: 'icon-[mingcute--notebook-2-fill] text-xl'

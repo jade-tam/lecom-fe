@@ -1,3 +1,5 @@
+import type { FormSelectOption } from '$lib/components/ui/FormSelect.svelte';
+
 export type FeedbackSummary = {
 	productId: string;
 	averageRating: number;
@@ -11,6 +13,16 @@ export type FeedbackSummary = {
 	recentFeedbacks: Feedback[];
 };
 
+export const feedbackRatingOptions = [
+	{ value: 5, title: '5 sao' },
+	{ value: 4, title: '4 sao' },
+	{ value: 3, title: '3 sao' },
+	{ value: 2, title: '2 sao' },
+	{ value: 1, title: '1 sao' }
+] as const satisfies readonly FormSelectOption[];
+
+export type FeedbackRating = (typeof feedbackRatingOptions)[number]['value'];
+
 export type Feedback = {
 	id: string;
 	userId: string;
@@ -18,7 +30,7 @@ export type Feedback = {
 	userAvatar: string;
 	productId: string;
 	shopId: number;
-	rating: number;
+	rating: FeedbackRating;
 	content: string;
 	images: string[];
 	createdAt: string;
