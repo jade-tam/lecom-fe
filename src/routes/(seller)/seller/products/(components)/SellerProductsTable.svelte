@@ -7,8 +7,12 @@
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
 	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
 	import { approvalStatusOptions, productStatusOptions, type Product } from '$lib/types/Product';
-	import { getApprovalStatusClass, getProductStatusBadgeClass, getProductStatusBtnClass } from '$lib/utils/classComposer';
-	import { formatDate, formatVND, getTitleFromOptionList } from '$lib/utils/converters';
+	import {
+		getApprovalStatusClass,
+		getProductStatusBadgeClass,
+		getProductStatusBtnClass
+	} from '$lib/utils/classComposer';
+	import { formatDateTime, formatVND, getTitleFromOptionList } from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
 
 	const { products }: { products: Product[] } = $props();
@@ -55,7 +59,7 @@
 	</AnimatedDiv>
 </div>
 
-<AnimatedDiv animateVars={{ translateY: 16 }} class="rounded-box border bg-base-100 p-4">
+<AnimatedDiv animateVars={{ translateY: 16 }} class="rounded-box border bg-base-100 p-2">
 	<div class="overflow-x-auto">
 		<table class="table table-sm">
 			<thead>
@@ -97,12 +101,29 @@
 									>
 								{:else if column.id === 'approvalStatus'}
 									<td class="whitespace-nowrap"
-										><div class={`badge badge-xs ${getApprovalStatusClass(row.approvalStatus, 'badge')}`}>
+										><div
+											class={`badge badge-xs ${getApprovalStatusClass(row.approvalStatus, 'badge')}`}
+										>
 											{getTitleFromOptionList(row.approvalStatus, approvalStatusOptions)}
 										</div>
+										{#if row.approvalStatus === 'Rejected'}
+											<p class="mt-1 text-xs font-bold text-error-content">
+												Lý do: {row.moderatorNote}
+											</p>
+										{/if}
 									</td>
 								{:else if column.id === 'price'}
-									<td>{formatVND(row.price)}</td>
+									<td class="font-serif text-base font-bold text-success-content"
+										>{formatVND(row.price)}</td
+									>
+								{:else if column.id === 'name'}
+									<td><p class="line-clamp-3 max-w-60 font-bold">{row.name}</p></td>
+								{:else if column.id === 'stock'}
+									<td
+										><p class="line-clamp-3 max-w-60 text-sm font-bold text-base-content/70">
+											{row.stock}
+										</p></td
+									>
 								{:else if column.id === 'images'}
 									<td
 										><div>
@@ -114,23 +135,25 @@
 										</div>
 									</td>
 								{:else if column.id === 'lastUpdatedAt'}
-									<td>{formatDate(row['lastUpdatedAt'])}</td>
+									<td class="font-semibold">{formatDateTime(row['lastUpdatedAt'])}</td>
 								{:else}
 									<td>{row[column.key]}</td>
 								{/if}
 							{/each}
 							<td>
 								<div class="flex gap-1">
-									<div class="tooltip" data-tip="Xem sản phẩm">
-										<a
-											href={`/shopping/product/${row['slug']}`}
-											class="btn btn-square btn-secondary"
-											aria-label="xem chi tiết"
-											target="_blank"
-										>
-											<span class="icon-[fa7-solid--eye] text-xl"></span>
-										</a>
-									</div>
+									{#if row.status === 'Published'}
+										<div class="tooltip" data-tip="Xem sản phẩm">
+											<a
+												href={`/shopping/product/${row['slug']}`}
+												class="btn btn-square btn-secondary"
+												aria-label="xem chi tiết"
+												target="_blank"
+											>
+												<span class="icon-[fa7-solid--eye] text-xl"></span>
+											</a>
+										</div>
+									{/if}
 									<div class="tooltip" data-tip="Chỉnh sửa">
 										<a
 											href={`/seller/products/update/${row.id}`}
