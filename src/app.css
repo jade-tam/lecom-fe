@@ -41,6 +41,40 @@
 	--noise: 1;
 }
 
+@plugin 'daisyui/theme' {
+	name: 'lecomdark';
+	prefersdark: true;
+	color-scheme: 'dark';
+	--color-base-100: #382f26;
+	--color-base-200: #2f271e;
+	--color-base-300: #251d15;
+	--color-base-content: #e8e3d8;
+	--color-primary: #ffed7f;
+	--color-primary-content: #d4843f;
+	--color-secondary: #f5e0ff;
+	--color-secondary-content: #a878d6;
+	--color-accent: #d9ff7f;
+	--color-accent-content: #4a9040;
+	--color-neutral: #2b2b2c;
+	--color-neutral-content: #e8e3d8;
+	--color-info: #d9f3ff;
+	--color-info-content: #3a8fd4;
+	--color-success: #d9ff7f;
+	--color-success-content: #4a9040;
+	--color-warning: #ffed7f;
+	--color-warning-content: #d4843f;
+	--color-error: #ffc9c9;
+	--color-error-content: #c9424a;
+	--radius-selector: 0.25rem;
+	--radius-field: 0.25rem;
+	--radius-box: 0.5rem;
+	--size-selector: 0.21875rem;
+	--size-field: 0.21875rem;
+	--border: 2px;
+	--depth: 1;
+	--noise: 1;
+}
+
 @theme {
 	--font-sans:
 		'Nunito', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
