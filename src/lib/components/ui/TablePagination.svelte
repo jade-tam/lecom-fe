@@ -50,7 +50,7 @@
 	<div class="join">
 		{#each visiblePages as page}
 			{#if page === '...'}
-				<button class="btn-disabled btn join-item">...</button>
+				<button class="btn btn-disabled join-item">...</button>
 			{:else}
 				<button
 					class="btn join-item {currentPage === page ? 'btn-active btn-primary' : ''}"

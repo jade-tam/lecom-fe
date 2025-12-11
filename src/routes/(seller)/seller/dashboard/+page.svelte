@@ -18,6 +18,7 @@
 	import showToast from '$lib/utils/showToast.js';
 	import 'cally';
 	import RevenueChart from './(components)/RevenueChart.svelte';
+	import MonthDateRangeSelector from '$lib/components/ui/data-input/MonthDateRangeSelector.svelte';
 
 	const { data } = $props();
 	let dashboardData: SellerDashboardData | null = $state(null);
@@ -136,18 +137,30 @@
 		</p>
 
 		<button class="btn ml-2 btn-xs btn-primary" onclick={handleThisMonthSelect}>
-			<span class="icon-[mingcute--calendar-month-line]"></span>Tháng này
+			<span class="icon-[mingcute--target-line]"></span>Tháng này
 		</button>
 
 		<DateRangeSelector
 			openButtonProps={{ class: 'btn btn-xs btn-secondary' }}
-			popoverId="dashboard-date-range"
+			popoverId="seller-dashboard-date-range"
 			bind:startDate={from}
 			bind:endDate={to}
 			rangeEndCallback={() => handleApplySearchParams()}
 		>
-			<span class="icon-[mingcute--calendar-2-line]"></span>Lựa chọn khoảng ngày
+			<span class="icon-[mingcute--arrows-left-fill]"></span><span
+				class="-ml-2 icon-[mingcute--arrows-right-fill]"
+			></span>Lựa chọn khoảng ngày
 		</DateRangeSelector>
+
+		<MonthDateRangeSelector
+			popoverId="month-selector"
+			openButtonProps={{ class: 'btn btn-xs btn-info' }}
+			bind:startDate={from}
+			bind:endDate={to}
+			onMonthSelected={() => handleApplySearchParams()}
+		>
+			<span class="icon-[mingcute--calendar-2-line]"></span>Xem theo tháng
+		</MonthDateRangeSelector>
 
 		<button class="btn ml-auto btn-xs btn-info" onclick={handleReloadData}>
 			<span class="icon-[mingcute--refresh-anticlockwise-1-fill]"></span> Cập nhật lại dữ liệu

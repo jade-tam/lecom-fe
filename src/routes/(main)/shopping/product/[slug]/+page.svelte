@@ -130,7 +130,7 @@
 									<span class="icon-[fa7-solid--cart-plus]"></span>Thêm vào giỏ hàng
 								</button>
 							{:else}
-								<button type="button" class="btn-disabled btn grow" disabled>
+								<button type="button" class="btn btn-disabled grow" disabled>
 									<span class="icon-[fa7-solid--cart-plus]"></span>Đã hết hàng
 								</button>
 							{/if}

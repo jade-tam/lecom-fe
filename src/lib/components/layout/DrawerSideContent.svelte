@@ -30,7 +30,18 @@
 </script>
 
 <div class="flex h-screen w-84 flex-col border bg-base-200 p-2">
-	<a class="btn flex h-fit w-full flex-col items-start justify-start gap-0 px-0 btn-ghost" href="/">
+	<a
+		class="btn flex h-fit w-full flex-col items-start justify-start gap-0 px-0 btn-ghost {page.url.pathname.startsWith(
+			'/seller'
+		)
+			? 'text-secondary-content'
+			: page.url.pathname.startsWith('/admin')
+				? 'text-error-content'
+				: page.url.pathname.startsWith('/moderator')
+					? 'text-info-content'
+					: 'text-primary-content'}"
+		href="/"
+	>
 		<!-- <img class="size-6 md:size-7" src="/images/logo-transparent-512.png" alt="logo" /> -->
 		<p class="ml-2 font-serif text-5xl font-black">Lecom</p>
 		<p class="ml-2 font-black">{title}</p>
@@ -39,14 +50,14 @@
 	<div class="mt-6 flex grow flex-col gap-1">
 		{#each sidebarLayoutItems as item (item.href)}
 			{#if item.subItems}
-				<div class="flex gap-2 px-4 py-2 text-sm font-semibold italic">
+				<div class="flex gap-2 px-4 py-2 text-sm font-semibold text-secondary-content italic">
 					<span>{item.title}</span>
 					<span class={item.iconClass}></span>
 				</div>
 			{:else}
 				<a
 					href={item.href}
-					class="btn justify-start gap-4 btn-ghost btn-primary"
+					class="btn justify-start gap-4 text-primary-content btn-ghost btn-primary"
 					class:btn-active={page.url.pathname.startsWith(item.href)}
 					><span class={item.iconClass}></span><span>{item.title}</span></a
 				>
@@ -58,7 +69,7 @@
 						{#each item.subItems as subItem (subItem.href)}
 							<a
 								href={subItem.href}
-								class="btn mb-1 justify-start gap-4 btn-ghost btn-primary"
+								class="btn mb-1 justify-start gap-4 text-primary-content btn-ghost btn-primary"
 								class:btn-active={page.url.pathname.startsWith(subItem.href)}
 								><span class={subItem.iconClass}></span><span>{subItem.title}</span></a
 							>

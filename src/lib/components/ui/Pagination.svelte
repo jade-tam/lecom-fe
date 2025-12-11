@@ -64,7 +64,7 @@
 		<!-- Page buttons -->
 		{#each visiblePages as p}
 			{#if p === '...'}
-				<button class="btn-disabled btn join-item btn-square">...</button>
+				<button class="btn btn-disabled join-item btn-square">...</button>
 			{:else}
 				<button
 					class="btn join-item btn-square {page === p ? 'btn-active btn-primary' : ''}"

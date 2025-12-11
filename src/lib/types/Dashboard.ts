@@ -25,11 +25,13 @@ export type DashboardRecentOrder = {
 	total: number;
 };
 
+export type DashboardViewType = 'day' | 'custom';
+
 export type SellerDashboardData = {
 	shopId: number;
 	shopName: string;
 	range: {
-		view: string;
+		view: DashboardViewType;
 		baseDate: string;
 		from: string;
 		to: string;
@@ -77,4 +79,100 @@ export type SellerDashboardData = {
 	};
 };
 
-export type DashboardViewType = 'day' | 'custom';
+// Admin Dashboard Types ================================
+
+export type AdminDashboardTopShop = {
+	shopId: number;
+	shopName: string;
+	sellerName: string;
+	shopLogoUrl: string;
+	totalRevenue: number;
+	totalOrders: number;
+	averageRating: number;
+	productCount: number;
+};
+
+export type AdminRevenueChart = {
+	date: string;
+	revenue: number;
+	platformFee: number;
+	orderCount: number;
+};
+
+export type AdminDashboardTopProduct = {
+	productId: string;
+	productName: string;
+	thumbnailUrl: string;
+	shopName: string;
+	shopId: number;
+	totalQuantity: number;
+	totalRevenue: number;
+	averageRating: number;
+	feedbackCount: number;
+};
+
+export type AdminDashboardRecentOrder = {
+	orderId: string;
+	orderCode: string;
+	createdAt: string;
+	status: OrderStatus;
+	paymentStatus: PaymentStatus;
+	total: number;
+	customerName: string;
+	shopName: string;
+};
+
+export type AdminDashboardData = {
+	range: {
+		view: DashboardViewType;
+		baseDate: string;
+		from: string;
+		to: string;
+	};
+	overview: {
+		from: string;
+		to: string;
+		totalOrders: number;
+		completedOrders: number;
+		cancelledOrders: number;
+		pendingOrders: number;
+		totalRevenue: number;
+		platformFee: number;
+		totalRefundAmount: number;
+		netRevenue: number;
+		averageOrderValue: number;
+		totalUsers: number;
+		newUsers: number;
+		activeShops: number;
+		newShops: number;
+	};
+	revenueChart: AdminRevenueChart[];
+	topShops: AdminDashboardTopShop[];
+	topProducts: AdminDashboardTopProduct[];
+	recentOrders: AdminDashboardRecentOrder[];
+	refundSummary: {
+		totalRequests: number;
+		pendingAdminCount: number;
+		approvedCount: number;
+		rejectedCount: number;
+		totalRefundAmount: number;
+	};
+	userSummary: {
+		totalUsers: number;
+		buyerCount: number;
+		sellerCount: number;
+		adminCount: number;
+		newUsersInRange: number;
+		activeUsersInRange: number;
+	};
+	systemHealth: {
+		totalProducts: number;
+		activeProducts: number;
+		outOfStockProducts: number;
+		totalShops: number;
+		activeShops: number;
+		pendingShops: number;
+		averageSystemRating: number;
+		totalFeedbacks: number;
+	};
+};

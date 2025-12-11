@@ -54,7 +54,16 @@
 		class="cally"
 		onrangestart={handleRangeStart}
 		onrangeend={handleRangeEnd}
+		locale="vi-VN"
 	>
+		<span
+			class="icon-[mingcute--square-arrow-left-fill] text-xl text-secondary-content/90"
+			slot="previous"
+		></span>
+		<span
+			class="icon-[mingcute--square-arrow-right-fill] text-xl text-secondary-content/90"
+			slot="next"
+		></span>
 		<div class="flex gap-4">
 			<calendar-month></calendar-month>
 			<calendar-month offset={1}></calendar-month>

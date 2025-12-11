@@ -95,7 +95,7 @@
 								>- {formatVND(order.discount)}</span
 							>
 							{#if group.voucherCodeUsed}
-								<span class="mt-1 badge badge-xs font-serif font-black badge-success"
+								<span class="mt-1 badge font-serif badge-xs font-black badge-success"
 									>{group.voucherCodeUsed}</span
 								>
 							{/if}

@@ -72,9 +72,7 @@
 			<form class="filter">
 				<input class="btn btn-square btn-sm" type="reset" value="×" />
 				{#each [5, 4, 3, 2, 1] as rating}
-					{@const count = (feedbackSummary as unknown as Record<string, number>)[
-						`rating${rating}Count`
-					]}
+					{@const count = (feedbackSummary as unknown as Record)[`rating${rating}Count`]}
 					<input
 						type="radio"
 						aria-label={`${rating} sao (${count})`}

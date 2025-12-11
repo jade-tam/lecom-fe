@@ -87,14 +87,14 @@
 				<span class={liked ? 'icon-[mingcute--heart-fill]' : 'icon-[mingcute--heart-line]'}></span>
 				<span>Thích</span>
 				{#if likeCount > 0}
-					<span class="ml-1 badge badge-sm px-1 badge-error">{likeCount}</span>
+					<span class="ml-1 badge px-1 badge-sm badge-error">{likeCount}</span>
 				{/if}
 			</button>
 			<button class="btn" type="button" aria-label="Bình luận" onclick={handleCommentToggle}>
 				<span class="icon-[mingcute--comment-line]"></span>
 				<span>Bình luận</span>
 				{#if post.comments?.length}
-					<span class="ml-1 badge badge-sm px-1 badge-secondary">{post.comments.length}</span>
+					<span class="ml-1 badge px-1 badge-sm badge-secondary">{post.comments.length}</span>
 				{/if}
 			</button>
 		</div>
