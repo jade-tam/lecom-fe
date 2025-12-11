@@ -8,6 +8,7 @@
 	import FormInput from '../ui/FormInput.svelte';
 	import FormTextArea from '../ui/FormTextArea.svelte';
 	import ImageWithFullscreenViewer from '../ui/ImageWithFullscreenViewer.svelte';
+	import { invalidateAll } from '$app/navigation';
 
 	const {
 		dataForm,
@@ -37,6 +38,10 @@
 		if ($message?.toastData) {
 			showToast($message.toastData);
 			onFormActionSuccess?.();
+			if($message.toastData.type === 'success') {
+				reset();
+				invalidateAll();
+			}
 		}
 	});
 </script>

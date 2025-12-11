@@ -1,5 +1,7 @@
 <script lang="ts">
 	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
+	import OpenModalButton from '$lib/components/modal/OpenModalButton.svelte';
+	import ReplyFeedbackModalContent from '$lib/components/modal/ReplyFeedbackModalContent.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import ImageWithFullscreenViewer from '$lib/components/ui/ImageWithFullscreenViewer.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
@@ -8,8 +10,10 @@
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
 	import { getSellerFeedbacks } from '$lib/remotes/sellerFeedbacks.remote';
 	import { feedbackRatingOptions, type Feedback } from '$lib/types/Feedback';
-	import { formatDate } from '$lib/utils/converters';
+	import { formatDate, formatDateTime } from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
+
+	const { replyFeedbackFormData }: { replyFeedbackFormData: any } = $props();
 
 	let isLoading = $state(true);
 
@@ -22,9 +26,9 @@
 			columns: [
 				{ id: 'userName', key: 'userName', name: 'Khách hàng' },
 				{ id: 'rating', key: 'rating', name: 'Đánh giá' },
-				{ id: 'content', key: 'content', name: 'Nội dung' },
+				{ id: 'content', key: 'content', name: 'Nội dung đánh giá' },
 				{ id: 'createdAt', key: 'createdAt', name: 'Thời gian' },
-				{ id: 'reply', key: 'reply', name: 'Trả lời của shop' }
+				{ id: 'reply', key: 'reply', name: 'Trả lời của shop', sortable: false }
 			],
 			initialSort: 'createdAt',
 			initialSortDirection: 'desc'
@@ -32,6 +36,8 @@
 	);
 
 	$effect(() => {
+		replyFeedbackFormData;
+
 		const loadData = async () => {
 			const data = await getSellerFeedbacks();
 			table.baseRows = data ? data.items : ([] as Feedback[]);
@@ -134,11 +140,11 @@
 										</div>
 									</td>
 								{:else if column.id === 'createdAt'}
-									<td>{formatDate(row.createdAt)}</td>
+									<td class="font-semibold">{formatDateTime(row.createdAt)}</td>
 								{:else if column.id === 'reply'}
 									<td>
 										{#if row.reply}
-											<div class="badge badge-success">row.reply</div>
+											<div class="text-base-content">{row.reply?.content}</div>
 										{:else}
 											<div class="text-warning-content italic">Chưa trả lời đánh giá</div>
 										{/if}
@@ -149,15 +155,31 @@
 							{/each}
 							<td>
 								<div class="flex gap-1">
-									<div class="tooltip" data-tip="Xem chi tiết">
+									<div class="tooltip" data-tip="Chỉnh sửa">
 										{#if row.reply}
-											<button class="btn btn-secondary">
-												<span class="icon-[mingcute--document-2-line] text-lg"></span>Chỉnh sửa
-											</button>
+											<OpenModalButton
+												openButtonProps={{ class: 'btn btn-secondary' }}
+												ModalContent={ReplyFeedbackModalContent}
+												ModalContentProps={{
+													dataForm: replyFeedbackFormData,
+													feedback: row,
+													type: 'update'
+												}}
+											>
+												<span class="icon-[mingcute--edit-4-line] text-lg"></span>Chỉnh sửa
+											</OpenModalButton>
 										{:else}
-											<button class="btn btn-primary">
+											<OpenModalButton
+												openButtonProps={{ class: 'btn btn-primary' }}
+												ModalContent={ReplyFeedbackModalContent}
+												ModalContentProps={{
+													dataForm: replyFeedbackFormData,
+													feedback: row,
+													type: 'create'
+												}}
+											>
 												<span class="icon-[mingcute--chat-1-line] text-lg"></span>Trả lời
-											</button>
+											</OpenModalButton>
 										{/if}
 									</div>
 								</div>

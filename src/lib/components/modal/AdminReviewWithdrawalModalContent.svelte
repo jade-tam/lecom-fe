@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
 	import { reviewWithdrawalSchema, type ReviewWithdrawalSchema } from '$lib/schemas/withdrawSchema';
 	import { withdrawalStatusOptions, type WithdrawalDetail } from '$lib/types/Withdrawal';
 	import { getWithdrawalStatusClass } from '$lib/utils/classComposer';
@@ -6,10 +7,8 @@
 	import showToast, { type ToastData } from '$lib/utils/showToast';
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
-	import FormInput from '../ui/FormInput.svelte';
 	import FormTextArea from '../ui/FormTextArea.svelte';
 	import Image from '../ui/Image.svelte';
-	import { invalidateAll } from '$app/navigation';
 
 	const {
 		dataForm,
@@ -39,7 +38,10 @@
 		if ($message?.toastData) {
 			showToast($message.toastData);
 			onFormActionSuccess?.();
-			invalidateAll();
+			if($message.toastData.type === 'success') {
+				reset();
+				invalidateAll();
+			}
 		}
 	});
 </script>

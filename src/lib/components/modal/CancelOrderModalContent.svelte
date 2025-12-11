@@ -24,7 +24,10 @@
 		if ($message?.toastData) {
 			showToast($message.toastData);
 			onFormActionSuccess?.();
-			invalidateAll();
+			if($message.toastData.type === 'success') {
+				reset();
+				invalidateAll();
+			}
 		}
 	});
 </script>

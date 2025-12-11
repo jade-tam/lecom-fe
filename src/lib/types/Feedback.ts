@@ -34,5 +34,8 @@ export type Feedback = {
 	content: string;
 	images: string[];
 	createdAt: string;
-	reply: string | null;
+	reply: {
+		content: string;
+		createdAt: string;
+	} | null;
 };

@@ -1,46 +1,37 @@
-import { reviewRefundSchema, type ReviewRefundSchema } from '$lib/schemas/refundSchema';
-import type { Refund } from '$lib/types/Refund.js';
-import { fetchAuthorizedApi, getSafeResult, getToastData } from '$lib/utils/externalApi';
+import { replyFeedbackSchema } from '$lib/schemas/replyFeedbackSchema.js';
+import { fetchAuthorizedApi, getToastData } from '$lib/utils/externalApi';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
 
-export const load = async ({ cookies }) => {
-	const refundsPromise = getSafeResult(
-		fetchAuthorizedApi<Refund[]>(cookies, '/api/Refund/seller', 'GET'),
-		[] as Refund[]
-	);
-
-	const reviewRefundFormData = await superValidate<ReviewRefundSchema>(zod4(reviewRefundSchema));
+export const load = async () => {
+	const replyFeedbackFormData = await superValidate(zod4(replyFeedbackSchema));
 
 	return {
-		refundsPromise,
-		reviewRefundFormData
+		replyFeedbackFormData
 	};
 };
 
 export const actions = {
-	reviewRefund: async ({ request, cookies }) => {
-		const form = await superValidate(request, zod4(reviewRefundSchema));
-
-		console.log(form);
+	replyFeedback: async ({ request, cookies }) => {
+		const form = await superValidate(request, zod4(replyFeedbackSchema));
 
 		if (!form.valid) {
 			return fail(400, { form });
 		}
 
-		const { refundId, ...formData } = form.data;
+		const { feedbackId, type, ...formData } = form.data;
 
 		const { response, responseBody } = await fetchAuthorizedApi(
 			cookies,
-			`/api/Refund/seller/${refundId}/decision`,
-			'POST',
+			`/api/Feedback/${feedbackId}/reply`,
+			type === 'create' ? 'POST' : 'PUT',
 			formData
 		);
 
 		const toastData = getToastData(
 			responseBody,
-			formData.approve ? `Đã xử lý yêu cầu hoàn tiền.` : `Đã từ chối yêu cầu hoàn tiền.`,
-			'Không thể xử lý yêu cầu.'
+			'Phản hồi đã được gửi thành công.',
+			'Không thể gửi phản hồi.'
 		);
 
 		if (response.ok) {

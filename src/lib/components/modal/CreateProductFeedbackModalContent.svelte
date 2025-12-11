@@ -47,8 +47,10 @@
 		if ($message?.toastData) {
 			showToast($message.toastData);
 			onFormActionSuccess?.();
-			invalidateAll();
-			reset();
+			if($message.toastData.type === 'success') {
+				reset();
+				invalidateAll();
+			}
 		}
 	});
 </script>

@@ -4,4 +4,4 @@
 	const { data } = $props();
 </script>
 
-<SellerFeedbacksTable />
+<SellerFeedbacksTable replyFeedbackFormData={data.replyFeedbackFormData} />

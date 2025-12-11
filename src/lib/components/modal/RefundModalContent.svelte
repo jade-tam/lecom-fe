@@ -28,7 +28,10 @@
 		if ($message?.toastData) {
 			showToast($message.toastData);
 			onFormActionSuccess?.();
-			goto(resolve('/(authenticated)/refunds'));
+			if ($message.toastData.type === 'success') {
+				reset();
+				goto(resolve('/(authenticated)/refunds'));
+			}
 		}
 	});
 </script>
