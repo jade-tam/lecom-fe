@@ -8,6 +8,7 @@ import {
 	type OrderStatus,
 	type PaymentStatus
 } from '$lib/types/Order';
+import type { PlatformWalletTransactionType } from '$lib/types/PlatformWallet';
 import type { ProductStatus } from '$lib/types/Product';
 import type { RefundStatus } from '$lib/types/Refund';
 import type { ShopStatus } from '$lib/types/Shop';
@@ -282,6 +283,20 @@ export function getWalletTransactionTypeClass(
 			return variant === 'badge' ? 'badge-primary' : 'btn-primary';
 		case 'BalanceRelease':
 			return variant === 'badge' ? 'badge-accent' : 'btn-accent';
+		default:
+			return variant === 'badge' ? 'badge-secondary' : 'btn-secondary';
+	}
+}
+
+export function getPlatformWalletTransactionTypeClass(
+	type: PlatformWalletTransactionType,
+	variant: 'badge' | 'btn' = 'badge'
+) {
+	switch (type) {
+		case 'CommissionIncome':
+			return variant === 'badge' ? 'badge-success' : 'btn-success';
+		case 'CommissionRefund':
+			return variant === 'badge' ? 'badge-error' : 'btn-error';
 		default:
 			return variant === 'badge' ? 'badge-secondary' : 'btn-secondary';
 	}

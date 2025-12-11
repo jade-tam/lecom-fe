@@ -73,6 +73,11 @@ export const adminSidebarLayout: SidebarLayoutItem[] = [
 		]
 	},
 	{
+		href: '/admin/platform-wallet',
+		title: 'Ví nền tảng',
+		iconClass: 'icon-[mingcute--wallet-4-fill] text-xl'
+	},
+	{
 		href: '/admin/broadcast-notification',
 		title: 'Thông báo cho mọi người dùng',
 		iconClass: 'icon-[mingcute--announcement-fill] text-xl'
