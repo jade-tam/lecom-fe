@@ -7,7 +7,7 @@
 		label,
 		icon = '',
 		help = '',
-		placeholder = 'Upload file',
+		placeholder = 'Lựa chọn tệp tải lên',
 		superForm,
 		errors,
 		name,
@@ -51,7 +51,7 @@
 		{icon}
 		{mediaType}
 		{buttonClass}
-		maxSizeMB={mediaType === 'Video' ? 8 : undefined}
+		maxSizeMB={mediaType === 'Video' ? 20 : undefined}
 		{onUploadSuccess}
 	/>
 

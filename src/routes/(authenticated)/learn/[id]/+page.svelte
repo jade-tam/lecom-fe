@@ -27,10 +27,35 @@
 
 	let videoElement: HTMLVideoElement | null = $state(null);
 	let completeLessonForm: HTMLFormElement | null = $state(null);
+	let wasPlaying = $state(false);
+	let playedDuration = $state(0);
 
 	function handleVideoEnded() {
 		if (completeLessonForm) {
 			completeLessonForm.requestSubmit();
+		}
+	}
+
+	function handleSeeking() {
+		if (videoElement) {
+			wasPlaying = !videoElement.paused;
+
+			// Prevent seeking ahead of what's been played
+			if (videoElement.currentTime > videoElement.played.end(0)) {
+				videoElement.currentTime = videoElement.played.end(0);
+			}
+		}
+	}
+
+	function handleSeeked() {
+		if (videoElement && wasPlaying) {
+			videoElement.play();
+		}
+	}
+
+	function handleTimeUpdate() {
+		if (videoElement) {
+			playedDuration = videoElement.played.end(0);
 		}
 	}
 
@@ -66,7 +91,7 @@
 			</button>
 			<h1 class="text-header3 font-bold">Khóa học: {courseLearning.course.title}</h1>
 		</div>
-		<p class="text-base-content/60 line-clamp-1">
+		<p class="line-clamp-1 text-base-content/60">
 			{courseLearning.course.summary}
 		</p>
 	</AnimatedDiv>
@@ -85,6 +110,9 @@
 							volume={0.3}
 							class="h-full w-full"
 							onended={handleVideoEnded}
+							onseeking={handleSeeking}
+							onplay={handleTimeUpdate}
+							onpause={handleTimeUpdate}
 						>
 							<track kind="captions" src="" srclang="vi" label="Vietnamese captions" />
 						</video>
@@ -118,6 +146,11 @@
 							>{formatVideoDuration(selectedLesson.durationSeconds)}</strong
 						></span
 					>
+					{#if videoElement}
+						<span class="text-info-content"
+							>Đang học tới <strong>{formatVideoDuration(playedDuration)}</strong></span
+						>
+					{/if}
 				</div>
 
 				<!-- Related products -->

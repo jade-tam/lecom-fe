@@ -398,10 +398,10 @@
 											: ''}"
 									>
 										<div class="flex items-center gap-2">
-											<button class="btn btn-square btn-ghost btn-primary" aria-label="play">
-												<span class="icon-[fa7-solid--circle-play]"></span>
+											<button class="btn btn-square btn-ghost btn-primary" disabled aria-label="play">
+												<span class="icon-[fa7-solid--circle-play] text-xl text-primary-content"></span>
 											</button>
-											<p class="line-clamp-2">{toNumericString(ii + 1)}. {lesson.title}</p>
+											<p class="line-clamp-2 font-semibold">{toNumericString(ii + 1)}. {lesson.title}</p>
 											<p
 												class="mr-4 ml-auto flex items-center gap-2 text-xs text-secondary-content"
 											>
@@ -440,33 +440,45 @@
 
 										<div class="flex flex-wrap items-start gap-3 px-2">
 											<p class="text-xs font-bold">Sản phẩm đã liên kết:</p>
-											{#each lesson.linkedProducts as product (product.id)}
-												<div class="tooltip tooltip-error" data-tip="Bỏ liên kết sản phẩm">
-													<FormConfirmPopoverButton
-														action="?/unlinkProduct"
-														formData={{
-															productId: product.id,
-															lessonId: lesson.id
-														}}
-														popoverId="unlink-product-{product.id}"
-														openButtonProps={{ class: 'group btn btn-sm btn-info hover:btn-error' }}
-														dropdownClass="dropdown-top dropdown-end"
-														dropdownContent={{
-															label: 'Bỏ liên kết sản phẩm này?',
-															description: `${product.name} sẽ được bỏ liên kết với ${lesson.title}.`,
-															confirmBtnClass: 'btn-error',
-															confirmBtnIcon: 'icon-[fa7-solid--unlink]',
-															confirmBtnText: 'Bỏ liên kết'
-														}}
-													>
-														<Image src={product.thumbnailUrl} alt={product.name} class="h-6 w-6" />
-														<p>{product.name}</p>
-														<span
-															class="icon-[fa7-solid--link] group-hover:icon-[fa7-solid--unlink]"
-														></span>
-													</FormConfirmPopoverButton>
-												</div>
-											{/each}
+											{#if lesson.linkedProducts && lesson.linkedProducts.length}
+												{#each lesson.linkedProducts as product (product.id)}
+													<div class="tooltip tooltip-error" data-tip="Bỏ liên kết sản phẩm">
+														<FormConfirmPopoverButton
+															action="?/unlinkProduct"
+															formData={{
+																productId: product.id,
+																lessonId: lesson.id
+															}}
+															popoverId="unlink-product-{product.id}"
+															openButtonProps={{
+																class: 'group btn btn-sm btn-info hover:btn-error'
+															}}
+															dropdownClass="dropdown-top dropdown-end"
+															dropdownContent={{
+																label: 'Bỏ liên kết sản phẩm này?',
+																description: `${product.name} sẽ được bỏ liên kết với ${lesson.title}.`,
+																confirmBtnClass: 'btn-error',
+																confirmBtnIcon: 'icon-[fa7-solid--unlink]',
+																confirmBtnText: 'Bỏ liên kết'
+															}}
+														>
+															<Image
+																src={product.thumbnailUrl}
+																alt={product.name}
+																class="h-6 w-6"
+															/>
+															<p class="line-clamp-1 max-w-50">{product.name}</p>
+															<span
+																class="icon-[fa7-solid--link] group-hover:icon-[fa7-solid--unlink]"
+															></span>
+														</FormConfirmPopoverButton>
+													</div>
+												{/each}
+											{:else}
+												<p class="text-xs text-base-content/60 italic">
+													Chưa liên kết sản phẩm nào
+												</p>
+											{/if}
 										</div>
 									</div>
 								{/each}
