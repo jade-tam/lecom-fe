@@ -9,7 +9,7 @@ import {
 	type PaymentStatus
 } from '$lib/types/Order';
 import type { PlatformWalletTransactionType } from '$lib/types/PlatformWallet';
-import type { ProductStatus } from '$lib/types/Product';
+import type { ApprovalStatus, ProductStatus } from '$lib/types/Product';
 import type { RefundStatus } from '$lib/types/Refund';
 import type { ShopStatus } from '$lib/types/Shop';
 import type { UserActiveStatus, UserRole } from '$lib/types/User';
@@ -56,6 +56,20 @@ export function getProductStatusBadgeClass(status: ProductStatus) {
 				? 'btn-info'
 				: 'badge-error';
 }
+
+export function getApprovalStatusClass(status: ApprovalStatus, type: 'btn' | 'badge') {
+	switch (status) {
+		case 'Pending':
+			return type === 'btn' ? 'btn-warning' : 'badge-warning';
+		case 'Approved':
+			return type === 'btn' ? 'btn-success' : 'badge-success';
+		case 'Rejected':
+			return type === 'btn' ? 'btn-error' : 'badge-error';
+		default:
+			return 'badge-secondary';
+	}
+}
+
 
 export function getCourseActiveStatusBtnClass(active: CourseActiveStatus) {
 	return active === 1 ? 'btn-success' : 'btn-error';

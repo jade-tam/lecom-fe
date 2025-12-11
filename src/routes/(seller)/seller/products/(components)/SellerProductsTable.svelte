@@ -6,28 +6,31 @@
 	import TableFilter from '$lib/components/ui/TableFilter.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
 	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
-	import { productStatusOptions, type Product } from '$lib/types/Product';
-	import { getProductStatusBadgeClass, getProductStatusBtnClass } from '$lib/utils/classComposer';
-	import { formatDate, formatVND } from '$lib/utils/converters';
+	import { approvalStatusOptions, productStatusOptions, type Product } from '$lib/types/Product';
+	import { getApprovalStatusClass, getProductStatusBadgeClass, getProductStatusBtnClass } from '$lib/utils/classComposer';
+	import { formatDate, formatVND, getTitleFromOptionList } from '$lib/utils/converters';
 	import { DataTable } from '@careswitch/svelte-data-table';
 
 	const { products }: { products: Product[] } = $props();
 
 	const pageSize = 12;
 
-	const table = new DataTable({
-		pageSize: pageSize,
-		data: products,
-		columns: [
-			{ id: 'images', key: 'images', name: 'Ảnh' },
-			{ id: 'name', key: 'name', name: 'Tên sản phẩm' },
-			{ id: 'categoryName', key: 'categoryName', name: 'Danh mục' },
-			{ id: 'price', key: 'price', name: 'Giá' },
-			{ id: 'stock', key: 'stock', name: 'Kho' },
-			{ id: 'status', key: 'status', name: 'Trạng thái' },
-			{ id: 'lastUpdatedAt', key: 'lastUpdatedAt', name: 'Cập nhật lần cuối' }
-		]
-	});
+	const table = $derived(
+		new DataTable({
+			pageSize: pageSize,
+			data: products,
+			columns: [
+				{ id: 'images', key: 'images', name: 'Ảnh' },
+				{ id: 'name', key: 'name', name: 'Tên sản phẩm' },
+				{ id: 'categoryName', key: 'categoryName', name: 'Danh mục' },
+				{ id: 'price', key: 'price', name: 'Giá' },
+				{ id: 'stock', key: 'stock', name: 'Kho' },
+				{ id: 'status', key: 'status', name: 'Trạng thái' },
+				{ id: 'approvalStatus', key: 'approvalStatus', name: 'Trạng thái duyệt' },
+				{ id: 'lastUpdatedAt', key: 'lastUpdatedAt', name: 'Cập nhật lần cuối' }
+			]
+		})
+	);
 </script>
 
 <div class="my-2 flex flex-wrap items-end justify-between">
@@ -87,11 +90,17 @@
 						<tr>
 							{#each table.columns as column (column.id)}
 								{#if column.id === 'status'}
-									<td
-										><div class={`badge ${getProductStatusBadgeClass(row.status)}`}>
-											{row.status}
+									<td class="whitespace-nowrap"
+										><div class={`badge badge-xs ${getProductStatusBadgeClass(row.status)}`}>
+											{getTitleFromOptionList(row.status, productStatusOptions)}
 										</div></td
 									>
+								{:else if column.id === 'approvalStatus'}
+									<td class="whitespace-nowrap"
+										><div class={`badge badge-xs ${getApprovalStatusClass(row.approvalStatus, 'badge')}`}>
+											{getTitleFromOptionList(row.approvalStatus, approvalStatusOptions)}
+										</div>
+									</td>
 								{:else if column.id === 'price'}
 									<td>{formatVND(row.price)}</td>
 								{:else if column.id === 'images'}

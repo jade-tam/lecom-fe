@@ -2,24 +2,41 @@ import type { FormSelectOption } from '$lib/components/ui/FormSelect.svelte';
 
 export const productStatusOptions = [
 	{
-		title: 'Draft',
+		title: 'Nháp',
 		value: 'Draft'
 	},
 	{
-		title: 'Published',
+		title: 'Đã xuất bản',
 		value: 'Published'
 	},
 	{
-		title: 'Out Of Stock',
+		title: 'Hết hàng',
 		value: 'OutOfStock'
 	},
 	{
-		title: 'Archived',
+		title: 'Đã lưu trữ',
 		value: 'Archived'
 	}
 ] as const satisfies readonly FormSelectOption[];
 
 export type ProductStatus = (typeof productStatusOptions)[number]['value'];
+
+export const approvalStatusOptions = [
+	{
+		title: 'Đang chờ duyệt',
+		value: 'Pending'
+	},
+	{
+		title: 'Đã được duyệt',
+		value: 'Approved'
+	},
+	{
+		title: 'Bị từ chối',
+		value: 'Rejected'
+	}
+] as const satisfies readonly FormSelectOption[];
+
+export type ApprovalStatus = (typeof approvalStatusOptions)[number]['value'];
 
 export type ProductImageData = {
 	url: string;
@@ -45,4 +62,6 @@ export type Product = {
 	shopName: string;
 	shopAvatar: string;
 	shopDescription: string;
+	approvalStatus: ApprovalStatus;
+	moderatorNote: null;
 };
