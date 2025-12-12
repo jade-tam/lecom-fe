@@ -78,12 +78,12 @@ export const actions: Actions = {
 			formData
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Course has been updated');
+		const toastData: ToastData = getToastData(responseBody, 'Thông tin khoá học đã được cập nhật');
 
 		if (response.ok) {
-			return message(form, toastData);
+			return message(form, { toastData });
 		} else {
-			return message(form, toastData, { status: 400 });
+			return message(form, { toastData }, { status: 400 });
 		}
 	},
 
@@ -108,7 +108,11 @@ export const actions: Actions = {
 			}
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Section added');
+		const toastData: ToastData = getToastData(
+			responseBody,
+			'Chương học đã được thêm',
+			'Không thể thêm chương học'
+		);
 
 		if (response.ok) {
 			return message(form, toastData);
@@ -140,7 +144,11 @@ export const actions: Actions = {
 			}
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Lesson added');
+		const toastData: ToastData = getToastData(
+			responseBody,
+			'Bài học đã được thêm',
+			'Không thể thêm bài học'
+		);
 
 		if (response.ok) {
 			return message(form, toastData);
@@ -164,7 +172,11 @@ export const actions: Actions = {
 			'DELETE'
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Section deleted');
+		const toastData: ToastData = getToastData(
+			responseBody,
+			'Chương đã được xoá',
+			'Không thể xoá chương học'
+		);
 
 		if (response.ok) {
 			return message(form, toastData);
@@ -188,7 +200,11 @@ export const actions: Actions = {
 			'DELETE'
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Lesson deleted');
+		const toastData: ToastData = getToastData(
+			responseBody,
+			'Bài học đã được xoá',
+			'Không thể xoá bài học'
+		);
 
 		if (response.ok) {
 			return message(form, toastData);
@@ -216,7 +232,11 @@ export const actions: Actions = {
 			}
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Product has been linked');
+		const toastData: ToastData = getToastData(
+			responseBody,
+			'Sản phẩm đã được liên kết với bài học',
+			'Không thể liên kết sản phẩm với bài học'
+		);
 
 		if (response.ok) {
 			return message(form, toastData);
@@ -238,7 +258,11 @@ export const actions: Actions = {
 			'DELETE'
 		);
 
-		const toastData = getToastData(responseBody, 'Course linked products has been updated');
+		const toastData = getToastData(
+			responseBody,
+			'Sản phẩm đã được gỡ liên kết khỏi bài học',
+			'Không thể gỡ liên kết sản phẩm'
+		);
 
 		return { toastData };
 	}

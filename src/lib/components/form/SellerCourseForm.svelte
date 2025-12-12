@@ -39,8 +39,8 @@
 			validators:
 				mode === 'create' ? zod4Client(createCourseSchema) : zod4Client(updateCourseSchema),
 			onUpdated: ({ form }) => {
-				if (form.message?.toastData.type === 'success') {
-					goto(`/seller/courses/update/${form.message?.responseResult?.id}`);
+				if (form.message?.toastData?.type === 'success') {
+					if (mode === 'create') goto(`/seller/courses/update/${form.message?.responseResult?.id}`);
 				}
 			}
 		});
