@@ -100,7 +100,7 @@
 										</div></td
 									>
 								{:else if column.id === 'approvalStatus'}
-									<td class="whitespace-nowrap"
+									<td class=" max-w-40"
 										><div
 											class={`badge badge-xs ${getApprovalStatusClass(row.approvalStatus, 'badge')}`}
 										>
