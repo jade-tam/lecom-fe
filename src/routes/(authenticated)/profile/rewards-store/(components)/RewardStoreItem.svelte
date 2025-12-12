@@ -21,8 +21,8 @@
 		duration: 0.5
 	}}
 	class="flex flex-col justify-between gap-2 rounded-field border-2 {item.type === 'Booster'
-		? 'border-info-content/30 bg-info text-info-content'
-		: 'border-success-content/30 bg-success text-success-content'} p-2"
+		? 'border-info-content/30 bg-info/30 text-info-content'
+		: 'border-success-content/30 bg-success/30 text-success-content'} p-2"
 >
 	<div class="mx-auto flex py-4">
 		{#if item.imageUrl}<Image class="h-24 w-24" src={item.imageUrl} alt={item.title} border="" />
