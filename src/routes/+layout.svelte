@@ -8,9 +8,10 @@
 		USER_ROLE_CONTEXT
 	} from '$lib/consts/contexts';
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
-	import { setContext } from 'svelte';
+	import { onMount, setContext } from 'svelte';
 	import { Toaster } from 'svelte-sonner';
 	import '../app.css';
+	import { themes } from '$lib/config/themeConfig';
 
 	injectSpeedInsights();
 
@@ -20,6 +21,11 @@
 	setContext(USER_ROLE_CONTEXT, () => data.userRole);
 	setContext(NOTIFICATIONS_CONTEXT, () => data.notificationsPromise);
 	setContext(TOKEN_CONTEXT, () => data.token);
+
+	onMount(() => {
+		const theme = localStorage.getItem('theme') ?? themes[0];
+		document.documentElement.setAttribute('data-theme', theme);
+	});
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
