@@ -35,6 +35,11 @@
 
 	let popover: HTMLDivElement | null = $state(null);
 	let isSubmitting = $state(false);
+	let reason = $state('');
+
+	function isReasonValid() {
+		return reason.trim().length > 20;
+	}
 </script>
 
 <form
@@ -72,8 +77,22 @@
 		style="position-anchor:--{popoverId}"
 	>
 		<div class="m-1 flex w-80 flex-col gap-2 rounded-field border bg-base-100 p-4 shadow">
-			<p class="font-bold text-sm">{dropdownContent.label}</p>
+			<p class="text-sm font-bold">{dropdownContent.label}</p>
 			<p class="text-xs text-base-content/60">{dropdownContent.description}</p>
+
+			<fieldset class={`fieldset`}>
+				<legend class="fieldset-legend">Lý do từ chối</legend>
+				<textarea
+					class="textarea"
+					placeholder="Nhập lý do từ chối"
+					name="reason"
+					bind:value={reason}
+				></textarea>
+				{#if !isReasonValid()}
+					<p class="text-error">Lý do từ chối phải dài hơn 20 ký tự.</p>
+				{/if}
+			</fieldset>
+
 			<div class="mt-1 flex justify-end gap-2">
 				<button
 					class="btn btn-sm"
@@ -84,7 +103,7 @@
 				<button
 					type="submit"
 					class="btn btn-sm {dropdownContent.confirmBtnClass}"
-					disabled={isSubmitting}
+					disabled={isSubmitting || !isReasonValid()}
 				>
 					<span class={dropdownContent.confirmBtnIcon}></span>{dropdownContent.confirmBtnText}
 				</button>

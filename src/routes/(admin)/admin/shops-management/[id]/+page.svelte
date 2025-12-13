@@ -1,9 +1,10 @@
 <script>
-	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
 	import ImageWithFullscreenViewer from '$lib/components/ui/ImageWithFullscreenViewer.svelte';
+	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
+	import FormConfirmWithReasonPopoverButton from '$lib/components/wrapper/FormRejectWithReasonPopoverButton.svelte';
 	import { getStatusBadgeClass } from '$lib/utils/classComposer';
-	import { formatDate, getTimeSince } from '$lib/utils/converters.js';
+	import { formatDate } from '$lib/utils/converters.js';
 	import showToast from '$lib/utils/showToast.js';
 
 	const { data, form } = $props();
@@ -22,63 +23,68 @@
 	});
 </script>
 
-<div class="my-2 flex items-center justify-between">
+<div class="my-2 flex flex-wrap items-center justify-between">
 	<div class="flex gap-3">
 		<a
 			href="/admin/shops-management/"
 			aria-label="Quay lại danh sách cửa hàng"
-			class="btn btn-square"
+			class="btn"
 		>
-			<span class="icon-[fa7-solid--arrow-left]"></span>
+			<span class="icon-[fa7-solid--arrow-left]"></span>Trở về
 		</a>
 		<h2>Chi tiết cửa hàng: {shop.name}</h2>
 	</div>
 
-	<div class="flex gap-2">
-		<div class="flex items-center">
-			{#if shop.status === 'Pending'}
-				<form method="POST" action="?/approve" use:enhance>
-					<input type="hidden" name="id" value={shop.id} />
-					<div class="dropdown dropdown-end">
-						<div tabindex="0" role="button" class="btn m-1 btn-success">
-							<span class="icon-[fa7-solid--check-circle]"></span> Chấp thuận
-						</div>
-						<div
-							tabindex="-1"
-							class="dropdown-content flex w-52 flex-col gap-2 rounded-field border bg-base-100 p-4"
-						>
-							<p class="font-bold">Chấp thuận cửa hàng này?</p>
-							<button class="btn btn-success">
-								<span class="icon-[fa7-solid--check-circle]"></span>Xác nhận duyệt</button
-							>
-						</div>
-					</div>
-				</form>
-				<form method="POST" action="?/reject" use:enhance>
-					<input type="hidden" name="id" value={shop.id} />
-					<div class="dropdown dropdown-end">
-						<div tabindex="0" role="button" class="btn m-1 btn-error">
-							<span class="icon-[fa7-solid--circle-xmark]"></span>Từ chối
-						</div>
-						<div
-							tabindex="-1"
-							class="dropdown-content flex w-96 flex-col gap-2 rounded-field border bg-base-100 p-4"
-						>
-							<p class="font-bold">Từ chối cửa hàng này?</p>
-							<fieldset class="fieldset">
-								<legend class="fieldset-legend">Lý do</legend>
-								<label class="input w-full">
-									<input name="reason" placeholder="Nhập lý do tại đây..." />
-								</label>
-							</fieldset>
-							<button class="btn btn-error">
-								<span class="icon-[fa7-solid--circle-xmark]"></span>Xác nhận từ chối</button
-							>
-						</div>
-					</div>
-				</form>
-			{/if}
-		</div>
+	<div class="flex items-center gap-2">
+		{#if shop.status === 'Pending'}
+			<p class="text-sm text-primary-content flex gap-2 items-center">
+				<span class="icon-[mingcute--information-fill] text-lg"></span>
+				Cửa hàng đang chờ phê duyệt, vui lòng kiểm tra thông tin và xử lý
+			</p>
+			<FormConfirmPopoverButton
+				popoverId="approve-shop-popover"
+				action="?/approve"
+				openButtonProps={{
+					type: 'button',
+					class: 'btn btn-sm btn-success',
+					'aria-label': 'Chấp thuận'
+				}}
+				formData={{
+					id: String(shop.id)
+				}}
+				dropdownClass="dropdown-bottom dropdown-end"
+				dropdownContent={{
+					label: 'Chấp thuận cửa hàng?',
+					description: 'Sau khi đã chấp thuận, cửa hàng sẽ được hiển thị công khai.',
+					confirmBtnClass: 'btn-success',
+					confirmBtnIcon: 'icon-[fa7-solid--check-circle]',
+					confirmBtnText: 'Xác nhận'
+				}}
+				><span class="icon-[fa7-solid--check-circle] text-xl"></span>Chấp thuận
+			</FormConfirmPopoverButton>
+			<FormConfirmWithReasonPopoverButton
+				popoverId="reject-shop-popover"
+				action="?/reject"
+				openButtonProps={{
+					type: 'button',
+					class: 'btn  btn-sm btn-error',
+					'aria-label': 'Từ chối'
+				}}
+				formData={{
+					id: String(shop.id)
+				}}
+				dropdownClass="dropdown-bottom dropdown-end"
+				dropdownContent={{
+					label: 'Từ chối cửa hàng?',
+					description: 'Sau khi từ chối, người bán sẽ nhận được thông tin lý do từ chối.',
+					confirmBtnClass: 'btn-error',
+					confirmBtnIcon: 'icon-[fa7-solid--circle-xmark]',
+					confirmBtnText: 'Xác nhận'
+				}}
+			>
+				<span class="icon-[fa7-solid--circle-xmark] text-xl"></span>Từ chối
+			</FormConfirmWithReasonPopoverButton>
+		{/if}
 	</div>
 </div>
 <!-- ============================================================================================= -->
@@ -113,62 +119,17 @@
 				{shop.status === 'Pending'
 					? 'Chờ duyệt'
 					: shop.status === 'Approved'
-						? 'Đã duyệt'
+						? 'Đã chấp thuận'
 						: 'Đã từ chối'}
 			</div>
 			{#if shop.status === 'Approved'}
-				<p class="text-xs italic">Hoạt động từ {formatDate(shop.approvedAt)}</p>
+				<p class="text-xs italic text-success-content">Hoạt động từ {formatDate(shop.approvedAt)}</p>
 			{:else if shop.status === 'Rejected'}
-				<p class="text-xs italic">Lý do: {shop.rejectedReason}</p>
+				<p class="text-sm italic text-error-content font-bold">Lý do: {shop.rejectedReason}</p>
 			{/if}
 		</div>
 		<p class="mt-2">{shop.description}</p>
 	</div>
-
-	<!-- <div class="overflow-auto">
-		<div class="stats mt-4 border">
-			<div class="stat">
-				<div class="stat-figure text-secondary-content">
-					<span class="icon-[fa7-solid--box-archive] text-2xl"></span>
-				</div>
-				<div class="stat-title">Tổng số sản phẩm</div>
-				<div class="stat-value">4</div>
-				<div class="stat-desc">Trong {shop.categoryName}</div>
-			</div>
-
-			<div class="stat">
-				<div class="stat-figure text-secondary-content">
-					<span class="icon-[fa7-solid--money-bill-trend-up] text-2xl"> </span>
-				</div>
-				<div class="stat-title">Tổng số đơn bán</div>
-				<div class="stat-value">0</div>
-				<div class="stat-desc">489 tháng trước ↗︎ 400 (22%)</div>
-			</div>
-
-			<div class="stat">
-				<div class="stat-figure text-secondary-content">
-					<span class="icon-[fa7-solid--business-time] text-2xl"></span>
-				</div>
-				<div class="stat-title">Thời gian hoạt động</div>
-				{#if shop.status === 'Approved'}
-					<div class="stat-value">{getTimeSince(shop.approvedAt)}</div>
-					<div class="stat-desc">Từ {formatDate(shop.approvedAt)}</div>
-				{:else}
-					<div class="stat-value">---</div>
-					<div class="stat-desc">Đang chờ duyệt...</div>
-				{/if}
-			</div>
-
-			<div class="stat">
-				<div class="stat-figure text-secondary-content">
-					<span class="icon-[fa7-solid--star] text-2xl"></span>
-				</div>
-				<div class="stat-title">Đánh giá cửa hàng</div>
-				<div class="stat-value">4,3</div>
-				<div class="stat-desc">145 lượt đánh giá</div>
-			</div>
-		</div>
-	</div> -->
 
 	<fieldset class="mt-2 fieldset">
 		<legend class="fieldset-legend">Số điện thoại cửa hàng</legend>
@@ -243,7 +204,7 @@
 				<ImageWithFullscreenViewer
 					src={shop.ownerPersonalIdFrontUrl}
 					alt="Ảnh mặt trước CMND/CCCD"
-					class="h-32 w-64"
+					class="h-32 w-64  max-md:h-16 max-md:w-32"
 				/>
 			</fieldset>
 
@@ -252,7 +213,7 @@
 				<ImageWithFullscreenViewer
 					src={shop.ownerPersonalIdBackUrl}
 					alt="Ảnh mặt sau CMND/CCCD"
-					class="h-32 w-64"
+					class="h-32 w-64 max-md:h-16 max-md:w-32"
 				/>
 			</fieldset>
 		</div>
