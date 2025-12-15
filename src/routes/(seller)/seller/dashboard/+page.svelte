@@ -4,6 +4,7 @@
 	import { page } from '$app/state';
 	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import DateRangeSelector from '$lib/components/ui/data-input/DateRangeSelector.svelte';
+	import MonthDateRangeSelector from '$lib/components/ui/data-input/MonthDateRangeSelector.svelte';
 	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 	import type { DashboardViewType, SellerDashboardData } from '$lib/types/Dashboard.js';
 	import { orderStatusOptions, paymentStatusOptions } from '$lib/types/Order';
@@ -18,7 +19,7 @@
 	import showToast from '$lib/utils/showToast.js';
 	import 'cally';
 	import RevenueChart from './(components)/RevenueChart.svelte';
-	import MonthDateRangeSelector from '$lib/components/ui/data-input/MonthDateRangeSelector.svelte';
+	import SellerTopProductCard from './(components)/SellerTopProductCard.svelte';
 
 	const { data } = $props();
 	let dashboardData: SellerDashboardData | null = $state(null);
@@ -402,7 +403,7 @@
 			<h2 class="mb-2 text-lg font-bold">Các sản phẩm bán chạy</h2>
 			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
 				{#each dashboardData.topProducts as product}
-					<div class="stat flex flex-col items-center rounded-box bg-base-100 p-4">
+					<!-- <div class="stat flex flex-col items-center rounded-box bg-base-100 p-4">
 						<img
 							src={product.thumbnailUrl}
 							alt={product.productName}
@@ -423,7 +424,8 @@
 							>
 							({product.feedbackCount})
 						</div>
-					</div>
+					</div> -->
+					<SellerTopProductCard {product} />
 				{/each}
 			</div>
 		</AnimatedDiv>

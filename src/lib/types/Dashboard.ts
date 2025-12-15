@@ -5,7 +5,7 @@ export type RevenueChart = {
 	revenue: number;
 };
 
-export type DashboardTopProduct = {
+export type SellerDashboardTopProduct = {
 	averageRating: number;
 	feedbackCount: number;
 	productId: string;
@@ -50,7 +50,7 @@ export type SellerDashboardData = {
 		uniqueCustomers: number;
 	};
 	revenueChart: RevenueChart[];
-	topProducts: DashboardTopProduct[];
+	topProducts: SellerDashboardTopProduct[];
 	recentOrders: DashboardRecentOrder[];
 	refundSummary: {
 		totalRequests: number;
