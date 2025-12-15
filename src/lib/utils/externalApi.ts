@@ -175,12 +175,8 @@ export async function fetchAuthorizedApi<T>(
 		} else {
 			logger.warn(apiPrefix, "Can't refresh new token");
 
-			// clearTokens(cookies);
-
-			// throw redirect(303, resolve('/auth/logout'));
+			throw redirect(303, resolve('/auth/logout'));
 		}
-
-		throw redirect(303, resolve('/auth/logout'));
 	}
 
 	return { response, responseBody };

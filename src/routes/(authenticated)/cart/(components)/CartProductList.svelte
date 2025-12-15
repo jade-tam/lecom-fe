@@ -12,7 +12,7 @@
 		$props();
 </script>
 
-<div class="flex justify-between rounded-field bg-secondary px-3 py-2">
+<div class="flex justify-between rounded-field bg-base-200 px-3 py-2">
 	<p class="text-sm font-bold">Sản phẩm</p>
 	<p class="text-sm font-bold">Tạm tính</p>
 </div>
