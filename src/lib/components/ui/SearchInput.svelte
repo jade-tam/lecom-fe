@@ -11,7 +11,7 @@
 	let searchInput: HTMLInputElement | null = null;
 
 	function handleKeydown(event: KeyboardEvent) {
-		if (event.key === 'Enter' && value.trim()) {
+		if (event.key === 'Enter') {
 			event.preventDefault();
 			onEnter?.(value.trim());
 		}
