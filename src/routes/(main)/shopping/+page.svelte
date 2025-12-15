@@ -4,6 +4,7 @@
 	import Pagination from '$lib/components/ui/Pagination.svelte';
 	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 	import { getUserProfile } from '$lib/context/appContext.js';
+	import { slide } from 'svelte/transition';
 
 	const { data } = $props();
 
@@ -14,12 +15,12 @@
 	<section class="mt-8 flex flex-col">
 		<h2 class="text-header3">Đề xuất dành cho bạn</h2>
 
-		<div class="mt-2 grid w-full grid-cols-4 items-stretch gap-2">
+		<div class="mt-2 grid w-full grid-cols-5 items-stretch gap-2 max-md:grid-cols-2">
 			{#await data.productBrowseDataPromise}
 				<LoadingPlaceholder text="Đang tải danh sách sản phẩm" />
 			{:then browseData}
 				{#if browseData?.recommendedProducts.length}
-					{#each browseData.recommendedProducts as product, index (product.id)}
+					{#each browseData.recommendedProducts.slice(0, 10) as product, index (product.id)}
 						<ProductCard {product} {index} />
 					{/each}
 				{:else}
@@ -39,14 +40,14 @@
 				<section class="mt-8 flex flex-col">
 					<div class="flex items-center gap-4">
 						<h2 class="text-header3">{category.name}</h2>
-						<a href="/shopping/products?category={category.slug}" class="btn btn-xs"
+						<a href="/shopping/products?category={category.slug}" class="btn btn-xs btn-primary"
 							>Xem tất cả <span class="icon-[mingcute--arrow-right-fill]"></span></a
 						>
 					</div>
 
-					<div class="mt-2 grid w-full grid-cols-5 items-stretch gap-2">
+					<div class="mt-2 grid w-full grid-cols-4 items-stretch gap-2 max-md:grid-cols-2">
 						{#if category.products.length}
-							{#each category.products as product, index (product.id)}
+							{#each category.products.slice(0, 4) as product, index (product.id)}
 								<ProductCard {product} {index} />
 							{/each}
 						{:else}
@@ -65,12 +66,12 @@
 	<section class="mt-8 flex flex-col">
 		<h2 class="text-header3">Sản phẩm đang trending</h2>
 
-		<div class="mt-2 grid w-full grid-cols-5 items-stretch gap-2">
+		<div class="mt-2 grid w-full grid-cols-5 items-stretch gap-2 max-md:grid-cols-2">
 			{#await data.productBrowseDataPromise}
 				<LoadingPlaceholder text="Đang tải danh sách sản phẩm" />
 			{:then browseData}
 				{#if browseData?.trendingProducts.length}
-					{#each browseData.trendingProducts as product, index (product.id)}
+					{#each browseData.trendingProducts.slice(0, 10) as product, index (product.id)}
 						<ProductCard {product} {index} />
 					{/each}
 				{:else}
@@ -85,12 +86,12 @@
 	<section class="mt-8 flex flex-col">
 		<h2 class="text-header3">Các sản phẩm bán chạy nhất</h2>
 
-		<div class="mt-2 grid w-full grid-cols-5 items-stretch gap-2">
+		<div class="mt-2 grid w-full grid-cols-5 items-stretch gap-2 max-md:grid-cols-2">
 			{#await data.productBrowseDataPromise}
 				<LoadingPlaceholder text="Đang tải danh sách sản phẩm" />
 			{:then browseData}
 				{#if browseData?.bestSellerProducts.length}
-					{#each browseData.bestSellerProducts as product, index (product.id)}
+					{#each browseData.bestSellerProducts.slice(0, 10) as product, index (product.id)}
 						<ProductCard {product} {index} />
 					{/each}
 				{:else}
@@ -105,12 +106,12 @@
 	<section class="mt-8 flex flex-col">
 		<h2 class="text-header3">Các sản phẩm mới nhất</h2>
 
-		<div class="mt-2 grid w-full grid-cols-5 items-stretch gap-2">
+		<div class="mt-2 grid w-full grid-cols-5 items-stretch gap-2 max-md:grid-cols-2">
 			{#await data.productBrowseDataPromise}
 				<LoadingPlaceholder text="Đang tải danh sách sản phẩm" />
 			{:then browseData}
 				{#if browseData?.newArrivalProducts.length}
-					{#each browseData.newArrivalProducts as product, index (product.id)}
+					{#each browseData.newArrivalProducts.slice(0, 10) as product, index (product.id)}
 						<ProductCard {product} {index} />
 					{/each}
 				{:else}

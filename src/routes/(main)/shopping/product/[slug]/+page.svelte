@@ -78,8 +78,23 @@
 					{product.name}
 				</p>
 				<div class="flex items-center gap-4">
-					<div style={`view-transition-name: product-rating-${product.id};`}>
-						<Rating defaultValue={1.4} readonly={true} />
+					<div>
+						{#if product.averageRating !== undefined}
+							<Rating defaultValue={product.averageRating} readonly={true} />
+						{:else}
+							<span class="text-sm text-base-content/70 italic">
+								<Rating defaultValue={0} readonly={true} />
+							</span>
+						{/if}
+						<p class="text-xs italic">
+							{#if product.ratingCount !== undefined}
+								{product.ratingCount === 0
+									? 'Chưa có đánh giá'
+									: `${product.ratingCount} lượt đánh giá`}
+							{:else}
+								không có dữ liệu
+							{/if}
+						</p>
 					</div>
 					<div
 						class="badge badge-sm badge-secondary"

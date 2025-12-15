@@ -5,7 +5,7 @@
 	let theme = $state('');
 
 	onMount(() => {
-		theme = localStorage.getItem('theme') ?? themes[0];
+		theme = localStorage.getItem('theme') ?? themes[1];
 		document.documentElement.setAttribute('data-theme', theme);
 	});
 

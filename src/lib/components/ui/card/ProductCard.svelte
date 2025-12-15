@@ -25,13 +25,28 @@
 		</p>
 		<div class="flex flex-wrap items-center justify-between">
 			<div>
-				<Rating defaultValue={1.4} readonly={true} />
+				{#if product.averageRating !== undefined}
+					<Rating defaultValue={product.averageRating} readonly={true} />
+				{:else}
+					<span class="text-sm text-base-content/70 italic">
+						<Rating defaultValue={0} readonly={true} />
+					</span>
+				{/if}
+				<p class="text-xs italic text-base-content/70">
+					{#if product.ratingCount !== undefined}
+						{product.ratingCount === 0
+							? 'Chưa có đánh giá'
+							: `${product.ratingCount} lượt đánh giá`}
+					{:else}
+						không có dữ liệu
+					{/if}
+				</p>
 			</div>
 			<div class="badge badge-xs badge-secondary">
 				{product.categoryName}
 			</div>
 		</div>
-		<div class="flex items-center gap-2">
+		<div class="flex items-center gap-2 mt-1">
 			<Image class="h-6 w-6 rounded-full" src={product.shopAvatar} alt={product.shopName} />
 			<p class="text-sm font-bold tracking-tight text-secondary-content">
 				{product.shopName ?? 'Unknown shop'}

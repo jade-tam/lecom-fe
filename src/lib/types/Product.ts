@@ -64,4 +64,6 @@ export type Product = {
 	shopDescription: string;
 	approvalStatus: ApprovalStatus;
 	moderatorNote: null;
+	averageRating?: number;
+	ratingCount?: number;
 };
