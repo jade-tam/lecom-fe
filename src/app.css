@@ -45,10 +45,10 @@
 	name: 'lecomdark';
 	prefersdark: true;
 	color-scheme: 'dark';
-	--color-base-100: #382f26;
-	--color-base-200: #2f271e;
-	--color-base-300: #251d15;
-	--color-base-content: #e8e3d8;
+	--color-base-100: #4a3628;
+	--color-base-200: #261e16;
+	--color-base-300: #17100a;
+	--color-base-content: #e1c79a;
 	--color-primary: #ffed7f;
 	--color-primary-content: #d4843f;
 	--color-secondary: #f5e0ff;

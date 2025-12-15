@@ -169,11 +169,10 @@
 											src={product.thumbnailUrl}
 											alt={product.name}
 											class="h-16 w-16 shrink-0 rounded"
-											border=""
 										/>
 										<div class="w-full">
 											<p class="flex items-start justify-between gap-4 font-bold">
-												{product.name}
+												<span class=" line-clamp-2 text-xs">{product.name}</span>
 												<span class="icon-[fa7-solid--external-link] text-sm text-secondary"></span>
 											</p>
 											<p class="text-xs text-base-content/70 italic">{product.categoryName}</p>
