@@ -45,7 +45,7 @@
 	});
 </script>
 
-<div class="tooltip tooltip-bottom" data-tip="Thông báo">
+<div class="tooltip tooltip-bottom overflow-hidden" data-tip="Thông báo">
 	<button
 		class="btn relative btn-square text-primary-content btn-ghost btn-primary"
 		aria-label="Notification"
