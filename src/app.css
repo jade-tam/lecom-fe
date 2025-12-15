@@ -125,19 +125,19 @@
 	}
 
 	::-webkit-scrollbar-thumb {
-		background: var(--color-secondary);
+		background: var(--color-base-content);
 		border-radius: 4px;
 		transition: background 0.3s ease;
 	}
 
 	::-webkit-scrollbar-thumb:hover {
-		background: var(--color-secondary);
+		background: var(--color-base-content);
 		opacity: 0.8;
 	}
 
 	/* Firefox scrollbar */
 	* {
-		scrollbar-color: var(--color-secondary) var(--color-base-100);
+		scrollbar-color: var(--color-base-content) var(--color-base-100);
 		scrollbar-width: thin;
 	}
 
