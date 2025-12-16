@@ -17,7 +17,7 @@
 				<LoadingPlaceholder text="Đang tải danh sách khóa học" />
 			{:then browseData}
 				{#if browseData?.recommendedCourses?.length}
-					{#each browseData.recommendedCourses as course, index (course.id)}
+					{#each browseData.recommendedCourses.slice(0, 8) as course, index (course.id)}
 						<CourseCard {course} {index} />
 					{/each}
 				{:else}
@@ -36,7 +36,7 @@
 				<LoadingPlaceholder text="Đang tải danh sách khóa học" />
 			{:then browseData}
 				{#if browseData?.newArrivalCourses?.length}
-					{#each browseData.newArrivalCourses as course, index (course.id)}
+					{#each browseData.newArrivalCourses.slice(0, 8) as course, index (course.id)}
 						<CourseCard {course} {index} />
 					{/each}
 				{:else}
@@ -56,13 +56,13 @@
 				<section class="mt-8 flex flex-col">
 					<div class="flex items-center gap-4">
 						<h2 class="text-header3">{category.name}</h2>
-						<a href="/learning/courses?category={category.slug}" class="btn btn-xs"
+						<a href="/learning/courses?category={category.slug}" class="btn btn-xs btn-primary"
 							>Xem tất cả <span class="icon-[mingcute--arrow-right-fill]"></span></a
 						>
 					</div>
 					<div class="mt-6 grid w-full grid-cols-4 items-stretch gap-2">
 						{#if category.courses.length}
-							{#each category.courses as course, index (course.id)}
+							{#each category.courses.slice(0, 4) as course, index (course.id)}
 								<CourseCard {course} {index} />
 							{/each}
 						{:else}

@@ -35,7 +35,7 @@
 				{#each shopItemGroup.items as item (item.productId)}
 					<div
 						class="flex gap-2 rounded-field duration-200 {checked[item.productId]
-							? 'bg-primary'
+							? 'bg-primary/20'
 							: ''} p-2"
 					>
 						<input
