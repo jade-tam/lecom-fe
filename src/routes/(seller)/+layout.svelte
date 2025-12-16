@@ -14,6 +14,12 @@
 
 <div class="drawer xl:drawer-open">
 	<input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+	<div class="drawer-side">
+		<label for="main-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+		<DrawerSideContent sidebarLayoutItems={sellerSidebarLayout} title="Trang quản lý cửa hàng" />
+	</div>
+
 	<div class="drawer-content flex min-h-screen flex-col">
 		<!-- Page content here -->
 		<div class="flex items-center justify-between border-b-2 border-base-300 p-4">
@@ -37,9 +43,5 @@
 		<div class="mx-auto h-full w-full max-w-7xl p-4 pt-0">
 			{@render children()}
 		</div>
-	</div>
-	<div class="drawer-side">
-		<label for="main-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-		<DrawerSideContent sidebarLayoutItems={sellerSidebarLayout} title="Trang quản lý cửa hàng" />
 	</div>
 </div>

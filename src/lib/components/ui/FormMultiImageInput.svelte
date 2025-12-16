@@ -3,6 +3,7 @@
 	import MultiImageUploader, { type MultiImageUploaderProps } from './MultiImageUploader.svelte';
 	import ToolTip from './ToolTip.svelte';
 	import MultiImageUploaderUrl from './MultiImageUploaderUrl.svelte';
+	import { fly } from 'svelte/transition';
 
 	let {
 		label,
@@ -24,7 +25,7 @@
 	} = $props();
 </script>
 
-<fieldset class={`fieldset flex flex-col ${className} min-h-39`}>
+<fieldset in:fly={{ y: 12, duration: 500 }} class={`fieldset flex flex-col ${className} min-h-39`}>
 	<legend class="fieldset-legend">
 		{label}
 		{#if help}

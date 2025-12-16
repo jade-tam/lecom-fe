@@ -3,7 +3,7 @@
 </script>
 
 <div
-	class="col-span-full flex {className} w-full flex-col items-center justify-center text-secondary-content/60"
+	class="col-span-full flex {className} w-full flex-col items-center justify-center text-primary-content/60"
 >
 	<span class="loading loading-xl loading-infinity"></span>
 	<p class="mt-2 animate-pulse text-sm font-bold italic">{text}</p>

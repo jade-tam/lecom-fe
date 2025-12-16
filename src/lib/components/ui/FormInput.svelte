@@ -3,6 +3,7 @@
 	import type { SuperFormData, SuperFormErrors } from 'sveltekit-superforms/client';
 	import ToolTip from './ToolTip.svelte';
 	import DateSelector from './data-input/DateSelector.svelte';
+	import { fly } from 'svelte/transition';
 
 	let {
 		label,
@@ -32,7 +33,7 @@
 	} = $props();
 </script>
 
-<fieldset class={`fieldset ${className}`}>
+<fieldset in:fly={{ y: 12, duration: 500 }} class={`fieldset ${className}`}>
 	{#if label}
 		<legend class="fieldset-legend" class:hidden
 			>{label}

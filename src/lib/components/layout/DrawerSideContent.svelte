@@ -80,10 +80,22 @@
 		{/each}
 	</div>
 
-	<div class="flex items-center gap-2">
+	<div class="flex items-center gap-2 mb-1">
+		<a
+			class="btn btn-sm grow"
+			aria-label="Chuyển sang giao diện người dùng"
+			href="/"
+		>
+		<span class='icon-[mingcute--home-3-line]'></span>
+		Trở về trang chủ
+	</a>
+
+	</div>
+
+	<div class="flex items-center gap-1">
 		<div class="tooltip grow" data-tip="Hồ sơ">
 			<a
-				class="btn flex min-w-0 flex-1 justify-start gap-2 px-2 btn-soft btn-lg"
+				class="btn flex min-w-0 flex-1 justify-start gap-2 px-2 btn-lg"
 				class:btn-active={page.url.pathname.startsWith('/profile')}
 				href="/profile"
 			>
@@ -118,7 +130,7 @@
 
 		<div class="tooltip" data-tip="Cài đặt">
 			<a
-				class="btn btn-square btn-soft btn-lg"
+				class="btn btn-square btn-lg"
 				aria-label="Cài đặt"
 				class:btn-active={page.url.pathname.startsWith('/settings')}
 				href="/settings"
@@ -129,7 +141,7 @@
 
 		<div class="tooltip" data-tip="Đăng xuất">
 			<button
-				class="btn btn-square btn-soft btn-lg"
+				class="btn btn-square btn-lg"
 				aria-label="Mở hộp thoại đăng xuất"
 				onclick={() => openModal()}
 			>

@@ -138,6 +138,8 @@
 					{cat.name}
 				</a>
 			{/each}
+		{:catch err}
+			<p class="text-error">Có lỗi xảy ra trong khi đang tải danh mục</p>
 		{/await}
 	</div>
 

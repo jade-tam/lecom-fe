@@ -2,6 +2,7 @@
 	import type { HTMLInputAttributes, HTMLTextareaAttributes } from 'svelte/elements';
 	import type { SuperFormData, SuperFormErrors } from 'sveltekit-superforms/client';
 	import ToolTip from './ToolTip.svelte';
+	import { fly } from 'svelte/transition';
 
 	let {
 		label,
@@ -25,7 +26,7 @@
 	} = $props();
 </script>
 
-<fieldset class={`fieldset ${className}`} class:hidden>
+<fieldset in:fly={{ y: 12, duration: 500 }} class={`fieldset ${className}`} class:hidden>
 	<legend class="fieldset-legend"
 		>{label}
 		{#if help}

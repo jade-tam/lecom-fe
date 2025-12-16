@@ -55,3 +55,30 @@ export type SellerRegisterStatus = {
 	status: ShopStatus;
 	reason: string;
 };
+
+export type ShopAddress = {
+	id: number;
+	shopId: number;
+	provinceId: number;
+	provinceName: string;
+	districtId: number;
+	districtName: string;
+	wardCode: string;
+	wardName: string;
+	detailAddress: string;
+	isDefault: boolean;
+	contactName: string;
+	contactPhone: string;
+};
+
+export type AddressProvince = { ProvinceID: number; ProvinceName: string; Code: string };
+
+export type AddressDistrict = {
+	DistrictID: number;
+	ProvinceID: number;
+	DistrictName: string;
+	Code: string;
+};
+
+export type AddressWard = { WardCode: string; DistrictID: number; WardName: string };
+;

@@ -2,6 +2,7 @@
 	import type { SuperFormData, SuperFormErrors } from 'sveltekit-superforms/client';
 	import MediaUploader from './MediaUploader.svelte';
 	import ToolTip from './ToolTip.svelte';
+	import { fly } from 'svelte/transition';
 
 	let {
 		label,
@@ -34,7 +35,7 @@
 	} = $props();
 </script>
 
-<fieldset class={`fieldset flex flex-col ${className} min-h-39`} class:hidden>
+<fieldset in:fly={{ y: 12, duration: 500 }} class={`fieldset flex flex-col ${className} min-h-39`} class:hidden>
 	<legend class="fieldset-legend">
 		{label}
 		{#if help}

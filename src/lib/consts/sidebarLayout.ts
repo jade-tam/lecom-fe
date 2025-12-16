@@ -101,11 +101,6 @@ export const sellerSidebarLayout: SidebarLayoutItem[] = [
 		iconClass: 'icon-[mingcute--box-2-fill] text-xl'
 	},
 	{
-		href: '/seller/feedbacks',
-		title: 'Đánh giá sản phẩm',
-		iconClass: 'icon-[mingcute--star-half-fill] text-xl'
-	},
-	{
 		href: '/seller/courses',
 		title: 'Quản lý khóa học',
 		iconClass: 'icon-[mingcute--notebook-2-fill] text-xl'
@@ -121,9 +116,19 @@ export const sellerSidebarLayout: SidebarLayoutItem[] = [
 		iconClass: 'icon-[mingcute--card-refund-fill] text-xl'
 	},
 	{
+		href: '/seller/feedbacks',
+		title: 'Đánh giá sản phẩm',
+		iconClass: 'icon-[mingcute--star-half-fill] text-xl'
+	},
+	{
 		href: '/seller/wallet',
 		title: 'Ví cửa hàng',
 		iconClass: 'icon-[mingcute--wallet-3-fill] text-xl'
+	},
+	{
+		href: '/seller/configuration',
+		title: 'Cài đặt cửa hàng',
+		iconClass: 'icon-[mingcute--settings-6-fill] text-xl'
 	}
 ];
 
