@@ -142,12 +142,13 @@
 	}
 
 	.input,
-	.textarea, select {
+	.textarea,
+	select {
 		@apply border-primary-content/30 bg-base-300/60 font-medium;
 	}
 
 	select {
-		@apply bg-base-200
+		@apply bg-base-200;
 	}
 }
 

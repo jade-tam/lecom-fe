@@ -93,7 +93,7 @@
 							{:else if column.id === 'dateOfBirth'}
 								<td>{formatDate(row.dateOfBirth)}</td>
 							{:else if column.id === 'roles'}
-								<td >
+								<td>
 									<div class="flex flex-col gap-1">
 										{#if Array.isArray(row.roles)}
 											{#each row.roles as role}

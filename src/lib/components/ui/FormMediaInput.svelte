@@ -35,7 +35,11 @@
 	} = $props();
 </script>
 
-<fieldset in:fly={{ y: 12, duration: 500 }} class={`fieldset flex flex-col ${className} min-h-39`} class:hidden>
+<fieldset
+	in:fly={{ y: 12, duration: 500 }}
+	class={`fieldset flex flex-col ${className} min-h-39`}
+	class:hidden
+>
 	<legend class="fieldset-legend">
 		{label}
 		{#if help}

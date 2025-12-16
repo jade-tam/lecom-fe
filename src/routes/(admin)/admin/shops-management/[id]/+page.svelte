@@ -25,11 +25,7 @@
 
 <div class="my-2 flex flex-wrap items-center justify-between">
 	<div class="flex gap-3">
-		<a
-			href="/admin/shops-management/"
-			aria-label="Quay lại danh sách cửa hàng"
-			class="btn"
-		>
+		<a href="/admin/shops-management/" aria-label="Quay lại danh sách cửa hàng" class="btn">
 			<span class="icon-[fa7-solid--arrow-left]"></span>Trở về
 		</a>
 		<h2>Chi tiết cửa hàng: {shop.name}</h2>
@@ -37,7 +33,7 @@
 
 	<div class="flex items-center gap-2">
 		{#if shop.status === 'Pending'}
-			<p class="text-sm text-primary-content flex gap-2 items-center">
+			<p class="flex items-center gap-2 text-sm text-primary-content">
 				<span class="icon-[mingcute--information-fill] text-lg"></span>
 				Cửa hàng đang chờ phê duyệt, vui lòng kiểm tra thông tin và xử lý
 			</p>
@@ -123,9 +119,11 @@
 						: 'Đã từ chối'}
 			</div>
 			{#if shop.status === 'Approved'}
-				<p class="text-xs italic text-success-content">Hoạt động từ {formatDate(shop.approvedAt)}</p>
+				<p class="text-xs text-success-content italic">
+					Hoạt động từ {formatDate(shop.approvedAt)}
+				</p>
 			{:else if shop.status === 'Rejected'}
-				<p class="text-sm italic text-error-content font-bold">Lý do: {shop.rejectedReason}</p>
+				<p class="text-sm font-bold text-error-content italic">Lý do: {shop.rejectedReason}</p>
 			{/if}
 		</div>
 		<p class="mt-2">{shop.description}</p>

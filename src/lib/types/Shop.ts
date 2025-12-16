@@ -81,4 +81,3 @@ export type AddressDistrict = {
 };
 
 export type AddressWard = { WardCode: string; DistrictID: number; WardName: string };
-;

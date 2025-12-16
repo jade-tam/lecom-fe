@@ -32,7 +32,7 @@
 						<Rating defaultValue={0} readonly={true} />
 					</span>
 				{/if}
-				<p class="text-xs italic text-base-content/70">
+				<p class="text-xs text-base-content/70 italic">
 					{#if product.ratingCount !== undefined}
 						{product.ratingCount === 0
 							? 'Chưa có đánh giá'
@@ -46,7 +46,7 @@
 				{product.categoryName}
 			</div>
 		</div>
-		<div class="flex items-center gap-2 mt-1">
+		<div class="mt-1 flex items-center gap-2">
 			<Image class="h-6 w-6 rounded-full" src={product.shopAvatar} alt={product.shopName} />
 			<p class="text-sm font-bold tracking-tight text-secondary-content">
 				{product.shopName ?? 'Unknown shop'}

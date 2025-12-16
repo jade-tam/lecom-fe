@@ -1,7 +1,6 @@
 import type { PlatformWallet, PlatformWalletTransactions } from '$lib/types/PlatformWallet.js';
 import { fetchAuthorizedApi, getSafeResult } from '$lib/utils/externalApi';
 
-
 export const load = async ({ cookies }) => {
 	const platformWalletPromise: Promise<PlatformWallet | null> = getSafeResult(
 		fetchAuthorizedApi<PlatformWallet>(cookies, '/api/Wallet/admin/platform-wallet', 'GET'),

@@ -398,10 +398,17 @@
 											: ''}"
 									>
 										<div class="flex items-center gap-2">
-											<button class="btn btn-square btn-ghost btn-primary" disabled aria-label="play">
-												<span class="icon-[fa7-solid--circle-play] text-xl text-primary-content"></span>
+											<button
+												class="btn btn-square btn-ghost btn-primary"
+												disabled
+												aria-label="play"
+											>
+												<span class="icon-[fa7-solid--circle-play] text-xl text-primary-content"
+												></span>
 											</button>
-											<p class="line-clamp-2 font-semibold">{toNumericString(ii + 1)}. {lesson.title}</p>
+											<p class="line-clamp-2 font-semibold">
+												{toNumericString(ii + 1)}. {lesson.title}
+											</p>
 											<p
 												class="mr-4 ml-auto flex items-center gap-2 text-xs text-secondary-content"
 											>

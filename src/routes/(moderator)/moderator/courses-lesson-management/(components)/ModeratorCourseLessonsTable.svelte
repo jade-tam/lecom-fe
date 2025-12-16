@@ -84,8 +84,7 @@
 											dropdownClass="dropdown-bottom dropdown-end"
 											dropdownContent={{
 												label: 'Chấp thuận bài học này?',
-												description:
-													'Bài học sẽ được hiển thị trên khóa học của người bán.',
+												description: 'Bài học sẽ được hiển thị trên khóa học của người bán.',
 												confirmBtnClass: 'btn-success',
 												confirmBtnIcon: 'icon-[fa7-solid--check-square]',
 												confirmBtnText: 'Chấp thuận'

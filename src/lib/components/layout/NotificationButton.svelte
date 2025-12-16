@@ -75,7 +75,7 @@
 	<div
 		class="m-1 flex max-h-[70vh] w-92 flex-col gap-2 rounded-field border bg-base-100 p-2 shadow"
 	>
-		<div class="flex justify-between items-end gap-4">
+		<div class="flex items-end justify-between gap-4">
 			<p class="font-serif font-bold">Thông báo</p>
 			<form
 				action="/?/readAllNotifications"
@@ -98,7 +98,7 @@
 				</button>
 			</form>
 		</div>
-		<div class="overflow-y-auto gap-1 flex flex-col pr-1">
+		<div class="flex flex-col gap-1 overflow-y-auto pr-1">
 			{#if !notifications.length}
 				<EmptyPlaceholder text="Bạn chưa có thông báo mới" />
 			{:else}

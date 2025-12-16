@@ -93,7 +93,7 @@
 			</div>
 		</div>
 		<div
-			class="col-span-9 grid h-fit w-full grid-cols-3 gap-y-6 gap-x-2 max-lg:grid-cols-2 max-md:grid-cols-2"
+			class="col-span-9 grid h-fit w-full grid-cols-3 gap-x-2 gap-y-6 max-lg:grid-cols-2 max-md:grid-cols-2"
 		>
 			{#await data.queryResult}
 				<LoadingPlaceholder text="Đang tải danh sách khóa học..." />>

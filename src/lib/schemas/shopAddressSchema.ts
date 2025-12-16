@@ -8,7 +8,10 @@ export const shopAddressSchema = z.object({
 		.int('Mã tỉnh / thành phố không hợp lệ')
 		.min(1, 'Vui lòng chọn tỉnh / thành phố'),
 	provinceName: z.string().min(1, 'Vui lòng chọn tỉnh / thành phố'),
-	districtId: z.number('Vui lòng chọn quận / huyện').int('Mã quận / huyện không hợp lệ').min(1, 'Vui lòng chọn quận / huyện'),
+	districtId: z
+		.number('Vui lòng chọn quận / huyện')
+		.int('Mã quận / huyện không hợp lệ')
+		.min(1, 'Vui lòng chọn quận / huyện'),
 	districtName: z.string().min(1, 'Vui lòng chọn quận / huyện'),
 	wardCode: z.string().min(1, 'Vui lòng chọn phường / xã'),
 	wardName: z.string().min(1, 'Vui lòng chọn phường / xã'),

@@ -350,7 +350,9 @@
 							>{formatVND(dashboardData.overview.platformFee)}</strong
 						>
 					</div>
-					<a class="btn btn-sm mt-2 btn-success" href={resolve('/(admin)/admin/platform-wallet')}><span class="icon-[mingcute--wallet-4-fill] text-lg"></span>Xem chi tiết ví nền tảng</a>
+					<a class="btn mt-2 btn-sm btn-success" href={resolve('/(admin)/admin/platform-wallet')}
+						><span class="icon-[mingcute--wallet-4-fill] text-lg"></span>Xem chi tiết ví nền tảng</a
+					>
 				</AnimatedDiv>
 				<AnimatedDiv
 					animateVars={{ translateY: 24, delay: 0.4 }}

@@ -40,51 +40,57 @@
 		{#await data.platformWalletPromise then balance}
 			{#if balance}
 				<div class="flex flex-col rounded-box border bg-base-100 p-4">
-				<div class="grid grid-cols-1 gap-4 md:grid-cols-4">
-					<div>
-						<h2 class="text-header3 mb-2 flex items-center gap-2 text-success-content/70">
-							<span class="icon-[mingcute--wallet-3-fill] text-lg"></span>Số dư khả dụng
-						</h2>
-						<p class=" font-serif font-bold text-success-content">
-							<strong class="font-serif text-2xl font-bold">{formatVND(balance.balance)}</strong>
-						</p>
+					<div class="grid grid-cols-1 gap-4 md:grid-cols-4">
+						<div>
+							<h2 class="text-header3 mb-2 flex items-center gap-2 text-success-content/70">
+								<span class="icon-[mingcute--wallet-3-fill] text-lg"></span>Số dư khả dụng
+							</h2>
+							<p class=" font-serif font-bold text-success-content">
+								<strong class="font-serif text-2xl font-bold">{formatVND(balance.balance)}</strong>
+							</p>
+						</div>
+
+						<div>
+							<h2 class="text-header3 mb-2 flex items-center gap-2 text-warning-content/70">
+								<span class="icon-[mingcute--receive-money-fill] text-lg"></span>Tiền hoa hồng đã
+								nhận
+							</h2>
+							<p class="font-serif text-2xl font-bold text-warning-content">
+								{formatVND(balance.totalCommissionEarned)}
+							</p>
+						</div>
+
+						<div>
+							<h2 class="text-header3 mb-2 flex items-center gap-2 text-error-content/70">
+								<span class="icon-[mingcute--refresh-anticlockwise-1-fill] text-lg"></span>Đã hoàn
+								lại
+							</h2>
+							<p class="font-serif text-2xl font-bold text-error-content">
+								{formatVND(balance.totalCommissionRefunded)}
+							</p>
+						</div>
+
+						<div>
+							<h2 class="text-header3 mb-2 flex items-center gap-2 text-success-content/70">
+								<span class="icon-[mingcute--bank-line] text-lg"></span>Tổng số tiền đã rút
+							</h2>
+							<p class="font-serif text-2xl font-bold text-success-content">
+								{formatVND(balance.totalPayout)}
+							</p>
+						</div>
 					</div>
 
-					<div>
-						<h2 class="text-header3 mb-2 flex items-center gap-2 text-warning-content/70">
-							<span class="icon-[mingcute--receive-money-fill] text-lg"></span>Tiền hoa hồng đã nhận
-						</h2>
-						<p class="font-serif text-2xl font-bold text-warning-content">
-							{formatVND(balance.totalCommissionEarned)}
-						</p>
-					</div>
-
-					<div>
-						<h2 class="text-header3 mb-2 flex items-center gap-2 text-error-content/70">
-							<span class="icon-[mingcute--refresh-anticlockwise-1-fill] text-lg"></span>Đã hoàn lại
-						</h2>
-						<p class="font-serif text-2xl font-bold text-error-content">
-							{formatVND(balance.totalCommissionRefunded)}
-						</p>
-					</div>
-
-					<div>
-						<h2 class="text-header3 mb-2 flex items-center gap-2 text-success-content/70">
-							<span class="icon-[mingcute--bank-line] text-lg"></span>Tổng số tiền đã rút
-						</h2>
-						<p class="font-serif text-2xl font-bold text-success-content">
-							{formatVND(balance.totalPayout)}
-						</p>
-					</div>
-				</div>
-
-				<div class="divider my-2"></div>
+					<div class="divider my-2"></div>
 					<div class="mb-2 grid grid-cols-2 gap-2 text-xs">
 						<div class="text-base-content/60">
-							Ngày tạo: <strong class="text-base-content">{formatDateTime(balance.createdAt)}</strong>
+							Ngày tạo: <strong class="text-base-content"
+								>{formatDateTime(balance.createdAt)}</strong
+							>
 						</div>
 						<div class="text-base-content/60">
-							Cập nhật lần cuối: <strong class="text-base-content">{formatDateTime(balance.lastUpdated)}</strong>
+							Cập nhật lần cuối: <strong class="text-base-content"
+								>{formatDateTime(balance.lastUpdated)}</strong
+							>
 						</div>
 					</div>
 

@@ -96,22 +96,22 @@
 								<NumberFlow value={item.lineTotal} format={formatVND} />
 							</p>
 
-						<FormConfirmPopoverButton
-							action="?/deleteItem"
-							formData={{ productId: item.productId }}
-							popoverId="delete-item-{item.productId}"
-							openButtonProps={{ class: 'btn mt-2 btn-square btn-sm btn-error' }}
-							dropdownClass="dropdown-bottom dropdown-end"
-							dropdownContent={{
-								label: 'Xóa sản phẩm này?',
-								description: 'Sản phẩm này sẽ bị xóa khỏi giỏ hàng của bạn',
-								confirmBtnClass: 'btn-error',
-								confirmBtnIcon: 'icon-[fa7-solid--check-circle]',
-								confirmBtnText: 'Xóa'
-							}}
-						>
-							<span class="icon-[fa7-solid--trash-alt]"></span>
-						</FormConfirmPopoverButton>
+							<FormConfirmPopoverButton
+								action="?/deleteItem"
+								formData={{ productId: item.productId }}
+								popoverId="delete-item-{item.productId}"
+								openButtonProps={{ class: 'btn mt-2 btn-square btn-sm btn-error' }}
+								dropdownClass="dropdown-bottom dropdown-end"
+								dropdownContent={{
+									label: 'Xóa sản phẩm này?',
+									description: 'Sản phẩm này sẽ bị xóa khỏi giỏ hàng của bạn',
+									confirmBtnClass: 'btn-error',
+									confirmBtnIcon: 'icon-[fa7-solid--check-circle]',
+									confirmBtnText: 'Xóa'
+								}}
+							>
+								<span class="icon-[fa7-solid--trash-alt]"></span>
+							</FormConfirmPopoverButton>
 						</div>
 					</div>
 				{/each}

@@ -11,18 +11,17 @@ export type PlatformWallet = {
 };
 
 export type PlatformWalletTransaction = {
-  id: string;
-  amount: number;
-  balanceBefore: number;
-  balanceAfter: number;
-  createdAt: string;
-  description: string;
-  performedBy: string | null;
-  referenceId: string;
-  referenceType: PlatformWalletTransactionType;
-  type: PlatformWalletTransactionType;
+	id: string;
+	amount: number;
+	balanceBefore: number;
+	balanceAfter: number;
+	createdAt: string;
+	description: string;
+	performedBy: string | null;
+	referenceId: string;
+	referenceType: PlatformWalletTransactionType;
+	type: PlatformWalletTransactionType;
 };
-
 
 export type PlatformWalletTransactions = {
 	totalItems: number;
@@ -37,4 +36,5 @@ export const platformWalletTransactionTypeOptions = [
 	{ title: 'Tiền hoàn trả', value: 'CommissionRefund' }
 ] as const satisfies readonly FormSelectOption[];
 
-export type PlatformWalletTransactionType = (typeof platformWalletTransactionTypeOptions)[number]['value'];
+export type PlatformWalletTransactionType =
+	(typeof platformWalletTransactionTypeOptions)[number]['value'];

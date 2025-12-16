@@ -3,10 +3,11 @@
 	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 	import TableFilter from '$lib/components/ui/TableFilter.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
-	import { platformWalletTransactionTypeOptions, type PlatformWalletTransaction } from '$lib/types/PlatformWallet';
 	import {
-		walletTransactionBalanceTypeOptions
-	} from '$lib/types/Wallet';
+		platformWalletTransactionTypeOptions,
+		type PlatformWalletTransaction
+	} from '$lib/types/PlatformWallet';
+	import { walletTransactionBalanceTypeOptions } from '$lib/types/Wallet';
 	import {
 		getPlatformWalletTransactionTypeClass,
 		getWalletTransactionBalanceTypeClass
@@ -102,7 +103,12 @@
 								<td class="font-semibold whitespace-nowrap">{formatDateTime(row.createdAt)}</td>
 							{:else if column.id === 'type'}
 								<td>
-									<div class="badge badge-sm {getPlatformWalletTransactionTypeClass(row.type, 'badge')}">
+									<div
+										class="badge badge-sm {getPlatformWalletTransactionTypeClass(
+											row.type,
+											'badge'
+										)}"
+									>
 										{getTitleFromOptionList(row.type, platformWalletTransactionTypeOptions)}
 									</div>
 								</td>

@@ -29,7 +29,7 @@
 >
 	<div class="flex items-center justify-between gap-6 max-md:flex-col max-md:gap-3">
 		<!-- Avatar and Name -->
-		<div class="flex items-center gap-4 min-w-fit">
+		<div class="flex min-w-fit items-center gap-4">
 			<UserAvatar
 				avatar_url={userProfile.imageUrl}
 				letter={userProfile.userName.charAt(0).toUpperCase()}
@@ -42,31 +42,34 @@
 		</div>
 
 		<!-- Info Grid -->
-		<div class="grid grid-cols-2 gap-3 gap-y-2 flex-1 max-md:w-full max-md:grid-cols-2 max-md:ml-0 ml-16">
+		<div
+			class="ml-16 grid flex-1 grid-cols-2 gap-3 gap-y-2 max-md:ml-0 max-md:w-full max-md:grid-cols-2"
+		>
 			<div class="min-w-0">
-				<p class="text-sm font-semibold uppercase text-base-content/50 tracking-wider">Email</p>
-				<p class="text-sm font-medium text-base-content truncate">{userProfile.email ?? '–'}</p>
+				<p class="text-sm font-semibold tracking-wider text-base-content/50 uppercase">Email</p>
+				<p class="truncate text-sm font-medium text-base-content">{userProfile.email ?? '–'}</p>
 			</div>
 			<div class="min-w-0">
-				<p class="text-sm font-semibold uppercase text-base-content/50 tracking-wider">Số điện thoại</p>
-				<p class="text-sm font-medium text-base-content truncate">{userProfile.phoneNumber ?? '–'}</p>
+				<p class="text-sm font-semibold tracking-wider text-base-content/50 uppercase">
+					Số điện thoại
+				</p>
+				<p class="truncate text-sm font-medium text-base-content">
+					{userProfile.phoneNumber ?? '–'}
+				</p>
 			</div>
 			<div class="min-w-0">
-				<p class="text-sm font-semibold uppercase text-base-content/50 tracking-wider">Ngày sinh</p>
+				<p class="text-sm font-semibold tracking-wider text-base-content/50 uppercase">Ngày sinh</p>
 				<p class="text-sm font-medium text-base-content">{formatDate(userProfile.dateOfBirth)}</p>
 			</div>
 			<div class="min-w-0">
-				<p class="text-sm font-semibold uppercase text-base-content/50 tracking-wider">Địa chỉ</p>
-				<p class="text-sm font-medium text-base-content truncate">{userProfile.address ?? '–'}</p>
+				<p class="text-sm font-semibold tracking-wider text-base-content/50 uppercase">Địa chỉ</p>
+				<p class="truncate text-sm font-medium text-base-content">{userProfile.address ?? '–'}</p>
 			</div>
 		</div>
 
 		<!-- Edit Button -->
 		<div class="shrink-0 max-md:w-full">
-			<a
-				href="/profile/edit"
-				class="btn btn-info btn-sm gap-1.5 w-full max-md:w-full"
-			>
+			<a href="/profile/edit" class="btn w-full gap-1.5 btn-sm btn-info max-md:w-full">
 				<span class="icon-[fa7-solid--user-edit] text-sm"></span>
 				<span class="">Chỉnh sửa</span>
 			</a>

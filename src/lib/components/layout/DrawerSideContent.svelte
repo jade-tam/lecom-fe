@@ -80,16 +80,11 @@
 		{/each}
 	</div>
 
-	<div class="flex items-center gap-2 mb-1">
-		<a
-			class="btn btn-sm grow"
-			aria-label="Chuyển sang giao diện người dùng"
-			href="/"
-		>
-		<span class='icon-[mingcute--home-3-line]'></span>
-		Trở về trang chủ
-	</a>
-
+	<div class="mb-1 flex items-center gap-2">
+		<a class="btn grow btn-sm" aria-label="Chuyển sang giao diện người dùng" href="/">
+			<span class="icon-[mingcute--home-3-line]"></span>
+			Trở về trang chủ
+		</a>
 	</div>
 
 	<div class="flex items-center gap-1">

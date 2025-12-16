@@ -70,7 +70,6 @@ export function getApprovalStatusClass(status: ApprovalStatus, type: 'btn' | 'ba
 	}
 }
 
-
 export function getCourseActiveStatusBtnClass(active: CourseActiveStatus) {
 	return active === 1 ? 'btn-success' : 'btn-error';
 }

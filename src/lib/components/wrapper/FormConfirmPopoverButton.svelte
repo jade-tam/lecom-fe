@@ -72,7 +72,7 @@
 		style="position-anchor:--{popoverId}"
 	>
 		<div class="m-1 flex w-80 flex-col gap-2 rounded-field border bg-base-100 p-4 shadow">
-			<p class="font-bold text-sm">{dropdownContent.label}</p>
+			<p class="text-sm font-bold">{dropdownContent.label}</p>
 			<p class="text-xs text-base-content/60">{dropdownContent.description}</p>
 			<div class="mt-1 flex justify-end gap-2">
 				<button
