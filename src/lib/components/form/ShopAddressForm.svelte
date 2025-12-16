@@ -43,7 +43,7 @@
 	use:enhance
 >
 	<div class="grid gap-4 md:grid-cols-2">
-		<div class="rounded-box border bg-base-100 p-4">
+		<div class="rounded-box border bg-base-300/30 p-4">
 			<h4 class="text-header4 mb-2 font-semibold">Khu vực</h4>
 			<AddressSelectors {form} {errors} />
 			<FormTextArea
@@ -81,7 +81,7 @@
 			</div>
 		</div>
 
-		<div class="rounded-box border bg-base-100 p-4">
+		<div class="rounded-box border bg-base-300/30 p-4">
 			<h4 class="text-header4 mb-2 font-semibold">Thông tin liên hệ</h4>
 			<FormInput
 				name="contactName"

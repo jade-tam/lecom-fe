@@ -1,5 +1,6 @@
 import { getShopAddress } from '$lib/remotes/shopAddress.remote.js';
 import { shopAddressSchema } from '$lib/schemas/shopAddressSchema';
+import { shopConnectGHNSchema } from '$lib/schemas/shopConnectGHNSchema.js';
 import { fetchAuthorizedApi, getToastData } from '$lib/utils/externalApi';
 import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
@@ -9,8 +10,11 @@ export const load = async () => {
 
 	const shopAddressForm = await superValidate(shopAddress, zod4(shopAddressSchema));
 
+	const shopConnectGHNForm = await superValidate(zod4(shopConnectGHNSchema));
+
 	return {
-		shopAddressForm
+		shopAddressForm,
+		shopConnectGHNForm
 	};
 };
 
@@ -63,6 +67,34 @@ export const actions = {
 			responseBody,
 			'Địa chỉ cửa hàng đã được cập nhật thành công.',
 			'Không thể cập nhật địa chỉ cửa hàng.'
+		);
+
+		if (response.ok) {
+			return message(form, { toastData });
+		} else {
+			return message(form, { toastData }, { status: 400 });
+		}
+	},
+	connectGHN: async ({ request, cookies }) => {
+		const form = await superValidate(request, zod4(shopConnectGHNSchema));
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		const formData = form.data;
+
+		const { response, responseBody } = await fetchAuthorizedApi(
+			cookies,
+			`/api/shop/address/me/ghn/connect`,
+			'POST',
+			formData
+		);
+
+		const toastData = getToastData(
+			responseBody,
+			'Liên kết với GHN thành công.',
+			'Không thể liên kết với GHN.'
 		);
 
 		if (response.ok) {

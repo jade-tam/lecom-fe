@@ -1,6 +1,7 @@
 <script>
 	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import ShopAddressForm from '$lib/components/form/ShopAddressForm.svelte';
+	import ShopConnectGHNForm from '$lib/components/form/ShopConnectGHNForm.svelte';
 	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 	import { getShopAddress } from '$lib/remotes/shopAddress.remote';
 
@@ -42,14 +43,33 @@
 {/await}
 
 <AnimatedDiv animateVars={{ translateY: 16 }} class="mt-2 rounded-box border bg-base-100 p-4">
+	<div class="flex flex-col gap-2">
+		<div>
+			<h2 class="text-header4 font-bold">Kết nối với hệ thống vận chuyển Giao Hàng Nhanh</h2>
+			<p class="text-sm text-base-content/60">
+				Thiết lập kết nối với đơn vị vận chuyển Giao Hàng Nhanh để cửa hàng có thể bắt đầu hoạt
+				động.
+				<a
+					href="https://api.ghn.vn/home/docs/detail"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="link link-primary">(Xem hướng dẫn lấy API Token)</a
+				>
+			</p>
+		</div>
+		<ShopConnectGHNForm dataForm={data.shopConnectGHNForm} />
+	</div>
+</AnimatedDiv>
+
+<AnimatedDiv animateVars={{ translateY: 16 }} class="mt-2 rounded-box border bg-base-100 p-4">
 	{#await getShopAddress()}
 		<LoadingPlaceholder text="Đang tải thông tin địa chỉ cửa hàng" />
 	{:then shopAddress}
 		<div class="flex flex-col gap-2">
 			<div>
 				<h2 class="text-header4 font-bold">Địa chỉ cửa hàng</h2>
-				<p class="text-sm text-base-content/60">
-					Cần thiết lập địa chỉ chính xác để bên giao hàng có thể tới lấy hàng.
+				<p class="text-sm text-error-content/60">
+					Cần thiết lập địa chỉ thông tin liên hệ chính xác để làm gì đây?
 				</p>
 			</div>
 			<ShopAddressForm mode={shopAddress ? 'update' : 'create'} dataForm={data.shopAddressForm} />
