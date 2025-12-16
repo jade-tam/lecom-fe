@@ -1,5 +1,5 @@
-import { z } from 'zod';
 import { vnPrefixes } from '$lib/consts/vnPhonePrefixes';
+import { z } from 'zod';
 
 // Schema
 export const updateShopSchema = z.object({
@@ -32,29 +32,40 @@ export const updateShopSchema = z.object({
 	shopBanner: z.url('Vui lòng tải lên ảnh banner cửa hàng'),
 
 	shopFacebook: z
-		.url('Liên kết Facebook không hợp lệ')
+		.string()
+		.trim()
 		.refine(
 			(value) =>
-				value.startsWith('https://www.facebook.com/') || value.startsWith('https://facebook.com/'),
+				value === '' ||
+				value.startsWith('https://www.facebook.com/') ||
+				value.startsWith('https://facebook.com/'),
 			'Liên kết Facebook phải bắt đầu bằng https://facebook.com/'
-		),
+		)
+		.nullable(),
 
 	shopTiktok: z
-		.url('Liên kết TikTok không hợp lệ')
+		.string()
+		.trim()
 		.refine(
 			(value) =>
-				value.startsWith('https://www.tiktok.com/@') || value.startsWith('https://tiktok.com/@'),
+				value === '' ||
+				value.startsWith('https://www.tiktok.com/@') ||
+				value.startsWith('https://tiktok.com/@'),
 			'Liên kết TikTok phải bắt đầu bằng https://tiktok.com/@'
-		),
+		)
+		.nullable(),
 
 	shopInstagram: z
-		.url('Liên kết Instagram không hợp lệ')
+		.string()
+		.trim()
 		.refine(
 			(value) =>
+				value === '' ||
 				value.startsWith('https://www.instagram.com/') ||
 				value.startsWith('https://instagram.com/'),
 			'Liên kết Instagram phải bắt đầu bằng https://instagram.com/'
 		)
+		.nullable()
 });
 
 export type UpdateShopSchema = z.infer<typeof updateShopSchema>;
