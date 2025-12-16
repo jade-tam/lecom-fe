@@ -1,4 +1,5 @@
 <script>
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import CourseCard from '$lib/components/ui/card/CourseCard.svelte';
 	import ProductCard from '$lib/components/ui/card/ProductCard.svelte';
 
@@ -9,25 +10,31 @@
 
 <section>
 	<div class="my-48 grid grid-cols-2 items-center gap-8 max-md:my-12 max-md:grid-cols-1">
-		<div>
+		<AnimatedDiv animateVars={{ translateY: 20, opacity: 0, duration: 0.6 }}>
 			<h1>Học tập dễ dàng. Mua sắm thông minh.</h1>
 			<p class="mt-2">
 				Tiếp cận các khóa học trực tuyến 100% miễn phí để nâng cao kiến thức và kỹ năng — đồng thời
 				khám phá những sản phẩm giúp việc học trở nên dễ dàng, thú vị và hiệu quả hơn.
 			</p>
-		</div>
+		</AnimatedDiv>
 
-		<div class="flex justify-end max-md:justify-center">
+		<AnimatedDiv
+			animateVars={{ translateX: 20, opacity: 0, duration: 0.6, delay: 0.1 }}
+			class="flex justify-end max-md:justify-center"
+		>
 			<div class="max-w-[400px]">
 				<img src="/icons/learning.svg" alt="lecom hero" />
 			</div>
-		</div>
+		</AnimatedDiv>
 	</div>
 </section>
 
 <!-- ========================================================================================== -->
 
-<section class="mt-64 flex flex-col items-center max-md:mt-32">
+<AnimatedDiv
+	animateVars={{ translateY: 20, opacity: 0, duration: 0.6, delay: 0.3 }}
+	class="mt-64 flex flex-col items-center max-md:mt-32"
+>
 	<h2 class="text-header1">Khóa học miễn phí cho mọi người</h2>
 	<div class="my-16 grid grid-cols-2 items-center gap-8 max-md:mb-8 max-md:grid-cols-1">
 		<div class="flex justify-center max-md:justify-center">
@@ -81,7 +88,7 @@
 	<a href="/learning" class="btn mt-8 btn-primary">
 		Xem tất cả khóa học <span class="icon-[fa7-solid--arrow-right]"></span>
 	</a>
-</section>
+</AnimatedDiv>
 
 <!-- ========================================================================================== -->
 

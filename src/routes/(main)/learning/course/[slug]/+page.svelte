@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
 	import CourseCard from '$lib/components/ui/card/CourseCard.svelte';
 	import ShopCard from '$lib/components/ui/card/ShopCard.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
@@ -26,7 +27,10 @@
 
 <section class="flex min-h-screen flex-col gap-4">
 	{#if course}
-		<div class="relative mt-4 w-full overflow-hidden rounded-box border bg-base-100">
+		<AnimatedDiv
+			animateVars={{ translateY: -20, opacity: 0 }}
+			class="relative mt-4 w-full overflow-hidden rounded-box border bg-base-100"
+		>
 			<Image
 				src={course.courseThumbnail}
 				alt={course.title}
@@ -35,26 +39,25 @@
 			/>
 
 			<div
-				class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 to-black/20"
+				class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 to-black/20"
 			></div>
 
-			<div class="absolute bottom-4 left-6 flex gap-2">
-				<h1 class="text-header line-clamp-1 text-base-100 text-shadow-md">{course.title}</h1>
+			<div class="absolute bottom-4 flex gap-2 px-4">
+				<h1 class="text-header text-shadow-s8">{course.title}</h1>
 			</div>
-		</div>
+		</AnimatedDiv>
 
 		<!-- =================================================================================== -->
 		<div class="grid w-full grid-cols-2 justify-stretch gap-4 max-md:grid-cols-1 max-md:gap-2">
-			<div class="flex flex-col gap-2">
-				<h2>{course.title}</h2>
-				<p class="flex items-center gap-2 text-sm text-secondary-content">
-					<span class="icon-[fa7-solid--swatchbook] shrink-0"></span>{course.categoryName}
+			<AnimatedDiv animateVars={{ translateX: -20, opacity: 0 }} class="flex flex-col gap-2">
+				<p class="mb-1 flex items-center gap-2 font-bold text-secondary-content">
+					<span class="icon-[mingcute--book-5-line] shrink-0 text-xl"></span>Danh mục: {course.categoryName}
 				</p>
 				{#if userProfile}
 					{#if course.isEnrolled}
 						<div class="badge badge-success">Đã tham gia khoá học</div>
 					{/if}
-					<p class="line-clamp-5">{course.summary}</p>
+					<p class="line-clamp-5 text-sm">{course.summary}</p>
 					<div class="mt-2 flex gap-2">
 						{#if course.isEnrolled}
 							<a class="btn grow btn-primary" href="/learn/{course.id}">
@@ -80,8 +83,8 @@
 						học ngay ngay
 					</a>
 				{/if}
-			</div>
-			<div class="flex flex-col gap-2">
+			</AnimatedDiv>
+			<AnimatedDiv animateVars={{ translateX: 20, opacity: 0 }} class="flex flex-col gap-2">
 				<ShopCard
 					shop={{
 						id: course.shop.id,
@@ -90,17 +93,17 @@
 						name: course.shop.name
 					}}
 				/>
-			</div>
+			</AnimatedDiv>
 		</div>
 
 		<div class="divider"></div>
 
 		<!-- =================================================================================== -->
-		<h2>Nội dung khóa học</h2>
-		<div class="w-full overflow-hidden rounded-box border bg-base-100 p-0">
+		<AnimatedDiv animateVars={{ translateY: 20, opacity: 0 }} class="w-full overflow-hidden rounded-box border bg-base-100 p-4">
+			<h2 class="mb-4">Nội dung khóa học</h2>
 			{#if course.sections}
 				{#each course.sections as section, i (section.id)}
-					<div class="bg-base-100 p-4">
+					<div class="bg-base-100">
 						<div class="flex items-center justify-between">
 							<p class="text-lg font-black">{toRomanNumeral(i + 1)}. {section.title}</p>
 						</div>
@@ -131,7 +134,7 @@
 			{:else}
 				<EmptyPlaceholder text="Khóa học này chưa có nội dung" />
 			{/if}
-		</div>
+		</AnimatedDiv>
 
 		<!-- =================================================================================== -->
 		<div class="col-span-2 rounded-box border bg-base-100 p-6 max-md:p-4">
