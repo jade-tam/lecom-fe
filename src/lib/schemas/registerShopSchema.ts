@@ -29,8 +29,26 @@ export const registerShopSchema = z.object({
 
 	shopAddress: z
 		.string()
-		.min(5, 'Địa chỉ cửa hàng là bắt buộc')
-		.max(200, 'Địa chỉ cửa hàng tối đa 200 ký tự'),
+		.min(5, 'Địa chỉ cụ thể là bắt buộc')
+		.max(100, 'Địa chỉ cụ thể tối đa 100 ký tự'),
+
+	provinceId: z
+		.number('Vui lòng chọn tỉnh / thành phố')
+		.int('Vui lòng chọn tỉnh / thành phố')
+		.min(1, 'Vui lòng chọn tỉnh / thành phố'),
+
+	provinceName: z.string().min(1, 'Vui lòng chọn tỉnh / thành phố'),
+
+	districtId: z
+		.number('Vui lòng chọn quận / huyện')
+		.int('Vui lòng chọn quận / huyện')
+		.min(1, 'Vui lòng chọn quận / huyện'),
+
+	districtName: z.string().min(1, 'Vui lòng chọn quận / huyện'),
+
+	wardCode: z.string().min(1, 'Vui lòng chọn phường / xã'),
+
+	wardName: z.string().min(1, 'Vui lòng chọn phường / xã'),
 
 	businessType: BusinessTypeEnum,
 
@@ -40,32 +58,31 @@ export const registerShopSchema = z.object({
 
 	shopBanner: z.url('Vui lòng tải lên ảnh banner cửa hàng'),
 
-	// shopFacebook: z
-	// 	.url('Facebook link is not a valid URL')
-	// 	.refine(
-	// 		(value) =>
-	// 			value.startsWith('https://www.facebook.com/') || value.startsWith('https://facebook.com/'),
-	// 		'Facebook link must start with https://facebook.com/'
-	// 	),
+	shopFacebook: z
+		.string()
+		.trim()
+		.optional()
+		.refine((value) => !value || /^https:\/\/(www\.)?facebook\.com\//.test(value), {
+			message: 'Đường dẫn Facebook không hợp lệ'
+		}),
 
-	// shopTiktok: z
-	// 	.url('TikTok link is not a valid URL')
-	// 	.refine(
-	// 		(value) =>
-	// 			value.startsWith('https://www.tiktok.com/@') || value.startsWith('https://tiktok.com/@'),
-	// 		'TikTok link must start with https://tiktok.com/@'
-	// 	),
+	shopTiktok: z
+		.string()
+		.trim()
+		.optional()
+		.refine((value) => !value || /^https:\/\/(www\.)?tiktok\.com\/@/.test(value), {
+			message: 'Đường dẫn TikTok không hợp lệ'
+		}),
 
-	// shopInstagram: z
-	// 	.url('Instagram link is not a valid URL')
-	// 	.refine(
-	// 		(value) =>
-	// 			value.startsWith('https://www.instagram.com/') ||
-	// 			value.startsWith('https://instagram.com/'),
-	// 		'Instagram link must start with https://instagram.com/'
-	// 	),
+	shopInstagram: z
+		.string()
+		.trim()
+		.optional()
+		.refine((value) => !value || /^https:\/\/(www\.)?instagram\.com\//.test(value), {
+			message: 'Đường dẫn Instagram không hợp lệ'
+		}),
 
-	categoryId: z.uuid('Vui lòng chọn một danh mục'),
+	categoryId: z.string().min(1, 'Vui lòng chọn một danh mục'),
 
 	acceptedTerms: z
 		.boolean()

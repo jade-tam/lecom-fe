@@ -31,29 +31,35 @@ export type Shop = {
 	shopBanner: string;
 	description: string;
 	phoneNumber: string;
+	provinceId: number;
+	provinceName: string;
+	districtId: number;
+	districtName: string;
+	wardCode: string;
+	wardName: string;
 	address: string;
 	businessType: BusinessType;
-	ownershipDocumentUrl: string;
+	ownershipDocumentUrl: string | null;
 	categoryId: string;
 	categoryName: string;
 	status: ShopStatus;
 	rejectedReason: string | null;
 	ownerFullName: string;
-	ownerDateOfBirth: Date;
+	ownerDateOfBirth: string;
 	ownerPersonalIdNumber: string;
 	ownerPersonalIdFrontUrl: string;
 	ownerPersonalIdBackUrl: string;
 	sellerId: string;
-	createdAt: Date;
-	approvedAt: Date;
-	shopFacebook: string;
-	shopInstagram: string;
-	shopTiktok: string;
+	createdAt: string;
+	approvedAt: string | null;
+	shopFacebook: string | null;
+	shopInstagram: string | null;
+	shopTiktok: string | null;
 };
 
 export type SellerRegisterStatus = {
 	status: ShopStatus;
-	reason: string;
+	rejectedReason: string;
 };
 
 export type ShopAddress = {

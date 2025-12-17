@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import AddressSelectors from '$lib/components/ui/data-input/AddressSelectors.svelte';
 	import FormInput from '$lib/components/ui/FormInput.svelte';
 	import FormMediaInput from '$lib/components/ui/FormMediaInput.svelte';
 	import FormSelect from '$lib/components/ui/FormSelect.svelte';
@@ -57,7 +58,7 @@
 				>Đơn đăng ký của bạn đã bị quản trị viên từ chối. Vui lòng kiểm tra lại nguyên nhân và thử
 				đăng ký lại.</span
 			>
-			<span class="font-bold">Lý do: {data.registerStatus?.reason}</span>
+			<span class="font-bold">Lý do: {data.registerStatus?.rejectedReason}</span>
 		</div>
 	</div>
 {/if}
@@ -82,7 +83,7 @@
 			name="ownerDateOfBirth"
 			label="Ngày sinh"
 			class="max-w-[400px]"
-			placeholder="Chọn sinh của bạn..."
+			placeholder="Chọn ngày sinh của bạn..."
 			icon="icon-[fa7-solid--calendar-alt] text-secondary-content text-sm"
 			help="Phải trùng với ngày sinh trên giấy tờ tùy thân"
 			type="text"
@@ -156,7 +157,7 @@
 				<FormMediaInput
 					aspectRatio="1:1"
 					name="shopAvatar"
-					label="Ảnh đại diện cửa hàng"
+					label="Ảnh đại diện"
 					class="h-39 w-38"
 					icon="icon-[fa7-solid--image] text-secondary-content text-sm"
 					superForm={form}
@@ -184,11 +185,19 @@
 			{errors}
 		/>
 
+		<div class="divider"></div>
+		<h3>Địa chỉ cửa hàng</h3>
+
+		<AddressSelectors
+			{form}
+			{errors}
+		/>
+
 		<FormInput
 			name="shopAddress"
-			label="Địa chỉ cửa hàng"
+			label="Địa chỉ cụ thể"
 			icon="icon-[fa7-solid--location-dot] text-secondary-content text-sm"
-			placeholder="Địa chỉ cửa hàng..."
+			placeholder="Địa chỉ cụ thể cửa hàng..."
 			type="text"
 			superForm={form}
 			{errors}

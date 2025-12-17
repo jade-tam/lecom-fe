@@ -4,7 +4,7 @@
 	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
 	import FormConfirmWithReasonPopoverButton from '$lib/components/wrapper/FormRejectWithReasonPopoverButton.svelte';
 	import { getStatusBadgeClass } from '$lib/utils/classComposer';
-	import { formatDate } from '$lib/utils/converters.js';
+	import { formatDate, formatDateTime } from '$lib/utils/converters.js';
 	import showToast from '$lib/utils/showToast.js';
 
 	const { data, form } = $props();
@@ -106,7 +106,20 @@
 	</div>
 
 	<div class="mt-2 flex flex-col gap-1 overflow-hidden">
-		<h3 class="text-header2">{shop.name}</h3>
+		<div class="flex justify-between gap-4">
+			<h3 class="text-header2">{shop.name}</h3>
+
+			<div class="mt-1 flex flex-col flex-wrap items-end gap-2 text-xs text-base-content">
+				<span>Mã cửa hàng: <strong>{shop.id}</strong></span>
+
+				<span>Thời gian tạo: {formatDateTime(shop.createdAt)}</span>
+				{#if shop.approvedAt}
+					<span class="text-success-content"
+						>Thời gian duyệt: {formatDateTime(shop.approvedAt)}</span
+					>
+				{/if}
+			</div>
+		</div>
 		<p class="text-secondary-content-content font-bold italic">
 			Danh mục cửa hàng: {shop.categoryName}
 		</p>
@@ -118,9 +131,9 @@
 						? 'Đã chấp thuận'
 						: 'Đã từ chối'}
 			</div>
-			{#if shop.status === 'Approved'}
+			{#if shop.status === 'Approved' && shop.approvedAt}
 				<p class="text-xs text-success-content italic">
-					Hoạt động từ {formatDate(shop.approvedAt)}
+					Hoạt động từ {formatDateTime(shop.approvedAt)}
 				</p>
 			{:else if shop.status === 'Rejected'}
 				<p class="text-sm font-bold text-error-content italic">Lý do: {shop.rejectedReason}</p>
@@ -134,14 +147,6 @@
 		<label class="input w-full">
 			<span class={`icon-[fa7-solid--phone-square] text-secondary-content`}></span>
 			<input value={shop.phoneNumber} readonly />
-		</label>
-	</fieldset>
-
-	<fieldset class="fieldset">
-		<legend class="fieldset-legend">Địa chỉ cửa hàng</legend>
-		<label class="input w-full">
-			<span class={`icon-[fa7-solid--location-dot] text-secondary-content`}></span>
-			<input value={shop.address} readonly />
 		</label>
 	</fieldset>
 
@@ -159,6 +164,72 @@
 			<label class="input w-full">
 				<span class={`icon-[fa7-solid--swatchbook] text-secondary-content`}></span>
 				<input value={shop.categoryName} readonly />
+			</label>
+		</fieldset>
+	</div>
+
+	<div class="divider"></div>
+	<h3>Địa chỉ cửa hàng</h3>
+
+	<div class="grid grid-cols-3 gap-2 max-md:grid-cols-1">
+		<fieldset class="fieldset">
+			<legend class="fieldset-legend">Tỉnh / Thành phố</legend>
+			<label class="input w-full">
+				<span class={`icon-[fa7-solid--location-dot] text-secondary-content`}></span>
+				<input value={shop.provinceName} readonly />
+			</label>
+		</fieldset>
+
+		<fieldset class="fieldset">
+			<legend class="fieldset-legend">Quận / Huyện</legend>
+			<label class="input w-full">
+				<span class={`icon-[fa7-solid--location-dot] text-secondary-content`}></span>
+				<input value={shop.districtName} readonly />
+			</label>
+		</fieldset>
+
+		<fieldset class="fieldset">
+			<legend class="fieldset-legend">Phường / Xã</legend>
+			<label class="input w-full">
+				<span class={`icon-[fa7-solid--location-dot] text-secondary-content`}></span>
+				<input value={shop.wardName} readonly />
+			</label>
+		</fieldset>
+	</div>
+
+	<fieldset class="fieldset">
+		<legend class="fieldset-legend">Địa chỉ chi tiết</legend>
+		<label class="input w-full">
+			<span class={`icon-[fa7-solid--location-dot] text-secondary-content`}></span>
+			<input value={shop.address} readonly />
+		</label>
+	</fieldset>
+
+	<div class="divider"></div>
+	<h3>Liên kết</h3>
+
+	<div class="mt-2 grid grid-cols-3 gap-4 max-md:grid-cols-1">
+		<fieldset class="fieldset">
+			<legend class="fieldset-legend">Facebook</legend>
+			<label class="input w-full">
+				<span class={`text-secondary-content icon-[fa7-brands--facebook]`}></span>
+				<input value={shop.shopFacebook ?? 'Chưa có'} readonly />
+			</label>
+		</fieldset>
+
+		<fieldset class="fieldset">
+			<legend class="fieldset-legend">Instagram</legend>
+			<label class="input w-full">
+				<span class={`text-secondary-content icon-[fa7-brands--instagram]`}></span>
+				<input value={shop.shopInstagram ?? 'Chưa có'} readonly />
+			</label>
+		</fieldset>
+
+		<fieldset class="fieldset">
+			<legend class="fieldset-legend">TikTok</legend>
+			<label class="input w-full">
+				<span class={`text-secondary-content icon-[fa7-brands--tiktok]`}></span>
+				<input value={shop.shopTiktok ?? 'Chưa có'} readonly />
 			</label>
 		</fieldset>
 	</div>

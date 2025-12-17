@@ -40,6 +40,8 @@ export const actions: Actions = {
 			formData
 		);
 
+		console.log('register shop with those data', formData);
+
 		const toastData: ToastData = getToastData(
 			responseBody,
 			'Yêu cầu đăng ký của bạn đã được gửi. Chúng tôi sẽ kiểm tra và phản hồi lại trong vòng 48 giờ.'
