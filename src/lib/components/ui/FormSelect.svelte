@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { HTMLSelectAttributes } from 'svelte/elements';
-	import { fly } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import type { SuperFormData, SuperFormErrors } from 'sveltekit-superforms/client';
 	import ToolTip from './ToolTip.svelte';
 
@@ -36,7 +36,7 @@
 	} = $props();
 </script>
 
-<fieldset in:fly={{ y: 12, duration: 500 }} class={`fieldset ${className}`} class:hidden>
+<fieldset in:fade={{ duration: 500 }} class={`fieldset ${className}`} class:hidden>
 	<legend class="fieldset-legend"
 		>{label}
 		{#if help}
