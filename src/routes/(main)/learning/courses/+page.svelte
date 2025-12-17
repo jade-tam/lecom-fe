@@ -4,20 +4,35 @@
 	import CourseCard from '$lib/components/ui/card/CourseCard.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Pagination from '$lib/components/ui/Pagination.svelte';
-	import RadioInput from '$lib/components/ui/RadioInput.svelte';
+	import RadioInput, { type RadioInputOption } from '$lib/components/ui/RadioInput.svelte';
 	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 
 	const { data } = $props();
 
+	const sortByOptions: RadioInputOption[] = [
+		{
+			label: 'Tên A-Z',
+			value: 'name_asc'
+		},
+		{
+			label: 'Tên Z-A',
+			value: 'name_desc'
+		},
+		{
+			label: 'Cũ nhất',
+			value: 'oldest'
+		}
+	];
+
 	let search: string | null = $state(null);
 	let category: string | null = $state(null);
-	// let sort: string | null = $state(null);
+	let sort: string | null = $state(null);
 	let pageNumber: number | null = $state(null);
 
 	$effect(() => {
 		search = page.url.searchParams.get('search') ?? null;
 		category = page.url.searchParams.get('category') ?? null;
-		// sort = page.url.searchParams.get('sort') ?? null;
+		sort = page.url.searchParams.get('sort') ?? null;
 		pageNumber = Number(page.url.searchParams.get('page')) ?? null;
 	});
 
@@ -25,7 +40,7 @@
 		const searchParams = new URLSearchParams();
 		if (search) searchParams.set('search', search);
 		if (category) searchParams.set('category', category);
-		// if (sort) searchParams.set('sort', sort);
+		if (sort) searchParams.set('sort', sort);
 		if (pageNumber) searchParams.set('page', String(pageNumber));
 
 		goto(`./courses?${searchParams.toString()}`, {
@@ -35,7 +50,7 @@
 
 	function handleClearAllFilter() {
 		category = null;
-		// sort = null;
+		sort = null;
 
 		const searchParams = new URLSearchParams();
 		if (pageNumber) searchParams.set('page', String(pageNumber));
@@ -76,7 +91,7 @@
 							bind:value={category}
 							options={categories.map((cat) => ({
 								label: cat.name,
-								value: cat.id
+								value: cat.slug
 							}))}
 						/>
 					{:else}
@@ -85,6 +100,13 @@
 				{:catch err}
 					<p class="text-error">Lỗi khi tải danh mục khóa học</p>
 				{/await}
+
+				<!-- =================================== -->
+				<div class="divider my-0"></div>
+				<p class="font-serif text-lg font-bold text-base-content">Sắp xếp theo</p>
+				<div class="mt-1 flex flex-col gap-2">
+					<RadioInput bind:value={sort} options={sortByOptions} />
+				</div>
 
 				<!-- =================================== -->
 				<div class="divider mb-1"></div>
