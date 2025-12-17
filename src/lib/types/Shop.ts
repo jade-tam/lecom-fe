@@ -81,3 +81,10 @@ export type AddressDistrict = {
 };
 
 export type AddressWard = { WardCode: string; DistrictID: number; WardName: string };
+
+export type GHNStatus = {
+	isConnected: boolean;
+	ghnShopId: string | null;
+	connectedAt: string | null;
+	message: string;
+};

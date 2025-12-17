@@ -1,5 +1,11 @@
 import { getRequestEvent, query } from '$app/server';
-import type { AddressDistrict, AddressProvince, AddressWard, ShopAddress } from '$lib/types/Shop';
+import type {
+	AddressDistrict,
+	AddressProvince,
+	AddressWard,
+	GHNStatus,
+	ShopAddress
+} from '$lib/types/Shop';
 import { fetchApi, fetchAuthorizedApi, getSafeResult } from '$lib/utils/externalApi';
 import z from 'zod';
 
@@ -43,4 +49,15 @@ export const getAddressWards = query(z.number().optional(), async (districtId) =
 	);
 
 	return wards;
+});
+
+export const getGHNStatus = query(async () => {
+	const { cookies } = getRequestEvent();
+
+	const status = await getSafeResult(
+		fetchAuthorizedApi<GHNStatus>(cookies, `/api/shop/address/me/ghn/status`, 'GET'),
+		null
+	);
+
+	return status;
 });

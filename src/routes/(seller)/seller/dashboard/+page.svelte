@@ -6,7 +6,7 @@
 	import DateRangeSelector from '$lib/components/ui/data-input/DateRangeSelector.svelte';
 	import MonthDateRangeSelector from '$lib/components/ui/data-input/MonthDateRangeSelector.svelte';
 	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
-	import { getShopAddress } from '$lib/remotes/shopAddress.remote';
+	import { getGHNStatus, getShopAddress } from '$lib/remotes/shopAddress.remote';
 	import type { DashboardViewType, SellerDashboardData } from '$lib/types/Dashboard.js';
 	import { orderStatusOptions, paymentStatusOptions } from '$lib/types/Order';
 	import { getOrderStatusBadgeClass, getPaymentStatusBadgeClass } from '$lib/utils/classComposer';
@@ -129,22 +129,46 @@
 	{/if}
 </div>
 
+{#await getGHNStatus() then status}
+	{#if status}
+		{#if !status.isConnected}
+			<AnimatedDiv
+				animateVars={{ translateX: 20, duration: 0.6 }}
+				class="mb-3 alert animate-pulse alert-warning"
+			>
+				<span class="icon-[mingcute--truck-line] text-xl"> </span>
+				<div class="flex flex-col gap-1">
+					<span class="font-bold">Chưa kết nối với đơn vị vận chuyển Giao Hàng Nhanh</span>
+
+					<span>{status?.message}</span>
+				</div>
+				<a href={resolve('/(seller)/seller/configuration')} class="btn ml-auto btn-neutral">
+					Thiết lập ngay <span class="icon-[mingcute--arrow-right-circle-line] text-xl"></span>
+				</a>
+			</AnimatedDiv>
+		{/if}
+	{/if}
+{/await}
+
 {#await getShopAddress() then shopAddress}
 	{#if !shopAddress}
-		<div role="alert" class="mb-3 alert animate-pulse alert-warning">
+		<AnimatedDiv
+			animateVars={{ translateX: 20, delay: 0.1, duration: 0.6 }}
+			class="mb-3 alert animate-pulse alert-warning"
+		>
 			<span class="icon-[mingcute--location-2-line] text-xl"> </span>
 			<div class="flex flex-col gap-1">
-				<span class="font-bold">Chưa thiết lập địa chỉ cửa hàng</span>
+				<span class="font-bold">Chưa thiết lập địa chỉ kho hàng</span>
 
 				<span
-					>Vui lòng thiết lập địa chỉ cửa hàng để bên vận chuyển có thể tới lấy hàng và cửa hàng có
-					thể bắt đầu hoạt động.</span
+					>Vui lòng thiết lập địa chỉ kho hàng để hoàn tất quá trình đăng ký cửa hàng và bắt đầu bán
+					hàng.</span
 				>
 			</div>
 			<a href={resolve('/(seller)/seller/configuration')} class="btn ml-auto btn-neutral">
 				Thiết lập ngay <span class="icon-[mingcute--arrow-right-circle-line] text-xl"></span>
 			</a>
-		</div>
+		</AnimatedDiv>
 	{/if}
 {/await}
 
