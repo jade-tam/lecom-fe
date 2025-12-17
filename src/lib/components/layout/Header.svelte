@@ -198,3 +198,38 @@
 		{/if}
 	</div>
 </header>
+
+<div class="hidden shrink-0 max-sm:flex mt-1 justify-evenly">
+	<ul class="flex h-full items-center gap-2">
+		<li>
+			<a
+				href="/learning"
+				class="btn text-success-content btn-ghost {page.url.pathname.startsWith('/learning')
+					? 'font-black'
+					: ''}"
+			>
+				<span class="icon-[mingcute--book-2-fill] text-xl"></span>Học tập
+			</a>
+		</li>
+		<li>
+			<a
+				href="/shopping"
+				class="btn text-secondary-content btn-ghost {page.url.pathname.startsWith('/shopping')
+					? 'font-black'
+					: ''}"
+			>
+				<span class="icon-[mingcute--box-2-fill] text-xl"></span>Mua sắm
+			</a>
+		</li>
+		<li>
+			<a
+				href="/community"
+				class="btn text-info-content btn-ghost {page.url.pathname.startsWith('/community')
+					? 'font-black'
+					: ''}"
+			>
+				<span class="icon-[mingcute--comment-2-fill] text-xl"></span>Cộng đồng
+			</a>
+		</li>
+	</ul>
+</div>

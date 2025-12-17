@@ -213,7 +213,7 @@
 				<p class="text-header3">Sản phẩm tương tự</p>
 
 				{#await data.similarProductsPromise}
-					<div class="mt-2 grid grid-cols-4 gap-2">
+					<div class="mt-2 grid grid-cols-4 gap-2 max-md:grid-cols-2">
 						<ProductCardSkeleton />
 						<ProductCardSkeleton />
 						<ProductCardSkeleton />
@@ -221,8 +221,8 @@
 					</div>
 				{:then similarProducts}
 					{#if similarProducts.length}
-						<div class="mt-2 grid grid-cols-4 gap-2">
-							{#each similarProducts as similarProduct (similarProduct.id)}
+						<div class="mt-2 grid grid-cols-4 gap-2 max-md:grid-cols-2">
+							{#each similarProducts.slice(0, 4) as similarProduct (similarProduct.id)}
 								<ProductCard product={similarProduct} />
 							{/each}
 						</div>

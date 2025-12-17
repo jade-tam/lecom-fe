@@ -144,7 +144,7 @@
 			<p class="text-header3">Khoá học tương tự</p>
 
 			{#await data.similarCoursesPromise}
-				<div class="mt-4 grid grid-cols-4 gap-2">
+				<div class="mt-4 grid grid-cols-4 max-lg:grid-cols-2 gap-2">
 					<CourseCardSkeleton />
 					<CourseCardSkeleton />
 					<CourseCardSkeleton />
@@ -152,8 +152,8 @@
 				</div>
 			{:then similarCourses}
 				{#if similarCourses.length}
-					<div class="mt-4 grid grid-cols-4 gap-2">
-						{#each similarCourses as similarCourse (similarCourse.id)}
+					<div class="mt-4 grid grid-cols-4 max-lg:grid-cols-2 gap-2 gap-y-6">
+						{#each similarCourses.slice(0, 4) as similarCourse (similarCourse.id)}
 							<CourseCard course={similarCourse} />
 						{/each}
 					</div>
