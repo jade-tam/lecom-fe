@@ -35,6 +35,8 @@ export const actions: Actions = {
 			formData
 		);
 
+		console.log('UPDATE SHOP WITH THIS DATA', formData);
+
 		const toastData: ToastData = getToastData(responseBody, 'Thông tin shop đã được cập nhật');
 
 		if (response.ok) {

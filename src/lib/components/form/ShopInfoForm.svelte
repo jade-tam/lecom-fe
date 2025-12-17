@@ -9,6 +9,7 @@
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import ShopFrontPage from '../layout/ShopFrontPage.svelte';
 	import FormMediaInput from '../ui/FormMediaInput.svelte';
+	import AddressSelectors from '../ui/data-input/AddressSelectors.svelte';
 
 	const {
 		dataForm,
@@ -114,11 +115,6 @@
 					superForm={form}
 					{errors}
 				/>
-			</div>
-			<div class="rounded-box border bg-base-100 p-4">
-				<div class="flex items-center justify-between">
-					<h1 class="text-header3 font-bold">Thông tin liên hệ</h1>
-				</div>
 				<FormInput
 					name="phoneNumber"
 					label="Số điện thoại"
@@ -127,10 +123,18 @@
 					superForm={form}
 					{errors}
 				/>
+			</div>
+			<div class="rounded-box border bg-base-100 p-4">
+				<div class="flex items-center justify-between">
+					<h1 class="text-header3 font-bold">Địa chỉ cửa hàng</h1>
+				</div>
+
+				<AddressSelectors {form} {errors} />
+
 				<FormInput
 					name="address"
-					label="Địa chỉ"
-					placeholder="Nhập địa chỉ..."
+					label="Địa chỉ cụ thể"
+					placeholder="Nhập địa chỉ cụ thể..."
 					type="text"
 					superForm={form}
 					{errors}

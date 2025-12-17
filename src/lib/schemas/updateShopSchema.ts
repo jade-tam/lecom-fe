@@ -1,11 +1,18 @@
+import { shopBusinessOptions } from '$lib/consts/shopBusinessOptions';
 import { vnPrefixes } from '$lib/consts/vnPhonePrefixes';
 import { z } from 'zod';
 
+// Enum for business type
+const BusinessTypeEnum = z.enum(
+	shopBusinessOptions.map((opt) => opt.value),
+	'Loại hình kinh doanh không hợp lệ'
+);
+
 // Schema
 export const updateShopSchema = z.object({
-	id: z.int().min(1, 'Cần nhập mã cửa hàng'),
+	id: z.number('Cần nhập mã cửa hàng').int('Cần nhập mã cửa hàng').min(1, 'Cần nhập mã cửa hàng'),
 
-	name: z.string().min(1, 'Cần nhập tên cửa hàng').max(100, 'Tên cửa hàng tối đa 100 ký tự'),
+	name: z.string().min(1, 'Tên cửa hàng là bắt buộc').max(100, 'Tên cửa hàng tối đa 100 ký tự'),
 
 	description: z
 		.string()
@@ -24,8 +31,30 @@ export const updateShopSchema = z.object({
 
 	address: z
 		.string()
-		.min(5, 'Cần nhập địa chỉ cửa hàng')
-		.max(200, 'Địa chỉ cửa hàng tối đa 200 ký tự'),
+		.min(5, 'Địa chỉ cụ thể là bắt buộc, tối thiểu 5 ký tự')
+		.max(100, 'Địa chỉ cụ thể tối đa 100 ký tự'),
+
+	provinceId: z
+		.number('Vui lòng chọn tỉnh / thành phố')
+		.int('Vui lòng chọn tỉnh / thành phố')
+		.min(1, 'Vui lòng chọn tỉnh / thành phố'),
+
+	provinceName: z.string().min(1, 'Vui lòng chọn tỉnh / thành phố'),
+
+	districtId: z
+		.number('Vui lòng chọn quận / huyện')
+		.int('Vui lòng chọn quận / huyện')
+		.min(1, 'Vui lòng chọn quận / huyện'),
+
+	districtName: z.string().min(1, 'Vui lòng chọn quận / huyện'),
+
+	wardCode: z.string().min(1, 'Vui lòng chọn phường / xã'),
+
+	wardName: z.string().min(1, 'Vui lòng chọn phường / xã'),
+
+	businessType: BusinessTypeEnum,
+
+	ownershipDocumentUrl: z.url('Tài liệu về sở hữu cửa hàng không hợp lệ').nullable(),
 
 	shopAvatar: z.url('Vui lòng tải lên ảnh đại diện cửa hàng'),
 
@@ -34,38 +63,68 @@ export const updateShopSchema = z.object({
 	shopFacebook: z
 		.string()
 		.trim()
-		.refine(
-			(value) =>
-				value === '' ||
-				value.startsWith('https://www.facebook.com/') ||
-				value.startsWith('https://facebook.com/'),
-			'Liên kết Facebook phải bắt đầu bằng https://facebook.com/'
-		)
-		.nullable(),
+		.optional()
+		.nullable()
+		.refine((value) => !value || /^https:\/\/(www\.)?facebook\.com\//.test(value), {
+			message: 'Đường dẫn Facebook không hợp lệ'
+		}),
 
 	shopTiktok: z
 		.string()
 		.trim()
-		.refine(
-			(value) =>
-				value === '' ||
-				value.startsWith('https://www.tiktok.com/@') ||
-				value.startsWith('https://tiktok.com/@'),
-			'Liên kết TikTok phải bắt đầu bằng https://tiktok.com/@'
-		)
-		.nullable(),
+		.optional()
+		.nullable()
+		.refine((value) => !value || /^https:\/\/(www\.)?tiktok\.com\/@/.test(value), {
+			message: 'Đường dẫn TikTok không hợp lệ'
+		}),
 
 	shopInstagram: z
 		.string()
 		.trim()
-		.refine(
-			(value) =>
-				value === '' ||
-				value.startsWith('https://www.instagram.com/') ||
-				value.startsWith('https://instagram.com/'),
-			'Liên kết Instagram phải bắt đầu bằng https://instagram.com/'
-		)
+		.optional()
 		.nullable()
+		.refine((value) => !value || /^https:\/\/(www\.)?instagram\.com\//.test(value), {
+			message: 'Đường dẫn Instagram không hợp lệ'
+		}),
+
+	categoryId: z.string().min(1, 'Vui lòng chọn một danh mục'),
+
+	acceptedTerms: z
+		.boolean()
+		.refine((val) => val === true, 'Bạn phải chấp nhận các điều khoản trước khi tiếp tục')
+		.default(true),
+
+	ownerFullName: z
+		.string()
+		.min(2, 'Tên chủ sở hữu là bắt buộc')
+		.max(100, 'Tên chủ sở hữu tối đa 100 ký tự'),
+
+	ownerDateOfBirth: z
+		.string('Vui lòng nhập ngày sinh của bạn')
+		.trim()
+		.refine(
+			(val) => {
+				const date = new Date(val);
+				return !isNaN(date.getTime());
+			},
+			{ message: 'Định dạng ngày không hợp lệ' }
+		)
+		.refine((date) => new Date(date) <= new Date(), {
+			message: 'Ngày sinh không được là tương lai'
+		})
+		.refine((date) => {
+			const age =
+				(new Date().getTime() - new Date(date).getTime()) / (1000 * 60 * 60 * 24 * 365.25);
+			return age >= 18;
+		}, 'Bạn phải ít nhất 18 tuổi để mở cửa hàng'),
+
+	ownerPersonalIdNumber: z
+		.string()
+		.min(5, 'Số CMND/CCCD là bắt buộc')
+		.max(20, 'Số CMND/CCCD tối đa 20 ký tự'),
+
+	ownerPersonalIdFrontUrl: z.url('Vui lòng tải lên ảnh mặt trước CMND/CCCD'),
+	ownerPersonalIdBackUrl: z.url('Vui lòng tải lên ảnh mặt sau CMND/CCCD')
 });
 
 export type UpdateShopSchema = z.infer<typeof updateShopSchema>;
