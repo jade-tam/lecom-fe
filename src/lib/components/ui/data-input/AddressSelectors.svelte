@@ -4,18 +4,42 @@
 		getAddressProvinces,
 		getAddressWards
 	} from '$lib/remotes/shopAddress.remote';
+	import type { SuperFormData, SuperFormErrors } from 'sveltekit-superforms/client';
 	import FormInput from '../FormInput.svelte';
 	import FormSelect from '../FormSelect.svelte';
 	import LoadingPlaceholder from '../skeleton/LoadingPlaceholder.svelte';
 
-	let { form, errors } = $props();
+	let {
+		form,
+		errors,
+		fieldNames = {
+			provinceId: 'provinceId',
+			provinceName: 'provinceName',
+			districtId: 'districtId',
+			districtName: 'districtName',
+			wardCode: 'wardCode',
+			wardName: 'wardName'
+		}
+	}: {
+		form: SuperFormData<any>;
+		errors: SuperFormErrors<any>;
+		fieldNames?: {
+			provinceId: string;
+			provinceName: string;
+			districtId: string;
+			districtName: string;
+			wardCode: string;
+			wardName: string;
+		};
+	} = $props();
 </script>
 
 {#await getAddressProvinces()}
 	<LoadingPlaceholder class="h-20" text="Đang tải danh sách tỉnh / thành phố..." />
 {:then provinces}
 	<FormSelect
-		name="provinceId"
+		isValueNumber
+		name={fieldNames.provinceId}
 		label="Tỉnh / Thành phố"
 		placeholder="Chọn tỉnh / thành phố..."
 		options={provinces
@@ -29,19 +53,18 @@
 			if (!provinces) return;
 
 			const selectedProvince = provinces.find(
-				(province) => province.ProvinceID === Number($form.provinceId)
+				(province) => province.ProvinceID === Number($form[fieldNames.provinceId])
 			);
-			$form.provinceId = selectedProvince ? selectedProvince.ProvinceID : '';
-			$form.provinceName = selectedProvince ? selectedProvince.ProvinceName : '';
-			$form.districtId = '';
-			$form.districtName = '';
-			$form.wardCode = '';
-			$form.wardName = '';
+			$form[fieldNames.provinceName] = selectedProvince ? selectedProvince.ProvinceName : '';
+			$form[fieldNames.districtId] = 0;
+			$form[fieldNames.districtName] = '';
+			$form[fieldNames.wardCode] = '';
+			$form[fieldNames.wardName] = '';
 		}}
 		{errors}
 	/>
 	<FormInput
-		name="provinceName"
+		name={fieldNames.provinceName}
 		label="Tên tỉnh / thành phố"
 		placeholder="Nhập tên tỉnh / thành phố ẩn..."
 		type="text"
@@ -52,12 +75,13 @@
 	/>
 {/await}
 
-{#await getAddressDistricts($form.provinceId)}
+{#await getAddressDistricts($form[fieldNames.provinceId])}
 	<LoadingPlaceholder class="h-20" text="Đang tải danh sách quận / huyện..." />
 {:then districts}
-	{#if districts && $form.provinceId}
+	{#if districts && $form[fieldNames.provinceId]}
 		<FormSelect
-			name="districtId"
+			isValueNumber
+			name={fieldNames.districtId}
 			label="Quận / Huyện"
 			placeholder="Chọn hoặc nhập quận / huyện..."
 			options={districts
@@ -71,17 +95,16 @@
 				if (!districts) return;
 
 				const selectedDistrict = districts.find(
-					(district) => district.DistrictID === Number($form.districtId)
+					(district) => district.DistrictID === Number($form[fieldNames.districtId])
 				);
-				$form.districtId = selectedDistrict ? selectedDistrict.DistrictID : '';
-				$form.districtName = selectedDistrict ? selectedDistrict.DistrictName : '';
-				$form.wardCode = '';
-				$form.wardName = '';
+				$form[fieldNames.districtName] = selectedDistrict ? selectedDistrict.DistrictName : '';
+				$form[fieldNames.wardCode] = '';
+				$form[fieldNames.wardName] = '';
 			}}
 			{errors}
 		/>
 		<FormInput
-			name="districtName"
+			name={fieldNames.districtName}
 			label="Tên quận / huyện"
 			placeholder="Nhập tên quận / huyện ẩn..."
 			type="text"
@@ -93,12 +116,12 @@
 	{/if}
 {/await}
 
-{#await getAddressWards($form.districtId)}
+{#await getAddressWards($form[fieldNames.districtId])}
 	<LoadingPlaceholder class="h-20" text="Đang tải danh sách phường / xã..." />
 {:then wards}
-	{#if wards && $form.districtId}
+	{#if wards && $form[fieldNames.districtId]}
 		<FormSelect
-			name="wardCode"
+			name={fieldNames.wardCode}
 			label="Phường / Xã"
 			placeholder="Chọn hoặc nhập phường / xã..."
 			options={wards
@@ -111,14 +134,13 @@
 			onchange={() => {
 				if (!wards) return;
 
-				const selectedWard = wards.find((ward) => ward.WardCode === $form.wardCode);
-				$form.wardName = selectedWard ? selectedWard.WardName : '';
-				$form.wardCode = selectedWard ? selectedWard.WardCode : '';
+				const selectedWard = wards.find((ward) => ward.WardCode === $form[fieldNames.wardCode]);
+				$form[fieldNames.wardName] = selectedWard ? selectedWard.WardName : '';
 			}}
 			{errors}
 		/>
 		<FormInput
-			name="wardName"
+			name={fieldNames.wardName}
 			label="Tên phường / Xã"
 			placeholder="Tên phường / xã..."
 			type="text"

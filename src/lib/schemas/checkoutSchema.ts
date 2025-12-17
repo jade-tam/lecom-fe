@@ -1,4 +1,5 @@
 import { vnPrefixes } from '$lib/consts/vnPhonePrefixes';
+import { shipmentTypeOptions } from '$lib/types/Order';
 import { z } from 'zod';
 
 export const checkoutSchema = z.object({
@@ -12,9 +13,28 @@ export const checkoutSchema = z.object({
 		.refine((val) => vnPrefixes.some((p) => val.startsWith(p)), {
 			message: 'Đầu số điện thoại không hợp lệ tại Việt Nam'
 		}),
+	toProvinceId: z
+		.number('Vui lòng chọn tỉnh / thành phố')
+		.int('Mã tỉnh / thành phố không hợp lệ')
+		.min(1, 'Vui lòng chọn tỉnh / thành phố'),
+	toProvinceName: z.string().min(1, 'Vui lòng chọn tỉnh / thành phố'),
+	toDistrictId: z
+		.number('Vui lòng chọn quận / huyện')
+		.int('Mã quận / huyện không hợp lệ')
+		.min(1, 'Vui lòng chọn quận / huyện'),
+	toDistrictName: z.string().min(1, 'Vui lòng chọn quận / huyện'),
+	toWardCode: z.string().min(1, 'Vui lòng chọn phường / xã'),
+	toWardName: z.string().min(1, 'Vui lòng chọn phường / xã'),
+	serviceTypeId: z
+		.number('Vui lòng chọn phương thức vận chuyển')
+		.int('Mã phương thức vận chuyển không hợp lệ')
+		.default(1)
+		.refine((val) => shipmentTypeOptions.some((opt) => opt.value === val), {
+			message: 'Phương thức vận chuyển không hợp lệ'
+		}),
 	shipToAddress: z
 		.string()
-		.min(8, 'Địa chỉ không được để trống, tối thiểu 8 ký tự')
+		.min(3, 'Địa chỉ không được để trống, tối thiểu 3 ký tự')
 		.max(100, 'Quá dài'),
 	voucherCode: z.string().optional(),
 	selectedProductIds: z

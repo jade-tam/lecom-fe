@@ -5,11 +5,13 @@
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import { formatVND } from '$lib/utils/converters';
 	import NumberFlow from '@number-flow/svelte';
-	import { FIXED_SHIPPING_FEE } from '$lib/config/paymentConfig';
 	import type { Voucher } from '$lib/types/Voucher';
 
-	const { selectedCart, selectedVoucher }: { selectedCart: Cart; selectedVoucher?: Voucher } =
-		$props();
+	const {
+		selectedCart,
+		selectedVoucher,
+		shippingFee
+	}: { selectedCart: Cart; selectedVoucher?: Voucher; shippingFee?: number } = $props();
 
 	const discountAmount = $derived(
 		selectedVoucher
@@ -67,9 +69,13 @@
 	</div>
 
 	<div class="flex items-end justify-between">
-		<p class="">Tổng phí giao hàng</p>
+		<p class="">Phí vận chuyển</p>
 		<p class="font-serif font-bold text-info-content">
-			<NumberFlow value={selectedCart.items.length * FIXED_SHIPPING_FEE} format={formatVND} /> đ
+			{#if shippingFee}
+				<NumberFlow value={shippingFee} format={formatVND} /> đ
+			{:else}
+				---
+			{/if}
 		</p>
 	</div>
 
@@ -79,10 +85,7 @@
 		<p class="font-bold">Tổng thanh toán</p>
 		<p class="font-serif text-2xl font-bold text-primary-content">
 			<NumberFlow
-				value={Math.max(
-					0,
-					selectedCart.subtotal - discountAmount + selectedCart.items.length * FIXED_SHIPPING_FEE
-				)}
+				value={Math.max(0, selectedCart.subtotal - discountAmount + (shippingFee ?? 0))}
 				format={formatVND}
 			/> đ
 		</p>

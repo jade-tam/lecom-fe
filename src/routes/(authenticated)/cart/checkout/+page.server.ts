@@ -27,6 +27,45 @@ export async function load({ cookies }) {
 }
 
 export const actions = {
+	preview: async ({ request, cookies }) => {
+		const form = await superValidate(request, zod4(checkoutSchema));
+
+		if (!form.valid) {
+			return { form };
+		}
+
+		const formData = form.data;
+
+		const { response, responseBody } = await fetchAuthorizedApi(
+			cookies,
+			'/api/orders/checkout/preview',
+			'POST',
+			{ ...formData, selectedProductIds: formData.selectedProductIds }
+		);
+
+		const toastData: ToastData = getToastData(
+			responseBody,
+			'Phí vận chuyển đã được cập nhật. Vui lòng kiểm tra lại thông tin trước khi xác nhận.',
+			undefined,
+			'info'
+		);
+
+		if (response.ok) {
+			return message(form, {
+				toastData: toastData,
+				responseResult: responseBody.result
+			});
+		} else {
+			return message(
+				form,
+				{
+					toastData: toastData,
+					responseResult: responseBody.result
+				},
+				{ status: 400 }
+			);
+		}
+	},
 	checkout: async ({ request, cookies }) => {
 		const form = await superValidate(request, zod4(checkoutSchema));
 
@@ -43,7 +82,7 @@ export const actions = {
 			{ ...formData, selectedProductIds: formData.selectedProductIds }
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Đơn hàng đã được tạo.');
+		const toastData: ToastData = getToastData(responseBody, 'Đơn hàng của bạn đã được tạo.');
 
 		if (response.ok) {
 			return message(form, {

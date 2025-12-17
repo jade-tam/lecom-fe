@@ -99,7 +99,10 @@
 		<div class="divider"></div>
 
 		<!-- =================================================================================== -->
-		<AnimatedDiv animateVars={{ translateY: 20, opacity: 0 }} class="w-full overflow-hidden rounded-box border bg-base-100 p-4">
+		<AnimatedDiv
+			animateVars={{ translateY: 20, opacity: 0 }}
+			class="w-full overflow-hidden rounded-box border bg-base-100 p-4"
+		>
 			<h2 class="mb-4">Nội dung khóa học</h2>
 			{#if course.sections}
 				{#each course.sections as section, i (section.id)}

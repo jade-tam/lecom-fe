@@ -35,6 +35,13 @@ export const shipmentStatusOptions = [
 
 export type ShipmentStatus = (typeof shipmentStatusOptions)[number]['value'];
 
+export const shipmentTypeOptions = [
+	{ value: 1, title: 'STANDARD - Giao hàng tiêu chuẩn' },
+	{ value: 2, title: 'EXPRESS - Giao hàng nhanh' }
+] as const satisfies readonly FormSelectOption[];
+
+export type ShipmentType = (typeof shipmentTypeOptions)[number]['value'];
+
 export interface OrderDetail {
 	id: string | null;
 	productId: string;

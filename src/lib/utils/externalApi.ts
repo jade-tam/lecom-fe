@@ -3,7 +3,7 @@ import { PUBLIC_API_URL } from '$env/static/public';
 import { createLogger, sanitizeForLog } from '$lib/server/logger';
 import type { ApiResponseBody } from '$lib/types/ApiResponseBody';
 import { redirect, type Cookies } from '@sveltejs/kit';
-import type { ToastData } from './showToast';
+import type { ToastData, ToastType } from './showToast';
 
 const logger = createLogger('API');
 
@@ -185,10 +185,11 @@ export async function fetchAuthorizedApi<T>(
 export function getToastData(
 	responseBody: ApiResponseBody<unknown>,
 	successTitle?: string,
-	errorTitle?: string
+	errorTitle?: string,
+	successType?: ToastType
 ) {
 	const responseToastData: ToastData = {
-		type: responseBody.isSuccess ? 'success' : 'error',
+		type: responseBody.isSuccess ? (successType ?? 'success') : 'error',
 		title: responseBody.isSuccess ? successTitle : errorTitle,
 		description: responseBody.isSuccess
 			? responseBody.result.message
