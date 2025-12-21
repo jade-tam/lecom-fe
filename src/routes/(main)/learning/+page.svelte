@@ -12,7 +12,7 @@
 {#if userProfile}
 	<section class="mt-8 flex flex-col">
 		<h2 class="text-header3">Khóa học đề xuất dành cho bạn</h2>
-		<div class="mt-6 grid w-full grid-cols-4 max-md:grid-cols-2 items-stretch gap-2 gap-y-6">
+		<div class="mt-6 grid w-full grid-cols-4 items-stretch gap-2 gap-y-6 max-md:grid-cols-2">
 			{#await data.courseBrowseDataPromise}
 				<LoadingPlaceholder text="Đang tải danh sách khóa học" />
 			{:then browseData}
@@ -31,7 +31,7 @@
 
 	<section class="mt-8 flex flex-col">
 		<h2 class="text-header3">Các khóa học mới nhất</h2>
-		<div class="mt-6 grid w-full grid-cols-4 max-md:grid-cols-2 items-stretch gap-2 gap-y-6">
+		<div class="mt-6 grid w-full grid-cols-4 items-stretch gap-2 gap-y-6 max-md:grid-cols-2">
 			{#await data.courseBrowseDataPromise}
 				<LoadingPlaceholder text="Đang tải danh sách khóa học" />
 			{:then browseData}
@@ -60,7 +60,7 @@
 							>Xem tất cả <span class="icon-[mingcute--arrow-right-fill]"></span></a
 						>
 					</div>
-					<div class="mt-6 grid w-full grid-cols-4 max-md:grid-cols-2 items-stretch gap-2">
+					<div class="mt-6 grid w-full grid-cols-4 items-stretch gap-2 max-md:grid-cols-2">
 						{#if category.courses.length}
 							{#each category.courses.slice(0, 4) as course, index (course.id)}
 								<CourseCard {course} {index} />
@@ -98,9 +98,7 @@
 
 <section class="mt-8 flex flex-col">
 	<h2 class="text-header3">Tất cả khóa học</h2>
-	<div
-		class="mt-4 grid w-full grid-cols-4 items-stretch gap-2 gap-y-6 max-md:grid-cols-2"
-	>
+	<div class="mt-4 grid w-full grid-cols-4 items-stretch gap-2 gap-y-6 max-md:grid-cols-2">
 		{#await data.queryResult}
 			<LoadingPlaceholder text="Đang tải danh sách khóa học" />
 		{:then result}

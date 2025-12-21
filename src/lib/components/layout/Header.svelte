@@ -199,7 +199,7 @@
 	</div>
 </header>
 
-<div class="hidden shrink-0 max-sm:flex mt-1 justify-evenly">
+<div class="mt-1 hidden shrink-0 justify-evenly max-sm:flex">
 	<ul class="flex h-full items-center gap-2">
 		<li>
 			<a

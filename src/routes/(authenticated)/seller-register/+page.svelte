@@ -188,10 +188,7 @@
 		<div class="divider"></div>
 		<h3>Địa chỉ cửa hàng</h3>
 
-		<AddressSelectors
-			{form}
-			{errors}
-		/>
+		<AddressSelectors {form} {errors} />
 
 		<FormInput
 			name="shopAddress"

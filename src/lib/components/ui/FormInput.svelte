@@ -44,7 +44,7 @@
 	{/if}
 	<label class="input w-full" class:hidden>
 		{#if icon}
-			<span class={`text-xl shrink-0 ${icon}`}></span>
+			<span class={`shrink-0 text-xl ${icon}`}></span>
 		{/if}
 		<input {name} bind:value={$superForm[name]} {...restInputAttr} />
 		{#if postfix}
