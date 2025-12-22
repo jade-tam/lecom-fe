@@ -125,5 +125,5 @@ export type LeaderboardPeriod = (typeof leaderboardPeriodOptions)[number]['value
 export type Leaderboard = {
 	period: LeaderboardPeriod;
 	entries: LeaderboardEntry[];
-	currentUser: LeaderboardEntry;
+	currentUser: LeaderboardEntry | null;
 };

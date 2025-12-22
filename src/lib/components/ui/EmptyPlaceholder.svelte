@@ -11,7 +11,7 @@
 
 <AnimatedDiv
 	animateVars={{ translateY: 10, duration: 0.8 }}
-	class="col-span-full flex {className} w-full flex-col items-center justify-center text-secondary-content/60"
+	class="col-span-full flex {className} text-primray-content/50 w-full flex-col items-center justify-center"
 >
 	<span class="{icon} text-2xl"></span>
 	<p class="mt-2 text-sm font-bold italic">{text}</p>

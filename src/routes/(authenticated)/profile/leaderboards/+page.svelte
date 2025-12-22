@@ -39,7 +39,7 @@
 	}
 
 	function isCurrentUser(userId: string): boolean {
-		return leaderboard?.currentUser.userId === userId;
+		return leaderboard?.currentUser?.userId === userId;
 	}
 </script>
 
@@ -74,32 +74,38 @@
 	<div
 		class="mt-3 mb-3 overflow-hidden rounded-box bg-gradient-to-r from-primary/50 to-secondary/50 p-1"
 	>
-		<div class="flex items-center justify-between gap-4 rounded-box bg-base-100 p-4">
-			<div class="flex items-center gap-4">
-				<div
-					class={`badge bg-gradient-to-br badge-lg ${getRankBadgeColor(leaderboard.currentUser.rank)}`}
-				>
-					#{leaderboard.currentUser.rank}
-				</div>
-				<div class="flex items-center gap-3">
-					<Image
-						src={leaderboard.currentUser.avatarUrl}
-						alt={leaderboard.currentUser.displayName}
-						class="h-12 w-12 rounded-full border-2 border-primary object-cover"
-					/>
-					<div>
-						<p class="font-bold">{leaderboard.currentUser.displayName}</p>
-						<p class="text-sm text-base-content/60">Cấp độ {leaderboard.currentUser.level}</p>
+		{#if leaderboard.currentUser}
+			<div class="flex items-center justify-between gap-4 rounded-box bg-base-100 p-4">
+				<div class="flex items-center gap-4">
+					<div
+						class={`badge bg-gradient-to-br badge-lg ${getRankBadgeColor(leaderboard.currentUser.rank)}`}
+					>
+						#{leaderboard.currentUser.rank}
+					</div>
+					<div class="flex items-center gap-3">
+						<Image
+							src={leaderboard.currentUser.avatarUrl}
+							alt={leaderboard.currentUser.displayName}
+							class="h-12 w-12 rounded-full border-2 border-primary object-cover"
+						/>
+						<div>
+							<p class="font-bold">{leaderboard.currentUser.displayName}</p>
+							<p class="text-sm text-base-content/60">Cấp độ {leaderboard.currentUser.level}</p>
+						</div>
 					</div>
 				</div>
+				<div class="text-right">
+					<p class="font-serif text-3xl font-bold text-success-content">
+						{leaderboard.currentUser.score} XP
+					</p>
+					<p class="text-xs text-success-content/60">điểm XP tích luỹ kỳ này</p>
+				</div>
 			</div>
-			<div class="text-right">
-				<p class="font-serif text-3xl font-bold text-success-content">
-					{leaderboard.currentUser.score} XP
-				</p>
-				<p class="text-xs text-success-content/60">điểm XP tích luỹ kỳ này</p>
+		{:else}
+			<div class="p-4 text-center text-base-content/70">
+				Chưa có dữ liệu bảng xếp hạng cho tài khoản của bạn.
 			</div>
-		</div>
+		{/if}
 	</div>
 
 	<!-- Stats Section -->
@@ -110,7 +116,11 @@
 				<div>
 					<p class="text-sm text-base-content/60">Vị trí hiện tại của bạn</p>
 					<p class="text-lg font-bold">
-						#{leaderboard.currentUser.rank}
+						{#if leaderboard.currentUser}
+							#{leaderboard.currentUser.rank}
+						{:else}
+							Chưa có dữ liệu
+						{/if}
 					</p>
 				</div>
 			</div>
@@ -122,7 +132,11 @@
 				<div>
 					<p class="text-sm text-base-content/60">Điểm kinh nghiệm tích luỹ của bạn</p>
 					<p class="font-serif text-lg font-bold text-success-content">
-						{leaderboard.currentUser.score} XP
+						{#if leaderboard.currentUser}
+							{leaderboard.currentUser.score} XP
+						{:else}
+							Chưa có dữ liệu
+						{/if}
 					</p>
 				</div>
 			</div>
@@ -134,7 +148,7 @@
 				<div>
 					<p class="text-sm text-base-content/60">Hạng nhất</p>
 					<p class="text-lg font-bold text-warning-content">
-						{leaderboard.entries[0]?.displayName ?? 'N/A'}
+						{leaderboard.entries[0]?.displayName ?? 'Không có dữ liệu'}
 					</p>
 				</div>
 			</div>
@@ -154,54 +168,62 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each leaderboard.entries as entry (entry.userId)}
-						<tr
-							class={`transition-all ${
-								isCurrentUser(entry.userId) ? 'bg-primary/20 font-bold' : ''
-							}`}
-						>
-							<td class="text-center">
-								<div class="flex items-center justify-center gap-2">
-									{#if entry.rank <= 3}
-										<div class={`badge bg-gradient-to-br ${getRankBadgeColor(entry.rank)} p-2`}>
-											<span class={getRankIcon(entry.rank)}></span>
-										</div>
-									{:else}
-										<div class="badge bg-base-300 p-2">
-											<span class="font-bold">#{entry.rank}</span>
-										</div>
-									{/if}
-								</div>
-							</td>
-							<td>
-								<div class="flex items-center gap-3">
-									<Image
-										src={entry.avatarUrl}
-										alt={entry.displayName}
-										class="h-10 w-10 rounded-full object-cover"
-									/>
-									<div>
-										<p class="font-semibold">{entry.displayName}</p>
-										{#if isCurrentUser(entry.userId)}
-											<p class="text-xs font-semibold text-primary-content">Bạn</p>
+					{#if leaderboard.entries.length}
+						{#each leaderboard.entries as entry (entry.userId)}
+							<tr
+								class={`transition-all ${
+									isCurrentUser(entry.userId) ? 'bg-primary/20 font-bold' : ''
+								}`}
+							>
+								<td class="text-center">
+									<div class="flex items-center justify-center gap-2">
+										{#if entry.rank <= 3}
+											<div class={`badge bg-gradient-to-br ${getRankBadgeColor(entry.rank)} p-2`}>
+												<span class={getRankIcon(entry.rank)}></span>
+											</div>
+										{:else}
+											<div class="badge bg-base-300 p-2">
+												<span class="font-bold">#{entry.rank}</span>
+											</div>
 										{/if}
 									</div>
-								</div>
-							</td>
-							<td class="text-center">
-								<div class="flex items-center justify-center gap-2">
+								</td>
+								<td>
+									<div class="flex items-center gap-3">
+										<Image
+											src={entry.avatarUrl}
+											alt={entry.displayName}
+											class="h-10 w-10 rounded-full object-cover"
+										/>
+										<div>
+											<p class="font-semibold">{entry.displayName}</p>
+											{#if isCurrentUser(entry.userId)}
+												<p class="text-xs font-semibold text-primary-content">Bạn</p>
+											{/if}
+										</div>
+									</div>
+								</td>
+								<td class="text-center">
+									<div class="flex items-center justify-center gap-2">
+										<span class="font-serif text-lg font-bold text-success-content"
+											>Cấp {entry.level}</span
+										>
+									</div>
+								</td>
+								<td class="text-right">
 									<span class="font-serif text-lg font-bold text-success-content"
-										>Cấp {entry.level}</span
+										>{entry.score} XP</span
 									>
-								</div>
-							</td>
-							<td class="text-right">
-								<span class="font-serif text-lg font-bold text-success-content"
-									>{entry.score} XP</span
-								>
+								</td>
+							</tr>
+						{/each}
+					{:else}
+						<tr>
+							<td colspan="4">
+								<EmptyPlaceholder text="Chưa có dữ liệu bảng xếp hạng để hiển thị." />
 							</td>
 						</tr>
-					{/each}
+					{/if}
 				</tbody>
 			</table>
 		</div>
