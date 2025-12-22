@@ -1,4 +1,5 @@
 import type { FormSelectOption } from '$lib/components/ui/FormSelect.svelte';
+import type { ApprovalStatus } from './Product';
 
 export const courseActiveStatusOptions = [
 	{
@@ -32,6 +33,8 @@ export type Section = {
 	title: string;
 	orderIndex: number;
 	lessons: Lesson[];
+	moderatorNote: string | null;
+	approvalStatus: ApprovalStatus;
 };
 
 export const courseTypeOptions = [
@@ -58,6 +61,8 @@ export type Lesson = {
 	linkedProducts: LinkedProduct[];
 	xpReward?: number;
 	isCompleted?: boolean;
+	moderatorNote: string | null;
+	approvalStatus: ApprovalStatus;
 };
 
 type LinkedProduct = {

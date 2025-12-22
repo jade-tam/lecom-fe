@@ -1,34 +1,33 @@
 <script lang="ts">
 	import SellerCourseForm from '$lib/components/form/SellerCourseForm.svelte';
+	import CreateCourseLessonModalContent from '$lib/components/modal/CreateCourseLessonModalContent.svelte';
 	import OpenModalButton from '$lib/components/modal/OpenModalButton.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import FormInput from '$lib/components/ui/FormInput.svelte';
-	import FormMediaInput from '$lib/components/ui/FormMediaInput.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
 	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
 	import {
-		addCourseLessonSchema,
 		addCourseSectionSchema,
 		deleteCourseLessonSchema,
 		deleteCourseSectionSchema,
-		type AddCourseLessonSchema,
 		type AddCourseSectionSchema,
 		type DeleteCourseLessonSchema,
 		type DeleteCourseSectionSchema,
 		type LinkProductSchema
 	} from '$lib/schemas/courseSchema';
-	import { formatVideoDuration, toNumericString, toRomanNumeral } from '$lib/utils/converters';
+	import {
+		formatVideoDuration,
+		toNumericString,
+		toRomanNumeral
+	} from '$lib/utils/converters';
 	import type { ToastData } from '$lib/utils/showToast';
 	import showToast from '$lib/utils/showToast';
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
-	import CreateCourseLessonModalContent from '$lib/components/modal/CreateCourseLessonModalContent.svelte';
-	import { courseActiveStatusOptions } from '$lib/types/Course.js';
 
 	const { data } = $props();
 
 	let addSectionModalRef: HTMLDialogElement | null = $state(null);
-	// let addLessonModalRef: HTMLDialogElement | null = $state(null);
 	let linkProductModalRef: HTMLDialogElement | null = $state(null);
 
 	const {
@@ -44,20 +43,6 @@
 	} = superForm<AddCourseSectionSchema, ToastData>(data.addSectionForm, {
 		validators: zod4Client(addCourseSectionSchema)
 	});
-
-	// const {
-	// 	form: lessonForm,
-	// 	errors: lessonErrors,
-	// 	message: lessonMessage,
-	// 	enhance: lessonEnhance,
-	// 	submitting: lessonSubmitting,
-	// 	delayed: lessonDelayed,
-	// 	tainted: lessonTainted,
-	// 	isTainted: lessonIsTainted,
-	// 	submit: lessonSubmit
-	// } = superForm<AddCourseLessonSchema, ToastData>(data.addLessonForm, {
-	// 	validators: zod4Client(addCourseLessonSchema)
-	// });
 
 	const {
 		form: deleteSectionForm,
@@ -109,12 +94,6 @@
 		}
 	});
 
-	// $effect(() => {
-	// 	if ($lessonMessage) {
-	// 		showToast($lessonMessage);
-	// 		addLessonModalRef?.close();
-	// 	}
-	// });
 	$effect(() => {
 		if ($deleteSectionMessage) {
 			showToast($deleteSectionMessage);
@@ -169,67 +148,6 @@
 		</form>
 	</div>
 </dialog>
-
-<!-- ===================================================================================== -->
-
-<!-- <dialog bind:this={addLessonModalRef} class="modal">
-	<div class="modal-box">
-		<form action="?/addLesson" method="POST" use:lessonEnhance>
-			<h3 class="text-lg font-bold">Thêm bài học mới</h3>
-
-			<FormInput
-				name="title"
-				label="Tiêu đề bài học"
-				placeholder="Nhập tiêu đề bài học..."
-				superForm={lessonForm}
-				errors={lessonErrors}
-			/>
-
-			<FormMediaInput
-				name="contentUrl"
-				label="Video bài học"
-				help="Có thể mất thời gian để tải lên video dài"
-				mediaType="Video"
-				aspectRatio="16:9"
-				superForm={lessonForm}
-				errors={lessonErrors}
-				onUploadSuccess={({ url, duration }) => {
-					console.log('✅ Upload done:', url, duration);
-					if (duration) $lessonForm.durationSeconds = duration;
-				}}
-			/>
-
-			<FormInput
-				hidden
-				name="durationSeconds"
-				label="Thời lượng (giây)"
-				superForm={lessonForm}
-				errors={lessonErrors}
-			/>
-
-			<FormInput
-				hidden
-				name="orderIndex"
-				label="Thứ tự"
-				superForm={lessonForm}
-				errors={lessonErrors}
-			/>
-
-			<FormInput
-				hidden
-				name="courseSectionId"
-				label="ID chương"
-				superForm={lessonForm}
-				errors={lessonErrors}
-			/>
-
-			<div class="modal-action">
-				<button class="btn" type="button" onclick={() => addLessonModalRef?.close()}>Hủy</button>
-				<button class="btn btn-primary" type="submit">Thêm bài học</button>
-			</div>
-		</form>
-	</div>
-</dialog> -->
 
 <!-- ===================================================================================== -->
 
@@ -351,7 +269,7 @@
 		<div class="flex flex-col">
 			<h1 class="text-header3 font-bold">Cập nhật khóa học</h1>
 			<p class="text-base-content/60">
-				Cập nhật thông tin, xây dựng khóa học micro-learning và liên kết với sản phẩm của shop.
+				Cập nhật thông tin, xây dựng nội dung khóa học và liên kết với các sản phẩm của cửa hàng.
 			</p>
 		</div>
 	</div>
@@ -392,6 +310,34 @@
 							</FormConfirmPopoverButton>
 						</div>
 
+						<div class="mt-1">
+							{#if section.approvalStatus === 'Pending'}
+								<p class="flex items-center gap-1 text-xs text-warning-content">
+									<span class="icon-[fa7-solid--hourglass-half]"></span> Đang chờ quản trị viên duyệt
+								</p>
+							{:else if section.approvalStatus === 'Approved'}
+								<p class="flex items-center gap-1 text-xs text-success-content">
+									<span class="icon-[mingcute--check-circle-fill]"></span> Đã được chấp thuận
+								</p>
+							{:else if section.approvalStatus === 'Rejected'}
+								<div class="flex items-center gap-1 text-xs text-error-content">
+									<span class="icon-[mingcute--close-circle-fill]"></span> Chương học bị từ chối phê
+									duyệt
+									<div
+										class="tooltip flex items-center tooltip-info"
+										data-tip="Vui lòng kiểm tra lý do từ chối và cập nhật lại nội dung"
+									>
+										<span class="ml-1 icon-[mingcute--information-fill] text-info-content"></span>
+									</div>
+								</div>
+								{#if section.moderatorNote}
+									<p class="mt-1 text-xs text-error-content">
+										Lý do: <strong>{section.moderatorNote}</strong>
+									</p>
+								{/if}
+							{/if}
+						</div>
+
 						<div class="mt-2 rounded-field bg-base-300">
 							{#if section.lessons.length}
 								{#each section.lessons as lesson, ii (lesson.id)}
@@ -406,10 +352,13 @@
 												disabled
 												aria-label="play"
 											>
-												<span class="icon-[fa7-solid--circle-play] text-xl text-primary-content"
+												<span
+													class="{lesson.type === 'Video'
+														? 'icon-[mingcute--video-fill] text-primary-content'
+														: 'icon-[mingcute--inventory-fill] text-secondary-content'} text-xl"
 												></span>
 											</button>
-											<p class="line-clamp-2 font-semibold">
+											<p class="line-clamp-2 font-bold">
 												{toNumericString(ii + 1)}. {lesson.title}
 											</p>
 											<p
@@ -490,6 +439,36 @@
 												</p>
 											{/if}
 										</div>
+
+										<div class="px-2">
+											{#if lesson.approvalStatus === 'Pending'}
+												<p class="flex items-center gap-1 text-xs text-warning-content">
+													<span class="icon-[fa7-solid--hourglass-half]"></span> Đang chờ quản trị viên
+													duyệt
+												</p>
+											{:else if lesson.approvalStatus === 'Approved'}
+												<p class="flex items-center gap-1 text-xs text-success-content">
+													<span class="icon-[mingcute--check-circle-fill]"></span> Đã được chấp thuận
+												</p>
+											{:else if lesson.approvalStatus === 'Rejected'}
+												<div class="flex items-center gap-1 text-xs text-error-content">
+													<span class="icon-[mingcute--close-circle-fill]"></span> Bài học bị từ
+													chối phê duyệt
+													<div
+														class="tooltip flex items-center tooltip-info"
+														data-tip="Vui lòng kiểm tra lý do từ chối và cập nhật lại nội dung"
+													>
+														<span class="ml-1 icon-[mingcute--information-fill] text-info-content"
+														></span>
+													</div>
+												</div>
+												{#if lesson.moderatorNote}
+													<p class="mt-1 text-xs text-error-content">
+														Lý do: <strong>{lesson.moderatorNote}</strong>
+													</p>
+												{/if}
+											{/if}
+										</div>
 									</div>
 								{/each}
 							{:else}
@@ -500,17 +479,6 @@
 						</div>
 
 						<div class="mt-2 flex justify-end">
-							<!-- <button
-								class="btn btn-secondary"
-								aria-label="Thêm bài học"
-								onclick={() => {
-									$lessonForm.courseSectionId = section.id;
-									$lessonForm.orderIndex = section.lessons.length;
-									addLessonModalRef?.showModal();
-								}}
-							>
-								<span class="icon-[fa7-solid--add]"></span>Thêm bài học
-							</button> -->
 							<OpenModalButton
 								ModalContentProps={{
 									dataForm: data.addLessonForm,
