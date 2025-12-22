@@ -103,7 +103,7 @@
 							{#if column.id === 'createdAt'}
 								<td class="font-semibold whitespace-nowrap">{formatDateTime(row.createdAt)}</td>
 							{:else if column.id === 'type'}
-								<td>
+								<td class="whitespace-nowrap">
 									<div class="badge badge-sm {getWalletTransactionTypeClass(row.type, 'badge')}">
 										{getTitleFromOptionList(row.type, walletTransactionTypeOptions)}
 									</div>
@@ -125,7 +125,7 @@
 									>{formatVND(row.balanceAfter)}</td
 								>
 							{:else if column.id === 'balanceType'}
-								<td>
+								<td class="whitespace-nowrap">
 									<div
 										class="badge badge-sm {getWalletTransactionBalanceTypeClass(
 											row.balanceType,

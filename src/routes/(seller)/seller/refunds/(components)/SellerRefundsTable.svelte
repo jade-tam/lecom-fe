@@ -145,7 +145,7 @@
 										</div></td
 									>
 								{:else if column.id === 'status'}
-									<td>
+									<td class="whitespace-nowrap">
 										<div class={`badge ${getRefundStatusClass(row.status, 'badge')}`}>
 											{getTitleFromOptionList(row.status, refundStatusOptions)}
 										</div>
