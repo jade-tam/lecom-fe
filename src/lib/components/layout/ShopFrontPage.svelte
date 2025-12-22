@@ -51,15 +51,16 @@
 			<div
 				class="flex items-center gap-2 text-xs text-base-content/60 max-md:flex-col max-md:items-start max-md:gap-1"
 			>
-				<p class="flex items-center gap-2">
-					<span class="icon-[fa7-solid--map-location-dot] shrink-0"></span>{shop.address}
+				<p class="flex items-center gap-2 text-info-content">
+					<span class="icon-[fa7-solid--map-location-dot] shrink-0"></span>{shop.address}, {shop.wardName},
+					{shop.districtName}, {shop.provinceName}
 				</p>
 				<div class="divider mx-0 divider-horizontal"></div>
-				<p class="flex items-center gap-2">
+				<p class="flex items-center gap-2 text-secondary-content">
 					<span class="icon-[fa7-solid--phone] shrink-0"></span>{shop.phoneNumber}
 				</p>
 				<div class="divider mx-0 divider-horizontal"></div>
-				<p class="flex items-center gap-2">
+				<p class="flex items-center gap-2 text-success-content">
 					<span class="icon-[fa7-solid--swatchbook] shrink-0"></span>{shop.categoryName}
 				</p>
 			</div>
