@@ -78,6 +78,16 @@ export const addCourseLessonSchema = z
 					code: 'custom',
 					message: 'Cần thêm nội dung bài quiz'
 				});
+			} else {
+				data.quiz.questions?.forEach((q, qIdx) => {
+					if (!q.answers.some((a) => a.isCorrect)) {
+						ctx.addIssue({
+							path: ['quiz', 'questions', qIdx, 'answers'],
+							code: 'custom',
+							message: 'Mỗi câu hỏi phải có ít nhất một đáp án đúng'
+						});
+					}
+				});
 			}
 			// contentUrl can be optional for quiz
 		}
