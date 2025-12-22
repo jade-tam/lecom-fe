@@ -86,7 +86,7 @@
 					<tr>
 						{#each table.columns as column (column.id)}
 							{#if column.id === 'activeStatus'}
-								<td>
+								<td class="whitespace-nowrap">
 									<div class={`badge ${getCourseActiveStatusBadgeClass(row.active)}`}>
 										{courseActiveStatusOptions.find((option) => option.value === row.active)?.title}
 									</div>
@@ -97,6 +97,8 @@
 										<Image alt="Ảnh khóa học" src={row.courseThumbnail} class="h-20 w-32" />
 									</div>
 								</td>
+							{:else if column.id === 'categoryName'}
+								<td><span class="font-bold text-sm text-success">{row[column.key]}</span></td>
 							{:else if column.id === 'title'}
 								<td>
 									<div class="flex flex-col">

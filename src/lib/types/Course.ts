@@ -2,11 +2,11 @@ import type { FormSelectOption } from '$lib/components/ui/FormSelect.svelte';
 
 export const courseActiveStatusOptions = [
 	{
-		title: 'Active',
+		title: 'Hoạt động',
 		value: 1
 	},
 	{
-		title: 'Deleted',
+		title: 'Đã xoá',
 		value: 0
 	}
 ] as const satisfies readonly FormSelectOption[];
@@ -34,11 +34,24 @@ export type Section = {
 	lessons: Lesson[];
 };
 
+export const courseTypeOptions = [
+	{
+		title: 'Video',
+		value: 'Video'
+	},
+	{
+		title: 'Quiz',
+		value: 'Quiz'
+	}
+] as const satisfies readonly FormSelectOption[];
+
+export type CourseType = (typeof courseTypeOptions)[number]['value'];
+
 export type Lesson = {
 	id: string;
 	courseSectionId: string;
 	title: string;
-	type: string;
+	type: CourseType;
 	durationSeconds: number;
 	contentUrl: string;
 	orderIndex: number;

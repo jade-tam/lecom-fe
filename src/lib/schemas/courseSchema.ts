@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { courseTypeOptions } from '$lib/types/Course';
 
 export const createCourseSchema = z.object({
 	title: z
@@ -28,17 +29,59 @@ export const addCourseSectionSchema = z.object({
 	orderIndex: z.int()
 });
 
-export const addCourseLessonSchema = z.object({
-	title: z
-		.string({ error: 'Cần nhập tiêu đề bài học' })
-		.min(3, 'Tiêu đề bài học phải có ít nhất 3 ký tự')
-		.max(100, 'Tiêu đề bài học không vượt quá 100 ký tự'),
-	type: z.string().default('Video'),
-	durationSeconds: z.int(),
-	contentUrl: z.url('Vui lòng tải lên video bài học'),
-	courseSectionId: z.string().min(1, 'Có lỗi xảy ra, thiếu ID phần khóa học hiện tại'),
-	orderIndex: z.int()
-});
+export const addCourseLessonSchema = z
+	.object({
+		courseSectionId: z.string().min(1, 'Có lỗi xảy ra, thiếu ID phần khóa học hiện tại'),
+		title: z
+			.string({ error: 'Cần nhập tiêu đề bài học' })
+			.min(3, 'Tiêu đề bài học phải có ít nhất 3 ký tự')
+			.max(100, 'Tiêu đề bài học không vượt quá 100 ký tự'),
+		type: z.enum(courseTypeOptions.map((opt) => opt.value)).default(courseTypeOptions[0].value),
+		durationSeconds: z.number().int().min(0, 'Thời lượng phải là số không âm'),
+		contentUrl: z.string().url('Vui lòng tải lên video bài học').nullable(),
+		orderIndex: z.number().int().min(0, 'Thứ tự bài học phải là số không âm'),
+		quiz: z
+			.object({
+				questions: z
+					.array(
+						z.object({
+							content: z.string().min(1, 'Nội dung câu hỏi là bắt buộc'),
+							answers: z
+								.array(
+									z.object({
+										content: z.string().min(1, 'Nội dung đáp án là bắt buộc'),
+										isCorrect: z.boolean()
+									})
+								)
+								.min(1, 'Phải có ít nhất một đáp án')
+						})
+					)
+					.min(1, 'Phải có ít nhất một câu hỏi')
+			})
+			.nullable()
+	})
+	.superRefine((data, ctx) => {
+		if (data.type === 'Video') {
+			if (!data.contentUrl) {
+				ctx.addIssue({
+					path: ['contentUrl'],
+					code: 'custom',
+					message: 'Vui lòng tải lên video bài học'
+				});
+			}
+			// quiz can be optional for video
+		}
+		if (data.type === 'Quiz') {
+			if (!data.quiz) {
+				ctx.addIssue({
+					path: ['quiz'],
+					code: 'custom',
+					message: 'Cần thêm nội dung bài quiz'
+				});
+			}
+			// contentUrl can be optional for quiz
+		}
+	});
 
 export const deleteCourseSectionSchema = z.object({
 	sectionId: z.string().min(1, 'Có lỗi xảy ra, thiếu ID phần chương khóa học hiện tại')

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import SellerCourseForm from '$lib/components/form/SellerCourseForm.svelte';
+	import OpenModalButton from '$lib/components/modal/OpenModalButton.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import FormInput from '$lib/components/ui/FormInput.svelte';
 	import FormMediaInput from '$lib/components/ui/FormMediaInput.svelte';
@@ -21,11 +22,13 @@
 	import showToast from '$lib/utils/showToast';
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
+	import CreateCourseLessonModalContent from '$lib/components/modal/CreateCourseLessonModalContent.svelte';
+	import { courseActiveStatusOptions } from '$lib/types/Course.js';
 
 	const { data } = $props();
 
 	let addSectionModalRef: HTMLDialogElement | null = $state(null);
-	let addLessonModalRef: HTMLDialogElement | null = $state(null);
+	// let addLessonModalRef: HTMLDialogElement | null = $state(null);
 	let linkProductModalRef: HTMLDialogElement | null = $state(null);
 
 	const {
@@ -42,19 +45,19 @@
 		validators: zod4Client(addCourseSectionSchema)
 	});
 
-	const {
-		form: lessonForm,
-		errors: lessonErrors,
-		message: lessonMessage,
-		enhance: lessonEnhance,
-		submitting: lessonSubmitting,
-		delayed: lessonDelayed,
-		tainted: lessonTainted,
-		isTainted: lessonIsTainted,
-		submit: lessonSubmit
-	} = superForm<AddCourseLessonSchema, ToastData>(data.addLessonForm, {
-		validators: zod4Client(addCourseLessonSchema)
-	});
+	// const {
+	// 	form: lessonForm,
+	// 	errors: lessonErrors,
+	// 	message: lessonMessage,
+	// 	enhance: lessonEnhance,
+	// 	submitting: lessonSubmitting,
+	// 	delayed: lessonDelayed,
+	// 	tainted: lessonTainted,
+	// 	isTainted: lessonIsTainted,
+	// 	submit: lessonSubmit
+	// } = superForm<AddCourseLessonSchema, ToastData>(data.addLessonForm, {
+	// 	validators: zod4Client(addCourseLessonSchema)
+	// });
 
 	const {
 		form: deleteSectionForm,
@@ -106,12 +109,12 @@
 		}
 	});
 
-	$effect(() => {
-		if ($lessonMessage) {
-			showToast($lessonMessage);
-			addLessonModalRef?.close();
-		}
-	});
+	// $effect(() => {
+	// 	if ($lessonMessage) {
+	// 		showToast($lessonMessage);
+	// 		addLessonModalRef?.close();
+	// 	}
+	// });
 	$effect(() => {
 		if ($deleteSectionMessage) {
 			showToast($deleteSectionMessage);
@@ -169,7 +172,7 @@
 
 <!-- ===================================================================================== -->
 
-<dialog bind:this={addLessonModalRef} class="modal">
+<!-- <dialog bind:this={addLessonModalRef} class="modal">
 	<div class="modal-box">
 		<form action="?/addLesson" method="POST" use:lessonEnhance>
 			<h3 class="text-lg font-bold">Thêm bài học mới</h3>
@@ -226,7 +229,7 @@
 			</div>
 		</form>
 	</div>
-</dialog>
+</dialog> -->
 
 <!-- ===================================================================================== -->
 
@@ -394,7 +397,7 @@
 								{#each section.lessons as lesson, ii (lesson.id)}
 									<div
 										class="flex flex-col gap-2 p-2 {ii !== section.lessons.length - 1
-											? 'border-b border-secondary'
+											? 'border-b border-base-100'
 											: ''}"
 									>
 										<div class="flex items-center gap-2">
@@ -497,7 +500,7 @@
 						</div>
 
 						<div class="mt-2 flex justify-end">
-							<button
+							<!-- <button
 								class="btn btn-secondary"
 								aria-label="Thêm bài học"
 								onclick={() => {
@@ -507,7 +510,19 @@
 								}}
 							>
 								<span class="icon-[fa7-solid--add]"></span>Thêm bài học
-							</button>
+							</button> -->
+							<OpenModalButton
+								ModalContentProps={{
+									dataForm: data.addLessonForm,
+									courseSectionId: section.id,
+									orderIndex: section.lessons.length
+								}}
+								ModalContent={CreateCourseLessonModalContent}
+								openButtonProps={{
+									class: 'btn btn-secondary btn-sm'
+								}}
+								><span class="icon-[mingcute--add-square-line] text-xl"></span>Thêm bài học</OpenModalButton
+							>
 						</div>
 					</div>
 				{/each}

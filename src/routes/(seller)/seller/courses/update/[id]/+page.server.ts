@@ -121,7 +121,7 @@ export const actions: Actions = {
 		}
 	},
 
-	addLesson: async ({ request, cookies }) => {
+	createCourseLesson: async ({ request, cookies }) => {
 		const form = await superValidate(request, zod4(addCourseLessonSchema));
 
 		if (!form.valid) {
@@ -134,14 +134,7 @@ export const actions: Actions = {
 			cookies,
 			'/api/seller/courses/lessons',
 			'POST',
-			{
-				courseSectionId: formData.courseSectionId,
-				title: formData.title,
-				type: formData.type,
-				durationSeconds: formData.durationSeconds,
-				contentUrl: formData.contentUrl,
-				orderIndex: formData.orderIndex
-			}
+			formData
 		);
 
 		const toastData: ToastData = getToastData(
@@ -151,9 +144,9 @@ export const actions: Actions = {
 		);
 
 		if (response.ok) {
-			return message(form, toastData);
+			return message(form, { toastData });
 		} else {
-			return message(form, toastData, { status: 400 });
+			return message(form, { toastData }, { status: 400 });
 		}
 	},
 
