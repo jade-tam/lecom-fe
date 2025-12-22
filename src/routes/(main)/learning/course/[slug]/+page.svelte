@@ -116,11 +116,17 @@
 								{#each section.lessons as lesson, ii (lesson.id)}
 									<div
 										class="flex items-center gap-2 p-2 {ii !== section.lessons.length - 1
-											? 'border-b border-secondary'
+											? 'border-b border-base-100'
 											: ''}"
 									>
-										<span class="mx-1 icon-[fa7-solid--circle-play] text-sm"></span>
-										<p>{toNumericString(ii + 1)}. {lesson.title}</p>
+										<button class="btn btn-sm btn-square btn-ghost btn-primary" disabled aria-label="play">
+											<span
+												class="{lesson.type === 'Video'
+													? 'icon-[mingcute--video-fill] text-primary-content'
+													: 'icon-[mingcute--inventory-fill] text-secondary-content'} text-xl"
+											></span>
+										</button>
+										<p class="font-semibold">{toNumericString(ii + 1)}. {lesson.title}</p>
 										<p class="mr-4 ml-auto flex items-center gap-2 text-xs text-secondary-content">
 											{formatVideoDuration(lesson.durationSeconds)}<span
 												class="icon-[fa7-solid--clock]"
