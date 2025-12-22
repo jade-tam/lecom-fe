@@ -9,6 +9,8 @@ export async function load({ cookies, params }) {
 		null
 	);
 
+	console.log(JSON.stringify(courseLearning, null, 4));
+
 	return {
 		courseLearning
 	};

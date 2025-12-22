@@ -98,7 +98,7 @@
 									</div>
 								</td>
 							{:else if column.id === 'categoryName'}
-								<td><span class="font-bold text-sm text-success">{row[column.key]}</span></td>
+								<td><span class="text-sm font-bold text-success">{row[column.key]}</span></td>
 							{:else if column.id === 'title'}
 								<td>
 									<div class="flex flex-col">

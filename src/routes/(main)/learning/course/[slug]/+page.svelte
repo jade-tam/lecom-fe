@@ -119,7 +119,11 @@
 											? 'border-b border-base-100'
 											: ''}"
 									>
-										<button class="btn btn-sm btn-square btn-ghost btn-primary" disabled aria-label="play">
+										<button
+											class="btn btn-square btn-ghost btn-sm btn-primary"
+											disabled
+											aria-label="play"
+										>
 											<span
 												class="{lesson.type === 'Video'
 													? 'icon-[mingcute--video-fill] text-primary-content'
