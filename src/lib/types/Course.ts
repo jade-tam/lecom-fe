@@ -63,6 +63,17 @@ export type Lesson = {
 	isCompleted?: boolean;
 	moderatorNote: string | null;
 	approvalStatus: ApprovalStatus;
+	quiz?: {
+		questions: {
+			id: string;
+			content: string;
+			answers: {
+				id: string;
+				content: string;
+				isCorrect: boolean;
+			}[];
+		}[];
+	};
 };
 
 type LinkedProduct = {

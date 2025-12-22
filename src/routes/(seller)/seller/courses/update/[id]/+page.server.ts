@@ -1,5 +1,5 @@
 import {
-	addCourseLessonSchema,
+	courseLessonSchema,
 	addCourseSectionSchema,
 	deleteCourseLessonSchema,
 	deleteCourseSectionSchema,
@@ -40,7 +40,7 @@ export const load = async ({ cookies, params }) => {
 
 	const form = await superValidate(course, zod4(updateCourseSchema));
 	const addSectionForm = await superValidate(zod4(addCourseSectionSchema));
-	const addLessonForm = await superValidate(zod4(addCourseLessonSchema));
+	const addLessonForm = await superValidate(zod4(courseLessonSchema));
 	const deleteSectionForm = await superValidate(zod4(deleteCourseSectionSchema));
 	const deleteLessonForm = await superValidate(zod4(deleteCourseLessonSchema));
 	const linkProductForm = await superValidate(zod4(linkProductSchema));
@@ -122,7 +122,7 @@ export const actions: Actions = {
 	},
 
 	createCourseLesson: async ({ request, cookies }) => {
-		const form = await superValidate(request, zod4(addCourseLessonSchema));
+		const form = await superValidate(request, zod4(courseLessonSchema));
 
 		if (!form.valid) {
 			return fail(400, { form });
@@ -134,6 +134,38 @@ export const actions: Actions = {
 			cookies,
 			'/api/seller/courses/lessons',
 			'POST',
+			formData
+		);
+
+		console.log('CREATE LESSON WITH DATA', formData);
+		console.log('CREATE LESSON WITH DATA quiz', formData.quiz);
+
+		const toastData: ToastData = getToastData(
+			responseBody,
+			'Bài học đã được thêm',
+			'Không thể thêm bài học'
+		);
+
+		if (response.ok) {
+			return message(form, { toastData });
+		} else {
+			return message(form, { toastData }, { status: 400 });
+		}
+	},
+
+	updateCourseLesson: async ({ request, cookies }) => {
+		const form = await superValidate(request, zod4(courseLessonSchema));
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		const formData = form.data;
+
+		const { response, responseBody } = await fetchAuthorizedApi(
+			cookies,
+			`/api/seller/courses/lessons/${formData.courseLessonId}`,
+			'PUT',
 			formData
 		);
 

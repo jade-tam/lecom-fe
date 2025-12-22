@@ -15,11 +15,7 @@
 		type DeleteCourseSectionSchema,
 		type LinkProductSchema
 	} from '$lib/schemas/courseSchema';
-	import {
-		formatVideoDuration,
-		toNumericString,
-		toRomanNumeral
-	} from '$lib/utils/converters';
+	import { formatVideoDuration, toNumericString, toRomanNumeral } from '$lib/utils/converters';
 	import type { ToastData } from '$lib/utils/showToast';
 	import showToast from '$lib/utils/showToast';
 	import { superForm } from 'sveltekit-superforms';
@@ -306,7 +302,7 @@
 									confirmBtnText: 'Xóa'
 								}}
 							>
-								<span class="icon-[fa7-solid--trash-alt]"></span>
+								<span class="icon-[fa7-solid--trash-alt] text-base"></span>
 							</FormConfirmPopoverButton>
 						</div>
 
@@ -368,6 +364,20 @@
 													class="icon-[fa7-solid--clock]"
 												></span>
 											</p>
+											<OpenModalButton
+												ModalContentProps={{
+													dataForm: data.addLessonForm,
+													courseSectionId: section.id,
+													orderIndex: lesson.orderIndex,
+													mode: 'update',
+													lesson: lesson
+												}}
+												ModalContent={CreateCourseLessonModalContent}
+												openButtonProps={{
+													class: 'btn btn-secondary btn-xs'
+												}}
+												><span class="icon-[mingcute--edit-4-fill] text-sm"></span>Chỉnh sửa</OpenModalButton
+											>
 											<button
 												class="btn btn-xs btn-info"
 												aria-label="Liên kết sản phẩm"
@@ -377,7 +387,7 @@
 													linkProductModalRef?.showModal();
 												}}
 											>
-												<span class="icon-[fa7-solid--box-open]"></span>Liên kết sản phẩm
+												<span class="icon-[fa7-solid--box-open] text-sm"></span>Liên kết sản phẩm
 											</button>
 											<FormConfirmPopoverButton
 												action="?/deleteLesson"
@@ -393,7 +403,7 @@
 													confirmBtnText: 'Xóa'
 												}}
 											>
-												<span class="icon-[fa7-solid--trash-alt]"></span>
+												<span class="icon-[fa7-solid--trash-alt] text-sm"></span>
 											</FormConfirmPopoverButton>
 										</div>
 
@@ -507,7 +517,7 @@
 						addSectionModalRef?.showModal();
 					}}
 				>
-					<span class="icon-[fa7-solid--add]"></span>Thêm chương
+					<span class="icon-[mingcute--add-square-line] text-xl"></span>Thêm chương
 				</button>
 			</div>
 		{/await}

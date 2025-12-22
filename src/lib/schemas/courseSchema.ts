@@ -29,9 +29,10 @@ export const addCourseSectionSchema = z.object({
 	orderIndex: z.int()
 });
 
-export const addCourseLessonSchema = z
+export const courseLessonSchema = z
 	.object({
 		courseSectionId: z.string().min(1, 'Có lỗi xảy ra, thiếu ID phần khóa học hiện tại'),
+		courseLessonId: z.string().optional(),
 		title: z
 			.string({ error: 'Cần nhập tiêu đề bài học' })
 			.min(3, 'Tiêu đề bài học phải có ít nhất 3 ký tự')
@@ -111,7 +112,7 @@ export const linkProductSchema = z.object({
 export type CreateCourseSchema = z.infer<typeof createCourseSchema>;
 export type UpdateCourseSchema = z.infer<typeof updateCourseSchema>;
 export type AddCourseSectionSchema = z.infer<typeof addCourseSectionSchema>;
-export type AddCourseLessonSchema = z.infer<typeof addCourseLessonSchema>;
+export type courseLessonSchema = z.infer<typeof courseLessonSchema>;
 export type DeleteCourseSectionSchema = z.infer<typeof deleteCourseSectionSchema>;
 export type DeleteCourseLessonSchema = z.infer<typeof deleteCourseLessonSchema>;
 export type LinkProductSchema = z.infer<typeof linkProductSchema>;

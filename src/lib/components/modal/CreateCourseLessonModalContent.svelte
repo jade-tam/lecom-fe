@@ -1,32 +1,36 @@
 <script lang="ts">
-	import { addCourseLessonSchema, type AddCourseLessonSchema } from '$lib/schemas/courseSchema';
-	import { courseTypeOptions } from '$lib/types/Course';
-	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import { invalidateAll } from '$app/navigation';
+	import { courseLessonSchema } from '$lib/schemas/courseSchema';
+	import { courseTypeOptions, type Lesson } from '$lib/types/Course';
+	import showToast, { type ToastData } from '$lib/utils/showToast';
+	import { flip } from 'svelte/animate';
+	import { slide } from 'svelte/transition';
+	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
 	import FormInput from '../ui/FormInput.svelte';
-	import showToast, { type ToastData } from '$lib/utils/showToast';
 	import FormMediaInput from '../ui/FormMediaInput.svelte';
-	import { invalidateAll } from '$app/navigation';
-	import { slide } from 'svelte/transition';
-	import { flip } from 'svelte/animate';
 
 	const {
 		dataForm,
 		onFormActionSuccess,
 		courseSectionId,
-		orderIndex
+		orderIndex,
+		mode = 'create',
+		lesson
 	}: {
-		dataForm: AddCourseLessonSchema;
+		dataForm: courseLessonSchema;
 		onFormActionSuccess?: () => void;
 		courseSectionId: string;
 		orderIndex: number;
+		mode?: 'create' | 'update';
+		lesson?: Lesson;
 	} = $props();
 
 	const { form, errors, message, enhance, submitting, delayed, tainted, isTainted, reset, submit } =
-		superForm<AddCourseLessonSchema, { toastData?: ToastData }>(dataForm, {
+		superForm<courseLessonSchema, { toastData?: ToastData }>(dataForm, {
 			dataType: 'json',
-			id: 'createCourseLessonForm',
-			validators: zod4Client(addCourseLessonSchema),
+			id: mode === 'create' ? 'createCourseLessonForm' : 'updateCourseLessonForm-' + lesson?.id,
+			validators: zod4Client(courseLessonSchema),
 			invalidateAll: false
 		});
 
@@ -35,6 +39,12 @@
 	}
 
 	$effect(() => {
+		console.log(lesson);
+
+		if (lesson) {
+			$form = lesson;
+			$form['courseLessonId'] = lesson.id;
+		}
 		$form['courseSectionId'] = courseSectionId;
 		$form['orderIndex'] = orderIndex;
 	});
@@ -51,11 +61,12 @@
 	});
 </script>
 
-<SuperDebug data={form} />
-<SuperDebug data={errors} />
-
-<form action="?/createCourseLesson" method="POST" use:enhance>
-	<h3 class="mb-2 font-bold">Thêm bài học mới</h3>
+<form
+	action="?/{mode === 'create' ? 'createCourseLesson' : 'updateCourseLesson'}"
+	method="POST"
+	use:enhance
+>
+	<h3 class="mb-2 font-bold">{mode === 'create' ? 'Thêm bài học mới' : 'Cập nhật bài học'}</h3>
 	<div class="mb-4">
 		<label class="mb-1 block text-xs font-semibold" for="type">Loại bài học</label>
 		<div class="mt-2 flex items-center gap-6">
@@ -67,6 +78,7 @@
 						value={opt.value}
 						bind:group={$form.type}
 						checked={$form.type === opt.value}
+						disabled={mode === 'update'}
 						class={idx === 0 ? 'radio radio-primary' : 'radio radio-secondary'}
 						onchange={(e: Event) => {
 							const input = e.target as HTMLInputElement;
@@ -250,7 +262,7 @@
 
 	<div class="modal-action">
 		<button type="button" onclick={handleSubmit} class="btn btn-primary" disabled={$submitting}
-			>Thêm bài học
+			>{mode === 'create' ? 'Thêm' : 'Lưu thay đổi'}
 			{#if $delayed}
 				<span class="loading loading-md loading-infinity"></span>
 			{/if}
