@@ -88,7 +88,7 @@
 			<div class="btn w-28 skeleton rounded-field btn-sm"></div>
 		{:then categories}
 			{#each categories as cat (cat.id)}
-				<a class="btn btn-sm btn-success" href="/learning/courses?category={cat.id}">
+				<a class="btn btn-sm btn-success" href="/learning/courses?category={cat.slug}">
 					{cat.name}
 				</a>
 			{/each}
