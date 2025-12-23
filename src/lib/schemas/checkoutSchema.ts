@@ -28,7 +28,7 @@ export const checkoutSchema = z.object({
 	serviceTypeId: z
 		.number('Vui lòng chọn phương thức vận chuyển')
 		.int('Mã phương thức vận chuyển không hợp lệ')
-		.default(1)
+		.default(2)
 		.refine((val) => shipmentTypeOptions.some((opt) => opt.value === val), {
 			message: 'Phương thức vận chuyển không hợp lệ'
 		}),
