@@ -43,15 +43,14 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		const { id } = form.data;
+		const { id, reason } = form.data;
 
 		const { responseBody } = await fetchAuthorizedApi(
 			cookies,
 			`/api/moderator/lessons/${id}/reject`,
 			'POST',
 			{
-				reason:
-					'Bài học không đáp ứng tiêu chuẩn của chúng tôi. Vui lòng kiểm tra lại thông tin và thử lại.'
+				reason: reason
 			}
 		);
 

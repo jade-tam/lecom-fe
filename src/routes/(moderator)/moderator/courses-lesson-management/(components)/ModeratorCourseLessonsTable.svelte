@@ -6,6 +6,7 @@
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
 	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
+	import FormRejectWithReasonPopoverButton from '$lib/components/wrapper/FormRejectWithReasonPopoverButton.svelte';
 	import { type ModeratorPendingLesson } from '$lib/types/Course';
 	import { DataTable } from '@careswitch/svelte-data-table';
 
@@ -75,7 +76,7 @@
 							{#each table.columns as column (column.id)}
 								{#if column.id === 'title'}
 									<td>
-										<p class="font-bold text-sm">{row[column.key]}</p>
+										<p class="text-sm font-bold">{row[column.key]}</p>
 									</td>
 								{:else}
 									<td><p class="font-semibold text-base-content/70">{row[column.key]}</p></td>
@@ -107,11 +108,11 @@
 												confirmBtnText: 'Chấp thuận'
 											}}
 										>
-											<span class="icon-[fa7-solid--check-square] text-xl"></span>
+											<span class="icon-[mingcute--check-circle-line] text-xl"></span>
 										</FormConfirmPopoverButton>
 									</div>
 									<div class="tooltip tooltip-top" data-tip="Từ chối">
-										<FormConfirmPopoverButton
+										<!-- <FormConfirmPopoverButton
 											action="?/reject"
 											formData={{ id: row.id }}
 											popoverId="reject-lesson-{row.id}"
@@ -126,7 +127,25 @@
 											}}
 										>
 											<span class="icon-[fa7-solid--xmark-square] text-xl"></span>
-										</FormConfirmPopoverButton>
+										</FormConfirmPopoverButton> -->
+										<FormRejectWithReasonPopoverButton
+											popoverId="reject-lesson-popover-{row.id}"
+											action="?/reject"
+											openButtonProps={{ class: 'btn btn-square btn-error' }}
+											formData={{
+												id: row.id
+											}}
+											dropdownClass="dropdown-bottom dropdown-end"
+											dropdownContent={{
+												label: 'Từ chối bài học này?',
+												description: 'Bài học sẽ không được hiển thị.',
+												confirmBtnClass: 'btn-error',
+												confirmBtnIcon: 'icon-[fa7-solid--xmark-square]',
+												confirmBtnText: 'Từ chối'
+											}}
+										>
+											<span class="icon-[mingcute--close-circle-line] text-xl"></span>
+										</FormRejectWithReasonPopoverButton>
 									</div>
 								</div>
 							</td>
