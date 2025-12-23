@@ -52,7 +52,11 @@
 				{#each table.rows as row (row.id)}
 					<tr>
 						{#each table.columns as column (column.id)}
-							<td>{row[column.key]}</td>
+							{#if column.id === 'name'}
+								<td class="text-base font-bold text-secondary-content">{row[column.key]}</td>
+							{:else}
+								<td>{row[column.key]}</td>
+							{/if}
 						{/each}
 					</tr>
 				{/each}

@@ -4,6 +4,7 @@
 	import ReviewRefundModalContent from '$lib/components/modal/ReviewRefundModalContent.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
+	import ImageWithFullscreenViewer from '$lib/components/ui/ImageWithFullscreenViewer.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 	import TableFilter from '$lib/components/ui/TableFilter.svelte';
@@ -83,7 +84,7 @@
 />
 
 <AnimatedDiv animateVars={{ translateY: 16 }} class="mt-2 rounded-box border bg-base-100 p-4">
-	<div class="overflow-x-auto">
+	<div class="overflow-x-auto min-h-[70vh]">
 		<table class="table table-sm">
 			<thead>
 				<tr class="text-base-content">
@@ -128,7 +129,7 @@
 										>{formatVND(row.refundAmount)}</td
 									>
 								{:else if column.id === 'requestedAt'}
-									<td>{formatDateTime(row.requestedAt)}</td>
+									<td><span class="font-semibold">{formatDateTime(row.requestedAt)}</span></td>
 								{:else if column.id === 'reasonType'}
 									<td>
 										<div class="flex flex-col gap-1">
@@ -139,7 +140,7 @@
 												<span class="text-xs text-base-content/70">{row.reasonDescription}</span>
 											{/if}
 											{#if row.attachmentUrls}
-												<Image
+												<ImageWithFullscreenViewer
 													src={row.attachmentUrls}
 													alt="Minh chứng hoàn tiền"
 													class="rounded-object mt-1 h-20 w-32 object-cover"

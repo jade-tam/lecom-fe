@@ -5,6 +5,7 @@
 	import ReviewRefundModalContent from '$lib/components/modal/ReviewRefundModalContent.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import Image from '$lib/components/ui/Image.svelte';
+	import ImageWithFullscreenViewer from '$lib/components/ui/ImageWithFullscreenViewer.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import LoadingPlaceholder from '$lib/components/ui/skeleton/LoadingPlaceholder.svelte';
 	import TableFilter from '$lib/components/ui/TableFilter.svelte';
@@ -84,8 +85,8 @@
 />
 
 <AnimatedDiv animateVars={{ translateY: 16 }} class="mt-2 rounded-box border bg-base-100 p-4">
-	<div class="overflow-x-auto">
-		<table class="table table-sm">
+	<div class="overflow-x-auto min-h-[70vh]">
+		<table class="table table-sm ">
 			<thead>
 				<tr class="text-base-content">
 					{#each table.columns as column (column.id)}
@@ -137,7 +138,7 @@
 											<p class="line-clamp-2 text-xs text-base-content/70">
 												{row.reasonDescription}
 											</p>
-											<Image
+											<ImageWithFullscreenViewer
 												src={row.attachmentUrls}
 												alt="Hình ảnh minh họa lý do hoàn tiền"
 												class="rounded-object mt-1 h-22 w-40 object-cover"

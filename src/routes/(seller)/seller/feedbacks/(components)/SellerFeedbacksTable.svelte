@@ -71,7 +71,7 @@
 </div>
 
 <AnimatedDiv animateVars={{ translateY: 16 }} class="mt-2 rounded-box border bg-base-100 p-4">
-	<div class="overflow-x-auto">
+	<div class="overflow-x-auto min-h-[70vh]">
 		<table class="table table-sm">
 			<thead>
 				<tr class="text-base-content">
