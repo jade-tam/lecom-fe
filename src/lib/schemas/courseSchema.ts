@@ -60,6 +60,7 @@ export const courseLessonSchema = z
 					.min(1, 'Phải có ít nhất một câu hỏi')
 			})
 			.nullable()
+			.optional()
 	})
 	.superRefine((data, ctx) => {
 		if (data.type === 'Video') {

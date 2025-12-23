@@ -171,8 +171,8 @@ export const actions: Actions = {
 
 		const toastData: ToastData = getToastData(
 			responseBody,
-			'Bài học đã được thêm',
-			'Không thể thêm bài học'
+			'Bài học đã được cập nhật',
+			'Không thể cập nhật bài học'
 		);
 
 		if (response.ok) {
