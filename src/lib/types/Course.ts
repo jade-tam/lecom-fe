@@ -133,3 +133,24 @@ export type ModeratorPendingSection = {
 	title: string;
 	courseTitle: string;
 };
+
+export type ModeratorPendingLessonDetail = {
+	id: string;
+	title: string;
+	type: CourseType; // adjust if more types exist
+	durationSeconds: number;
+	contentUrl: string;
+	orderIndex: number;
+	approvalStatus: ApprovalStatus;
+	moderatorNote: string | null;
+	section: {
+		id: string;
+		title: string;
+	};
+	course: {
+		id: string;
+		title: string;
+		slug: string;
+	};
+	products: LinkedProduct[]; // or a real Product type if you have one
+};

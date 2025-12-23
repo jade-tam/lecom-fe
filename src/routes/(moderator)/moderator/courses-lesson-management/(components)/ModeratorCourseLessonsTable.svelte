@@ -1,5 +1,7 @@
 <script lang="ts">
 	import AnimatedDiv from '$lib/components/animate/AnimatedDiv.svelte';
+	import ModeratorViewCourseLessonModalContent from '$lib/components/modal/ModeratorViewCourseLessonModalContent.svelte';
+	import OpenModalButton from '$lib/components/modal/OpenModalButton.svelte';
 	import EmptyPlaceholder from '$lib/components/ui/EmptyPlaceholder.svelte';
 	import SearchInput from '$lib/components/ui/SearchInput.svelte';
 	import TablePagination from '$lib/components/ui/TablePagination.svelte';
@@ -16,9 +18,9 @@
 			pageSize: pageSize,
 			data: lessons,
 			columns: [
-				{ id: 'courseTitle', key: 'courseTitle', name: 'Khóa học' },
-				{ id: 'sectionTitle', key: 'sectionTitle', name: 'Chương học' },
-				{ id: 'title', key: 'title', name: 'Tiêu đề bài học' }
+				{ id: 'title', key: 'title', name: 'Tiêu đề bài học' },
+				{ id: 'sectionTitle', key: 'sectionTitle', name: 'Thuộc chương học' },
+				{ id: 'courseTitle', key: 'courseTitle', name: 'Thuộc khóa học' }
 			]
 		})
 	);
@@ -71,16 +73,31 @@
 					{#each table.rows as row (row.id)}
 						<tr>
 							{#each table.columns as column (column.id)}
-								<td><p class="font-semibold">{row[column.key]}</p></td>
+								{#if column.id === 'title'}
+									<td>
+										<p class="font-bold text-sm">{row[column.key]}</p>
+									</td>
+								{:else}
+									<td><p class="font-semibold text-base-content/70">{row[column.key]}</p></td>
+								{/if}
 							{/each}
 							<td>
-								<div class="flex justify-end gap-1">
+								<div class="flex justify-end gap-1 p-1">
+									<div class="tooltip tooltip-top" data-tip="Xem chi tiết">
+										<OpenModalButton
+											openButtonProps={{ class: 'btn btn-square btn-primary' }}
+											ModalContent={ModeratorViewCourseLessonModalContent}
+											ModalContentProps={{ lessonId: row.id }}
+										>
+											<span class="icon-[mingcute--document-3-line] text-lg"></span>
+										</OpenModalButton>
+									</div>
 									<div class="tooltip tooltip-top" data-tip="Chấp thuận">
 										<FormConfirmPopoverButton
 											action="?/approve"
 											formData={{ id: row.id }}
 											popoverId="approve-lesson-{row.id}"
-											openButtonProps={{ class: 'btn btn-success' }}
+											openButtonProps={{ class: 'btn btn-square btn-success' }}
 											dropdownClass="dropdown-bottom dropdown-end"
 											dropdownContent={{
 												label: 'Chấp thuận bài học này?',
@@ -90,7 +107,7 @@
 												confirmBtnText: 'Chấp thuận'
 											}}
 										>
-											<span class="icon-[fa7-solid--check-square] text-xl"></span>Chấp thuận
+											<span class="icon-[fa7-solid--check-square] text-xl"></span>
 										</FormConfirmPopoverButton>
 									</div>
 									<div class="tooltip tooltip-top" data-tip="Từ chối">
@@ -98,7 +115,7 @@
 											action="?/reject"
 											formData={{ id: row.id }}
 											popoverId="reject-lesson-{row.id}"
-											openButtonProps={{ class: 'btn btn-error' }}
+											openButtonProps={{ class: 'btn btn-square btn-error' }}
 											dropdownClass="dropdown-bottom dropdown-end"
 											dropdownContent={{
 												label: 'Từ chối bài học này?',
@@ -108,7 +125,7 @@
 												confirmBtnText: 'Từ chối'
 											}}
 										>
-											<span class="icon-[fa7-solid--xmark-square] text-xl"></span>Từ chối
+											<span class="icon-[fa7-solid--xmark-square] text-xl"></span>
 										</FormConfirmPopoverButton>
 									</div>
 								</div>
