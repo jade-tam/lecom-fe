@@ -29,7 +29,7 @@
 		<h1 class="text-3xl font-black uppercase">Lecom</h1>
 	</a>
 
-	<div class="shrink-0 max-sm:hidden">
+	<div class="shrink-0 max-lg:hidden">
 		<ul class="flex h-full items-center gap-2 px-6">
 			<li>
 				<a
@@ -78,7 +78,7 @@
 		<div class="grow"></div>
 	{/if}
 
-	<div class="flex items-center gap-2">
+	<div class="flex items-center gap-2 shrink-0">
 		{#if userProfile}
 			<div class="tooltip tooltip-bottom" data-tip="Giỏ hàng">
 				<a
@@ -199,7 +199,7 @@
 	</div>
 </header>
 
-<div class="mt-1 hidden shrink-0 justify-evenly max-sm:flex">
+<div class="mt-1 hidden shrink-0 justify-evenly max-lg:flex">
 	<ul class="flex h-full items-center gap-2">
 		<li>
 			<a
