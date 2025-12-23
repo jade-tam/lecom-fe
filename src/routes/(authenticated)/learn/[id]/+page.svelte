@@ -253,7 +253,11 @@
 											: 'btn-outline'}"
 										onclick={() => selectLesson(sectionIdx, lessonIdx)}
 									>
-										<span class="icon-[fa7-solid--circle-play] text-secondary-content"></span>
+										<span
+											class="{lesson.type === 'Video'
+												? 'icon-[mingcute--video-fill] text-primary-content'
+												: 'icon-[mingcute--inventory-fill] text-secondary-content'} text-xl"
+										></span>
 
 										<!-- TEXT BLOCK -->
 										<span class="flex grow flex-col">
