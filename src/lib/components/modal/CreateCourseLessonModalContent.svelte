@@ -78,7 +78,7 @@
 						value={opt.value}
 						bind:group={$form.type}
 						checked={$form.type === opt.value}
-						disabled={mode === 'update'}
+						disabled={mode === 'update' || opt.value === 'Quiz'}
 						class={idx === 0 ? 'radio radio-primary' : 'radio radio-secondary'}
 						onchange={(e: Event) => {
 							const input = e.target as HTMLInputElement;

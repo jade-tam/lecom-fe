@@ -35,7 +35,10 @@ export const actions: Actions = {
 			formData
 		);
 
-		const toastData: ToastData = getToastData(responseBody, 'Course has been created');
+		const toastData: ToastData = getToastData(
+			responseBody,
+			'Khoá học đã được tạo, hãy bắt đầu thêm nội dung cho khoá học!'
+		);
 
 		if (response.ok) {
 			return message(form, {
