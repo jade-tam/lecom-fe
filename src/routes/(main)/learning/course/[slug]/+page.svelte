@@ -39,11 +39,11 @@
 			/>
 
 			<div
-				class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 to-black/20"
+				class="pointer-events-none absolute inset-0 bg-gradient-to-t from-base-300/60 to-base-300/10"
 			></div>
 
 			<div class="absolute bottom-4 flex gap-2 px-4">
-				<h1 class="text-header text-shadow-s8">{course.title}</h1>
+				<h1 class="text-header text-shadow-2xs">{course.title}</h1>
 			</div>
 		</AnimatedDiv>
 
