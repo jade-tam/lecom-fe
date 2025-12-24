@@ -3,8 +3,9 @@
 	import ImageWithFullscreenViewer from '$lib/components/ui/ImageWithFullscreenViewer.svelte';
 	import FormConfirmPopoverButton from '$lib/components/wrapper/FormConfirmPopoverButton.svelte';
 	import FormConfirmWithReasonPopoverButton from '$lib/components/wrapper/FormRejectWithReasonPopoverButton.svelte';
+	import { shopBusinessOptions } from '$lib/consts/shopBusinessOptions.js';
 	import { getStatusBadgeClass } from '$lib/utils/classComposer';
-	import { formatDate, formatDateTime } from '$lib/utils/converters.js';
+	import { formatDate, formatDateTime, getTitleFromOptionList } from '$lib/utils/converters.js';
 	import showToast from '$lib/utils/showToast.js';
 
 	const { data, form } = $props();
@@ -155,7 +156,7 @@
 			<legend class="fieldset-legend">Loại hình kinh doanh</legend>
 			<label class="input w-full">
 				<span class={`icon-[fa7-solid--briefcase] text-secondary-content`}></span>
-				<input value={shop.businessType} readonly />
+				<input value={getTitleFromOptionList(shop.businessType, shopBusinessOptions)} readonly />
 			</label>
 		</fieldset>
 
