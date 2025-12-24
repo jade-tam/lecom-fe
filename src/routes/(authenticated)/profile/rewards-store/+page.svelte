@@ -62,7 +62,7 @@
 
 <form action="?/redeemReward" method="POST" use:enhance>
 	<div class="tabs-lift mt-2 tabs">
-		<label class="tab font-bold text-info-content hover:text-info-content">
+		<!-- <label class="tab font-bold text-info-content hover:text-info-content">
 			<input type="radio" name="storeTabRadio" checked />
 			<span class="mr-2 icon-[fa7-solid--flask-vial]"></span>
 			Vật phẩm hỗ trợ
@@ -75,10 +75,10 @@
 					{/each}
 				</div>
 			{/if}
-		</div>
+		</div> -->
 
 		<label class="tab font-bold text-success-content hover:text-success-content">
-			<input type="radio" name="storeTabRadio" />
+			<input type="radio" name="storeTabRadio" checked />
 			<span class="mr-2 icon-[fa7-solid--ticket]"></span>
 			Phiếu giảm giá
 		</label>

@@ -228,7 +228,7 @@
 						value={courseLearning.progress.percent}
 						max="100"
 					></progress>
-					<span class="font-bold">{courseLearning.progress.percent}%</span>
+					<span class="font-bold">{Number(courseLearning.progress.percent.toFixed(1))}%</span>
 				</div>
 			</div>
 
