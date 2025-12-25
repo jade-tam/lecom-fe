@@ -4,6 +4,7 @@
 	import Rating from '../data-input/Rating.svelte';
 	import EmptyPlaceholder from '../EmptyPlaceholder.svelte';
 	import ImageWithFullscreenViewer from '../ImageWithFullscreenViewer.svelte';
+	import UserAvatar from '../UserAvatar.svelte';
 
 	const {
 		feedbackSummaryPromise
@@ -91,10 +92,10 @@
 					<div class="rounded-box border bg-base-200/30 p-4">
 						<!-- User Info -->
 						<div class="mb-3 flex items-center gap-3">
-							<img
-								src={feedback.userAvatar}
-								alt={feedback.userName}
-								class="h-9 w-9 rounded-full object-cover"
+							<UserAvatar
+								avatar_url={feedback.userAvatar}
+								letter={feedback.userName[0].toUpperCase()}
+								sizeClass="h-9 w-9"
 							/>
 							<div class="flex-1">
 								<p class="text-sm font-bold">{feedback.userName}</p>
