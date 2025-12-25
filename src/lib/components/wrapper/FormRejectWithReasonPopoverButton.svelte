@@ -78,7 +78,7 @@
 	>
 		<div class="m-1 flex w-80 flex-col gap-2 rounded-field border bg-base-100 p-4 shadow">
 			<p class="text-sm font-bold">{dropdownContent.label}</p>
-			<p class="text-xs text-base-content/60">{dropdownContent.description}</p>
+			<p class="text-xs text-base-content/60 text-wrap">{dropdownContent.description}</p>
 
 			<fieldset class={`fieldset`}>
 				<legend class="fieldset-legend">Lý do từ chối</legend>
