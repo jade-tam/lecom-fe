@@ -131,6 +131,10 @@
 							pageSize={result.pageSize}
 							totalItems={result.totalItems}
 							totalPages={result.totalPages}
+							onPageChange={(newPage) => {
+								pageNumber = newPage;
+								handleApplyFilter();
+							}}
 						/>
 					</div>
 				{:else}

@@ -16,11 +16,11 @@ export function load({ url }) {
 	if (category) params.set('category', category);
 	if (sort) params.set('sort', sort);
 	if (page) params.set('page', page);
-	params.set('pageSize', '12'); // HARD FIX PAGE SIZE
+	params.set('pageSize', '6'); // HARD FIX PAGE SIZE
 
 	const queryResult = getSafeResult(
 		fetchApi<PaginatedResult<Course>>(`/api/home/courses?${params.toString()}`, 'GET'),
-		{ totalItems: 0, page: 1, pageSize: 12, totalPages: 0, items: [] } as PaginatedResult<Course>
+		{ totalItems: 0, page: 1, pageSize: 6, totalPages: 0, items: [] } as PaginatedResult<Course>
 	);
 
 	const categories = getSafeResult(

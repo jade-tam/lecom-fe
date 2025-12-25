@@ -18,13 +18,13 @@ export function load({ url }) {
 	if (category) params.set('category', category);
 	if (sort) params.set('sort', sort);
 	if (page) params.set('page', page);
-	params.set('pageSize', '12'); // HARD FIX PAGE SIZE
+	params.set('pageSize', '8'); // HARD FIX PAGE SIZE
 	if (minPrice) params.set('minPrice', minPrice);
 	if (maxPrice) params.set('maxPrice', maxPrice);
 
 	const queryResult = getSafeResult(
 		fetchApi<PaginatedResult<Product>>(`/api/home/products?${params.toString()}`, 'GET'),
-		{ totalItems: 0, page: 1, pageSize: 12, totalPages: 0, items: [] } as PaginatedResult<Product>
+		{ totalItems: 0, page: 1, pageSize: 8, totalPages: 0, items: [] } as PaginatedResult<Product>
 	);
 
 	const categories = getSafeResult(
