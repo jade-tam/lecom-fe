@@ -61,7 +61,7 @@
 					<div class="mt-2 flex gap-2">
 						{#if course.isEnrolled}
 							<a class="btn grow btn-primary" href="/learn/{course.id}">
-								<span class="icon-[fa7-solid--book-open]"></span>Bắt đầu học
+								<span class="icon-[mingcute--fast-forward-line] text-xl"></span>Bắt đầu học
 							</a>
 						{:else}
 							<FormAction
@@ -71,8 +71,8 @@
 								}}
 								class="grow"
 							>
-								<button type="submit" class="btn w-full btn-primary"
-									><span class="icon-[fa7-solid--book-open]"></span>Tham gia khóa học này</button
+								<button type="submit" class="btn w-full btn-success"
+									><span class="icon-[mingcute--bookmark-add-line] text-xl"></span>Tham gia khóa học này</button
 								>
 							</FormAction>
 						{/if}
@@ -106,7 +106,7 @@
 			<h2 class="mb-4">Nội dung khóa học</h2>
 			{#if course.sections}
 				{#each course.sections as section, i (section.id)}
-					<div class="bg-base-100">
+					<div class="bg-base-100 mb-4">
 						<div class="flex items-center justify-between">
 							<p class="text-lg font-black">{toRomanNumeral(i + 1)}. {section.title}</p>
 						</div>

@@ -18,8 +18,8 @@
 			<h1 class="text-header3 text-lg">{shop.name}</h1>
 			<p class="line-clamp-1 text-sm">{shop.description}</p>
 		</div>
-		<a href="/shopping/shop/{shop.id}" class="btn self-center btn-xs btn-secondary max-md:w-full">
-			View Shop
+		<a href="/shopping/shop/{shop.id}" class="btn self-center btn-xs btn-primary max-md:w-full">
+			<span class="icon-[mingcute--store-line]"></span>Xem cửa hàng
 		</a>
 	</div>
 </div>
