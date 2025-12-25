@@ -64,6 +64,12 @@ export interface Order {
 	shipToName: string;
 	shipToPhone: string;
 	shipToAddress: string;
+	toProvinceId: 268;
+	toProvinceName: 'Hưng Yên';
+	toDistrictId: 2194;
+	toDistrictName: 'Huyện Phù Cừ';
+	toWardCode: '220712';
+	toWardName: 'Xã Tiền Tiến';
 	subtotal: number;
 	shippingFee: number;
 	discount: number;
@@ -73,6 +79,7 @@ export interface Order {
 	estimatedDelivery: string;
 	paymentMethod: PaymentMethod;
 	shipmentStatus: ShipmentStatus; // <-- Added here
+	estimatedDeliveryText: string;
 	balanceReleased: boolean;
 	createdAt: string; // ISO 8601 timestamp
 	completedAt: string | null;

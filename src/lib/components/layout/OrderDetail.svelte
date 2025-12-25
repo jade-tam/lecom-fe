@@ -305,7 +305,7 @@
 						<span class="text-info-content italic"
 							>{order.estimatedDelivery
 								? formatDate(order.estimatedDelivery)
-								: '3 - 5 ngày kể từ khi vận chuyển'}</span
+								: order.estimatedDeliveryText + ' kể từ khi vận chuyển'}</span
 						>
 					</p>{/if}
 				<StatusSteps
@@ -320,9 +320,14 @@
 					getStepClass={getShipmentStatusStepClass}
 				/>
 				<div class="divider my-0"></div>
-				<p><span class="font-semibold">Người nhận:</span> {order.shipToName}</p>
-				<p><span class="font-semibold">Số điện thoại:</span> {order.shipToPhone}</p>
-				<p><span class="font-semibold">Địa chỉ:</span> {order.shipToAddress}</p>
+				<p class="text-sm"><span class="">Người nhận:</span> <strong>{order.shipToName}</strong></p>
+				<p><span class="text-sm">Số điện thoại:</span> <strong>{order.shipToPhone}</strong></p>
+				<p>
+					<span class="text-sm">Địa chỉ:</span>
+					<strong
+						>{order.shipToAddress}, {order.toWardName}, {order.toDistrictName}, {order.toProvinceName}</strong
+					>
+				</p>
 			</div>
 		</AnimatedDiv>
 
