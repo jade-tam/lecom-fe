@@ -82,7 +82,7 @@
 										</div>
 									</td>
 								{:else if column.id === 'price'}
-									<td class="font-serif text-2xl font-bold">{formatVND(row.price)}</td>
+									<td class="font-serif text-xl font-bold text-success-content">{formatVND(row.price)}</td>
 								{:else if column.id === 'thumbnail'}
 									<td>
 										<div>
@@ -93,7 +93,7 @@
 									<td>{row[column.key]}</td>
 								{/if}
 							{/each}
-							<td>
+							<td class="whitespace-nowrap">
 								<div class="flex justify-end gap-1">
 									<FormConfirmPopoverButton
 										action="?/approve"
