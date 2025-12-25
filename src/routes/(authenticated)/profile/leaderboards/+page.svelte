@@ -25,16 +25,16 @@
 	});
 
 	function getRankBadgeColor(rank: number): string {
-		if (rank === 0) return 'from-yellow-400 to-yellow-600 badge-xl';
-		if (rank === 1) return 'from-gray-200 to-gray-400 badge-lg';
-		if (rank === 2) return 'from-amber-500 to-amber-800 badge-md';
+		if (rank === 1) return 'from-yellow-400 to-yellow-600 badge-xl';
+		if (rank === 2) return 'from-gray-200 to-gray-400 badge-lg';
+		if (rank === 3) return 'from-amber-500 to-amber-800 badge-md';
 		return 'bg-base-300 text-base-content/70';
 	}
 
 	function getRankIcon(rank: number): string {
-		if (rank === 0) return 'icon-[mingcute--vip-2-fill] text-yellow-300';
-		if (rank === 1) return 'icon-[mingcute--hexagon-fill] text-zinc-200';
-		if (rank === 2) return 'icon-[mingcute--triangle-fill] text-amber-500';
+		if (rank === 1) return 'icon-[mingcute--vip-2-fill] text-yellow-300';
+		if (rank === 2) return 'icon-[mingcute--hexagon-fill] text-zinc-200';
+		if (rank === 3) return 'icon-[mingcute--triangle-fill] text-amber-500';
 		return '';
 	}
 
