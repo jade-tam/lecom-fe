@@ -21,7 +21,7 @@
 				rounded="rounded-selector"
 				alt={product.name}
 			/>
-			{#each product.images as image}
+			{#each product.images.filter((image) => image.url !== product.thumbnailUrl) as image}
 				<Image
 					src={image.url}
 					class="aspect-square w-full"

@@ -62,7 +62,7 @@
 		<div class="grid w-full grid-cols-12 gap-x-4 gap-y-2 max-md:grid-cols-1">
 			<AnimatedDiv animateVars={{ translateX: -16 }} class="col-span-5 max-md:col-span-1">
 				<ImageViewer
-					images={product.images.map((image) => image.url) ?? []}
+					images={product.images.sort((a, b) => a.orderIndex - b.orderIndex).map((image) => image.url) ?? []}
 					viewTransitionName={`product-image-${product.id}`}
 				/>
 			</AnimatedDiv>
