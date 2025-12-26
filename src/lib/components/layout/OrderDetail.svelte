@@ -17,7 +17,7 @@
 		getPaymentStatusStepClass,
 		getShipmentStatusStepClass
 	} from '$lib/utils/classComposer';
-	import { formatDate, formatVND, getTitleFromOptionList } from '$lib/utils/converters';
+	import { formatDate, formatDateTime, formatVND, getTitleFromOptionList } from '$lib/utils/converters';
 	import NumberFlow from '@number-flow/svelte';
 	import AnimatedDiv from '../animate/AnimatedDiv.svelte';
 	import CancelOrderModalContent from '../modal/CancelOrderModalContent.svelte';
@@ -179,7 +179,7 @@
 	</AnimatedDiv>
 </div>
 <div class="mb-2 flex items-center gap-4">
-	<p class="text-xs text-base-content/70">Ngày đặt hàng: {formatDate(order.createdAt)}</p>
+	<p class="text-xs text-base-content/70">Đơn đặt hàng lúc: <strong>{formatDateTime(order.createdAt)}</strong></p>
 </div>
 
 <!-- Order Status Steps -->

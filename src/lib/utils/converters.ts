@@ -10,7 +10,7 @@ export function toPascalCase(segment: string) {
 
 export function formatDate(input: string | Date): string {
 	try {
-		const date = input instanceof Date ? input : new Date(input);
+		const date = input instanceof Date ? input : new Date(input + 'Z');
 
 		if (isNaN(date.getTime())) {
 			throw new Error('Invalid date input');
@@ -29,7 +29,7 @@ export function formatDate(input: string | Date): string {
 
 export function formatDateTime(input: string | Date): string {
 	try {
-		const date = input instanceof Date ? input : new Date(input);
+		const date = input instanceof Date ? input : new Date(input + 'Z');
 
 		if (isNaN(date.getTime())) {
 			throw new Error('Invalid date input');
