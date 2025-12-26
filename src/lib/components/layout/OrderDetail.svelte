@@ -17,7 +17,12 @@
 		getPaymentStatusStepClass,
 		getShipmentStatusStepClass
 	} from '$lib/utils/classComposer';
-	import { formatDate, formatDateTime, formatVND, getTitleFromOptionList } from '$lib/utils/converters';
+	import {
+		formatDate,
+		formatDateTime,
+		formatVND,
+		getTitleFromOptionList
+	} from '$lib/utils/converters';
 	import NumberFlow from '@number-flow/svelte';
 	import AnimatedDiv from '../animate/AnimatedDiv.svelte';
 	import CancelOrderModalContent from '../modal/CancelOrderModalContent.svelte';
@@ -39,6 +44,15 @@
 		cancelOrderFormData: any;
 		createProductFeedbackFormData?: any;
 	} = $props();
+
+	const MS_7_DAYS = 7 * 24 * 60 * 60 * 1000;
+	const completedDate = $derived(order.completedAt ? new Date(order.completedAt + 'Z') : null);
+	const refundDeadline = $derived(
+		completedDate ? new Date(completedDate.getTime() + MS_7_DAYS) : null
+	);
+	const isRefundable = $derived(
+		completedDate && refundDeadline ? Date.now() <= refundDeadline.getTime() : false
+	);
 
 	const shipmentStatus: ShipmentStatus = $derived.by(() => {
 		switch (order?.status) {
@@ -178,8 +192,23 @@
 		{/if}
 	</AnimatedDiv>
 </div>
-<div class="mb-2 flex items-center gap-4">
-	<p class="text-xs text-base-content/70">Đơn đặt hàng lúc: <strong>{formatDateTime(order.createdAt)}</strong></p>
+<div class="mb-2 flex flex-wrap items-center justify-between gap-4">
+	<p class="text-xs text-base-content/70">
+		Đơn đặt hàng lúc: <strong>{formatDateTime(order.createdAt)}</strong>
+	</p>
+	{#if order.completedAt}
+		<p class="text-xs text-success-content/70">
+			Hoàn thành lúc: <strong>{formatDateTime(order.completedAt)}</strong>
+		</p>
+		{#if !isSellerView && isRefundable && refundDeadline}
+			<p class="text-xs text-warning-content/70">
+				Nếu có vấn đề về đơn hàng, bạn có thể làm yêu cầu trả hàng hoàn tiền trong vòng <strong
+					>7 ngày</strong
+				>
+				sau khi nhận hàng (trước <strong>{formatDateTime(refundDeadline)}</strong>).
+			</p>
+		{/if}
+	{/if}
 </div>
 
 <!-- Order Status Steps -->
@@ -321,9 +350,9 @@
 				/>
 				<div class="divider my-0"></div>
 				<p class="text-sm"><span class="">Người nhận:</span> <strong>{order.shipToName}</strong></p>
-				<p><span class="text-sm">Số điện thoại:</span> <strong>{order.shipToPhone}</strong></p>
-				<p>
-					<span class="text-sm">Địa chỉ:</span>
+				<p class="text-sm"><span>Số điện thoại:</span> <strong>{order.shipToPhone}</strong></p>
+				<p class="text-sm">
+					<span>Địa chỉ:</span>
 					<strong
 						>{order.shipToAddress}, {order.toWardName}, {order.toDistrictName}, {order.toProvinceName}</strong
 					>
