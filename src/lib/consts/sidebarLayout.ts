@@ -81,6 +81,11 @@ export const adminSidebarLayout: SidebarLayoutItem[] = [
 		href: '/admin/broadcast-notification',
 		title: 'Thông báo cho mọi người dùng',
 		iconClass: 'icon-[mingcute--announcement-fill] text-xl'
+	},
+	{
+		href: '/admin/platform-config',
+		title: 'Cấu hình toàn hệ thống',
+		iconClass: 'icon-[mingcute--settings-3-fill] text-xl'
 	}
 ];
 
